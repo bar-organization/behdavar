@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: behdavar
+    password: 123456
+    url: jdbc:oracle:thin:@127.0.0.1:1521/XE
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: false
+    properties:
+      hibernate.dialect: org.hibernate.dialect.Oracle12cDialect
