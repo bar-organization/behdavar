@@ -1,5 +1,7 @@
 package com.bar.behdavardatabase;
 
-public class BehdavarDatabaseApplication {
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
+public class BehdavarDatabaseApplication {
 }
