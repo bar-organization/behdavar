@@ -13,15 +13,19 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AlertComponent } from './_components';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import {MatCardModule} from "@angular/material/card";
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        appRoutingModule,
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    appRoutingModule,
+    BrowserAnimationsModule,
+    MatCardModule
 
-    ],
+  ],
     declarations: [
         AppComponent,
         HomeComponent,
@@ -38,4 +42,4 @@ import { AlertComponent } from './_components';
     ],
     bootstrap: [AppComponent]
 })
-export class AppModule { };
+export class AppModule { }
