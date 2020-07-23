@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.bar</groupId>
-            <artifactId>behdavar-common</artifactId>
+            <artifactId>behdavar-database</artifactId>
         </dependency>
     </dependencies>
 
