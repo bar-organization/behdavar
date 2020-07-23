@@ -1,24 +1,50 @@
-﻿<h2>ورود</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="username">نام کاربری</label>
-        <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
-        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
-            <div *ngIf="f.username.errors.required">Username is required</div>
-        </div>
+﻿<div class="d-flex justify-content-center align-items-center h-100 login">
+
+  <mat-card class="w-50 p-5">
+
+    <div class="d-flex flex-row">
+      <div class="d-flex justify-content-center align-items-center w-50 p-2 ">
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
+          <h3 class="text-center mb-5">{{loginMessage}}</h3>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{usernameMessage}}</mat-label>
+            <input matInput formControlName="username">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="submitted && f.username.errors && f.username.errors.required">Username is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{passwordMessage}}</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="submitted && f.username.errors && f.password.errors.required">Username is required
+            </mat-error>
+          </mat-form-field>
+
+          <div class="d-flex flex-row">
+            <button mat-raised-button color="primary" class="m-1 w-50">Primary</button>
+            <a mat-stroked-button routerLink="/register" class="m-1 w-50" target="_blank">{{registerMessage}}</a>
+          </div>
+          <a mat-flat-button href="#" class="w-100 mt-2" target="_blank">{{forgetPassword}}</a>
+        </form>
+
+      </div>
+      <div class="d-flex justify-content-center align-items-center w-50 " style="padding: 100px 0">
+        <img src="../../assets/image/logo.png" alt="logo" class="w-75">
+      </div>
+
     </div>
-    <div class="form-group">
-        <label for="password">رمز عبور</label>
-        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-            <div *ngIf="f.password.errors.required">Password is required</div>
-        </div>
-    </div>
-    <div class="form-group">
-        <button [disabled]="loading" class="btn btn-primary">
-            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-            Login
-        </button>
-        <a routerLink="/register" class="btn btn-link">Register</a>
-    </div>
-</form>
+
+  </mat-card>
+
+</div>
+
+
+
+
