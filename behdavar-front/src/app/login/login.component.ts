@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   loginMessage = 'ورود به سیستم';
   usernameMessage = 'نام کاربری';
   passwordMessage: string = 'رمز عبور';
+  enterMessage: string = 'ورود';
 
   constructor(
     private formBuilder: FormBuilder,
