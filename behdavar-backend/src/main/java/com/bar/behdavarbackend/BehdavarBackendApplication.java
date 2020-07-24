@@ -1,10 +1,9 @@
 package com.bar.behdavarbackend;
 
-import com.bar.behdavardatabase.BehdavarDatabaseApplication;
+import com.bar.behdavardatabase.configuration.EnableBehdavarDatabase;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
-@Import(BehdavarDatabaseApplication.class)
+@EnableBehdavarDatabase
 @SpringBootApplication
 public class BehdavarBackendApplication {
 
