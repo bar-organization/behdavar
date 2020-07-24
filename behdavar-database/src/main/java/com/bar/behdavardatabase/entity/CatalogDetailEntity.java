@@ -1,0 +1,41 @@
+package com.bar.behdavardatabase.entity;
+
+import com.bar.behdavardatabase.common.BaseAuditorEntity;
+import com.bar.behdavardatabase.constant.CatalogDetailConstant;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
+
+import static com.bar.behdavardatabase.constant.CatalogDetailConstant.SEQ_NAME;
+
+@Data
+@EqualsAndHashCode
+@Entity
+@Table(name = CatalogDetailConstant.TABLE_NAME, schema = CatalogDetailConstant.SCHEMA)
+public class CatalogDetailEntity extends BaseAuditorEntity<String, Long> {
+
+    @Column(name = CatalogDetailConstant.ID)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
+    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME)
+    private Long id;
+
+    @Column(name = CatalogDetailConstant.ENGLISH_TITLE)
+    private String englishTitle;
+
+    @Column(name = CatalogDetailConstant.CODE , length = 5)
+    private String code;
+
+    @Column(name = CatalogDetailConstant.ID)
+    private Boolean active;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = CatalogDetailConstant.CATALOG,
+            foreignKey = @ForeignKey(name = CatalogDetailConstant.CATALOG_FK_CONSTRAINT),
+            nullable = false)
+    private CatalogEntity catalog;
+
+
+
+}
