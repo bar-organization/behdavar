@@ -19,9 +19,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatListModule} from "@angular/material/list";
-import { UserInfoComponent } from './user-info/user-info.component'
+import {UserInfoComponent} from './user-info/user-info.component'
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {FlexModule} from "@angular/flex-layout";
+import {UserInfoDetailComponent} from './user-info/user-info-detail/user-info-detail.component'
 
 @NgModule({
   imports: [
@@ -47,7 +48,10 @@ import {FlexModule} from "@angular/flex-layout";
     LoginComponent,
     RegisterComponent,
     AlertComponent,
-    UserInfoComponent  ],
+    UserInfoComponent,
+    UserInfoDetailComponent
+  ],
+
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
