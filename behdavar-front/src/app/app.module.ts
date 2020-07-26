@@ -19,6 +19,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatListModule} from "@angular/material/list";
+import { UserInfoComponent } from './user-info/user-info.component'
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {FlexModule} from "@angular/flex-layout";
 
 @NgModule({
   imports: [
@@ -33,7 +36,9 @@ import {MatListModule} from "@angular/material/list";
     MatIconModule,
     MatButtonModule,
     MatGridListModule,
-    MatListModule
+    MatListModule,
+    MatToolbarModule,
+    FlexModule
 
   ],
   declarations: [
@@ -41,8 +46,8 @@ import {MatListModule} from "@angular/material/list";
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    AlertComponent
-  ],
+    AlertComponent,
+    UserInfoComponent  ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},

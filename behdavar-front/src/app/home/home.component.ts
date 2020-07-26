@@ -5,8 +5,9 @@ import { User } from '../_models';
 import { UserService, AuthenticationService } from '../_services';
 
 @Component({
-  selector: 'home-form',
-  templateUrl: './home.component.html'
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
     currentUser: User;
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loadAllUsers();
+        // this.loadAllUsers();
     }
 
     deleteUser(id: number) {
