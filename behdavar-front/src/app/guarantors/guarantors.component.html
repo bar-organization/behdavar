@@ -1,0 +1,18 @@
+<div class="form-group">
+
+  <label for="power">Hero Power</label>
+  <select class="form-control" id="power" required>
+    <option *ngFor="let pow of powers" [value]="pow">{{pow}}</option>
+  </select>
+
+  <div>
+    <label [textContent]="lang.name" class="text-fa">{{lang.name}}</label>
+    <input
+      matInput
+      type="text"
+      class="text-fa"
+      formControlName="username"
+      [textContent]="lang.name"
+    >
+  </div>
+</div>

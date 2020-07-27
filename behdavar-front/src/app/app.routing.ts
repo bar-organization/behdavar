@@ -2,6 +2,7 @@
 
 import {HomeComponent} from './home';
 import {AuthGuard} from './_helpers';
+import {GuarantorsComponent} from './guarantors';
 
 const routes: Routes = [
   {path: '', component: HomeComponent, canActivate: [AuthGuard]},
@@ -9,6 +10,7 @@ const routes: Routes = [
   // TODO must fix after authentication added
   // { path: 'login', component: LoginComponent },
   // { path: 'register', component: RegisterComponent },
+  { path: 'guarantors',component:GuarantorsComponent},
 
   // otherwise redirect to home
   {path: '**', redirectTo: ''}

@@ -10,3 +10,7 @@ html, body {
 body {
   margin: 0;
 }
+
+.text-fa {
+  text-align: right;
+}

@@ -12,17 +12,18 @@ import {LoginComponent} from './login';
 import {RegisterComponent} from './register';
 import {AlertComponent} from './_components';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
-import {MatCardModule} from "@angular/material/card";
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatListModule} from "@angular/material/list";
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatListModule} from '@angular/material/list';
 import {UserInfoComponent} from './user-info/user-info.component'
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {FlexModule} from "@angular/flex-layout";
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {FlexModule} from '@angular/flex-layout';
 import {UserInfoDetailComponent} from './user-info/user-info-detail/user-info-detail.component'
+import { GuarantorsComponent } from './guarantors/guarantors.component';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import {UserInfoDetailComponent} from './user-info/user-info-detail/user-info-de
     RegisterComponent,
     AlertComponent,
     UserInfoComponent,
+    GuarantorsComponent,
     UserInfoDetailComponent
   ],
 
