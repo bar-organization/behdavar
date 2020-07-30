@@ -2,7 +2,8 @@
 import {first} from 'rxjs/operators';
 
 import {User} from '../_models';
-import {UserService, AuthenticationService} from '../_services';
+import {AuthenticationService, UserService} from '../_services';
+import {HomeLang} from "../model/lang";
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,8 @@ import {UserService, AuthenticationService} from '../_services';
 export class HomeComponent implements OnInit {
   currentUser: User;
   users = [];
-  appTitle: string = 'بهداور';
+  lang: HomeLang = new HomeLang();
+
 
   constructor(
     private authenticationService: AuthenticationService,

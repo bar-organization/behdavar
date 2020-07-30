@@ -1,18 +1,52 @@
 ﻿<mat-toolbar color="primary">
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+  <button mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
-  <span>{{appTitle}}</span>
+  <span>{{lang.appTitle}}</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-    <mat-icon>favorite</mat-icon>
+  <button mat-icon-button routerLink="/login">
+    <mat-icon>exit_to_app</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
-    <mat-icon>share</mat-icon>
-  </button>
+
 </mat-toolbar>
 
 <div fxLayout="column" fxLayoutGap="0.5rem" class="p-2">
   <app-user-info></app-user-info>
+  <mat-card>
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="ml-2">shopping_basket</mat-icon>
+          {{lang.myBasket}}
+        </ng-template>
+
+        Content 1
+      </mat-tab>
+
+      <mat-tab [label]="lang.search">
+        <ng-template mat-tab-label>
+          <mat-icon class="ml-2">search</mat-icon>
+          {{lang.search}}
+        </ng-template>
+        Content 2
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="ml-2"> assignment</mat-icon>
+          {{lang.reports}}
+        </ng-template>
+        Content 3
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="ml-2">build_circle</mat-icon>
+          {{lang.utilityTools}}
+        </ng-template>
+
+        Content 3
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
 
 </div>

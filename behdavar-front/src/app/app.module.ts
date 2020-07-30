@@ -23,7 +23,9 @@ import {UserInfoComponent} from './user-info/user-info.component'
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {UserInfoDetailComponent} from './user-info/user-info-detail/user-info-detail.component'
-import { GuarantorsComponent } from './guarantors/guarantors.component';
+import { GuarantorsComponent } from './guarantors';
+import {MatTabsModule} from "@angular/material/tabs";
+import {MatMenuModule} from "@angular/material/menu";
 
 @NgModule({
   imports: [
@@ -40,7 +42,9 @@ import { GuarantorsComponent } from './guarantors/guarantors.component';
     MatGridListModule,
     MatListModule,
     MatToolbarModule,
-    FlexModule
+    FlexModule,
+    MatTabsModule,
+    MatMenuModule
   ],
   declarations: [
     AppComponent,
