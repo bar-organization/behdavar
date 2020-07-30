@@ -1,7 +1,6 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {first} from 'rxjs/operators';
 
 import {AlertService, AuthenticationService} from '../_services';
 
@@ -13,8 +12,6 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   hide: boolean = true;
 
-  registerMessage: string = 'ثبت نام';
-  forgetPassword = 'رمزعبور را فراموش کرده ام ؟';
   loginMessage = 'ورود به سیستم';
   usernameMessage = 'نام کاربری';
   passwordMessage: string = 'رمز عبور';
@@ -49,26 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
-    // reset alerts on submit
-    this.alertService.clear();
-
-    // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
-    }
-
-    this.loading = true;
-    this.authenticationService.login(this.f.username.value, this.f.password.value)
-      .pipe(first())
-      .subscribe(
-        () => {
-          this.router.navigate([this.returnUrl]);
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
-        });
+    // TODO must fix code after authentication added
+    this.router.navigate(['/']);
   }
 }

@@ -1,44 +1,35 @@
-﻿<div class="d-flex justify-content-center align-items-center h-100 login">
+﻿<div fxLayout="row" fxLayoutAlign="center center" fxFill class="login">
 
-  <mat-card class="w-50 p-5">
+  <mat-card class="w-50 pt-5 pb-5" fxLayout="row" fxLayoutAlign="center stretch" fxLayout.xs="column">
 
-    <div class="d-flex flex-row">
-      <div class="d-flex justify-content-center align-items-center w-50 p-2 ">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="1.5rem"
+          class="w-100">
+      <h3 class="text-center">{{loginMessage}}</h3>
 
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-100">
-          <h3 class="text-center mb-5">{{loginMessage}}</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>{{usernameMessage}}</mat-label>
+        <input matInput formControlName="username">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="submitted && f.username.errors && f.username.errors.required">Username is required
+        </mat-error>
+      </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>{{usernameMessage}}</mat-label>
-            <input matInput formControlName="username">
-            <mat-icon matSuffix>person</mat-icon>
-            <mat-error *ngIf="submitted && f.username.errors && f.username.errors.required">Username is required
-            </mat-error>
-          </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>{{passwordMessage}}</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="submitted && f.username.errors && f.password.errors.required">Username is required
+        </mat-error>
+      </mat-form-field>
 
-          <mat-form-field appearance="outline" class="w-100">
-            <mat-label>{{passwordMessage}}</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-            </button>
-            <mat-error *ngIf="submitted && f.username.errors && f.password.errors.required">Username is required
-            </mat-error>
-          </mat-form-field>
+      <button mat-raised-button color="primary">{{enterMessage}}</button>
+    </form>
 
-          <div class="d-flex flex-row">
-            <button mat-raised-button color="primary" class="m-1 w-50">{{enterMessage}}</button>
-            <a mat-stroked-button routerLink="/register" class="m-1 w-50" target="_blank">{{registerMessage}}</a>
-          </div>
-          <a mat-flat-button href="#" class="w-100 mt-2" target="_blank">{{forgetPassword}}</a>
-        </form>
-
-      </div>
-      <div class="d-flex justify-content-center align-items-center w-50 " style="padding: 100px 0">
-        <img src="../../assets/image/logo.png" alt="logo" class="w-75">
-      </div>
-
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img src="../../assets/image/logo.png" alt="logo" class="w-75">
     </div>
 
   </mat-card>

@@ -9,7 +9,6 @@ import './_content/app.less';
 @Component({selector: 'app', templateUrl: 'app.component.html',styleUrls: ['app.component.css']})
 export class AppComponent {
   currentUser: User;
-  appTitle: string = 'بهداور';
 
   constructor(
     private router: Router,
