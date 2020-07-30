@@ -1,8 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+﻿import {Component, OnInit} from '@angular/core';
+import {first} from 'rxjs/operators';
 
-import { User } from '../_models';
-import { UserService, AuthenticationService } from '../_services';
+import {User} from '../_models';
+import {UserService, AuthenticationService} from '../_services';
 
 @Component({
   selector: 'app-home',
@@ -10,29 +10,30 @@ import { UserService, AuthenticationService } from '../_services';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    currentUser: User;
-    users = [];
+  currentUser: User;
+  users = [];
+  appTitle: string = 'بهداور';
 
-    constructor(
-        private authenticationService: AuthenticationService,
-        private userService: UserService
-    ) {
-        this.currentUser = this.authenticationService.currentUserValue;
-    }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private userService: UserService
+  ) {
+    this.currentUser = this.authenticationService.currentUserValue;
+  }
 
-    ngOnInit() {
-        // this.loadAllUsers();
-    }
+  ngOnInit() {
+    // this.loadAllUsers();
+  }
 
-    deleteUser(id: number) {
-        this.userService.delete(id)
-            .pipe(first())
-            .subscribe(() => this.loadAllUsers());
-    }
+  deleteUser(id: number) {
+    this.userService.delete(id)
+      .pipe(first())
+      .subscribe(() => this.loadAllUsers());
+  }
 
-    private loadAllUsers() {
-        this.userService.getAll()
-            .pipe(first())
-            .subscribe(users => this.users = users);
-    }
+  private loadAllUsers() {
+    this.userService.getAll()
+      .pipe(first())
+      .subscribe(users => this.users = users);
+  }
 }
