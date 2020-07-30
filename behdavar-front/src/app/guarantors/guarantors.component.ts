@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PersonLang} from '../model/lang';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {MyErrorStateMatcher} from '../model/MyErrorStateMatcher';
 
 @Component({
@@ -10,22 +10,30 @@ import {MyErrorStateMatcher} from '../model/MyErrorStateMatcher';
 })
 export class GuarantorsComponent implements OnInit {
 
-  guarantorsForm:FormGroup;
   lang = new PersonLang();
+  guarantorsForm: FormGroup;
+  gurFormControls: any;
 
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email,
-  ]);
+  constructor(public fb: FormBuilder) {
+  }
 
   matcher = new MyErrorStateMatcher();
 
   ngOnInit(): void {
+    this.guarantorsForm = this.fb.group({
+      name: [''],
+      family: [''],
+      fatherName: [''],
+      birthDate: [''],
+      nationalNumber: [''],
+      postalCode: [''],
+      mobile: [''],
+      telephone: [''],
+      birthPlace: [''],
+      workPlacePhone: [''],
+    });
+    this.gurFormControls = this.guarantorsForm.controls;
   }
-
-  powers = ['Really Smart', 'Super Flexible',
-    'Super Hot', 'Weather Changer'];
-
 
   submitted = false;
 

@@ -1,121 +1,57 @@
-<div  fxLayout="column" >
-<!--  <form class="example-form">-->
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.name}}</label>
-      <input
-        matInput [formControl]="lang.name"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-    <label>{{lang.family}}</label>
-    <input
-      matInput [formControl]="lang.family"
-      [errorStateMatcher]="matcher"
-    >
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.fatherName}}</label>
-      <input
-        matInput [formControl]="lang.fatherName"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.birthDate}}</label>
-      <input
-        matInput [formControl]="lang.birthDate"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.birthPlace}}</label>
-      <input
-        matInput [formControl]="lang.birthPlace"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.nationalNumber}}</label>
-      <input
-        matInput [formControl]="lang.nationalNumber"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.mobile}}</label>
-      <input
-        matInput [formControl]="lang.mobile"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.postalCode}}</label>
-      <input
-        matInput [formControl]="lang.postalCode"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field  fxLayoutAlign="right">
-      <label>{{lang.workPlacePhone}}</label>
-      <input
-        matInput [formControl]="lang.workPlacePhone"
-        [errorStateMatcher]="matcher"
-      >
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
-<!--  </form>-->
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <mat-card class="w-50" >
+    <mat-card-title class="text-center">{{lang.customerInfo}}</mat-card-title>
+    <form fxLayout="column" [formGroup]="guarantorsForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <label>{{lang.name}}</label>
+        <input matInput formControlName="name" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <mat-form-field>
+        <label>{{lang.family}}</label>
+        <input matInput formControlName="family" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <label>{{lang.fatherName}}</label>
+        <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <mat-form-field>
+        <label>{{lang.birthDate}}</label>
+        <input matInput formControlName="birthDate" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <mat-form-field>
+        <label>{{lang.birthPlace}}</label>
+        <input matInput formControlName="birthPlace" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <mat-form-field>
+        <label>{{lang.nationalNumber}}</label>
+        <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <mat-form-field>
+        <label>{{lang.mobile}}</label>
+        <input
+          matInput formControlName="mobile" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <mat-form-field>
+        <label>{{lang.postalCode}}</label>
+        <input
+          matInput formControlName="postalCode" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <mat-form-field>
+        <label>{{lang.workPlacePhone}}</label>
+        <input matInput formControlName="workPlacePhone" [errorStateMatcher]="matcher">
+      </mat-form-field>
+
+      <button mat-raised-button color="primary">{{lang.save}}</button>
+    </form>
+  </mat-card>
 </div>
+

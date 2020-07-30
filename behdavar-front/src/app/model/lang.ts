@@ -1,9 +1,10 @@
 export class Lang {
-
+  save = 'ذخیره';
 }
 
 
 export class PersonLang extends Lang{
+  customerInfo = 'اطلاعات مشتری';
   name='نام';
   family='نام خانوادگی';
   fatherName = "نام پدر";
