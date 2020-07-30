@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {PersonLang} from "../model/lang";
-import {FormGroup} from "@angular/forms";
+import {PersonLang} from '../model/lang';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {MyErrorStateMatcher} from '../model/MyErrorStateMatcher';
 
 @Component({
   selector: 'app-guarantors',
@@ -11,6 +12,13 @@ export class GuarantorsComponent implements OnInit {
 
   guarantorsForm:FormGroup;
   lang = new PersonLang();
+
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+
+  matcher = new MyErrorStateMatcher();
 
   ngOnInit(): void {
   }

@@ -41,7 +41,6 @@ import { GuarantorsComponent } from './guarantors/guarantors.component';
     MatListModule,
     MatToolbarModule,
     FlexModule
-
   ],
   declarations: [
     AppComponent,
