@@ -1,6 +1,7 @@
-package com.bar.behdavarbackend.exception;
+package com.bar.behdavarapplication.exception;
 
 
+import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.RestMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

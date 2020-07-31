@@ -3,4 +3,56 @@ POST http://127.0.0.1:8081/catalog/find-by-id
 Content-Type: application/json
 
 2
+
 ###
+# call catalog save
+POST http://127.0.0.1:8081/catalog/save
+Content-Type: application/json
+
+{
+  "code": 13,
+  "englishTitle": "test3",
+  "title": "تست3",
+  "active": true
+}
+
+###
+# call catalog update
+POST http://127.0.0.1:8081/catalog/update
+Content-Type: application/json
+
+{
+  "id": 3,
+  "version": 0,
+  "code": 102,
+  "englishTitle": "test",
+  "title": "تست",
+  "active": 1
+}
+
+###
+# call catalog delete
+POST http://127.0.0.1:8081/catalog/delete
+Content-Type: application/json
+
+2
+
+###
+# call catalog find paging
+POST http://127.0.0.1:8081/catalog/find-paging
+Content-Type: application/json
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+    {
+      "key": "code",
+      "value": "1",
+      "operation": "EQUAL"
+    }
+  ]
+}
+
+###
+

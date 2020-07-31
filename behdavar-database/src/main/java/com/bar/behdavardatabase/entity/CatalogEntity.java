@@ -20,11 +20,14 @@ public class CatalogEntity extends BaseAuditorEntity<String, Long>  {
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME)
     private Long id;
 
-    @Column(name = CatalogConstant.CODE , length = 5)
+    @Column(name = CatalogConstant.CODE, length = 5)
     private String code;
 
     @Column(name = CatalogConstant.ENGLISH_TITLE)
     private String englishTitle;
+
+    @Column(name = CatalogConstant.TITLE)
+    private String title;
 
     @Column(name = CatalogConstant.ACTIVE)
     private Boolean active;

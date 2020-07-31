@@ -1,5 +1,7 @@
 package com.bar.behdavarcommon.enumeration;
 
-public interface AbstractEnum<T> {
+import java.io.Serializable;
+
+public interface AbstractEnum<T> extends Serializable {
     public T getValue();
 }
