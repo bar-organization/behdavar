@@ -1,0 +1,56 @@
+<app-document-toolbar *ngIf="showToolbar"></app-document-toolbar>
+
+<form [formGroup]="documentSearchFormParent" (ngSubmit)="onSub()" fxLayout="column" fxLayoutAlign="start start"
+      fxLayoutGap="0.5rem" class="py-2">
+  <app-document-search-form [documentSearchForm]="documentSearchFormGroup"></app-document-search-form>
+  <app-customer-search-form [customerSearchForm]="customerSearchFormGroup"></app-customer-search-form>
+  <app-bank-machine-search-form [backMachineSearchForm]="bankMachineSearchFormGroup"></app-bank-machine-search-form>
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
+    <button type="submit" mat-raised-button color="primary" class="px-5">{{documentSearchLang.search}}</button>
+    <button type="reset" mat-raised-button color="accent" class="px-5">{{documentSearchLang.reset}}</button>
+  </div>
+</form>
+
+
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8 px-2">
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="onChecked($event)"
+                    [aria-label]="checkboxLabel(row)"></mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="position">
+    <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="weight">
+    <mat-header-cell *matHeaderCellDef> Weight </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.weight}} </mat-cell>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="symbol">
+    <mat-header-cell *matHeaderCellDef> Symbol </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
