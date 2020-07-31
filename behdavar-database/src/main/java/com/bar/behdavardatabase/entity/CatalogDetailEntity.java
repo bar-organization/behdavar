@@ -16,7 +16,6 @@ import static com.bar.behdavardatabase.constant.CatalogDetailConstant.SEQ_NAME;
 public class CatalogDetailEntity extends BaseAuditorEntity<String, Long> {
 
     @Column(name = CatalogDetailConstant.ID)
-    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME)
     private Long id;
@@ -24,10 +23,13 @@ public class CatalogDetailEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = CatalogDetailConstant.ENGLISH_TITLE)
     private String englishTitle;
 
-    @Column(name = CatalogDetailConstant.CODE , length = 5)
+    @Column(name = CatalogDetailConstant.TITLE, nullable = false)
+    private String title;
+
+    @Column(name = CatalogDetailConstant.CODE, length = 5, nullable = false)
     private String code;
 
-    @Column(name = CatalogDetailConstant.ID)
+    @Column(name = CatalogDetailConstant.ACTIVE)
     private Boolean active;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +37,5 @@ public class CatalogDetailEntity extends BaseAuditorEntity<String, Long> {
             foreignKey = @ForeignKey(name = CatalogDetailConstant.CATALOG_FK_CONSTRAINT),
             nullable = false)
     private CatalogEntity catalog;
-
-
 
 }

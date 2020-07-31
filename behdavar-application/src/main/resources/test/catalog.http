@@ -2,7 +2,7 @@
 POST http://127.0.0.1:8081/catalog/find-by-id
 Content-Type: application/json
 
-2
+100
 
 ###
 # call catalog save
@@ -11,9 +11,7 @@ Content-Type: application/json
 
 {
   "code": 13,
-  "englishTitle": "test3",
-  "title": "تست3",
-  "active": true
+  "englishTitle": "test3"
 }
 
 ###
@@ -48,7 +46,7 @@ Content-Type: application/json
   "filters": [
     {
       "key": "code",
-      "value": "1",
+      "value": "101",
       "operation": "EQUAL"
     }
   ]
