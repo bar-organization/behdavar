@@ -1,0 +1,32 @@
+<div [formGroup]="backMachineSearchForm" class="card" fxLayout="row">
+  <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
+    <h6>{{bankMachineSearchFormLang.bankMachine}}</h6>
+  </div>
+  <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
+    <mat-form-field>
+      <mat-label>{{bankMachineSearchFormLang.bank}}</mat-label>
+      <input matInput formControlName="bank">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{bankMachineSearchFormLang.branch}}</mat-label>
+      <input matInput formControlName="branch">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{bankMachineSearchFormLang.facilityReceivingDate}}</mat-label>
+      <input matInput formControlName="facilityReceivingDate">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{bankMachineSearchFormLang.plateNumber}}</mat-label>
+      <input matInput formControlName="plateNumber">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{bankMachineSearchFormLang.vehicleType}}</mat-label>
+      <input matInput formControlName="vehicleType">
+    </mat-form-field>
+
+  </div>
+
+</div>
