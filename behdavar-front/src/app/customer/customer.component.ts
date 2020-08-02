@@ -1,26 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {GuarantorsLang} from '../model/lang';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {CustomerLang} from '../model/lang';
 import {MyErrorStateMatcher} from '../model/MyErrorStateMatcher';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
-  selector: 'app-guarantors',
-  templateUrl: './guarantors.component.html',
-  styleUrls: ['./guarantors.component.css']
+  selector: 'app-customer',
+  templateUrl: './customer.component.html',
+  styleUrls: ['./customer.component.css']
 })
-export class GuarantorsComponent implements OnInit {
+export class CustomerComponent implements OnInit {
 
-  lang = new GuarantorsLang();
-  guarantorsForm: FormGroup;
-  gurFormControls: any;
+  lang = new CustomerLang();
+  customerForm: FormGroup;
   matcher = new MyErrorStateMatcher();
+  customerFormControls: any;
 
   constructor(public fb: FormBuilder) {
   }
-
-
   ngOnInit(): void {
-    this.guarantorsForm = this.fb.group({
+    this.customerForm = this.fb.group({
       name: [''],
       family: [''],
       fatherName: [''],
@@ -32,7 +30,7 @@ export class GuarantorsComponent implements OnInit {
       birthPlace: [''],
       workPlacePhone: [''],
     });
-    this.gurFormControls = this.guarantorsForm.controls;
+    this.customerFormControls = this.customerForm.controls;
   }
 
   submitted = false;
@@ -41,4 +39,3 @@ export class GuarantorsComponent implements OnInit {
     this.submitted = true;
   }
 }
-

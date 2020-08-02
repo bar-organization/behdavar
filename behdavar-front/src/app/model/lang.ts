@@ -6,11 +6,9 @@ export class Lang {
   logout = 'خروج';
 }
 
-
-export class PersonLang extends Lang {
-  customerInfo = 'اطلاعات مشتری';
-  name = 'نام';
-  family = 'نام خانوادگی';
+export class PersonLang  extends Lang{
+  name='نام';
+  family='نام خانوادگی';
   fatherName = "نام پدر";
   birthDate = "تاریخ تولد";
   nationalNumber = "کد ملی";
@@ -60,3 +58,12 @@ export class BankMachineSearchFormLang extends DocumentSearchLang {
   plateNumber = 'پلاک خودرو';
   vehicleType = 'نوع خودرو';
 }
+
+export class GuarantorsLang extends PersonLang {
+  guarantorsInformation='اطلاعات ضامنین';
+}
+
+export class CustomerLang extends PersonLang {
+  customerInformation = 'اطلاعات مشتری';
+}
+

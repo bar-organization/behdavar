@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayoutAlign="center none" >
   <mat-card class="w-50" >
-    <mat-card-title class="text-center">{{lang.guarantorsInformation}}</mat-card-title>
-    <form fxLayout="column" [formGroup]="guarantorsForm" (ngSubmit)="onSubmit()">
+    <mat-card-title class="text-center">{{lang.customerInformation}}</mat-card-title>
+    <form fxLayout="column" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
       <mat-form-field>
         <label>{{lang.name}}</label>
         <input matInput formControlName="name" [errorStateMatcher]="matcher">
