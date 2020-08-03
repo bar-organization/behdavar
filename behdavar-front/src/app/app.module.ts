@@ -19,10 +19,10 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
-import {UserInfoComponent} from './user-info/user-info.component'
+import {UserInfoComponent} from './user-info/user-info.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
-import {UserInfoDetailComponent} from './user-info/user-info-detail/user-info-detail.component'
+import {UserInfoDetailComponent} from './user-info/user-info-detail/user-info-detail.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
 import {DocumentSearchComponent} from './document/document-search/document-search.component';
@@ -33,9 +33,9 @@ import {DocumentSearchFormComponent} from './document/document-search/document-s
 import {BankMachineSearchFormComponent} from './document/document-search/bank-machine-search-form/bank-machine-search-form.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {GuarantorsComponent} from './guarantors/guarantors.component';
-import {CustomerComponent} from "./customer/customer.component";
+import {CustomerComponent} from './customer/customer.component';
 
-;
+import { FollowingComponent } from './following/following.component';
 
 @NgModule({
   imports: [
@@ -73,8 +73,10 @@ import {CustomerComponent} from "./customer/customer.component";
     BankMachineSearchFormComponent,
     DocumentSearchFormComponent,
     UserInfoDetailComponent,
-    CustomerComponent],
+    CustomerComponent,
 
+    DocumentSearchFormComponent,
+    FollowingComponent],
 
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

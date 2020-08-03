@@ -1,0 +1,55 @@
+<div fxLayout="row" fxLayoutAlign="center none" >
+  <mat-card class="w-50" >
+    <form fxLayout="column" [formGroup]="followingForm" (ngSubmit)="onSubmit()">
+      <mat-form-field>
+        <mat-checkbox class="example-margin">{{lang.followingType}}</mat-checkbox>
+      </mat-form-field>
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.family}}</label>-->
+<!--        <input matInput formControlName="family" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.fatherName}}</label>-->
+<!--        <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.birthDate}}</label>-->
+<!--        <input matInput formControlName="birthDate" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.birthPlace}}</label>-->
+<!--        <input matInput formControlName="birthPlace" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.nationalNumber}}</label>-->
+<!--        <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.mobile}}</label>-->
+<!--        <input-->
+<!--          matInput formControlName="mobile" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.postalCode}}</label>-->
+<!--        <input-->
+<!--          matInput formControlName="postalCode" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+<!--      <mat-form-field>-->
+<!--        <label>{{lang.workPlacePhone}}</label>-->
+<!--        <input matInput formControlName="workPlacePhone" [errorStateMatcher]="matcher">-->
+<!--      </mat-form-field>-->
+
+      <button mat-raised-button color="primary">{{lang.save}}</button>
+    </form>
+  </mat-card>
+</div>
+
