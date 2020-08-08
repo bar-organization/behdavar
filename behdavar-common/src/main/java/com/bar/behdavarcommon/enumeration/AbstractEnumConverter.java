@@ -2,7 +2,7 @@ package com.bar.behdavarcommon.enumeration;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@Converter
+@Converter(autoApply = true)
 public abstract class AbstractEnumConverter<T extends Enum<T> & AbstractEnum<E> , E > implements AttributeConverter<T , E> {
     private final Class<T> clazz;
 
