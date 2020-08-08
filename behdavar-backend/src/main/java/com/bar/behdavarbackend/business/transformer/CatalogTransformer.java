@@ -12,4 +12,10 @@ public class CatalogTransformer {
         entity.setTitle(dto.getTitle());
         return entity;
     }
+
+    public static CatalogEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+        CatalogEntity entity = new CatalogEntity();
+        entity.setId(id);
+        return entity;
+    }
 }
