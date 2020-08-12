@@ -36,6 +36,9 @@ import {GuarantorsComponent} from './guarantors/guarantors.component';
 import {CustomerComponent} from './customer/customer.component';
 
 import { FollowingComponent } from './following/following.component';
+import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   imports: [
@@ -56,7 +59,10 @@ import { FollowingComponent } from './following/following.component';
     MatTabsModule,
     MatMenuModule,
     MatTableModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [
     AppComponent,
