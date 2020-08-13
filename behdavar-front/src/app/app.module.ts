@@ -36,9 +36,10 @@ import {GuarantorsComponent} from './guarantors/guarantors.component';
 import {CustomerComponent} from './customer/customer.component';
 
 import { FollowingComponent } from './following/following.component';
-import {MatSelectModule} from "@angular/material/select";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';;
+import { DocumentAttachmentComponent } from './document-attachment/document-attachment.component'
 
 @NgModule({
   imports: [
@@ -80,9 +81,10 @@ import {MatNativeDateModule} from "@angular/material/core";
     DocumentSearchFormComponent,
     UserInfoDetailComponent,
     CustomerComponent,
-
     DocumentSearchFormComponent,
-    FollowingComponent],
+    FollowingComponent,
+    DocumentAttachmentComponent
+  ],
 
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},

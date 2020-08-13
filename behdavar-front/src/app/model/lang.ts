@@ -81,3 +81,12 @@ export class CustomerLang extends PersonLang {
   customerInformation = 'اطلاعات مشتری';
 }
 
+export class AttachmentLang extends Lang {
+  documentAttachment='ضمائم پرونده';
+  documentNumber = 'شماره پرونده';
+  attachDocument = 'آپلود مدرک';
+  documentList = 'لیست مدارک';
+  titleDocument = 'عنوان مدرک';
+  fileDocument = 'فایل مدرک';
+}
+
