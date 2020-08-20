@@ -32,7 +32,7 @@ public class RoleEntity extends BaseAuditorEntity<String, Long> {
 
     @ManyToMany
     @JoinTable(
-            name = "roles_privileges",
+            name = BASE_TABLE_PREFIX + "ROLES_PRIVILEGES",
             joinColumns = @JoinColumn(
                     name = "ROLE_ID", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(

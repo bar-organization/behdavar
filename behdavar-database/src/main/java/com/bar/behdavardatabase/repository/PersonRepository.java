@@ -1,9 +1,8 @@
 package com.bar.behdavardatabase.repository;
 
 import com.bar.behdavardatabase.entity.PersonEntity;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
+public interface PersonRepository extends AbstractRepository<PersonEntity, Long> {
 }

@@ -60,7 +60,7 @@ public class UserEntity extends BaseAuditorEntity<String, Long> {
 
     @ManyToMany
     @JoinTable(
-            name = "users_roles",
+            name = BASE_TABLE_PREFIX + "USERS_ROLES",
             joinColumns = @JoinColumn(
                     name = "USER_ID", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(
