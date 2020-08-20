@@ -3,13 +3,15 @@ package com.bar.behdavardatabase.entity;
 import com.bar.behdavarcommon.enumeration.PhoneType;
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 import static com.bar.behdavardatabase.constant.ContactConstant.SEQ_NAME;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = ContactConstant.TABLE_NAME, schema = ContactConstant.SCHEMA)
 public class ContactEntity extends BaseAuditorEntity<String, Long> {

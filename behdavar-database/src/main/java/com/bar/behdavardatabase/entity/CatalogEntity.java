@@ -3,13 +3,15 @@ package com.bar.behdavardatabase.entity;
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.CatalogConstant;
 import com.bar.behdavardatabase.constant.common.BaseCodeTitleConstant;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 import static com.bar.behdavardatabase.constant.CatalogConstant.SEQ_NAME;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = CatalogConstant.TABLE_NAME, schema = CatalogConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class CatalogEntity extends BaseAuditorEntity<String, Long>  {

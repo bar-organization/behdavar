@@ -5,14 +5,17 @@ import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
 import com.bar.behdavardatabase.constant.common.BaseCodeTitleConstant;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
-@Data
+@EqualsAndHashCode(callSuper = true)
+@Setter
+@Getter
 @Entity
 @Table(name = GeoDivisionEntity.TABLE_NAME, schema = ContactConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class GeoDivisionEntity extends BaseAuditorEntity<String, Long> {
@@ -34,14 +37,14 @@ public class GeoDivisionEntity extends BaseAuditorEntity<String, Long> {
 
 
     @Column(name = "TYPE", nullable = false)
-//    @Convert(converter = GeoDivisionType.GeoDivisionTypeConverter.class)
     private GeoDivisionType geoDivisionType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "GEO_DIVISION_FK", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "GEO_DIVISION_SELF_FK"))
     private GeoDivisionEntity parent;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
-    private Set<GeoDivisionEntity> children;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+//    private Set<GeoDivisionEntity> children;
+
 
 }

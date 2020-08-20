@@ -5,13 +5,15 @@ import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
 import com.bar.behdavardatabase.constant.common.BaseCodeTitleConstant;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = BankEntity.TABLE_NAME, schema = ContactConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class BankEntity extends BaseAuditorEntity<String, Long> {

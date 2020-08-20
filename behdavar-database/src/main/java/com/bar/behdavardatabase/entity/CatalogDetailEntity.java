@@ -2,14 +2,16 @@ package com.bar.behdavardatabase.entity;
 
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.CatalogDetailConstant;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 import static com.bar.behdavardatabase.constant.CatalogDetailConstant.SEQ_NAME;
 
-@Data
+@Setter
+@Getter
 @EqualsAndHashCode
 @Entity
 @Table(name = CatalogDetailConstant.TABLE_NAME, schema = CatalogDetailConstant.SCHEMA)
