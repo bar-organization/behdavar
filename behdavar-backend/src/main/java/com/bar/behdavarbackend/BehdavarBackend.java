@@ -1,8 +1,9 @@
 package com.bar.behdavarbackend;
 
-import com.bar.behdavardatabase.configuration.EnableBehdavarDatabase;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,9 +13,10 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
-@EnableBehdavarDatabase
+@ComponentScans({@ComponentScan(basePackages = "com.bar.behdavardatabase"),
+        @ComponentScan(basePackages = "com.bar.behdavarcommon")})
 @SpringBootApplication
-public class BehdavarBackendApplication implements WebMvcConfigurer {
+public class BehdavarBackend implements WebMvcConfigurer {
 
     @Bean
     public LocaleResolver localeResolver() {

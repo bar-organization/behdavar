@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/catalog")
+@RequestMapping("/api/catalog")
 @Validated
 public class CatalogRest {
 

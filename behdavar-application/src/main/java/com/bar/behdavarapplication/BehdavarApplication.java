@@ -1,10 +1,14 @@
 package com.bar.behdavarapplication;
 
-import com.bar.behdavarbackend.configuration.EnableBehdavarBackend;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.ComponentScans;
 
-@EnableBehdavarBackend
+
+@ComponentScans({@ComponentScan(basePackages = "com.bar.behdavarbackend"),
+        @ComponentScan(basePackages = "com.bar.behdavarcommon"),
+        @ComponentScan(basePackages = "com.bar.behdavardatabase")})
 @SpringBootApplication
 public class BehdavarApplication {
 

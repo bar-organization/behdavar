@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BehdavarDatabaseApplication {
+public class BehdavarDatabase {
     public static void main(String[] args) {
-        SpringApplication.run(BehdavarDatabaseApplication.class);
+        SpringApplication.run(BehdavarDatabase.class);
     }
 }
