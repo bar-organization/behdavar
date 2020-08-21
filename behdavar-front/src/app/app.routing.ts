@@ -6,9 +6,10 @@ import {LoginComponent} from './login';
 import {CustomerComponent} from './customer';
 import {FollowingComponent} from './following';
 import {DocumentAttachmentComponent} from "./document-attachment/document-attachment.component";
+import {AuthGuardService} from "./service/auth/auth-guard.service";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: HomeComponent,canActivate:[AuthGuardService]},
 
   // TODO must fix after authentication added
   { path: 'login', component: LoginComponent },

@@ -1,6 +1,8 @@
 ﻿import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from "../service/auth/auth.service";
+import {LoginLang} from "../model/lang";
 
 
 @Component({templateUrl: 'login.component.html', styleUrls: ['login.component.css']})
@@ -10,21 +12,21 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   hide: boolean = true;
+  loginLang: LoginLang;
 
-  loginMessage = 'ورود به سیستم';
-  usernameMessage = 'نام کاربری';
-  passwordMessage: string = 'رمز عبور';
-  enterMessage: string = 'ورود';
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService
   ) {
 
   }
 
   ngOnInit() {
+    this.loginLang = new LoginLang();
+
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -40,7 +42,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO must fix code after authentication added
-    this.router.navigate(['/']);
+    this.authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe(
+      value => {
+        console.log("Redirect to:", this.returnUrl);
+        this.router.navigate([this.returnUrl]);
+      }, error => {
+          // TODO must show error message to user
+      });
   }
 }

@@ -6,9 +6,16 @@ export class Lang {
   logout = 'خروج';
 }
 
-export class PersonLang  extends Lang{
-  name='نام';
-  family='نام خانوادگی';
+export class LoginLang extends Lang {
+  loginMessage = 'ورود به سیستم';
+  usernameMessage = 'نام کاربری';
+  passwordMessage = 'رمز عبور';
+  enterMessage = 'ورود';
+}
+
+export class PersonLang extends Lang {
+  name = 'نام';
+  family = 'نام خانوادگی';
   fatherName = 'نام پدر';
   birthDate = 'تاریخ تولد';
   nationalNumber = 'کد ملی';
@@ -59,7 +66,7 @@ export class BankMachineSearchFormLang extends DocumentSearchLang {
   vehicleType = 'نوع خودرو';
 }
 
-export class FollowingLang extends Lang{
+export class FollowingLang extends Lang {
   followingType = 'نوع پیگیری';
   followingResult = 'نتیجه پیگیری';
   followingResultDescription = 'شرح نتیجه پیگیری';
@@ -74,7 +81,7 @@ export class FollowingLang extends Lang{
 }
 
 export class GuarantorsLang extends PersonLang {
-  guarantorsInformation='اطلاعات ضامنین';
+  guarantorsInformation = 'اطلاعات ضامنین';
 }
 
 export class CustomerLang extends PersonLang {
@@ -82,7 +89,7 @@ export class CustomerLang extends PersonLang {
 }
 
 export class AttachmentLang extends Lang {
-  documentAttachment='ضمائم پرونده';
+  documentAttachment = 'ضمائم پرونده';
   documentNumber = 'شماره پرونده';
   attachDocument = 'آپلود مدرک';
   documentList = 'لیست مدارک';
