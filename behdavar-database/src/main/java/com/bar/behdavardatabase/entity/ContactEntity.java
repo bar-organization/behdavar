@@ -25,8 +25,11 @@ public class ContactEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "PHONE_NUMBER", nullable = false, length = 15)
     private String number;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(100)")
     private String description;
+
+    @Column(name = "PRE_CODE", columnDefinition = "VARCHAR(4)")
+    private String preCode;
 
     @Column(name = "CONFIRMED")
     private Boolean confirmed;

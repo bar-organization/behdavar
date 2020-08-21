@@ -2,9 +2,13 @@ package com.bar.behdavardatabase.entity;
 
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.AddressConstant;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
 @Entity
 @Table(name = AddressConstant.TABLE_NAME, schema = AddressConstant.SCHEMA)
 public class AddressEntity extends BaseAuditorEntity<String, Long> {
@@ -12,36 +16,33 @@ public class AddressEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = AddressConstant.ID)
     private Long id;
 
-    @JoinColumn(name = AddressConstant.FK_CITY, nullable = false, foreignKey = @ForeignKey(name = AddressConstant.CITY_FK_CONSTRAINT))
+    @Column(name = "MAIN_STREET", columnDefinition = "VARCHAR( 30)")
+    private String mainStreet;
+
+    @Column(name = "SUB_STREET", columnDefinition = "VARCHAR( 30)")
+    private String subStreet;
+
+    @Column(name = "MAIN_ALLEY", columnDefinition = "VARCHAR( 30)")
+    private String mainAlley;
+
+    @Column(name = "SUB_ALLEY", columnDefinition = "VARCHAR( 30)")
+    private String subAlley;
+
+    @Column(name = "POSTAL_CODE", columnDefinition = "VARCHAR( 15)")
+    private String postalCode;
+
+    @Column(name = "Plate", columnDefinition = "VARCHAR(10)")
+    private String plate;
+
+    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR( 60)")
+    private String description;
+
+    @JoinColumn(name = "GEO_DIVISION_ID", nullable = false, foreignKey = @ForeignKey(name = "ADDRESS_GEO_DIVISION_FK"))
     @OneToOne
-    private CityEntity city;
+    private GeoDivisionEntity geoDivision;
 
-    @Column(name = AddressConstant.ADDRESS_DETAIL, nullable = false)
-    private String addressDetail;
+    @JoinColumn(name = "PERSON_ID", foreignKey = @ForeignKey(name = "ADDRESS_PERSON_FK"))
+    @ManyToOne
+    private PersonEntity person;
 
-    public CityEntity getCity() {
-        return city;
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCity(CityEntity city) {
-        this.city = city;
-    }
-
-    public String getAddressDetail() {
-        return addressDetail;
-    }
-
-    public void setAddressDetail(String addressDetail) {
-        this.addressDetail = addressDetail;
-    }
 }
