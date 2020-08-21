@@ -47,7 +47,7 @@ public class GeoDivisionRest {
     }
 
     @PostMapping("/find-paging")
-    public ResponseEntity<PagingResponse<GeoDivisionDto>> findById(@RequestBody PagingRequest pageRequest) {
+    public ResponseEntity<PagingResponse> findById(@RequestBody PagingRequest pageRequest) {
         return new ResponseEntity<>(geoDivisionBusiness.findPaging(pageRequest), HttpStatus.OK);
     }
 }

@@ -14,5 +14,5 @@ public interface BankBusiness {
 
     void delete(Long id);
 
-    PagingResponse<BankDto> findPaging(PagingRequest pagingRequest);
+    PagingResponse findPaging(PagingRequest pagingRequest);
 }

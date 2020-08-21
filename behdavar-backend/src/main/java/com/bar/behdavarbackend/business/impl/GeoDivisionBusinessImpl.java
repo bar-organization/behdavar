@@ -12,6 +12,9 @@ import com.bar.behdavardatabase.repository.GeoDivisionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service(GeoDivisionBusinessImpl.BEAN_NAME)
 public class GeoDivisionBusinessImpl implements GeoDivisionBusiness {
     public static final String BEAN_NAME = "GeoDivisionBusinessImpl";
@@ -46,8 +49,16 @@ public class GeoDivisionBusinessImpl implements GeoDivisionBusiness {
     }
 
     @Override
-    public PagingResponse<GeoDivisionDto> findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(repository, pagingRequest);
-        return executor.execute();
+    public PagingResponse findPaging(PagingRequest pagingRequest) {
+        PagingExecutor<GeoDivisionEntity, Long> executor = new PagingExecutor(repository, pagingRequest);
+        PagingResponse pagingResponse = executor.execute();
+        if (pagingResponse.getData() != null) {
+            List<GeoDivisionDto> geoDivisionDtos = new ArrayList<>();
+            ((List<GeoDivisionEntity>) pagingResponse.getData()).forEach(e ->
+                    geoDivisionDtos.add(GeoDivisionTransformer.ENTITY_TO_DTO(e, new GeoDivisionDto()))
+            );
+            pagingResponse.setData(geoDivisionDtos);
+        }
+        return pagingResponse;
     }
 }

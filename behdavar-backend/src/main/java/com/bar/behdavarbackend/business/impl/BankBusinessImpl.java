@@ -42,7 +42,7 @@ public class BankBusinessImpl implements BankBusiness {
     }
 
     @Override
-    public PagingResponse<BankDto> findPaging(PagingRequest pagingRequest) {
+    public PagingResponse findPaging(PagingRequest pagingRequest) {
         PagingExecutor executor = new PagingExecutor(BankRepository, pagingRequest);
         return executor.execute();
     }

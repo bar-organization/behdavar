@@ -62,7 +62,7 @@ Content-Type: application/json
   "filters": [
     {
       "key": "code",
-      "value": "101",
+      "value": "10",
       "operation": "EQUAL"
     }
   ]

@@ -3,13 +3,11 @@ package com.bar.behdavarbackend.util.pagination;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
-public class PagingResponse<E> {
+public class PagingResponse {
     private int start;
     private int max;
     private long total;
-    List<E> data;
+    Object data;
 }

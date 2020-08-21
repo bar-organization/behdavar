@@ -42,7 +42,7 @@ public class CatalogBusinessImpl implements CatalogBusiness {
     }
 
     @Override
-    public PagingResponse<CatalogDto> findPaging(PagingRequest pagingRequest) {
+    public PagingResponse findPaging(PagingRequest pagingRequest) {
         PagingExecutor executor = new PagingExecutor(catalogRepository, pagingRequest);
         return executor.execute();
     }

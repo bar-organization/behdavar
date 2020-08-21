@@ -14,5 +14,5 @@ public interface CatalogDetailBusiness {
 
     void delete(Long id);
 
-    PagingResponse<CatalogDetailDto> findPaging(PagingRequest pagingRequest);
+    PagingResponse findPaging(PagingRequest pagingRequest);
 }

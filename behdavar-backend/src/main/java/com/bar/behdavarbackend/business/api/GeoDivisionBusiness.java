@@ -13,5 +13,5 @@ public interface GeoDivisionBusiness {
 
     void delete(Long id);
 
-    PagingResponse<GeoDivisionDto> findPaging(PagingRequest pagingRequest);
+    PagingResponse findPaging(PagingRequest pagingRequest);
 }
