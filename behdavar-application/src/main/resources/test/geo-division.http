@@ -1,0 +1,72 @@
+# call geo-division find by id
+POST http://127.0.0.1:8081/geo-division/find-by-id
+Content-Type: application/json
+
+21
+
+###
+# call geo-division save
+POST http://127.0.0.1:8081/geo-division/save
+Content-Type: application/json
+
+{
+  "code": 10,
+  "name": "تهران",
+  "geoDivisionType": "PROVINCE"
+}
+
+###
+# call geo-division save
+POST http://127.0.0.1:8081/geo-division/save
+Content-Type: application/json
+
+{
+  "code": 1010,
+  "name": "دماوند",
+  "geoDivisionType": "PROVINCE",
+  "parent": {
+    "id": 21,
+    "version": 0
+  }
+}
+
+###
+# call geo-division update
+POST http://127.0.0.1:8081/geo-division/update
+Content-Type: application/json
+
+{
+  "id": 5,
+  "version": 0,
+  "code": 102,
+  "englishTitle": "test",
+  "title": "تست",
+  "active": 1
+}
+
+###
+# call geo-division delete
+POST http://127.0.0.1:8081/geo-division/delete
+Content-Type: application/json
+
+2
+
+###
+# call geo-division find paging
+POST http://127.0.0.1:8081/geo-division/find-paging
+Content-Type: application/json
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+    {
+      "key": "code",
+      "value": "101",
+      "operation": "EQUAL"
+    }
+  ]
+}
+
+###
+

@@ -17,33 +17,37 @@ public class GeoDivisionBusinessImpl implements GeoDivisionBusiness {
     public static final String BEAN_NAME = "GeoDivisionBusinessImpl";
 
     @Autowired
-    private GeoDivisionRepository GeoDivisionRepository;
+    private GeoDivisionRepository repository;
 
     @Override
-    public GeoDivisionEntity findById(Long id) {
-        return GeoDivisionRepository.findById(id).orElseThrow(() -> new BusinessException("error.GeoDivision.not.found", id));
+    public GeoDivisionDto findById(Long id) {
+        return repository.findById(id)
+                .map(geoDivisionEntity -> GeoDivisionTransformer.ENTITY_TO_DTO(geoDivisionEntity, new GeoDivisionDto()))
+                .orElseThrow(() -> new BusinessException("error.GeoDivision.not.found", id));
     }
 
     @Override
     public Long save(GeoDivisionDto dto) {
         GeoDivisionEntity GeoDivisionEntity = GeoDivisionTransformer.DTO_TO_ENTITY(dto, new GeoDivisionEntity());
-        return GeoDivisionRepository.save(GeoDivisionEntity).getId();
+        return repository.save(GeoDivisionEntity).getId();
     }
 
     @Override
     public void update(GeoDivisionDto dto) {
-        GeoDivisionEntity GeoDivisionEntity = GeoDivisionTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
-        GeoDivisionRepository.save(GeoDivisionEntity);
+        GeoDivisionEntity GeoDivisionEntity = GeoDivisionTransformer.DTO_TO_ENTITY(dto, repository
+                .findById(dto.getId())
+                .orElseThrow(() -> new BusinessException("error.GeoDivision.not.found", dto.getId())));
+        repository.save(GeoDivisionEntity);
     }
 
     @Override
     public void delete(Long id) {
-        GeoDivisionRepository.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
     public PagingResponse<GeoDivisionDto> findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(GeoDivisionRepository, pagingRequest);
+        PagingExecutor executor = new PagingExecutor(repository, pagingRequest);
         return executor.execute();
     }
 }

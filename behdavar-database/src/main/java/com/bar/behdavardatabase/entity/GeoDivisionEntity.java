@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
@@ -43,8 +44,8 @@ public class GeoDivisionEntity extends BaseAuditorEntity<String, Long> {
     @JoinColumn(name = "GEO_DIVISION_FK", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "GEO_DIVISION_SELF_FK"))
     private GeoDivisionEntity parent;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
-//    private Set<GeoDivisionEntity> children;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+    private Set<GeoDivisionEntity> children;
 
 
 }
