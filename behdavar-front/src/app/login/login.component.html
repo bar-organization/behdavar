@@ -4,10 +4,10 @@
 
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="1.5rem"
           class="w-100">
-      <h3 class="text-center">{{loginMessage}}</h3>
+      <h3 class="text-center">{{loginLang.loginMessage}}</h3>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{usernameMessage}}</mat-label>
+        <mat-label>{{loginLang.usernameMessage}}</mat-label>
         <input matInput formControlName="username">
         <mat-icon matSuffix>person</mat-icon>
         <mat-error *ngIf="submitted && f.username.errors && f.username.errors.required">Username is required
@@ -15,7 +15,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label>{{passwordMessage}}</mat-label>
+        <mat-label>{{loginLang.passwordMessage}}</mat-label>
         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                 [attr.aria-pressed]="hide">
@@ -25,7 +25,7 @@
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary">{{enterMessage}}</button>
+      <button mat-raised-button color="primary">{{loginLang.enterMessage}}</button>
     </form>
 
     <div fxLayout="column" fxLayoutAlign="center center">

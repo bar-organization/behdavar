@@ -28,4 +28,19 @@ public class WebConfiguration implements WebMvcConfigurer {
                     }
                 });
     }
+
+    //   TODO Only for disable cors
+    //    @Bean
+    //    CorsConfigurationSource corsConfigurationSource() {
+    //        UrlBasedCorsConfigurationSource source = new
+    //                UrlBasedCorsConfigurationSource();
+    //        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+    //        return source;
+    //    }
+    //    @Override
+    //    public void addCorsMappings(CorsRegistry registry) {
+    //        registry.addMapping("/**")
+    //                .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+    //                .exposedHeaders("Authorization");
+    //    }
 }

@@ -2,15 +2,11 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-// used to create fake backend
-import {ErrorInterceptor, fakeBackendProvider, JwtInterceptor} from './_helpers';
 
 import {appRoutingModule} from './app.routing';
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home';
 import {LoginComponent} from './login';
-import {RegisterComponent} from './register';
-import {AlertComponent} from './_components';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -69,8 +65,6 @@ import { DocumentAttachmentComponent } from './document-attachment/document-atta
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent,
-    AlertComponent,
     UserInfoComponent,
     GuarantorsComponent,
     UserInfoDetailComponent,
@@ -87,11 +81,6 @@ import { DocumentAttachmentComponent } from './document-attachment/document-atta
   ],
 
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-
-    // provider used to create fake backend
-    fakeBackendProvider
   ],
   bootstrap: [AppComponent]
 })
