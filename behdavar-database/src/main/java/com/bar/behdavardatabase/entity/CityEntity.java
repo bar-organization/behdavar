@@ -11,7 +11,8 @@ import javax.persistence.*;
 @Table(name = CityConstant.TABLE_NAME, schema = CityConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class CityEntity extends BaseCodeTitleEntity<String, Long> {
 
-    @Column(name = CityConstant.ID)
+    @Id
+    @Column(name = "ID")
     private Long id;
 
     @JoinColumn(name = CityConstant.FK_PROVINCE, nullable = false, foreignKey = @ForeignKey(name = CityConstant.PROVINCE_FK_CONSTRAINT))

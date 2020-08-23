@@ -17,7 +17,8 @@ import static com.bar.behdavardatabase.constant.CatalogDetailConstant.SEQ_NAME;
 @Table(name = CatalogDetailConstant.TABLE_NAME, schema = CatalogDetailConstant.SCHEMA)
 public class CatalogDetailEntity extends BaseAuditorEntity<String, Long> {
 
-    @Column(name = CatalogDetailConstant.ID)
+    @Id
+    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME)
     private Long id;

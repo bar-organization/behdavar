@@ -12,7 +12,8 @@ import java.util.Set;
         uniqueConstraints = @UniqueConstraint(columnNames = {PersonConstant.FIRST_NAME, PersonConstant.LAST_NAME}))
 public class PersonEntity extends BaseAuditorEntity<String, Long> {
 
-    @Column(name = PersonConstant.ID)
+    @Id
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = PersonConstant.FIRST_NAME)

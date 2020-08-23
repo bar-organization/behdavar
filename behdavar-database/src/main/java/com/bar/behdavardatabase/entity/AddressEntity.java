@@ -13,7 +13,8 @@ import javax.persistence.*;
 @Table(name = AddressConstant.TABLE_NAME, schema = AddressConstant.SCHEMA)
 public class AddressEntity extends BaseAuditorEntity<String, Long> {
 
-    @Column(name = AddressConstant.ID)
+    @Column(name = "ID")
+    @Id
     private Long id;
 
     @Column(name = "MAIN_STREET", columnDefinition = "VARCHAR( 30)")

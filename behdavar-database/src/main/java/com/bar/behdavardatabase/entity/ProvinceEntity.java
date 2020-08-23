@@ -5,14 +5,13 @@ import com.bar.behdavardatabase.constant.ProvinceConstant;
 import com.bar.behdavardatabase.constant.common.BaseCodeTitleConstant;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = ProvinceConstant.TABLE_NAME, schema = ProvinceConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class ProvinceEntity extends BaseCodeTitleEntity<String, Long> {
-    @Column(name = ProvinceConstant.ID)
+    @Id
+    @Column(name = "ID")
     private Long id;
 
     @OneToMany(mappedBy = ProvinceConstant.PROVINCE_MAPPED_BY)

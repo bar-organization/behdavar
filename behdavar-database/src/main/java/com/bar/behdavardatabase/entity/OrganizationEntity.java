@@ -9,7 +9,8 @@ import javax.persistence.*;
 @Table(name = OrganizationConstant.TABLE_NAME, schema = OrganizationConstant.SCHEMA)
 public class OrganizationEntity extends BaseAuditorEntity<String, Long> {
 
-    @Column(name = OrganizationConstant.ID)
+    @Id
+    @Column(name = "ID")
     private Long id;
 
     @Column(name = OrganizationConstant.TITLE, nullable = false)

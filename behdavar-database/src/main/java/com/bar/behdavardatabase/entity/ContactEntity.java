@@ -16,7 +16,7 @@ import static com.bar.behdavardatabase.constant.ContactConstant.SEQ_NAME;
 @Table(name = ContactConstant.TABLE_NAME, schema = ContactConstant.SCHEMA)
 public class ContactEntity extends BaseAuditorEntity<String, Long> {
 
-    @Column(name = ContactConstant.ID)
+    @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME)
