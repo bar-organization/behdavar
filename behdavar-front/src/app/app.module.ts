@@ -30,12 +30,15 @@ import {BankMachineSearchFormComponent} from './document/document-search/bank-ma
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {GuarantorsComponent} from './guarantors/guarantors.component';
 import {CustomerComponent} from './customer/customer.component';
-
 import { FollowingComponent } from './following/following.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';;
-import { DocumentAttachmentComponent } from './document-attachment/document-attachment.component'
+import {MatNativeDateModule} from '@angular/material/core';
+import { DocumentAttachmentComponent } from './document-attachment/document-attachment.component';
+import { MyBasketComponent } from './navigation-tab/my-basket/my-basket.component';
+import { SearchPanelComponent } from './navigation-tab/search-panel/search-panel.component';
+import { ReportsComponent } from './navigation-tab/reports/reports.component';
+import {UtilityToolsComponent} from './navigation-tab/utility-tools/utility-tools.component';
 
 @NgModule({
   imports: [
@@ -77,8 +80,11 @@ import { DocumentAttachmentComponent } from './document-attachment/document-atta
     CustomerComponent,
     DocumentSearchFormComponent,
     FollowingComponent,
-    DocumentAttachmentComponent
-  ],
+    DocumentAttachmentComponent,
+    MyBasketComponent ,
+    SearchPanelComponent ,
+    ReportsComponent,
+    UtilityToolsComponent],
 
   providers: [
   ],

@@ -23,7 +23,7 @@
     <td mat-cell *matCellDef="let element" [attr.colspan]="myColumns.length">
       <div class="example-element-detail"
            [@detailExpand]="element == expendedDocument ? 'expanded' : 'collapsed'">
-        <app-document-toolbar *ngIf="element == expendedDocument"></app-document-toolbar>
+        <app-document-toolbar [data]="element.id" *ngIf="element == expendedDocument"></app-document-toolbar>
       </div>
     </td>
   </ng-container>

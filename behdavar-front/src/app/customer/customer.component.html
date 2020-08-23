@@ -1,56 +1,59 @@
 <div fxLayout="row" fxLayoutAlign="center none" >
-  <mat-card class="w-50" >
-    <mat-card-title class="text-center">{{lang.customerInformation}}</mat-card-title>
+  <mat-card class="w-75 bg-brown-100" >
+    <mat-card-title class="text-center card-header">{{lang.customerInformation}}</mat-card-title>
     <form fxLayout="column" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
-      <mat-form-field>
-        <label>{{lang.name}}</label>
-        <input matInput formControlName="name" [errorStateMatcher]="matcher">
-      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="0.5rem">
+        <mat-form-field class="flex-fill">
+          <label>{{lang.name}}</label>
+          <input matInput formControlName="name" [errorStateMatcher]="matcher">
+        </mat-form-field>
+        <mat-form-field class="flex-fill">
+          <label>{{lang.family}}</label>
+          <input matInput formControlName="family" [errorStateMatcher]="matcher">
+        </mat-form-field>
+        <mat-form-field class="flex-fill">
+          <label>{{lang.fatherName}}</label>
+          <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">
+        </mat-form-field>
 
-      <mat-form-field>
-        <label>{{lang.family}}</label>
-        <input matInput formControlName="family" [errorStateMatcher]="matcher">
-      </mat-form-field>
+        <mat-form-field class="flex-fill">
+          <label>{{lang.birthDate}}</label>
+          <input matInput formControlName="birthDate" [errorStateMatcher]="matcher">
+        </mat-form-field>
+      </div>
 
 
-      <mat-form-field>
-        <label>{{lang.fatherName}}</label>
-        <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">
-      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="0.5rem">
+        <mat-form-field class="flex-fill">
+          <label>{{lang.birthPlace}}</label>
+          <input matInput formControlName="birthPlace" [errorStateMatcher]="matcher">
+        </mat-form-field>
 
-      <mat-form-field>
-        <label>{{lang.birthDate}}</label>
-        <input matInput formControlName="birthDate" [errorStateMatcher]="matcher">
-      </mat-form-field>
+        <mat-form-field class="flex-fill">
+          <label>{{lang.nationalNumber}}</label>
+          <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">
+        </mat-form-field>
+        <mat-form-field class="flex-fill">
+          <label>{{lang.mobile}}</label>
+          <input
+            matInput formControlName="mobile" [errorStateMatcher]="matcher">
+        </mat-form-field>
 
-      <mat-form-field>
-        <label>{{lang.birthPlace}}</label>
-        <input matInput formControlName="birthPlace" [errorStateMatcher]="matcher">
-      </mat-form-field>
-
-      <mat-form-field>
-        <label>{{lang.nationalNumber}}</label>
-        <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">
-      </mat-form-field>
-
-      <mat-form-field>
-        <label>{{lang.mobile}}</label>
-        <input
-          matInput formControlName="mobile" [errorStateMatcher]="matcher">
-      </mat-form-field>
-
-      <mat-form-field>
-        <label>{{lang.postalCode}}</label>
-        <input
-          matInput formControlName="postalCode" [errorStateMatcher]="matcher">
-      </mat-form-field>
-
-      <mat-form-field>
-        <label>{{lang.workPlacePhone}}</label>
-        <input matInput formControlName="workPlacePhone" [errorStateMatcher]="matcher">
-      </mat-form-field>
-
-      <button mat-raised-button color="primary">{{lang.save}}</button>
+        <mat-form-field class="flex-fill">
+          <label>{{lang.postalCode}}</label>
+          <input
+            matInput formControlName="postalCode" [errorStateMatcher]="matcher">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="0.5rem">
+        <mat-form-field>
+          <label>{{lang.workPlacePhone}}</label>
+          <input matInput formControlName="workPlacePhone" [errorStateMatcher]="matcher">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
+        <button mat-raised-button class="px-5" color="primary">{{lang.save}}</button>
+      </div>
     </form>
   </mat-card>
 </div>

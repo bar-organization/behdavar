@@ -1,0 +1,7 @@
+<div>
+  <button *ngIf="!isSearch" mat-flat-button (click)="onExit()" class="bg-secondary text-white">X</button>
+  <app-document-search *ngIf="isSearch"></app-document-search>
+  <app-following *ngIf="isFollowing"></app-following>
+  <app-guarantors *ngIf="isGuarantor"></app-guarantors>
+  <app-customer *ngIf="isCustomer"></app-customer>
+</div>

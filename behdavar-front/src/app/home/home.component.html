@@ -13,39 +13,23 @@
 <div fxLayout="column" fxLayoutGap="0.5rem" class="p-2">
   <app-user-info></app-user-info>
   <mat-card>
-    <mat-tab-group mat-align-tabs="start">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="ml-2">shopping_basket</mat-icon>
-          {{lang.myBasket}}
-        </ng-template>
-        <app-document-search></app-document-search>
-      </mat-tab>
+    <nav mat-tab-nav-bar>
+      <ng-container *ngFor="let link of linkList">
+        <div mat-tab-link style="font-family: Vazir"
+           routerLinkActive
+           #rla="routerLinkActive"
+           [active]="rla.isActive"
+           *ngIf="link.visible"
+           [routerLink]="link.routerLink">
+          <mat-icon class="ml-2">{{link.iconName}}</mat-icon>
+          {{link.title}}
+        </div>
 
-      <mat-tab [label]="lang.search">
-        <ng-template mat-tab-label>
-          <mat-icon class="ml-2">search</mat-icon>
-          {{lang.search}}
-        </ng-template>
-        <app-document-search></app-document-search>
-      </mat-tab>
+      </ng-container>
+    </nav>
 
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="ml-2"> assignment</mat-icon>
-          {{lang.reports}}
-        </ng-template>
-        Content 3
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon class="ml-2">build_circle</mat-icon>
-          {{lang.utilityTools}}
-        </ng-template>
+    <router-outlet></router-outlet>
 
-        Content 3
-      </mat-tab>
-    </mat-tab-group>
   </mat-card>
 
 </div>
