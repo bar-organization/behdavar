@@ -25,4 +25,14 @@ public class CustomerEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = CustomerEntity.SEQ_NAME, sequenceName = CustomerEntity.SEQ_NAME)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "PERSON_ID", nullable = false, foreignKey = @ForeignKey(name = "CUSTOMER_PERSON_FK"))
+    private PersonEntity person;
+
+    @ManyToOne
+    @JoinColumn(name = "CONTRACT_ID", nullable = false, foreignKey = @ForeignKey(name = "CUSTOMER_CONTRACT_FK"))
+    private ContractEntity contract;
+
+    //TODO : add catalog detail
+
 }

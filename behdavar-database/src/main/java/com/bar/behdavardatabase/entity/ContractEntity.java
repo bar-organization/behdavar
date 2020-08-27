@@ -4,6 +4,7 @@ import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @Setter
 @Getter
 @Entity
+@NoArgsConstructor
 @Table(name = ContractEntity.TABLE_NAME, schema = ContactConstant.SCHEMA)
 public class ContractEntity extends BaseAuditorEntity<String, Long> {
 
@@ -25,5 +27,7 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = ContractEntity.SEQ_NAME, sequenceName = ContractEntity.SEQ_NAME)
     private Long id;
 
-
+    public ContractEntity(Long id) {
+        this.id = id;
+    }
 }
