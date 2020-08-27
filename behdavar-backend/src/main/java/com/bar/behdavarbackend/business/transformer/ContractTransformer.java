@@ -19,6 +19,14 @@ public class ContractTransformer {
     public static ContractEntity CREATE_ENTITY_FOR_RELATION(Long id) {
         ContractEntity entity = new ContractEntity();
         entity.setId(id);
+        entity.setVersion(0L);
         return entity;
+    }
+
+    public static ContractDto CREATE_DTO_FOR_RELATION(Long id) {
+        ContractDto dto = new ContractDto();
+        dto.setId(id);
+        dto.setVersion(0L);
+        return dto;
     }
 }

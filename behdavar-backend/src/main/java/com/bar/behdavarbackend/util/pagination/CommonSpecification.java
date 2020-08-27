@@ -1,12 +1,14 @@
 package com.bar.behdavarbackend.util.pagination;
 
 import com.bar.behdavardatabase.common.BaseEntity;
+import org.hibernate.query.criteria.internal.path.RootImpl;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,17 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
 
         //add add criteria to predicates
         for (SearchCriteria criteria : list) {
+            Class aClass = ((RootImpl) root).getEntityType().getJavaType();
+            boolean isEntity = false;
+            try {
+                Field field = aClass.getDeclaredField(criteria.getKey());
+                if (BaseEntity.class.isAssignableFrom(field.getType())) {
+                    isEntity = true;
+                }
+            } catch (NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+
             if (criteria.getOperation().equals(SearchOperation.GREATER_THAN)) {
                 predicates.add(builder.greaterThan(
                         root.get(criteria.getKey()), criteria.getValue().toString()));
@@ -51,7 +64,8 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
                         root.get(criteria.getKey()), criteria.getValue()));
             } else if (criteria.getOperation().equals(SearchOperation.EQUAL)) {
                 predicates.add(builder.equal(
-                        root.get(criteria.getKey()), criteria.getValue()));
+                        !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                        , criteria.getValue()));
             } else if (criteria.getOperation().equals(SearchOperation.MATCH)) {
                 predicates.add(builder.like(
                         builder.lower(root.get(criteria.getKey())),

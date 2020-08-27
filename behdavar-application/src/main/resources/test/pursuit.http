@@ -1,0 +1,75 @@
+# call catalog find by id
+POST http://127.0.0.1:8081/pursuit/find-by-id
+Content-Type: application/json
+
+202
+
+###
+# call catalog save
+POST http://127.0.0.1:8081/pursuit/save
+Content-Type: application/json
+
+{
+  "description": "توضیحات",
+  "coordinateAppointment": true,
+  "depositAppointment": true,
+  "submitAccordingFinal": false,
+  "nextPursuitDate": "2020-01-07",
+  "customerDeposit": true,
+  "pursuitType": 1,
+  "resultType": 1,
+  "payment": {
+    "id": 1,
+    "version": 0
+  },
+  "user": {
+    "id": 1
+  },
+  "contract": {
+    "id": 1
+  }
+}
+
+###
+# call catalog update
+POST http://127.0.0.1:8081/pursuit/update
+Content-Type: application/json
+
+{
+  "id": 102,
+  "version": 0,
+  "description": "توضیحات dfs ",
+  "coordinateAppointment": true,
+  "depositAppointment": true,
+  "submitAccordingFinal": false,
+  "nextPursuitDate": "2020-01-07",
+  "customerDeposit": true,
+  "pursuitType": 0,
+  "resultType": 1,
+  "payment": {
+    "id": 1,
+    "version": 0
+  },
+  "user": {
+    "id": 1
+  },
+  "contract": {
+    "id": 1
+  }
+}
+
+
+###
+# call catalog find paging
+POST http://127.0.0.1:8081/pursuit/find-paging
+Content-Type: application/json
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+  ]
+}
+
+###
+
