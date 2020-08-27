@@ -40,7 +40,11 @@ public class AttachmentEntity extends BaseAuditorEntity<String, Long> {
 
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "CONTRACT_ID", foreignKey = @ForeignKey(name = "CONTRACT_FK"))
+    @JoinColumn(name = "CONTRACT_ID", foreignKey = @ForeignKey(name = "ATTACHMENT_CONTRACT_FK"))
     private ContractEntity contract;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PURSUIT_ID", foreignKey = @ForeignKey(name = "ATTACHMENT_PURSUIT_FK"))
+    private PursuitEntity pursuit;
 
 }

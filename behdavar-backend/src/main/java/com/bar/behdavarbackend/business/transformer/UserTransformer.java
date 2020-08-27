@@ -31,14 +31,22 @@ public class UserTransformer {
 
         return dto;
     }
+
     private static List<RoleDto> getUserRoles(Set<RoleEntity> roles) {
-        if(Objects.isNull(roles) || roles.isEmpty())
+        if (Objects.isNull(roles) || roles.isEmpty())
             return Collections.emptyList();
 
         return roles
                 .stream()
-                .map(roleEntity -> RoleTransformer.ENTITY_TO_DTO(roleEntity,new RoleDto()))
+                .map(roleEntity -> RoleTransformer.ENTITY_TO_DTO(roleEntity, new RoleDto()))
                 .collect(Collectors.toList());
+    }
+
+    public static UserEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(id);
+        userEntity.setVersion(0L);
+        return userEntity;
     }
 
 }

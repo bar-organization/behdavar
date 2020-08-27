@@ -1,0 +1,25 @@
+# call pursuit-log find by id
+POST http://127.0.0.1:8081/pursuit-log/find-by-id
+Content-Type: application/json
+
+202
+
+###
+# call pursuit-log find paging
+POST http://127.0.0.1:8081/pursuit-log/find-paging
+Content-Type: application/json
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+    {
+      "key": "contract",
+      "value": "1",
+      "operation": "EQUAL"
+    }
+  ]
+}
+
+###
+
