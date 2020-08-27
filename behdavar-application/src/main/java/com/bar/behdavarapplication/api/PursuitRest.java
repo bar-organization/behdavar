@@ -29,6 +29,11 @@ public class PursuitRest {
         return new ResponseEntity<>(pursuitBusiness.findById(id), HttpStatus.OK);
     }
 
+    @PostMapping("/find-by-contract")
+    public ResponseEntity<PursuitDto> findByContractId(@RequestBody @NotNull Long id) {
+        return new ResponseEntity<>(pursuitBusiness.findByContractId(id), HttpStatus.OK);
+    }
+
     @PostMapping("/save")
     public ResponseEntity<Long> save(@Valid @RequestBody PursuitDto dto) {
         return new ResponseEntity<>(pursuitBusiness.save(dto), HttpStatus.OK);

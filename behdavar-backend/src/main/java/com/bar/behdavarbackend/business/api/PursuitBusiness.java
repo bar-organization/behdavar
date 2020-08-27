@@ -14,4 +14,6 @@ public interface PursuitBusiness {
     void delete(Long id);
 
     PagingResponse findPaging(PagingRequest pagingRequest);
+
+    PursuitDto findByContractId(Long id);
 }

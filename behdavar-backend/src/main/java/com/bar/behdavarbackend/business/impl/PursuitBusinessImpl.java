@@ -67,4 +67,10 @@ public class PursuitBusinessImpl implements PursuitBusiness {
         }
         return pagingResponse;
     }
+
+    @Override
+    public PursuitDto findByContractId(Long id) {
+        PursuitEntity pursuitEntity = pursuitRepository.findFirstByContractId(id);
+        return pursuitEntity != null ? PursuitTransformer.ENTITY_TO_DTO(pursuitEntity, new PursuitDto()) : null;
+    }
 }

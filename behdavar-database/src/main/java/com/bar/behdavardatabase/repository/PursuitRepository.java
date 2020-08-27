@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PursuitRepository extends AbstractRepository<PursuitEntity, Long> {
+    PursuitEntity findFirstByContractId(Long id);
 }
