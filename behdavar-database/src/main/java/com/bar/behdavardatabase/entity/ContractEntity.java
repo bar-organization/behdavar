@@ -25,4 +25,5 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = ContractEntity.SEQ_NAME, sequenceName = ContractEntity.SEQ_NAME)
     private Long id;
 
+
 }
