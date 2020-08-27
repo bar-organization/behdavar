@@ -28,6 +28,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+
+                // TODO only for disable cors
+//                .cors().configurationSource(request -> new
+//                CorsConfiguration().applyPermitDefaultValues()).and()
+
                 .authorizeRequests()
                 .antMatchers("/api", "/api/**").authenticated()
                 .anyRequest().permitAll()

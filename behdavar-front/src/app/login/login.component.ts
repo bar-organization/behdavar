@@ -5,7 +5,7 @@ import {AuthService} from "../service/auth/auth.service";
 import {LoginLang} from "../model/lang";
 
 
-@Component({templateUrl: 'login.component.html', styleUrls: ['login.component.css']})
+@Component({selector:'login',templateUrl: 'login.component.html', styleUrls: ['login.component.css']})
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   loading = false;

@@ -42,23 +42,13 @@ export class DocumentToolbarLang extends Lang {
   projectFlow = 'گردش پرونده';
 }
 
-export class DocumentSearchLang extends Lang {
+export class DocumentSearchLang extends PersonLang {
   bankMachine = 'بانک/ماشین';
   document = 'پرونده';
   customer = 'مشتری';
-}
-
-export class DocumentSearchFormLang extends DocumentSearchLang {
   facilityNumber = 'شماره تسهیلات';
   status = 'وضعیت پرونده';
   registrationDate = 'تاریخ ثبت پرونده';
-}
-
-export class CustomerSearchFormLang extends PersonLang {
-  customer = 'مشتری';
-}
-
-export class BankMachineSearchFormLang extends DocumentSearchLang {
   bank = 'بانک';
   branch = 'شعبه';
   facilityReceivingDate = 'تاریخ دریافت تسهیلات';

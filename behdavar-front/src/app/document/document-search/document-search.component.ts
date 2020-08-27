@@ -16,7 +16,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ],
 })
 export class DocumentSearchComponent implements OnInit {
-  documentSearchFormParent: FormGroup;
+  parentForm: FormGroup;
   bankMachineSearchFormGroup: FormGroup;
   customerSearchFormGroup: FormGroup;
   documentSearchFormGroup: FormGroup;
@@ -55,7 +55,7 @@ export class DocumentSearchComponent implements OnInit {
 
     this.documentSearchFormGroup = fb.group({facilityNumber: [''], status: [''], registrationDate: ['']});
 
-    this.documentSearchFormParent = fb.group({
+    this.parentForm = fb.group({
       bankMachineSearchFormGroup: this.bankMachineSearchFormGroup,
       documentSearchFormGroup: this.documentSearchFormGroup,
       customerSearchFormGroup: this.customerSearchFormGroup,
@@ -67,7 +67,7 @@ export class DocumentSearchComponent implements OnInit {
   }
 
   onSub() {
-    console.log(this.documentSearchFormParent);
+    console.log(this.parentForm);
   }
 
 }

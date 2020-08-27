@@ -3,10 +3,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
-import {appRoutingModule} from './app.routing';
 import {AppComponent} from './app.component';
-import {HomeComponent} from './home';
-import {LoginComponent} from './login';
+import {HomeComponent} from './home/home.component';
+import {LoginComponent} from './login/login.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -24,9 +23,6 @@ import {MatMenuModule} from '@angular/material/menu';
 import {DocumentSearchComponent} from './document/document-search/document-search.component';
 import {DocumentToolbarComponent} from './document/document-toolbar/document-toolbar.component';
 import {MatTableModule} from '@angular/material/table';
-import {CustomerSearchFormComponent} from './document/document-search/customer-search-form/customer-search-form.component';
-import {DocumentSearchFormComponent} from './document/document-search/document-search-form/document-search-form.component';
-import {BankMachineSearchFormComponent} from './document/document-search/bank-machine-search-form/bank-machine-search-form.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {GuarantorsComponent} from './guarantors/guarantors.component';
 import {CustomerComponent} from './customer/customer.component';
@@ -39,13 +35,14 @@ import { MyBasketComponent } from './navigation-tab/my-basket/my-basket.componen
 import { SearchPanelComponent } from './navigation-tab/search-panel/search-panel.component';
 import { ReportsComponent } from './navigation-tab/reports/reports.component';
 import {UtilityToolsComponent} from './navigation-tab/utility-tools/utility-tools.component';
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   imports: [
+    AppRoutingModule,
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    appRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -73,12 +70,8 @@ import {UtilityToolsComponent} from './navigation-tab/utility-tools/utility-tool
     UserInfoDetailComponent,
     DocumentSearchComponent,
     DocumentToolbarComponent,
-    CustomerSearchFormComponent,
-    BankMachineSearchFormComponent,
-    DocumentSearchFormComponent,
     UserInfoDetailComponent,
     CustomerComponent,
-    DocumentSearchFormComponent,
     FollowingComponent,
     DocumentAttachmentComponent,
     MyBasketComponent ,
