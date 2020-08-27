@@ -16,6 +16,7 @@ public final class CatalogConstant extends BaseConstant {
     public static final Long PURSUIT_TYPE = 102L;
     public static final Long BANK_TYPE = 103L;
     public static final Long CORPORATION_TYPE = 104L;
+    public static final Long ATTACHMENT_TYPE = 105L;
 
     private CatalogConstant() {
         // only constant
