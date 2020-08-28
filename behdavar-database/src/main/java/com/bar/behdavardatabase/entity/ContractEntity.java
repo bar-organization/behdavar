@@ -28,7 +28,7 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = ContractEntity.SEQ_NAME)
-    @SequenceGenerator(name = ContractEntity.SEQ_NAME, sequenceName = ContractEntity.SEQ_NAME)
+    @SequenceGenerator(name = ContractEntity.SEQ_NAME, sequenceName = ContractEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     public ContractEntity(Long id) {

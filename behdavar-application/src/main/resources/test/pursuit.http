@@ -75,6 +75,11 @@ Content-Type: application/json
   "start": 0,
   "max": 3,
   "filters": [
+    {
+      "key": "contract.id",
+      "value": "1",
+      "operation": "EQUAL"
+    }
   ]
 }
 

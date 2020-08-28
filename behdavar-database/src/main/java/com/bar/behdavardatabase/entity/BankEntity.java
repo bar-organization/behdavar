@@ -24,7 +24,7 @@ public class BankEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = BankEntity.SEQ_NAME)
-    @SequenceGenerator(name = BankEntity.SEQ_NAME, sequenceName = BankEntity.SEQ_NAME)
+    @SequenceGenerator(name = BankEntity.SEQ_NAME, sequenceName = BankEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Column(name = "CODE", nullable = false, length = 5)

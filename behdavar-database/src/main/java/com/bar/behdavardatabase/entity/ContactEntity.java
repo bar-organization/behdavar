@@ -19,7 +19,7 @@ public class ContactEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
-    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME)
+    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Column(name = "PHONE_NUMBER", nullable = false, length = 15)

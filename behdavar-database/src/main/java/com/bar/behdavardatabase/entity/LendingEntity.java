@@ -22,7 +22,7 @@ public class LendingEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = LendingEntity.SEQ_NAME)
-    @SequenceGenerator(name = LendingEntity.SEQ_NAME, sequenceName = LendingEntity.SEQ_NAME)
+    @SequenceGenerator(name = LendingEntity.SEQ_NAME, sequenceName = LendingEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
 }

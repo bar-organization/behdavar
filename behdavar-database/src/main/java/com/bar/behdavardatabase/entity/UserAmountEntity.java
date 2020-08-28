@@ -24,7 +24,7 @@ public class UserAmountEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = UserAmountEntity.SEQ_NAME)
-    @SequenceGenerator(name = UserAmountEntity.SEQ_NAME, sequenceName = UserAmountEntity.SEQ_NAME)
+    @SequenceGenerator(name = UserAmountEntity.SEQ_NAME, sequenceName = UserAmountEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Column(name = "TOTAL_AMOUNT", columnDefinition = "NUMBER(24,4)", nullable = false)

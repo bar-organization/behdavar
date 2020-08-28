@@ -27,7 +27,7 @@ public class GeoDivisionEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = GeoDivisionEntity.SEQ_NAME)
-    @SequenceGenerator(name = GeoDivisionEntity.SEQ_NAME, sequenceName = GeoDivisionEntity.SEQ_NAME)
+    @SequenceGenerator(name = GeoDivisionEntity.SEQ_NAME, sequenceName = GeoDivisionEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Column(name = "CODE", nullable = false, length = 5)

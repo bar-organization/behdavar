@@ -23,7 +23,7 @@ public class AttachmentEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = AttachmentEntity.SEQ_NAME)
-    @SequenceGenerator(name = AttachmentEntity.SEQ_NAME, sequenceName = AttachmentEntity.SEQ_NAME)
+    @SequenceGenerator(name = AttachmentEntity.SEQ_NAME, sequenceName = AttachmentEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Lob

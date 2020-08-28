@@ -3,6 +3,7 @@ package com.bar.behdavardatabase.entity;
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
+import com.bar.behdavardatabase.entity.security.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,16 +24,18 @@ public class CartableEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = CartableEntity.SEQ_NAME)
-    @SequenceGenerator(name = CartableEntity.SEQ_NAME, sequenceName = CartableEntity.SEQ_NAME)
+    @SequenceGenerator(name = CartableEntity.SEQ_NAME, sequenceName = CartableEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @NotNull
-    @Column(name = "SENDER_ID", nullable = false, columnDefinition = "NUMBER(19)")
-    private Long senderId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "SENDER_ID", nullable = false, foreignKey = @ForeignKey(name = "CARTABLE_SENDER_FK"))
+    private UserEntity sender;
 
     @NotNull
-    @Column(name = "RECEIVER_ID", nullable = false, columnDefinition = "NUMBER(19)")
-    private Long receiverId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RECEIVER_ID", nullable = false, foreignKey = @ForeignKey(name = "CARTABLE_RECEIVER_FK"))
+    private UserEntity receiver;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTRACT_ID", nullable = false, foreignKey = @ForeignKey(name = "CARTABLE_CONTRACT_FK"))

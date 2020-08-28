@@ -4,12 +4,10 @@ import com.bar.behdavardatabase.common.BaseEntity;
 import org.hibernate.query.criteria.internal.path.RootImpl;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CommonSpecification<E extends BaseEntity> implements Specification<E> {
@@ -33,18 +31,20 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
 
         //create a new predicate list
         List<Predicate> predicates = new ArrayList<>();
+        List<String> items = new ArrayList<>();
 
         //add add criteria to predicates
         for (SearchCriteria criteria : list) {
             Class aClass = ((RootImpl) root).getEntityType().getJavaType();
             boolean isEntity = false;
+            items = Arrays.asList(criteria.getKey().split("\\."));
             try {
                 Field field = aClass.getDeclaredField(criteria.getKey());
                 if (BaseEntity.class.isAssignableFrom(field.getType())) {
                     isEntity = true;
                 }
             } catch (NoSuchFieldException e) {
-                e.printStackTrace();
+                //nothing
             }
 
             if (criteria.getOperation().equals(SearchOperation.GREATER_THAN)) {
@@ -63,9 +63,19 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
                 predicates.add(builder.notEqual(
                         root.get(criteria.getKey()), criteria.getValue()));
             } else if (criteria.getOperation().equals(SearchOperation.EQUAL)) {
-                predicates.add(builder.equal(
-                        !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
-                        , criteria.getValue()));
+                if (items.size() == 1) {
+                    predicates.add(builder.equal(
+                            !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                            , criteria.getValue()));
+                } else {
+                    Join<Object, Object> join = null;
+                    for (int i = 0; i < (items.size() - 1); i++) {
+                        join = root.join(items.get(i));
+                    }
+                    predicates.add(builder.equal(
+                            join.get(items.get(items.size() - 1))
+                            , criteria.getValue()));
+                }
             } else if (criteria.getOperation().equals(SearchOperation.MATCH)) {
                 predicates.add(builder.like(
                         builder.lower(root.get(criteria.getKey())),

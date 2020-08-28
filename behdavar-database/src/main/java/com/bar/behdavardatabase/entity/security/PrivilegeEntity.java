@@ -23,7 +23,7 @@ public class PrivilegeEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = PrivilegeEntity.SEQ_NAME)
-    @SequenceGenerator(name = PrivilegeEntity.SEQ_NAME, sequenceName = PrivilegeEntity.SEQ_NAME)
+    @SequenceGenerator(name = PrivilegeEntity.SEQ_NAME, sequenceName = PrivilegeEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     private String name;

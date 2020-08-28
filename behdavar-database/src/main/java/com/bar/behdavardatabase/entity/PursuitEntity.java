@@ -26,7 +26,7 @@ public class PursuitEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = PursuitEntity.SEQ_NAME)
-    @SequenceGenerator(name = PursuitEntity.SEQ_NAME, sequenceName = PursuitEntity.SEQ_NAME)
+    @SequenceGenerator(name = PursuitEntity.SEQ_NAME, sequenceName = PursuitEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(200)")

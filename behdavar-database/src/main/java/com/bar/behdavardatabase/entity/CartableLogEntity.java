@@ -22,7 +22,7 @@ public class CartableLogEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = CartableLogEntity.SEQ_NAME)
-    @SequenceGenerator(name = CartableLogEntity.SEQ_NAME, sequenceName = CartableLogEntity.SEQ_NAME)
+    @SequenceGenerator(name = CartableLogEntity.SEQ_NAME, sequenceName = CartableLogEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
 }

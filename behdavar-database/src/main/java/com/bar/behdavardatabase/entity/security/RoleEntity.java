@@ -23,7 +23,7 @@ public class RoleEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = RoleEntity.SEQ_NAME)
-    @SequenceGenerator(name = RoleEntity.SEQ_NAME, sequenceName = RoleEntity.SEQ_NAME)
+    @SequenceGenerator(name = RoleEntity.SEQ_NAME, sequenceName = RoleEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     private String name;

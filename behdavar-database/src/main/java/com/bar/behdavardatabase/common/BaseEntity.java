@@ -6,10 +6,7 @@ import java.util.Objects;
 
 @MappedSuperclass
 public abstract class BaseEntity<I extends Serializable> {
-
-//    @Id
-//    @GeneratedValue
-//    private I id;
+    public static final int ALLOCATION_SIZE = 1;
 
     public abstract I getId();
 

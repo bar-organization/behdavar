@@ -24,7 +24,7 @@ public class StatusLogEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = StatusLogEntity.SEQ_NAME)
-    @SequenceGenerator(name = StatusLogEntity.SEQ_NAME, sequenceName = StatusLogEntity.SEQ_NAME)
+    @SequenceGenerator(name = StatusLogEntity.SEQ_NAME, sequenceName = StatusLogEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Column(name = "CONTRACT_STATUS", nullable = false, columnDefinition = "NUMBER(2)")

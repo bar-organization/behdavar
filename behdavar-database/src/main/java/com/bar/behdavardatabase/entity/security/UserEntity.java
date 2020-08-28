@@ -3,14 +3,12 @@ package com.bar.behdavardatabase.entity.security;
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
-import com.bar.behdavardatabase.entity.BankEntity;
 import com.bar.behdavardatabase.entity.PersonEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Set;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
@@ -26,8 +24,8 @@ public class UserEntity extends BaseAuditorEntity<String, Long> {
 
     @Column(name = "ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = BankEntity.SEQ_NAME)
-    @SequenceGenerator(name = BankEntity.SEQ_NAME, sequenceName = BankEntity.SEQ_NAME)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_NAME)
+    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @Column(name = "USERNAME", nullable = false)

@@ -22,7 +22,7 @@ public class ProductEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = ProductEntity.SEQ_NAME)
-    @SequenceGenerator(name = ProductEntity.SEQ_NAME, sequenceName = ProductEntity.SEQ_NAME)
+    @SequenceGenerator(name = ProductEntity.SEQ_NAME, sequenceName = ProductEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
 }

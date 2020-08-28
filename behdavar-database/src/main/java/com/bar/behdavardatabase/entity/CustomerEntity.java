@@ -22,7 +22,7 @@ public class CustomerEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = CustomerEntity.SEQ_NAME)
-    @SequenceGenerator(name = CustomerEntity.SEQ_NAME, sequenceName = CustomerEntity.SEQ_NAME)
+    @SequenceGenerator(name = CustomerEntity.SEQ_NAME, sequenceName = CustomerEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
     @ManyToOne

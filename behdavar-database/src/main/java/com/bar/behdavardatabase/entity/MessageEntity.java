@@ -22,7 +22,7 @@ public class MessageEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = MessageEntity.SEQ_NAME)
-    @SequenceGenerator(name = MessageEntity.SEQ_NAME, sequenceName = MessageEntity.SEQ_NAME)
+    @SequenceGenerator(name = MessageEntity.SEQ_NAME, sequenceName = MessageEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
 }
