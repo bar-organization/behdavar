@@ -6,6 +6,7 @@ import HttpDataSource from "./HttpDataSource";
 import {PagingRequest} from "./PaginationModel";
 import {tap} from "rxjs/operators";
 import {BehaviorSubject, Observable} from "rxjs";
+import dot from "dot-object";
 
 @Component({
   selector: 'data-table',
@@ -57,7 +58,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     if (!this.tableColumns) {
       return [];
     }
-    return this.tableColumns.filter(value => !value.hidden).map(value => value.name);
+    return this.tableColumns.filter(value => !value.hidden).map(value => value.fieldName);
   }
 
   private configureMatTableDataSource() {
@@ -74,10 +75,17 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       this.totalRecord$ = this.httpDataSource.totalRecordSubject.asObservable();
     }
   }
+
+  handelDot(element: any, colName: string): string {
+    if (!element || !colName) {
+      return '';
+    }
+    return dot.pick(colName, element);
+  }
 }
 
 export interface TableColumn {
-  name: string;
+  fieldName: string;
   title: string;
   hidden?: boolean;
 }

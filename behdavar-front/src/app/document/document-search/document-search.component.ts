@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {DocumentSearchLang} from '../../model/lang';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {TableColumn} from "../../_custom-component/data-table/data-table.component";
-import {CatalogDto} from "../../model/model";
+import {CartableDto} from "../../model/model";
 import HttpDataSource from "../../_custom-component/data-table/HttpDataSource";
 import Url from "../../model/url";
 import {HttpClient} from "@angular/common/http";
@@ -30,7 +30,7 @@ export class DocumentSearchComponent implements OnInit {
 
   documentSearchLang: DocumentSearchLang = new DocumentSearchLang();
 
-  constructor(private fb: FormBuilder,private httpClient:HttpClient) {
+  constructor(private fb: FormBuilder, private httpClient: HttpClient) {
     this.bankMachineSearchFormGroup = fb.group({
       bank: [''],
       branch: [''],
@@ -68,14 +68,15 @@ export class DocumentSearchComponent implements OnInit {
   onSub() {
     console.log(this.parentForm);
   }
+
   // TODO httpClint not be required for constructor
-  catalogHttpDataSource: HttpDataSource<CatalogDto> = new HttpDataSource<CatalogDto>(Url.CATALOG_FIND_PAGING,this.httpClient);
+  catalogHttpDataSource: HttpDataSource<CartableDto> = new HttpDataSource<CartableDto>(Url.CARTABLE_FIND_PAGING, this.httpClient);
 
   tableColumns: TableColumn[] = [
-    {name: "id", title: 'شناسه'},
-    {name: "code", title: 'کد'},
-    {name: 'englishTitle', title: 'عنوان انگلیسی'},
-    {name: 'title', title: 'عنوان'},
-    {name: 'active', title: 'فعال'},
+    {fieldName: "id", title: 'شناسه'},
+    {fieldName: "receiver.firstName", title: 'نام مشتری'},
+    {fieldName: 'englishTitle', title: 'عنوان انگلیسی'},
+    {fieldName: 'title', title: 'عنوان'},
+    {fieldName: 'active', title: 'فعال'},
   ]
 }
