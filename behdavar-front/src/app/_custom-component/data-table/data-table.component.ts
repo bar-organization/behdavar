@@ -30,6 +30,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
   loadingText = 'درحال واکشی...';
+  rowNoTitle = 'ردیف';
 
 
   ngOnInit(): void {
@@ -58,7 +59,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     if (!this.tableColumns) {
       return [];
     }
-    return this.tableColumns.filter(value => !value.hidden).map(value => value.fieldName);
+    let columnToDisplay = this.tableColumns.filter(value => !value.hidden).map(value => value.fieldName);
+    columnToDisplay.unshift('rowNo');
+    return columnToDisplay;
   }
 
   private configureMatTableDataSource() {
@@ -76,11 +79,22 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  handelDot(element: any, colName: string): string {
-    if (!element || !colName) {
+  handelDotAndPip(element: any, col: TableColumn): string {
+    if (!element || !col || !col.fieldName) {
       return '';
     }
-    return dot.pick(colName, element);
+
+    let result = dot.pick(col.fieldName, element);
+    // TODO must handel pip
+    // let pipChain = '';
+    // if (col.pipNames && col.pipNames.length > 0) {
+    //   for (let pipName of col.pipNames) {
+    //     pipChain += ' | ' + pipName;
+    //   }
+    // }
+    // console.log(pipChain);
+    // return result + pipChain;
+    return result;
   }
 }
 
@@ -88,6 +102,7 @@ export interface TableColumn {
   fieldName: string;
   title: string;
   hidden?: boolean;
+  pipNames?: string[];
 }
 
 export declare type DataSourceType = 'array' | 'http' | undefined;
