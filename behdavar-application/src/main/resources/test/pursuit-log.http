@@ -1,12 +1,13 @@
 # call pursuit-log find by id
-POST http://127.0.0.1:8081/pursuit-log/find-by-id
+POST http://127.0.0.1:8081/api/pursuit-log/find-by-id
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2Mjc3ODQsImV4cCI6MTU5ODYzMTM4NH0.fQF2ZtoPSsa0ZQh6vxA79FdD0wrh0E_Qn_hRcD8b3Js
 
 202
 
 ###
 # call pursuit-log find paging
-POST http://127.0.0.1:8081/pursuit-log/find-paging
+POST http://127.0.0.1:8081/api/pursuit-log/find-paging
 Content-Type: application/json
 
 {

@@ -17,7 +17,8 @@ public class UserTransformer {
     public static UserDto ENTITY_TO_DTO(UserEntity entity, UserDto dto) {
         @NotNull PersonEntity person = entity.getPerson();
         Set<RoleEntity> roles = entity.getRoles();
-
+        dto.setId(entity.getId());
+        dto.setVersion(entity.getVersion());
         dto.setFirstName(person.getFirstName());
         dto.setLastName(person.getLastName());
         dto.setUsername(entity.getUsername());
