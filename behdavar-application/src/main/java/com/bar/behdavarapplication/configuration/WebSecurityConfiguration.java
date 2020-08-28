@@ -34,7 +34,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                CorsConfiguration().applyPermitDefaultValues()).and()
 
                 .authorizeRequests()
-                .antMatchers("/api", "/api/**").authenticated()
+                .antMatchers("/api", "/api/**","/auth/info").authenticated()
                 .anyRequest().permitAll()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -48,7 +48,7 @@ public class CatalogRest {
     }
 
     @PostMapping("/find-paging")
-    public ResponseEntity<PagingResponse<CatalogDto>> findById(@RequestBody PagingRequest pageRequest) {
+    public ResponseEntity<PagingResponse> findById(@RequestBody PagingRequest pageRequest) {
         return new ResponseEntity<>(catalogBusiness.findPaging(pageRequest), HttpStatus.OK);
     }
 }
