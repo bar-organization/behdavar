@@ -26,50 +26,51 @@ import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {GuarantorsComponent} from './guarantors/guarantors.component';
 import {CustomerComponent} from './customer/customer.component';
-import { FollowingComponent } from './following/following.component';
+import {FollowingComponent} from './following/following.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import { DocumentAttachmentComponent } from './document-attachment/document-attachment.component';
-import { MyBasketComponent } from './navigation-tab/my-basket/my-basket.component';
-import { SearchPanelComponent } from './navigation-tab/search-panel/search-panel.component';
-import { ReportsComponent } from './navigation-tab/reports/reports.component';
+import {DocumentAttachmentComponent} from './document-attachment/document-attachment.component';
+import {MyBasketComponent} from './navigation-tab/my-basket/my-basket.component';
+import {SearchPanelComponent} from './navigation-tab/search-panel/search-panel.component';
+import {ReportsComponent} from './navigation-tab/reports/reports.component';
 import {UtilityToolsComponent} from './navigation-tab/utility-tools/utility-tools.component';
 import {AppRoutingModule} from "./app-routing.module";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatSortModule} from "@angular/material/sort";
 import {MatPaginatorModule} from "@angular/material/paginator";
-import { DataTableComponent } from './_custom-component/data-table/data-table.component'
+import {DataTableComponent} from './_custom-component/data-table/data-table.component'
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {AuthInterceptorService} from "./service/auth/AuthInterceptorService";
 
 @NgModule({
-    imports: [
-        AppRoutingModule,
-        BrowserModule,
-        ReactiveFormsModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        MatCardModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        MatButtonModule,
-        MatGridListModule,
-        MatListModule,
-        MatToolbarModule,
-        FlexModule,
-        MatTabsModule,
-        MatMenuModule,
-        MatTableModule,
-        MatCheckboxModule,
-        MatSelectModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatExpansionModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-    ],
+  imports: [
+    AppRoutingModule,
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatGridListModule,
+    MatListModule,
+    MatToolbarModule,
+    FlexModule,
+    MatTabsModule,
+    MatMenuModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatExpansionModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+  ],
   declarations: [
     AppComponent,
     HomeComponent,
@@ -83,14 +84,15 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     CustomerComponent,
     FollowingComponent,
     DocumentAttachmentComponent,
-    MyBasketComponent ,
-    SearchPanelComponent ,
+    MyBasketComponent,
+    SearchPanelComponent,
     ReportsComponent,
     UtilityToolsComponent,
     DataTableComponent,
   ],
 
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
   ],
   bootstrap: [AppComponent]
 })
