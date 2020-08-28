@@ -1,150 +1,135 @@
-<form [formGroup]="parentForm" (ngSubmit)="onSub()" fxLayout="column" fxLayoutAlign="start start"
-      fxLayoutGap="0.5rem" class="py-2 my-2">
-  <!-- Document Search -->
-  <div [formGroup]="documentSearchFormGroup" class="card" fxLayout="row">
-    <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
-      <h6>{{documentSearchLang.document}}</h6>
-    </div>
-    <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.facilityNumber}}</mat-label>
-        <input matInput formControlName="facilityNumber">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.status}}</mat-label>
-        <input matInput formControlName="status">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.registrationDate}}</mat-label>
-        <input matInput formControlName="registrationDate">
-      </mat-form-field>
+<mat-accordion >
+  <mat-expansion-panel class="my-1 p-0 bg-indigo-50" (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+    <mat-expansion-panel-header >
+      <mat-panel-title>{{documentSearchLang.search}}</mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-divider></mat-divider>
+    <form [formGroup]="parentForm" (ngSubmit)="onSub()" fxLayout="column" fxLayoutAlign="start start"
+          fxLayoutGap="0.5rem" >
+      <!-- Document Search -->
+      <div [formGroup]="documentSearchFormGroup" class="card" fxLayout="row">
+        <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
+          <h6>{{documentSearchLang.document}}</h6>
+        </div>
+        <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.facilityNumber}}</mat-label>
+            <input matInput formControlName="facilityNumber">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.status}}</mat-label>
+            <input matInput formControlName="status">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.registrationDate}}</mat-label>
+            <input matInput formControlName="registrationDate">
+          </mat-form-field>
 
-    </div>
+        </div>
 
-  </div>
-
-  <!-- Customer Search  -->
-  <div [formGroup]="customerSearchFormGroup" class="card" fxLayout="row">
-    <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
-      <h6>{{documentSearchLang.customer}}</h6>
-    </div>
-    <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.name}}</mat-label>
-        <input matInput formControlName="name">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.family}}</mat-label>
-        <input matInput formControlName="family">
-      </mat-form-field>
-
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.fatherName}}</mat-label>
-        <input matInput formControlName="fatherName">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.birthDate}}</mat-label>
-        <input matInput formControlName="birthDate">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.birthPlace}}</mat-label>
-        <input matInput formControlName="birthPlace">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.nationalNumber}}</mat-label>
-        <input matInput formControlName="nationalNumber">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.mobile}}</mat-label>
-        <input
-          matInput formControlName="mobile">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.postalCode}}</mat-label>
-        <input
-          matInput formControlName="postalCode">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.workPlacePhone}}</mat-label>
-        <input matInput formControlName="workPlacePhone">
-      </mat-form-field>
-
-    </div>
-
-  </div>
-
-  <!--Bank/Machine Search  -->
-  <div [formGroup]="bankMachineSearchFormGroup" class="card" fxLayout="row">
-    <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
-      <h6>{{documentSearchLang.bankMachine}}</h6>
-    </div>
-    <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.bank}}</mat-label>
-        <input matInput formControlName="bank">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.branch}}</mat-label>
-        <input matInput formControlName="branch">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.facilityReceivingDate}}</mat-label>
-        <input matInput formControlName="facilityReceivingDate">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.plateNumber}}</mat-label>
-        <input matInput formControlName="plateNumber">
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-label>{{documentSearchLang.vehicleType}}</mat-label>
-        <input matInput formControlName="vehicleType">
-      </mat-form-field>
-
-    </div>
-
-  </div>
-
-  <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
-    <button type="submit" mat-raised-button color="primary" class="px-5">{{documentSearchLang.search}}</button>
-    <button type="reset" mat-raised-button color="accent" class="px-5">{{documentSearchLang.reset}}</button>
-  </div>
-</form>
-
-
-
-  <table mat-table multiTemplateDataRows [dataSource]="documentList" class="mat-elevation-z8 p-5 ">
-  <ng-container [matColumnDef]="col" *ngFor="let col of myColumns">
-    <th mat-header-cell *matHeaderCellDef>{{col}}</th>
-    <td mat-cell *matCellDef="let doc">{{doc[col]}} </td>
-  </ng-container>
-
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-  <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="myColumns.length">
-      <div class="example-element-detail"
-           [@detailExpand]="element == expendedDocument ? 'expanded' : 'collapsed'">
-        <app-document-toolbar [data]="element.id" *ngIf="element == expendedDocument"></app-document-toolbar>
       </div>
-    </td>
-  </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="myColumns"></tr>
-  <tr mat-row *matRowDef="let element; columns: myColumns;"
-      class="example-element-row"
-      [class.example-expanded-row]="expendedDocument === element"
-      (click)="expendedDocument = expendedDocument === element ? null : element">
-  </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-</table>
+      <!-- Customer Search  -->
+      <div [formGroup]="customerSearchFormGroup" class="card" fxLayout="row">
+        <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
+          <h6>{{documentSearchLang.customer}}</h6>
+        </div>
+        <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.name}}</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
 
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.family}}</mat-label>
+            <input matInput formControlName="family">
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.fatherName}}</mat-label>
+            <input matInput formControlName="fatherName">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.birthDate}}</mat-label>
+            <input matInput formControlName="birthDate">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.birthPlace}}</mat-label>
+            <input matInput formControlName="birthPlace">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.nationalNumber}}</mat-label>
+            <input matInput formControlName="nationalNumber">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.mobile}}</mat-label>
+            <input
+              matInput formControlName="mobile">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.postalCode}}</mat-label>
+            <input
+              matInput formControlName="postalCode">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.workPlacePhone}}</mat-label>
+            <input matInput formControlName="workPlacePhone">
+          </mat-form-field>
+
+        </div>
+
+      </div>
+
+      <!--Bank/Machine Search  -->
+      <div [formGroup]="bankMachineSearchFormGroup" class="card" fxLayout="row">
+        <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
+          <h6>{{documentSearchLang.bankMachine}}</h6>
+        </div>
+        <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.bank}}</mat-label>
+            <input matInput formControlName="bank">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.branch}}</mat-label>
+            <input matInput formControlName="branch">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.facilityReceivingDate}}</mat-label>
+            <input matInput formControlName="facilityReceivingDate">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.plateNumber}}</mat-label>
+            <input matInput formControlName="plateNumber">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.vehicleType}}</mat-label>
+            <input matInput formControlName="vehicleType">
+          </mat-form-field>
+
+        </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
+        <button type="submit" mat-raised-button color="primary" class="px-5">{{documentSearchLang.search}}</button>
+        <button type="reset" mat-raised-button color="accent" class="px-5">{{documentSearchLang.reset}}</button>
+      </div>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<app-document-toolbar></app-document-toolbar>
+
+<data-table [httpDataSource]="catalogHttpDataSource" [tableColumns]="tableColumns"></data-table>

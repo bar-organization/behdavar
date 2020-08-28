@@ -1,0 +1,85 @@
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {MatSort} from "@angular/material/sort";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
+import HttpDataSource from "./HttpDataSource";
+import {PagingRequest} from "./PaginationModel";
+import {tap} from "rxjs/operators";
+import {BehaviorSubject, Observable} from "rxjs";
+
+@Component({
+  selector: 'data-table',
+  templateUrl: './data-table.component.html',
+  styleUrls: ['./data-table.component.css']
+})
+export class DataTableComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @Input()
+  tableColumns: TableColumn[];
+
+  @Input()
+  matTableDataSource: MatTableDataSource<unknown>;
+
+  @Input()
+  httpDataSource: HttpDataSource<unknown>;
+
+  public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
+  public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
+  loadingText = 'درحال واکشی...';
+
+
+  ngOnInit(): void {
+    this.configureMatTableDataSource();
+    this.configureHttpDataSource();
+  }
+
+  ngAfterViewInit(): void {
+    this.paginator.page.pipe(tap(() => this.configureHttpDataSource())).subscribe();
+  }
+
+  getPageRequest() {
+    const request = new PagingRequest()
+    if (this.paginator) {
+      request.start = this.paginator.pageIndex;
+      request.max = this.paginator.pageSize;
+    } else {
+      request.start = 0;
+      request.max = 5;
+    }
+
+    return request;
+  }
+
+  getDisplayedColumns(): string[] {
+    if (!this.tableColumns) {
+      return [];
+    }
+    return this.tableColumns.filter(value => !value.hidden).map(value => value.name);
+  }
+
+  private configureMatTableDataSource() {
+    if (this.matTableDataSource) {
+      this.matTableDataSource.sort = this.sort;
+      this.matTableDataSource.paginator = this.paginator;
+    }
+  }
+
+  private configureHttpDataSource() {
+    if (this.httpDataSource) {
+      this.httpDataSource.find(this.getPageRequest())
+      this.loading$ = this.httpDataSource.loadingSubject.asObservable();
+      this.totalRecord$ = this.httpDataSource.totalRecordSubject.asObservable();
+    }
+  }
+}
+
+export interface TableColumn {
+  name: string;
+  title: string;
+  hidden?: boolean;
+}
+
+export declare type DataSourceType = 'array' | 'http' | undefined;

@@ -2,6 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DocumentSearchLang} from '../../model/lang';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {TableColumn} from "../../_custom-component/data-table/data-table.component";
+import {CatalogDto} from "../../model/model";
+import HttpDataSource from "../../_custom-component/data-table/HttpDataSource";
+import Url from "../../model/url";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-document-search',
@@ -16,6 +21,8 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ],
 })
 export class DocumentSearchComponent implements OnInit {
+  panelOpenState = false;
+
   parentForm: FormGroup;
   bankMachineSearchFormGroup: FormGroup;
   customerSearchFormGroup: FormGroup;
@@ -23,15 +30,7 @@ export class DocumentSearchComponent implements OnInit {
 
   documentSearchLang: DocumentSearchLang = new DocumentSearchLang();
 
-  myColumns: string[] = ['id', 'name', 'desc'];
-  expendedDocument: DocumentModel | null;
-
-  documentList: DocumentModel[] = [
-    {id: 1, name: 'doc1', desc: 'THis is test doc'},
-    {id: 1, name: 'doc1', desc: 'THis is test doc'},
-    {id: 1, name: 'doc1', desc: 'THis is test doc'}]
-
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private httpClient:HttpClient) {
     this.bankMachineSearchFormGroup = fb.group({
       bank: [''],
       branch: [''],
@@ -69,11 +68,14 @@ export class DocumentSearchComponent implements OnInit {
   onSub() {
     console.log(this.parentForm);
   }
+  // TODO httpClint not be required for constructor
+  catalogHttpDataSource: HttpDataSource<CatalogDto> = new HttpDataSource<CatalogDto>(Url.CATALOG_FIND_PAGING,this.httpClient);
 
-}
-
-export interface DocumentModel {
-  id: number;
-  name: string;
-  desc: string;
+  tableColumns: TableColumn[] = [
+    {name: "id", title: 'شناسه'},
+    {name: "code", title: 'کد'},
+    {name: 'englishTitle', title: 'عنوان انگلیسی'},
+    {name: 'title', title: 'عنوان'},
+    {name: 'active', title: 'فعال'},
+  ]
 }

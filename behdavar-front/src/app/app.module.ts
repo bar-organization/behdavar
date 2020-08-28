@@ -36,31 +36,40 @@ import { SearchPanelComponent } from './navigation-tab/search-panel/search-panel
 import { ReportsComponent } from './navigation-tab/reports/reports.component';
 import {UtilityToolsComponent} from './navigation-tab/utility-tools/utility-tools.component';
 import {AppRoutingModule} from "./app-routing.module";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {MatSortModule} from "@angular/material/sort";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { DataTableComponent } from './_custom-component/data-table/data-table.component'
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatListModule,
-    MatToolbarModule,
-    FlexModule,
-    MatTabsModule,
-    MatMenuModule,
-    MatTableModule,
-    MatCheckboxModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatNativeDateModule
-  ],
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatListModule,
+        MatToolbarModule,
+        FlexModule,
+        MatTabsModule,
+        MatMenuModule,
+        MatTableModule,
+        MatCheckboxModule,
+        MatSelectModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatExpansionModule,
+        MatSortModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+    ],
   declarations: [
     AppComponent,
     HomeComponent,
@@ -77,7 +86,9 @@ import {AppRoutingModule} from "./app-routing.module";
     MyBasketComponent ,
     SearchPanelComponent ,
     ReportsComponent,
-    UtilityToolsComponent],
+    UtilityToolsComponent,
+    DataTableComponent,
+  ],
 
   providers: [
   ],

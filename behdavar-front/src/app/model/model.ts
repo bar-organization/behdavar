@@ -11,14 +11,14 @@ export class Guarantors extends BaseModel<number> {
 export class Person {
   name: string;
   family: string;
-  fatherName: string;
-  birthDate: Date;
+  fatherName?: string;
+  birthDate?: Date;
   nationalNumber: string;
-  postalCode: string;
-  mobile: string;
-  telephone: string;
-  birthPlace: string;
-  workPlacePhone: string;
+  postalCode?: string;
+  mobile?: string;
+  telephone?: string;
+  birthPlace?: string;
+  workPlacePhone?: string;
 }
 
 export class AuthenticationRequest {
@@ -41,6 +41,14 @@ export class UserDto {
   isAccountNonLocked: boolean;
   isCredentialsNonExpired: boolean;
   roles: RoleDto[];
+}
+
+export class CatalogDto {
+  id: number;
+  code: string;
+  englishTitle: string;
+  title: string;
+  active: boolean;
 }
 
 export class RoleDto {
