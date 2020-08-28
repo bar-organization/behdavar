@@ -47,6 +47,7 @@ Content-Type: application/json
 # call catalog find paging
 POST http://127.0.0.1:8081/api/cartable/find-paging
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2Mjk0MTMsImV4cCI6MTU5ODYzMzAxM30.1UiJgfnGeRzlNtxxNUMLV7OEvTKx4KD5pj5-FT2HVTI
 
 {
   "start": 0,

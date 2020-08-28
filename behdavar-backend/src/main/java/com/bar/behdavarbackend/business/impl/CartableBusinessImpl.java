@@ -4,9 +4,8 @@ import com.bar.behdavarbackend.business.api.CartableBusiness;
 import com.bar.behdavarbackend.business.transformer.CartableTransformer;
 import com.bar.behdavarbackend.dto.CartableDto;
 import com.bar.behdavarbackend.exception.BusinessException;
-import com.bar.behdavarbackend.util.pagination.PagingExecutor;
-import com.bar.behdavarbackend.util.pagination.PagingRequest;
-import com.bar.behdavarbackend.util.pagination.PagingResponse;
+import com.bar.behdavarbackend.util.SecurityUtil;
+import com.bar.behdavarbackend.util.pagination.*;
 import com.bar.behdavardatabase.entity.CartableEntity;
 import com.bar.behdavardatabase.repository.CartableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +51,7 @@ public class CartableBusinessImpl implements CartableBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
+        pagingRequest.getFilters().add(new SearchCriteria(CartableEntity.RECEIVER, SecurityUtil.getCurrentUserId(), SearchOperation.EQUAL));
         PagingExecutor executor = new PagingExecutor(cartableRepository, pagingRequest);
 
         PagingResponse pagingResponse = executor.execute();
