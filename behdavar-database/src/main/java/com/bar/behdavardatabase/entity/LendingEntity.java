@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
@@ -24,5 +26,19 @@ public class LendingEntity extends BaseAuditorEntity<String, Long> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = LendingEntity.SEQ_NAME)
     @SequenceGenerator(name = LendingEntity.SEQ_NAME, sequenceName = LendingEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
+
+
+    @Column(name = "MASTER_AMOUNT", columnDefinition = "NUMBER(24,4)")
+    private BigDecimal masterAmount;
+
+    @Column(name = "IDEA_ISSUE_DATE")
+    private LocalDate ideaIssueDate;
+
+    @Column(name = "receive_Lending_Date")
+    private LocalDate receiveLendingDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BANK_ID", foreignKey = @ForeignKey(name = "LENDIING_BANK_FK"))
+    private BankBranchEntity branchBank;
 
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/pursuit-log")
+@RequestMapping("/api/pursuit-log")
 @Validated
 public class PursuitLogRest {
 

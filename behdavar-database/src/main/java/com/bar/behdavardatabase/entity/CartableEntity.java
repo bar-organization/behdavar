@@ -20,6 +20,9 @@ public class CartableEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "CARTABLE";
     public static final String SEQ_NAME = "MESSAGE" + BaseConstant.SEQUENCE;
+    public static final String SENDER = "sender";
+    public static final String RECEIVER = "receiver";
+    public static final String CONTRACT = "contract";
 
     @Column(name = "ID")
     @Id
