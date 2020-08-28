@@ -73,10 +73,13 @@ export class DocumentSearchComponent implements OnInit {
   catalogHttpDataSource: HttpDataSource<CartableDto> = new HttpDataSource<CartableDto>(Url.CARTABLE_FIND_PAGING, this.httpClient);
 
   tableColumns: TableColumn[] = [
-    {fieldName: "id", title: 'شناسه'},
-    {fieldName: "receiver.firstName", title: 'نام مشتری'},
-    {fieldName: 'englishTitle', title: 'عنوان انگلیسی'},
-    {fieldName: 'title', title: 'عنوان'},
-    {fieldName: 'active', title: 'فعال'},
+    {fieldName: "receiver.firstName", title: this.documentSearchLang.customerName},
+    {fieldName: 'contract.lendingNumber', title: this.documentSearchLang.facilityNumber},
+    {fieldName: 'contract.contractStatus', title: this.documentSearchLang.status},
+    {fieldName: 'contract.lateFees', title: this.documentSearchLang.lateFees},
+    {fieldName: 'contract.defferedAmount', title:  this.documentSearchLang.deferredAmount},
+    {fieldName: 'contract.defferedCount', title:  this.documentSearchLang.deferredCount},
+    {fieldName: 'contract.masterAmount', title:  this.documentSearchLang.totalAmount},
+    {fieldName: 'contract.submitDate', title: this.documentSearchLang.registrationDate},
   ]
 }

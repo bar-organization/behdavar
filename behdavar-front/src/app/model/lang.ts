@@ -4,6 +4,7 @@ export class Lang {
   reset = 'بازنشانی'
   appTitle = 'بهداور';
   logout = 'خروج';
+  row = 'ردیف';
 }
 
 export class LoginLang extends Lang {
@@ -46,8 +47,13 @@ export class DocumentSearchLang extends PersonLang {
   bankMachine = 'بانک/ماشین';
   document = 'پرونده';
   customer = 'مشتری';
+  customerName = 'نام مشتری';
   facilityNumber = 'شماره تسهیلات';
   status = 'وضعیت پرونده';
+  lateFees = 'جریمه دیرکرد';
+  deferredAmount = 'مبلغ معوق';
+  deferredCount = 'تعداد معوق';
+  totalAmount = 'مجموع تسهیلات';
   registrationDate = 'تاریخ ثبت پرونده';
   bank = 'بانک';
   branch = 'شعبه';
