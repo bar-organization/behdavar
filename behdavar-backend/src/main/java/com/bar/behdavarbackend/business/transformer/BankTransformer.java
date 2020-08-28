@@ -1,26 +1,39 @@
 package com.bar.behdavarbackend.business.transformer;
 
+import com.bar.behdavarbackend.dto.AddressDto;
 import com.bar.behdavarbackend.dto.BankDto;
-import com.bar.behdavardatabase.entity.BankEntity;
+import com.bar.behdavarbackend.dto.CatalogDetailDto;
+import com.bar.behdavardatabase.entity.BankBranchEntity;
+
+import java.util.Optional;
 
 public class BankTransformer {
 
-    public static BankEntity DTO_TO_ENTITY(BankDto dto, BankEntity entity) {
+    public static BankBranchEntity DTO_TO_ENTITY(BankDto dto, BankBranchEntity entity) {
         entity.setCode(dto.getCode());
-        entity.setAddress(dto.getAddress());
-        entity.setBankType(entity.getBankType());
-        entity.setCityType(dto.getCityType());
-        entity.setCity(GeoDivisionTransformer.CREATE_ENTITY_FOR_RELATION(dto.getCity().getId()));
-        entity.setFax(dto.getFax());
-        entity.setHeads(dto.getHeads());
+        Optional.ofNullable(dto.getAddress()).ifPresent(addressDto -> entity.setAddress(AddressTransformer.CREATE_ENTITY_FOR_RELATION(addressDto.getId())));
+        entity.setBankType(CatalogDetailTransformer.CREATE_ENTITY_FOR_RELATION(dto.getBankType().getId()));
         entity.setName(dto.getName());
-        entity.setPhone(dto.getPhone());
+        entity.setActive(dto.getActive());
         return entity;
     }
 
-    public static BankEntity CREATE_ENTITY_FOR_RELATION(Long id) {
-        BankEntity entity = new BankEntity();
+    public static BankDto ENTITY_TO_DTO(BankBranchEntity entity, BankDto dto) {
+        dto.setId(entity.getId());
+        dto.setVersion(entity.getVersion());
+        dto.setCode(entity.getCode());
+        Optional.ofNullable(entity.getAddress()).ifPresent(addressEntity -> dto.setAddress(AddressTransformer.ENTITY_TO_DTO(addressEntity, new AddressDto())));
+        dto.setBankType(CatalogDetailTransformer.ENTITY_TO_DTO(entity.getBankType(), new CatalogDetailDto()));
+        dto.setName(entity.getName());
+        dto.setActive(entity.getActive());
+        return dto;
+    }
+
+
+    public static BankBranchEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+        BankBranchEntity entity = new BankBranchEntity();
         entity.setId(id);
+        entity.setVersion(0l);
         return entity;
     }
 }

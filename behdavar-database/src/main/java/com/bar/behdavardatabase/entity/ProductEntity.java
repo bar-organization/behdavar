@@ -25,4 +25,12 @@ public class ProductEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = ProductEntity.SEQ_NAME, sequenceName = ProductEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
+    @Column(name = "PRODUCT_SHASI_NUMBER", columnDefinition = "VARCHAR(50)")
+    private String productShasiNumber;
+
+    @Column(name = "PRODUCT_PLATE", columnDefinition = "VARCHAR(50)")
+    private String productPlate;
+
+    @Column(name = "PRODUCT_NAME", columnDefinition = "VARCHAR(100)")
+    private String productName;
 }

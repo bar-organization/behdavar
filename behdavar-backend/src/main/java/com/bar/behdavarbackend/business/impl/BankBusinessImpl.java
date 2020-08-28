@@ -7,7 +7,7 @@ import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.PagingExecutor;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
-import com.bar.behdavardatabase.entity.BankEntity;
+import com.bar.behdavardatabase.entity.BankBranchEntity;
 import com.bar.behdavardatabase.repository.BankRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,20 +20,20 @@ public class BankBusinessImpl implements BankBusiness {
     private BankRepository BankRepository;
 
     @Override
-    public BankEntity findById(Long id) {
+    public BankBranchEntity findById(Long id) {
         return BankRepository.findById(id).orElseThrow(() -> new BusinessException("error.Bank.not.found", id));
     }
 
     @Override
     public Long save(BankDto dto) {
-        BankEntity BankEntity = BankTransformer.DTO_TO_ENTITY(dto, new BankEntity());
-        return BankRepository.save(BankEntity).getId();
+        BankBranchEntity BankBranchEntity = BankTransformer.DTO_TO_ENTITY(dto, new BankBranchEntity());
+        return BankRepository.save(BankBranchEntity).getId();
     }
 
     @Override
     public void update(BankDto dto) {
-        BankEntity BankEntity = BankTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
-        BankRepository.save(BankEntity);
+        BankBranchEntity BankBranchEntity = BankTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
+        BankRepository.save(BankBranchEntity);
     }
 
     @Override
