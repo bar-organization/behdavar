@@ -1,0 +1,70 @@
+# call status-log find by id
+POST http://127.0.0.1:8081/status-log/find-by-id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTk3NjgsImV4cCI6MTU5ODcwMzM2OH0.pe2awsk_PHUBsdHd86y915DILNrl5aNenyebTliOUps
+
+2
+
+###
+# call status-log find by id
+POST http://127.0.0.1:8081/status-log/find-by-contract
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTk3NjgsImV4cCI6MTU5ODcwMzM2OH0.pe2awsk_PHUBsdHd86y915DILNrl5aNenyebTliOUps
+
+1
+
+###
+# call status-log save
+POST http://127.0.0.1:8081/status-log/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTk3NjgsImV4cCI6MTU5ODcwMzM2OH0.pe2awsk_PHUBsdHd86y915DILNrl5aNenyebTliOUps
+
+{
+  "status": 0,
+  "user": {
+    "id": 1
+  },
+  "contract": {
+    "id": 1
+  }
+}
+
+###
+# call status-log update
+POST http://127.0.0.1:8081/status-log/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTk3NjgsImV4cCI6MTU5ODcwMzM2OH0.pe2awsk_PHUBsdHd86y915DILNrl5aNenyebTliOUps
+
+{
+  "id": 2,
+  "version": 0,
+  "status": 0,
+  "user": {
+    "id": 1
+  },
+  "contract": {
+    "id": 2
+  }
+}
+
+
+###
+# call status-log find paging
+POST http://127.0.0.1:8081/status-log/find-paging
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTk3NjgsImV4cCI6MTU5ODcwMzM2OH0.pe2awsk_PHUBsdHd86y915DILNrl5aNenyebTliOUps
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+    {
+      "key": "contract.id",
+      "value": "2",
+      "operation": "EQUAL"
+    }
+  ]
+}
+
+###
+
