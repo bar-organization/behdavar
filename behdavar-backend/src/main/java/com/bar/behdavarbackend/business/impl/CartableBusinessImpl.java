@@ -2,12 +2,15 @@ package com.bar.behdavarbackend.business.impl;
 
 import com.bar.behdavarbackend.business.api.CartableBusiness;
 import com.bar.behdavarbackend.business.api.StatusLogBusiness;
+import com.bar.behdavarbackend.business.api.UserAmountBusiness;
+import com.bar.behdavarbackend.business.api.UserLogBusiness;
 import com.bar.behdavarbackend.business.transformer.CartableTransformer;
 import com.bar.behdavarbackend.business.transformer.ContractTransformer;
 import com.bar.behdavarbackend.business.transformer.UserTransformer;
 import com.bar.behdavarbackend.dto.AssignContractDto;
 import com.bar.behdavarbackend.dto.CartableDto;
 import com.bar.behdavarbackend.dto.StatusLogDto;
+import com.bar.behdavarbackend.dto.UserInfoDto;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.*;
 import com.bar.behdavardatabase.entity.CartableEntity;
@@ -29,6 +32,13 @@ public class CartableBusinessImpl implements CartableBusiness {
 
     @Autowired
     private StatusLogBusiness statusLogBusiness;
+
+    @Autowired
+    private UserLogBusiness userLogBusiness;
+
+    @Autowired
+    private UserAmountBusiness userAmountBusiness;
+
 
     @Override
     public CartableDto findById(Long id) {
@@ -96,5 +106,16 @@ public class CartableBusinessImpl implements CartableBusiness {
         statusLogBusiness.save(statusLogDto);
 
 
+    }
+
+    @Override
+    public UserInfoDto getUserInfo() {
+        UserInfoDto userInfoDto = new UserInfoDto();
+        Long currentUserId = SecurityUtil.getCurrentUserId();
+        userInfoDto.setActiveCount(cartableRepository.findUserActiveCount(currentUserId));
+        userInfoDto.setLastLogin(userLogBusiness.getLastLogin());
+        userInfoDto.setUserAmount(userAmountBusiness.findByUserId(currentUserId));
+
+        return userInfoDto;
     }
 }

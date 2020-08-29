@@ -18,4 +18,6 @@ public interface UserAmountBusiness {
     PagingResponse findPaging(PagingRequest pagingRequest);
 
     void increaseReceiveAmount(BigDecimal amount);
+
+    UserAmountDto findByUserId(Long userId);
 }

@@ -76,4 +76,11 @@ public class UserAmountBusinessImpl implements UserAmountBusiness {
         });
     }
 
+    @Override
+    public UserAmountDto findByUserId(Long userId) {
+        return userAmountRepository.findByUserId(userId)
+                .map(userAmountEntity -> UserAmountTransformer.ENTITY_TO_DTO(userAmountEntity, new UserAmountDto()))
+                .orElse(null);
+    }
+
 }

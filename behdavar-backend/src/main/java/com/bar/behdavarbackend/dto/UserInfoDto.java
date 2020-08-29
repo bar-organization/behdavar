@@ -4,14 +4,12 @@ import com.bar.behdavarbackend.dto.common.BaseAuditorDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
-public class CatalogDetailDto extends BaseAuditorDto<String, Long> {
-
-    private String englishTitle;
-    private String title;
-    private String code;
-    private Boolean active;
-    private CatalogDto catalog;
-
+public class UserInfoDto extends BaseAuditorDto<String, Long> {
+    private LocalDateTime lastLogin;
+    private UserAmountDto userAmount;
+    private Long activeCount;
 }

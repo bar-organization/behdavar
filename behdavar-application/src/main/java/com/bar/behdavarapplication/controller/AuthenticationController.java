@@ -5,6 +5,7 @@ import com.bar.behdavarapplication.model.AuthenticationResponse;
 import com.bar.behdavarapplication.service.AppUserDetailService;
 import com.bar.behdavarapplication.service.JWTService;
 import com.bar.behdavarbackend.business.api.UserBusiness;
+import com.bar.behdavarbackend.business.api.UserLogBusiness;
 import com.bar.behdavarbackend.dto.UserDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,14 +22,16 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final AppUserDetailService userDetailService;
     private final UserBusiness userBusiness;
+    private final UserLogBusiness userLogBusiness;
 
     private final JWTService jwtService;
 
-    public AuthenticationController(AuthenticationManager authenticationManager, AppUserDetailService userDetailService, UserBusiness userBusiness, JWTService jwtService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, AppUserDetailService userDetailService, UserBusiness userBusiness, JWTService jwtService, UserLogBusiness userLogBusiness) {
         this.authenticationManager = authenticationManager;
         this.userDetailService = userDetailService;
         this.userBusiness = userBusiness;
         this.jwtService = jwtService;
+        this.userLogBusiness = userLogBusiness;
     }
 
     @PostMapping({"/token", "/login"})
@@ -48,6 +51,7 @@ public class AuthenticationController {
 
         final String jwt = jwtService.generateToken(userDetails);
 
+        userLogBusiness.writeLoginLog(userDto);
         return ResponseEntity.ok(new AuthenticationResponse(jwt, userDto));
     }
 

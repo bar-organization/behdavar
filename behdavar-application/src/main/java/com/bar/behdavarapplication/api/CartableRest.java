@@ -3,6 +3,7 @@ package com.bar.behdavarapplication.api;
 import com.bar.behdavarbackend.business.api.CartableBusiness;
 import com.bar.behdavarbackend.dto.AssignContractDto;
 import com.bar.behdavarbackend.dto.CartableDto;
+import com.bar.behdavarbackend.dto.UserInfoDto;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,10 @@ public class CartableRest {
         return new ResponseEntity<>(CartableBusiness.findById(id), HttpStatus.OK);
     }
 
+    @PostMapping("/get-user-info")
+    public ResponseEntity<UserInfoDto> getUserInfo() {
+        return new ResponseEntity<>(CartableBusiness.getUserInfo(), HttpStatus.OK);
+    }
 
     @PostMapping("/save")
     public ResponseEntity<Long> save(@Valid @RequestBody CartableDto dto) {
