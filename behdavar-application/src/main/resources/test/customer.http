@@ -1,9 +1,71 @@
-# call guarantor find by contract
-POST http://127.0.0.1:8081/customer/find-by-contract
+# call customer find by id
+POST http://127.0.0.1:8081/api/customer/find-by-id
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTU4MTEsImV4cCI6MTU5ODY5OTQxMX0.irkK9m-JlwJGNTtj1th6nPgTohEn73r7jocfGpM1FyM
+
+1
+
+###
+
+# call customer find by contract
+POST http://127.0.0.1:8081/api/customer/find-by-contract
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTU4MTEsImV4cCI6MTU5ODY5OTQxMX0.irkK9m-JlwJGNTtj1th6nPgTohEn73r7jocfGpM1FyM
 
 2
 
 ###
+# call customer save
+POST http://127.0.0.1:8081/api/customer/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTU4MTEsImV4cCI6MTU5ODY5OTQxMX0.irkK9m-JlwJGNTtj1th6nPgTohEn73r7jocfGpM1FyM
+
+{
+  "contract": {
+    "id": 1
+  },
+  "person": {
+    "id": 1
+  }
+}
+
+###
+# call customer update
+POST http://127.0.0.1:8081/api/customer/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTU4MTEsImV4cCI6MTU5ODY5OTQxMX0.irkK9m-JlwJGNTtj1th6nPgTohEn73r7jocfGpM1FyM
+
+{
+  "id": 1,
+  "version": 0,
+  "amount": 1000320000,
+  "paymentDate": "2018-12-21",
+  "paymentType": 0,
+  "contract": {
+    "id": 1
+  },
+  "user": {
+    "id": 1
+  }
+}
 
 
+###
+# call customer find paging
+POST http://127.0.0.1:8081/api/customer/find-paging
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTU4MTEsImV4cCI6MTU5ODY5OTQxMX0.irkK9m-JlwJGNTtj1th6nPgTohEn73r7jocfGpM1FyM
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+    {
+      "key": "contract.id",
+      "value": "1",
+      "operation": "EQUAL"
+    }
+  ]
+}
+
+###

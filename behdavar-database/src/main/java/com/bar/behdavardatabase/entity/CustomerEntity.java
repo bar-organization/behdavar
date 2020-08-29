@@ -18,6 +18,8 @@ public class CustomerEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "CUSTOMER";
     public static final String SEQ_NAME = "CUSTOMER" + BaseConstant.SEQUENCE;
+    public static final String PERSON = "person";
+    public static final String CONTRACT = "contract";
 
     @Column(name = "ID")
     @Id

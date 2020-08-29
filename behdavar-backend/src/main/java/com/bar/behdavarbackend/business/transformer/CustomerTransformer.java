@@ -5,6 +5,10 @@ import com.bar.behdavarbackend.dto.CustomerDto;
 import com.bar.behdavarbackend.dto.PersonDto;
 import com.bar.behdavardatabase.entity.CustomerEntity;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CustomerTransformer {
 
     public static CustomerEntity DTO_TO_ENTITY(CustomerDto dto, CustomerEntity entity) {
@@ -13,11 +17,20 @@ public class CustomerTransformer {
         return entity;
     }
 
-    public static CustomerDto ENTITY_TO_DTO(CustomerEntity entity, CustomerDto dto) {
+    public static CustomerDto ENTITY_TO_DTO(CustomerEntity entity, CustomerDto dto, String... strings) {
+        List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         dto.setId(entity.getId());
         dto.setVersion(entity.getVersion());
-        dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
-        dto.setPerson(PersonTransformer.ENTITY_TO_DTO(entity.getPerson(), new PersonDto()));
+        if (fields.contains(CustomerEntity.CONTRACT)) {
+            dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
+        } else {
+            dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
+        }
+        if (fields.contains(CustomerEntity.PERSON)) {
+            dto.setPerson(PersonTransformer.ENTITY_TO_DTO(entity.getPerson(), new PersonDto()));
+        } else {
+            dto.setPerson(PersonTransformer.CREATE_DTO_FOR_RELATION(entity.getPerson().getId()));
+        }
         return dto;
     }
 

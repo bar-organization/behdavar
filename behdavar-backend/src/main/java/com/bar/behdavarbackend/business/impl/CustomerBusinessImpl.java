@@ -24,8 +24,9 @@ public class CustomerBusinessImpl implements CustomerBusiness {
     private CustomerRepository customerRepository;
 
     @Override
-    public CustomerEntity findById(Long id) {
-        return customerRepository.findById(id).orElseThrow(() -> new BusinessException("error.Customer.not.found", id));
+    public CustomerDto findById(Long id) {
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> new BusinessException("error.Customer.not.found", id));
+        return CustomerTransformer.ENTITY_TO_DTO(customerEntity, new CustomerDto(), CustomerEntity.PERSON);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class CustomerBusinessImpl implements CustomerBusiness {
 
     @Override
     public void update(CustomerDto dto) {
-        CustomerEntity customerEntity = CustomerTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
+        CustomerEntity customerEntity = CustomerTransformer.DTO_TO_ENTITY(dto, customerRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Customer.not.found", dto.getId())));
         customerRepository.save(customerEntity);
     }
 
@@ -51,7 +52,7 @@ public class CustomerBusinessImpl implements CustomerBusiness {
         List<CustomerEntity> allByContractId = customerRepository.findByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
             allByContractId.forEach(e -> {
-                customerDtos.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto()));
+                customerDtos.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON));
             });
         }
         return customerDtos;
@@ -60,6 +61,14 @@ public class CustomerBusinessImpl implements CustomerBusiness {
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
         PagingExecutor executor = new PagingExecutor(customerRepository, pagingRequest);
-        return executor.execute();
+
+        PagingResponse pagingResponse = executor.execute();
+        if (pagingResponse.getData() != null) {
+            List<CustomerEntity> data = (List<CustomerEntity>) pagingResponse.getData();
+            List<CustomerDto> output = new ArrayList<>();
+            data.forEach(e -> output.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.PERSON)));
+            pagingResponse.setData(output);
+        }
+        return pagingResponse;
     }
 }
