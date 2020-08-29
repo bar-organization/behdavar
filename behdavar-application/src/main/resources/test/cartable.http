@@ -62,4 +62,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2M
 }
 
 ###
+###
+# call catalog save
+POST http://127.0.0.1:8081/api/cartable/assign
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg3MjUwNzYsImV4cCI6MTU5ODcyODY3Nn0.g5oAkymuy4TrUrJ3XwxQ0rBo14aoPkOJs2h11aYYFZI
 
+{
+  "assigneeId": 1,
+  "contractId": 1,
+  "status": "STATUS_1"
+}

@@ -1,8 +1,13 @@
 package com.bar.behdavarbackend.business.impl;
 
 import com.bar.behdavarbackend.business.api.CartableBusiness;
+import com.bar.behdavarbackend.business.api.StatusLogBusiness;
 import com.bar.behdavarbackend.business.transformer.CartableTransformer;
+import com.bar.behdavarbackend.business.transformer.ContractTransformer;
+import com.bar.behdavarbackend.business.transformer.UserTransformer;
+import com.bar.behdavarbackend.dto.AssignContractDto;
 import com.bar.behdavarbackend.dto.CartableDto;
+import com.bar.behdavarbackend.dto.StatusLogDto;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.*;
 import com.bar.behdavardatabase.entity.CartableEntity;
@@ -22,6 +27,9 @@ public class CartableBusinessImpl implements CartableBusiness {
     @Autowired
     private CartableRepository cartableRepository;
 
+    @Autowired
+    private StatusLogBusiness statusLogBusiness;
+
     @Override
     public CartableDto findById(Long id) {
         CartableEntity cartableEntity = cartableRepository.findById(id).orElseThrow(() -> new BusinessException("error.Cartable.not.found", id));
@@ -32,6 +40,7 @@ public class CartableBusinessImpl implements CartableBusiness {
     @Transactional
     public Long save(CartableDto dto) {
         CartableEntity cartableEntity = CartableTransformer.DTO_TO_ENTITY(dto, new CartableEntity());
+        cartableEntity.setActive(Boolean.TRUE);
         cartableEntity.setId(cartableRepository.save(cartableEntity).getId());
         return cartableEntity.getId();
     }
@@ -41,6 +50,7 @@ public class CartableBusinessImpl implements CartableBusiness {
     public void update(CartableDto dto) {
         CartableEntity cartableEntity = CartableTransformer.DTO_TO_ENTITY(dto, cartableRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.Cartable.not.found", dto.getId())));
+        cartableEntity.setActive(Boolean.TRUE);
         cartableRepository.save(cartableEntity);
     }
 
@@ -62,5 +72,29 @@ public class CartableBusinessImpl implements CartableBusiness {
             pagingResponse.setData(output);
         }
         return pagingResponse;
+    }
+
+    @Transactional
+    @Override
+    public void assignContract(AssignContractDto dto) {
+        cartableRepository.findByContractIdAndActive(dto.getContractId(), Boolean.TRUE)
+                .ifPresent(cartableEntity -> {
+                    cartableEntity.setActive(false);
+                    cartableRepository.save(cartableEntity);
+                });
+        CartableEntity newEntity = new CartableEntity();
+        newEntity.setContract(ContractTransformer.CREATE_ENTITY_FOR_RELATION(dto.getContractId()));
+        newEntity.setReceiver(UserTransformer.CREATE_ENTITY_FOR_RELATION(dto.getAssigneeId()));
+        newEntity.setSender(UserTransformer.CREATE_ENTITY_FOR_RELATION(SecurityUtil.getCurrentUserId()));
+        newEntity.setActive(Boolean.TRUE);
+        cartableRepository.save(newEntity);
+
+        StatusLogDto statusLogDto = new StatusLogDto();
+        statusLogDto.setStatus(dto.getStatus());
+        statusLogDto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(dto.getContractId()));
+        statusLogDto.setUser(UserTransformer.CREATE_DTO_FOR_RELATION(dto.getAssigneeId()));
+        statusLogBusiness.save(statusLogDto);
+
+
     }
 }

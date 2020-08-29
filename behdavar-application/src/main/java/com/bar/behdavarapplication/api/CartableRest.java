@@ -1,6 +1,7 @@
 package com.bar.behdavarapplication.api;
 
 import com.bar.behdavarbackend.business.api.CartableBusiness;
+import com.bar.behdavarbackend.dto.AssignContractDto;
 import com.bar.behdavarbackend.dto.CartableDto;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
@@ -33,6 +34,12 @@ public class CartableRest {
     @PostMapping("/save")
     public ResponseEntity<Long> save(@Valid @RequestBody CartableDto dto) {
         return new ResponseEntity<>(CartableBusiness.save(dto), HttpStatus.OK);
+    }
+
+    @PostMapping("/assign")
+    public ResponseEntity<Void> save(@Valid @RequestBody AssignContractDto dto) {
+        CartableBusiness.assignContract(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/update")
