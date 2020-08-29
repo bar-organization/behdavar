@@ -92,7 +92,7 @@ public class CartableBusinessImpl implements CartableBusiness {
         StatusLogDto statusLogDto = new StatusLogDto();
         statusLogDto.setStatus(dto.getStatus());
         statusLogDto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(dto.getContractId()));
-        statusLogDto.setUser(UserTransformer.CREATE_DTO_FOR_RELATION(dto.getAssigneeId()));
+        statusLogDto.setUser(UserTransformer.CREATE_DTO_FOR_RELATION(SecurityUtil.getCurrentUserId()));
         statusLogBusiness.save(statusLogDto);
 
 
