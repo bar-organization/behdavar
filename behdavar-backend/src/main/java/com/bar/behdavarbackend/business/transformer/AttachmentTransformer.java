@@ -18,6 +18,7 @@ public class AttachmentTransformer {
         entity.setAttachmentType(CatalogDetailTransformer.CREATE_ENTITY_FOR_RELATION(dto.getAttachmentType().getId()));
         entity.setFileName(dto.getFileName());
         entity.setContent(Base64Utils.decodeFromString(dto.getContent()));
+
         return entity;
     }
 

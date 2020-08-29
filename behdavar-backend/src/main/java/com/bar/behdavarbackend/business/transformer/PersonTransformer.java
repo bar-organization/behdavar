@@ -20,6 +20,14 @@ public class PersonTransformer {
     public static PersonEntity CREATE_ENTITY_FOR_RELATION(Long id) {
         PersonEntity entity = new PersonEntity();
         entity.setId(id);
+        entity.setVersion(0L);
         return entity;
+    }
+
+    public static PersonDto CREATE_DTO_FOR_RELATION(Long id) {
+        PersonDto dto = new PersonDto();
+        dto.setId(id);
+        dto.setVersion(0L);
+        return dto;
     }
 }

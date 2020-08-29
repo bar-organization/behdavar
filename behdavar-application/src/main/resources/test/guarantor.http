@@ -1,9 +1,31 @@
-# call guarantor find by contract
-POST http://127.0.0.1:8081/guarantor/find-by-contract
+# call guarantor find by id
+POST http://127.0.0.1:8081/api/guarantor/find-by-id
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTA2NjEsImV4cCI6MTU5ODY5NDI2MX0.ATKjbHuDVMhqwV3zltxry-jPm4e5PdOGSVLd6qBB2d8
+
+5
+
+###
+# call guarantor find by contract
+POST http://127.0.0.1:8081/api/guarantor/find-by-contract
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTA2NjEsImV4cCI6MTU5ODY5NDI2MX0.ATKjbHuDVMhqwV3zltxry-jPm4e5PdOGSVLd6qBB2d8
 
 1
 
 ###
 
+# call guarantor save
+POST http://127.0.0.1:8081/api/guarantor/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTA2NjEsImV4cCI6MTU5ODY5NDI2MX0.ATKjbHuDVMhqwV3zltxry-jPm4e5PdOGSVLd6qBB2d8
 
+{
+  "relationType": 0,
+  "contract": {
+    "id": 1
+  },
+  "person": {
+    "id": 1
+  }
+}
