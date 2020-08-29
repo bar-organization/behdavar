@@ -23,12 +23,17 @@ public class CartableEntity extends BaseAuditorEntity<String, Long> {
     public static final String SENDER = "sender";
     public static final String RECEIVER = "receiver";
     public static final String CONTRACT = "contract";
+    public static final String ACTIVE = "active";
 
     @Column(name = "ID")
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = CartableEntity.SEQ_NAME)
     @SequenceGenerator(name = CartableEntity.SEQ_NAME, sequenceName = CartableEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
+
+    @Column(name = "ACTIVE")
+    @NotNull
+    private Boolean active;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
