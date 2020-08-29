@@ -1,0 +1,74 @@
+# call catalog find by id
+POST http://127.0.0.1:8081/api/payment/find-by-id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2ODYxNTcsImV4cCI6MTU5ODY4OTc1N30.B7W8pLj0iLBqMqmULue130XCBRKSdelelOMxIVU_yIo
+
+1
+
+###
+# call catalog find by id
+POST http://127.0.0.1:8081/api/payment/find-by-contract
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2ODYxNTcsImV4cCI6MTU5ODY4OTc1N30.B7W8pLj0iLBqMqmULue130XCBRKSdelelOMxIVU_yIo
+
+1
+
+###
+# call catalog save
+POST http://127.0.0.1:8081/api/payment/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2ODYxNTcsImV4cCI6MTU5ODY4OTc1N30.B7W8pLj0iLBqMqmULue130XCBRKSdelelOMxIVU_yIo
+
+{
+  "amount": 1000000000,
+  "paymentDate": "2018-12-21",
+  "paymentType": 0,
+  "contract": {
+    "id": 1
+  },
+  "user": {
+    "id": 1
+  }
+}
+
+###
+# call catalog update
+POST http://127.0.0.1:8081/api/payment/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2ODYxNTcsImV4cCI6MTU5ODY4OTc1N30.B7W8pLj0iLBqMqmULue130XCBRKSdelelOMxIVU_yIo
+
+{
+  "id": 1,
+  "version": 0,
+  "amount": 1000320000,
+  "paymentDate": "2018-12-21",
+  "paymentType": 0,
+  "contract": {
+    "id": 1
+  },
+  "user": {
+    "id": 1
+  }
+}
+
+
+###
+# call catalog find paging
+POST http://127.0.0.1:8081/api/payment/find-paging
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2ODYxNTcsImV4cCI6MTU5ODY4OTc1N30.B7W8pLj0iLBqMqmULue130XCBRKSdelelOMxIVU_yIo
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+    {
+      "key": "contract.id",
+      "value": "1",
+      "operation": "EQUAL"
+    }
+  ]
+}
+
+###
+

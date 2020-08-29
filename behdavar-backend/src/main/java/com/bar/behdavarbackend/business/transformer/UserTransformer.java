@@ -50,4 +50,11 @@ public class UserTransformer {
         return userEntity;
     }
 
+    public static UserDto CREATE_DTO_FOR_RELATION(Long id) {
+        UserDto dto = new UserDto();
+        dto.setId(id);
+        dto.setVersion(0L);
+        return dto;
+    }
+
 }
