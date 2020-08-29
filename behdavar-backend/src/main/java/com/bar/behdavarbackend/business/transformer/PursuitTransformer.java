@@ -27,16 +27,16 @@ public class PursuitTransformer {
     public static PursuitDto ENTITY_TO_DTO(PursuitEntity entity, PursuitDto dto) {
         dto.setId(entity.getId());
         dto.setVersion(entity.getVersion());
-        dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
         dto.setCoordinateAppointment(entity.getCoordinateAppointment());
         dto.setCustomerDeposit(entity.getCustomerDeposit());
         dto.setDepositAppointment(entity.getDepositAppointment());
         dto.setDescription(entity.getDescription());
         dto.setNextPursuitDate(entity.getNextPursuitDate());
-        Optional.ofNullable(entity.getPayment()).ifPresent(e -> PaymentTransformer.ENTITY_TO_DTO(e, new PaymentDto()));
         dto.setPursuitType(entity.getPursuitType());
         dto.setResultType(entity.getResultType());
         dto.setSubmitAccordingFinal(entity.getSubmitAccordingFinal());
+        Optional.ofNullable(entity.getPayment()).ifPresent(e -> dto.setPayment(PaymentTransformer.ENTITY_TO_DTO(e, new PaymentDto())));
+        dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
         dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));
         return dto;
     }

@@ -1,20 +1,23 @@
-# call catalog find by id
-POST http://127.0.0.1:8081/pursuit/find-by-id
+# call pursuit find by id
+POST http://127.0.0.1:8081/api/pursuit/find-by-id
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg3MDEzNzYsImV4cCI6MTU5ODcwNDk3Nn0.sDtw1dBBs-m-94VHwVpoNNMLIPxZiIc5DejNlPj1_8U
 
 202
 
 ###
-# call catalog find by id
-POST http://127.0.0.1:8081/pursuit/find-by-contract
+# call pursuit find by id
+POST http://127.0.0.1:8081/api/pursuit/find-by-contract
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg3MDEzNzYsImV4cCI6MTU5ODcwNDk3Nn0.sDtw1dBBs-m-94VHwVpoNNMLIPxZiIc5DejNlPj1_8U
 
 1
 
 ###
-# call catalog save
-POST http://127.0.0.1:8081/pursuit/save
+# call pursuit save
+POST http://127.0.0.1:8081/api/pursuit/save
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg3MDEzNzYsImV4cCI6MTU5ODcwNDk3Nn0.sDtw1dBBs-m-94VHwVpoNNMLIPxZiIc5DejNlPj1_8U
 
 {
   "description": "توضیحات",
@@ -38,9 +41,10 @@ Content-Type: application/json
 }
 
 ###
-# call catalog update
-POST http://127.0.0.1:8081/pursuit/update
+# call pursuit update
+POST http://127.0.0.1:8081/api/pursuit/update
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg3MDEzNzYsImV4cCI6MTU5ODcwNDk3Nn0.sDtw1dBBs-m-94VHwVpoNNMLIPxZiIc5DejNlPj1_8U
 
 {
   "id": 102,
@@ -67,18 +71,23 @@ Content-Type: application/json
 
 
 ###
-# call catalog find paging
-POST http://127.0.0.1:8081/pursuit/find-paging
+# call pursuit find paging
+POST http://127.0.0.1:8081/api/pursuit/find-paging
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg3MDEzNzYsImV4cCI6MTU5ODcwNDk3Nn0.sDtw1dBBs-m-94VHwVpoNNMLIPxZiIc5DejNlPj1_8U
 
 {
   "start": 0,
-  "max": 3,
+  "max": 10,
   "filters": [
     {
       "key": "contract.id",
       "value": "1",
       "operation": "EQUAL"
+    },
+    {
+      "key": "payment",
+      "operation": "NOT_NULL"
     }
   ]
 }

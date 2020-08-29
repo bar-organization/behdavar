@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @RestController
-@RequestMapping("/pursuit")
+@RequestMapping("/api/pursuit")
 @Validated
 public class PursuitRest {
 
