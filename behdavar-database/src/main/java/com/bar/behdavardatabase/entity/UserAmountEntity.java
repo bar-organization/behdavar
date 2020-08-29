@@ -15,7 +15,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @Setter
 @Getter
 @Entity
-@Table(name = UserAmountEntity.TABLE_NAME, schema = ContactConstant.SCHEMA)
+@Table(name = UserAmountEntity.TABLE_NAME, schema = ContactConstant.SCHEMA,
+        uniqueConstraints = @UniqueConstraint(name = "USER_AMOUNT_USER_UK", columnNames = "USER_ID"))
 public class UserAmountEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "USERـAMOUNT";
@@ -35,6 +36,6 @@ public class UserAmountEntity extends BaseAuditorEntity<String, Long> {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false, foreignKey = @ForeignKey(name = "USER_AMOUNT_USER_ID"))
-    private UserEntity User;
+    private UserEntity user;
 
 }

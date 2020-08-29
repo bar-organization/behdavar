@@ -37,7 +37,7 @@ Content-Type: application/json
 
 ###
 # call catalog find paging
-POST http://127.0.0.1:8081/catalog/find-paging
+POST http://127.0.0.1:8081/api/catalog/find-paging
 Content-Type: application/json
 
 {
