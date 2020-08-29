@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/attachment")
+@RequestMapping("/api/attachment")
 @Validated
 public class AttachmentRest {
 

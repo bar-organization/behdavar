@@ -47,4 +47,11 @@ public class PursuitTransformer {
         entity.setVersion(0L);
         return entity;
     }
+
+    public static PursuitDto CREATE_DTO_FOR_RELATION(Long id) {
+        PursuitDto dto = new PursuitDto();
+        dto.setId(id);
+        dto.setVersion(0L);
+        return dto;
+    }
 }
