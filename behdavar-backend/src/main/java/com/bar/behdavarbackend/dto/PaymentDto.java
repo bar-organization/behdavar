@@ -30,5 +30,5 @@ public class PaymentDto extends BaseAuditorDto<String, Long> {
     @NotNull(message = "validation.error.not.null")
     private UserDto user;
 
-    private AttachmentDto attachmentDto;
+    private AttachmentDto attachment;
 }

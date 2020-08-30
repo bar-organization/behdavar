@@ -2,13 +2,11 @@ package com.bar.behdavarbackend.business.transformer;
 
 import com.bar.behdavarbackend.dto.AttachmentDto;
 import com.bar.behdavarbackend.dto.ContractDto;
-import com.bar.behdavarbackend.dto.PursuitDto;
 import com.bar.behdavardatabase.entity.AttachmentEntity;
 import org.springframework.util.Base64Utils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AttachmentTransformer {
@@ -41,5 +39,11 @@ public class AttachmentTransformer {
         AttachmentEntity entity = new AttachmentEntity();
         entity.setId(id);
         return entity;
+    }
+
+    public static AttachmentDto CREATE_DTO_FOR_RELATION(Long id) {
+        AttachmentDto dto = new AttachmentDto();
+        dto.setId(id);
+        return dto;
     }
 }

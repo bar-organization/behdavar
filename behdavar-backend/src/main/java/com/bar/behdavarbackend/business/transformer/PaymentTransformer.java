@@ -7,6 +7,7 @@ import com.bar.behdavardatabase.entity.PaymentEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class PaymentTransformer {
@@ -17,6 +18,9 @@ public class PaymentTransformer {
         entity.setPaymentDate(dto.getPaymentDate());
         entity.setPaymentType(dto.getPaymentType());
         entity.setUser(UserTransformer.CREATE_ENTITY_FOR_RELATION(dto.getUser().getId()));
+        Optional.ofNullable(dto.getAttachment()).
+                ifPresent(attachmentDto ->
+                        entity.setAttachment(AttachmentTransformer.CREATE_ENTITY_FOR_RELATION(attachmentDto.getId())));
         return entity;
     }
 
@@ -26,16 +30,21 @@ public class PaymentTransformer {
         dto.setPaymentDate(entity.getPaymentDate());
         dto.setPaymentType(entity.getPaymentType());
         dto.setId(entity.getId());
-        if (fields.contains("contract")) {
+
+        if (fields.contains(PaymentEntity.CONTRACT)) {
             dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
         } else {
             dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
         }
-        if (fields.contains("user")) {
+
+        if (fields.contains(PaymentEntity.USER)) {
             dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));
         } else {
             dto.setUser(UserTransformer.CREATE_DTO_FOR_RELATION(entity.getUser().getId()));
         }
+
+        Optional.ofNullable(entity.getAttachment()).ifPresent(attachmentEntity ->
+                dto.setAttachment(AttachmentTransformer.CREATE_DTO_FOR_RELATION(attachmentEntity.getId())));
         return dto;
     }
 

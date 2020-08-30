@@ -53,7 +53,7 @@ public class PaymentEntity extends BaseAuditorEntity<String, Long> {
     private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ATTACHMENT_ID",  foreignKey = @ForeignKey(name = "ATTACHMENT_FK"))
-    private AttachmentEntity attachmentEntity;
+    @JoinColumn(name = "ATTACHMENT_ID", foreignKey = @ForeignKey(name = "PAYMENT_ATTACHMENT_FK"))
+    private AttachmentEntity attachment;
 
 }
