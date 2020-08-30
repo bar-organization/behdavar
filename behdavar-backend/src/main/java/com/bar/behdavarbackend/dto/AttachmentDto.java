@@ -22,6 +22,4 @@ public class AttachmentDto extends BaseAuditorDto<String, Long> {
     @NotNull(message = "validation.error.not.null")
     private ContractDto contract;
 
-    private PursuitDto pursuit;
-
 }

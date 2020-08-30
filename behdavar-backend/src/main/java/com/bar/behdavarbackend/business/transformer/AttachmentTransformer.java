@@ -34,12 +34,6 @@ public class AttachmentTransformer {
             dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
         }
 
-        if (fields.contains(AttachmentEntity.PURSUIT)) {
-            Optional.ofNullable(entity.getPursuit()).ifPresent(pursuitEntity -> dto.setPursuit(PursuitTransformer.ENTITY_TO_DTO(pursuitEntity, new PursuitDto())));
-        } else {
-            Optional.ofNullable(entity.getPursuit()).ifPresent(pursuitEntity -> dto.setPursuit(PursuitTransformer.CREATE_DTO_FOR_RELATION(pursuitEntity.getId())));
-        }
-
         return dto;
     }
 

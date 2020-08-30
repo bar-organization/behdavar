@@ -23,7 +23,6 @@ public class AttachmentEntity extends BaseAuditorEntity<String, Long> {
     public static final String FILENAME = "fileName";
     public static final String ATTACHMENT_TYPE = "attachmentType";
     public static final String CONTRACT = "contract";
-    public static final String PURSUIT = "pursuit";
 
     @Column(name = "ID")
     @Id
@@ -48,8 +47,5 @@ public class AttachmentEntity extends BaseAuditorEntity<String, Long> {
     @JoinColumn(name = "CONTRACT_ID", foreignKey = @ForeignKey(name = "ATTACHMENT_CONTRACT_FK"))
     private ContractEntity contract;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PURSUIT_ID", foreignKey = @ForeignKey(name = "ATTACHMENT_PURSUIT_FK"))
-    private PursuitEntity pursuit;
 
 }

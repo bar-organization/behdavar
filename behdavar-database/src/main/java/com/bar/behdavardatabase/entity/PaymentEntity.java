@@ -27,6 +27,7 @@ public class PaymentEntity extends BaseAuditorEntity<String, Long> {
     public static final String PAYMENT_TYPE = "paymentType";
     public static final String CONTRACT = "contract";
     public static final String USER = "user";
+    public static final String ATTACHMENT = "attachment";
 
     @Column(name = "ID")
     @Id
@@ -50,4 +51,9 @@ public class PaymentEntity extends BaseAuditorEntity<String, Long> {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false, foreignKey = @ForeignKey(name = "PAYMENT_USER_FK"))
     private UserEntity user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ATTACHMENT_ID",  foreignKey = @ForeignKey(name = "ATTACHMENT_FK"))
+    private AttachmentEntity attachmentEntity;
+
 }
