@@ -24,8 +24,9 @@ public class GuarantorBusinessImpl implements GuarantorBusiness {
     private GuarantorRepository guarantorRepository;
 
     @Override
-    public GuarantorEntity findById(Long id) {
-        return guarantorRepository.findById(id).orElseThrow(() -> new BusinessException("error.Guarantor.not.found", id));
+    public GuarantorDto findById(Long id) {
+        GuarantorEntity entity = guarantorRepository.findById(id).orElseThrow(() -> new BusinessException("error.Guarantor.not.found", id));
+        return GuarantorTransformer.ENTITY_TO_DTO(entity, new GuarantorDto());
     }
 
     @Override
@@ -36,7 +37,7 @@ public class GuarantorBusinessImpl implements GuarantorBusiness {
 
     @Override
     public void update(GuarantorDto dto) {
-        GuarantorEntity GuarantorEntity = GuarantorTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
+        GuarantorEntity GuarantorEntity = GuarantorTransformer.DTO_TO_ENTITY(dto, guarantorRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Guarantor.not.found", dto.getId())));
         guarantorRepository.save(GuarantorEntity);
     }
 
@@ -51,7 +52,7 @@ public class GuarantorBusinessImpl implements GuarantorBusiness {
         List<GuarantorEntity> allByContractId = guarantorRepository.findAllByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
             allByContractId.forEach(e -> {
-                guarantorDtos.add(GuarantorTransformer.ENTITY_TO_DTO(e, new GuarantorDto()));
+                guarantorDtos.add(GuarantorTransformer.ENTITY_TO_DTO(e, new GuarantorDto(), GuarantorEntity.CONTRACT, GuarantorEntity.PERSON));
             });
         }
         return guarantorDtos;

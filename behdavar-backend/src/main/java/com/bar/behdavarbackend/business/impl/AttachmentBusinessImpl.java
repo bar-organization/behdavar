@@ -59,7 +59,15 @@ public class AttachmentBusinessImpl implements AttachmentBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(attachmentRepository, pagingRequest);
-        return executor.execute();
+        PagingExecutor<AttachmentEntity, Long> executor = new PagingExecutor<>(attachmentRepository, pagingRequest);
+
+        PagingResponse pagingResponse = executor.execute();
+        if (pagingResponse.getData() != null) {
+            List<AttachmentEntity> data = (List<AttachmentEntity>) pagingResponse.getData();
+            List<AttachmentDto> output = new ArrayList<>();
+            data.forEach(e -> output.add(AttachmentTransformer.ENTITY_TO_DTO(e, new AttachmentDto())));
+            pagingResponse.setData(output);
+        }
+        return pagingResponse;
     }
 }

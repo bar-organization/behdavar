@@ -12,7 +12,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -53,8 +52,9 @@ public class RestExceptionHandler {
 
                 .stream()
 
-                .map(objectError -> messageSource.getMessage(objectError, locale))
-
+                .map(objectError ->
+                        messageSource.getMessage(objectError.getDefaultMessage(), objectError.getArguments(), locale)
+                )
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(new RestMessage(errorMessages), HttpStatus.BAD_REQUEST);
@@ -66,7 +66,7 @@ public class RestExceptionHandler {
     public ResponseEntity<RestMessage> handleExceptions(Exception ex, Locale locale) {
 
         String errorMessage = messageSource.getMessage(UNEXPECTED_ERROR, null, locale);
-        return new ResponseEntity<>(new RestMessage(String.format("%s: [%s]",errorMessage ,ex.getMessage())), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(new RestMessage(String.format("%s: [%s]", errorMessage, ex.getMessage())), HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
 

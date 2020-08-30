@@ -4,13 +4,15 @@ import com.bar.behdavarbackend.dto.common.BaseAuditorDto;
 import com.bar.behdavarcommon.enumeration.ContractStatus;
 import com.bar.behdavarcommon.enumeration.ContractType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
-public class ContractDto extends BaseAuditorDto<Long, Long> {
+public class ContractDto extends BaseAuditorDto<String, Long> {
 
     public BigDecimal masterAmount;
 

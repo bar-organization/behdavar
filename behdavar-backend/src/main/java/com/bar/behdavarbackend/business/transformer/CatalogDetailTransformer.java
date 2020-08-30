@@ -27,6 +27,7 @@ public class CatalogDetailTransformer {
     public static CatalogDetailEntity CREATE_ENTITY_FOR_RELATION(Long id) {
         CatalogDetailEntity entity = new CatalogDetailEntity();
         entity.setId(id);
+        entity.setVersion(0L);
         return entity;
     }
 }

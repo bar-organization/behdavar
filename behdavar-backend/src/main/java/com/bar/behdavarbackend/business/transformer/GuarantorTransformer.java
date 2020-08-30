@@ -5,6 +5,10 @@ import com.bar.behdavarbackend.dto.GuarantorDto;
 import com.bar.behdavarbackend.dto.PersonDto;
 import com.bar.behdavardatabase.entity.GuarantorEntity;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class GuarantorTransformer {
 
     public static GuarantorEntity DTO_TO_ENTITY(GuarantorDto dto, GuarantorEntity entity) {
@@ -14,12 +18,24 @@ public class GuarantorTransformer {
         return entity;
     }
 
-    public static GuarantorDto ENTITY_TO_DTO(GuarantorEntity entity, GuarantorDto dto) {
+    public static GuarantorDto ENTITY_TO_DTO(GuarantorEntity entity, GuarantorDto dto, String... strings) {
+        List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         dto.setId(entity.getId());
         dto.setVersion(entity.getVersion());
-        dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
-        dto.setPerson(PersonTransformer.ENTITY_TO_DTO(entity.getPerson(), new PersonDto()));
         dto.setRelationType(entity.getRelationType());
+
+        if (fields.contains(GuarantorEntity.CONTRACT)) {
+            dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
+        } else {
+            dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
+        }
+
+        if (fields.contains(GuarantorEntity.PERSON)) {
+            dto.setPerson(PersonTransformer.ENTITY_TO_DTO(entity.getPerson(), new PersonDto()));
+        } else {
+            dto.setPerson(PersonTransformer.CREATE_DTO_FOR_RELATION(entity.getPerson().getId()));
+        }
+
         return dto;
     }
 

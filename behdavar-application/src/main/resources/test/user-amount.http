@@ -1,0 +1,61 @@
+# call user-amount find by id
+POST http://127.0.0.1:8081/api/user-amount/find-by-id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2Nzg2MzIsImV4cCI6MTU5ODY4MjIzMn0.iG8nfrXT_DC3cZ-gb7bJ5Ga4TLI5ZnASQx72vjc5faA
+
+1
+
+###
+# call user-amount find by id
+POST http://127.0.0.1:8081/api/user-amount/increase-receive-amount
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2Nzg2MzIsImV4cCI6MTU5ODY4MjIzMn0.iG8nfrXT_DC3cZ-gb7bJ5Ga4TLI5ZnASQx72vjc5faA
+
+13323000
+
+###
+# call user-amount save
+POST http://127.0.0.1:8081/api/user-amount/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2ODEyMzEsImV4cCI6MTU5ODY4NDgzMX0.J-g7tRheP5aUOGyu4hhH2lh6e-sQsKlQw19XP3IqZrw
+
+{
+  "totalAmount": 1000000000000.23,
+  "receiveAmount": 100.100,
+  "user": {
+    "id": 1
+  }
+}
+
+###
+# call user-amount update
+POST http://127.0.0.1:8081/api/user-amount/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2ODEyMzEsImV4cCI6MTU5ODY4NDgzMX0.J-g7tRheP5aUOGyu4hhH2lh6e-sQsKlQw19XP3IqZrw
+
+{
+  "id": 9,
+  "version": 0,
+  "totalAmount": 1000003300000.23,
+  "receiveAmount": 100.100,
+  "user": {
+    "id": 1
+  }
+}
+
+
+###
+# call user-amount find paging
+POST http://127.0.0.1:8081/api/user-amount/find-paging
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2Nzg2MzIsImV4cCI6MTU5ODY4MjIzMn0.iG8nfrXT_DC3cZ-gb7bJ5Ga4TLI5ZnASQx72vjc5faA
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+  ]
+}
+
+###
+

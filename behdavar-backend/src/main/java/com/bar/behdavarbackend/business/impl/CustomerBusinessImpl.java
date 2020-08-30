@@ -9,7 +9,6 @@ import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import com.bar.behdavardatabase.entity.CustomerEntity;
 import com.bar.behdavardatabase.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -20,12 +19,16 @@ import java.util.List;
 public class CustomerBusinessImpl implements CustomerBusiness {
     public static final String BEAN_NAME = "CustomerBusinessImpl";
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+
+    public CustomerBusinessImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
-    public CustomerEntity findById(Long id) {
-        return customerRepository.findById(id).orElseThrow(() -> new BusinessException("error.Customer.not.found", id));
+    public CustomerDto findById(Long id) {
+        CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> new BusinessException("error.Customer.not.found", id));
+        return CustomerTransformer.ENTITY_TO_DTO(customerEntity, new CustomerDto(), CustomerEntity.PERSON);
     }
 
     @Override
@@ -36,7 +39,7 @@ public class CustomerBusinessImpl implements CustomerBusiness {
 
     @Override
     public void update(CustomerDto dto) {
-        CustomerEntity customerEntity = CustomerTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
+        CustomerEntity customerEntity = CustomerTransformer.DTO_TO_ENTITY(dto, customerRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Customer.not.found", dto.getId())));
         customerRepository.save(customerEntity);
     }
 
@@ -50,16 +53,22 @@ public class CustomerBusinessImpl implements CustomerBusiness {
         List<CustomerDto> customerDtos = new ArrayList<>();
         List<CustomerEntity> allByContractId = customerRepository.findByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
-            allByContractId.forEach(e -> {
-                customerDtos.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto()));
-            });
+            allByContractId.forEach(e -> customerDtos.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON)));
         }
         return customerDtos;
     }
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(customerRepository, pagingRequest);
-        return executor.execute();
+        PagingExecutor<CustomerEntity, Long> executor = new PagingExecutor<>(customerRepository, pagingRequest);
+
+        PagingResponse pagingResponse = executor.execute();
+        if (pagingResponse.getData() != null) {
+            List<CustomerEntity> data = (List<CustomerEntity>) pagingResponse.getData();
+            List<CustomerDto> output = new ArrayList<>();
+            data.forEach(e -> output.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.PERSON)));
+            pagingResponse.setData(output);
+        }
+        return pagingResponse;
     }
 }

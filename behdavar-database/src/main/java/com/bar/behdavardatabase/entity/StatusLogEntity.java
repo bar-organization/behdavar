@@ -20,6 +20,9 @@ public class StatusLogEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "STATUS_LOG";
     public static final String SEQ_NAME = "STATUS_LOG" + BaseConstant.SEQUENCE;
+    public static final String STATUS = "status";
+    public static final String USER = "user";
+    public static final String CONTRACT = "contract";
 
     @Column(name = "ID")
     @Id

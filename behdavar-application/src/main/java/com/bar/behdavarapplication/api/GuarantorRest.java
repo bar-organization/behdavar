@@ -4,7 +4,6 @@ import com.bar.behdavarbackend.business.api.GuarantorBusiness;
 import com.bar.behdavarbackend.dto.GuarantorDto;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
-import com.bar.behdavardatabase.entity.GuarantorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/guarantor")
+@RequestMapping("/api/guarantor")
 @Validated
 public class GuarantorRest {
 
@@ -27,7 +26,7 @@ public class GuarantorRest {
     GuarantorBusiness GuarantorBusiness;
 
     @PostMapping("/find-by-id")
-    public ResponseEntity<GuarantorEntity> findById(@RequestBody @NotNull Long id) {
+    public ResponseEntity<GuarantorDto> findById(@RequestBody @NotNull Long id) {
         return new ResponseEntity<>(GuarantorBusiness.findById(id), HttpStatus.OK);
     }
 

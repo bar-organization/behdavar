@@ -13,6 +13,8 @@ public enum SearchOperation implements AbstractEnum<String> {
     MATCH_START("ms"),
     MATCH_END("me"),
     IN("in"),
+    IS_NULL("isNull"),
+    NOT_NULL("notNull"),
     NOT_IN("nin");
 
     private String value;

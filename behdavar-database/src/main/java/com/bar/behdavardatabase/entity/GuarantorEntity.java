@@ -20,6 +20,9 @@ public class GuarantorEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "GUARANTOR";
     public static final String SEQ_NAME = "GUARANTOR" + BaseConstant.SEQUENCE;
+    public static final String RELATION_TYPE = "relationType";
+    public static final String CONTRACT = "contract";
+    public static final String PERSON = "person";
 
     @Column(name = "ID")
     @Id

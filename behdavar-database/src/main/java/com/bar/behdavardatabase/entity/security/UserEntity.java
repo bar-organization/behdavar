@@ -5,6 +5,7 @@ import com.bar.behdavardatabase.constant.ContactConstant;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
 import com.bar.behdavardatabase.entity.PersonEntity;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 
 @Setter
 @Getter
+@NoArgsConstructor
 @Entity
 @Table(name = UserEntity.TABLE_NAME, schema = ContactConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME"))
 public class UserEntity extends BaseAuditorEntity<String, Long> {
@@ -70,5 +72,4 @@ public class UserEntity extends BaseAuditorEntity<String, Long> {
     @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "USER_PRESON_FK"), nullable = false)
     @NotNull
     private PersonEntity person;
-
 }

@@ -4,7 +4,6 @@ import com.bar.behdavarbackend.business.api.CustomerBusiness;
 import com.bar.behdavarbackend.dto.CustomerDto;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
-import com.bar.behdavardatabase.entity.CustomerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/api/customer")
 @Validated
 public class CustomerRest {
 
@@ -27,7 +26,7 @@ public class CustomerRest {
     CustomerBusiness customerBusiness;
 
     @PostMapping("/find-by-id")
-    public ResponseEntity<CustomerEntity> findById(@RequestBody @NotNull Long id) {
+    public ResponseEntity<CustomerDto> findById(@RequestBody @NotNull Long id) {
         return new ResponseEntity<>(customerBusiness.findById(id), HttpStatus.OK);
     }
 

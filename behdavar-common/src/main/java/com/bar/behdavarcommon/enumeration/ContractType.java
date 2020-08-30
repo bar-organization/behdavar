@@ -1,8 +1,8 @@
 package com.bar.behdavarcommon.enumeration;
 
 public enum ContractType implements AbstractEnum<Integer> {
-    TYPE_1(0),
-    TYPE_2(1);
+    BANKS(0),
+    CARS(1);
 
     private Integer value;
 

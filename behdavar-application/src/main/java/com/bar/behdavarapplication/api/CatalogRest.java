@@ -4,7 +4,6 @@ import com.bar.behdavarbackend.business.api.CatalogBusiness;
 import com.bar.behdavarbackend.dto.CatalogDto;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
-import com.bar.behdavardatabase.entity.CatalogEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +25,7 @@ public class CatalogRest {
     CatalogBusiness catalogBusiness;
 
     @PostMapping("/find-by-id")
-    public ResponseEntity<CatalogEntity> findById(@RequestBody @NotNull Long id) {
+    public ResponseEntity<CatalogDto> findById(@RequestBody @NotNull Long id) {
         return new ResponseEntity<>(catalogBusiness.findById(id), HttpStatus.OK);
     }
 
