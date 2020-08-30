@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
@@ -7,6 +7,8 @@ import {PagingRequest} from "./PaginationModel";
 import {tap} from "rxjs/operators";
 import {BehaviorSubject, Observable} from "rxjs";
 import dot from "dot-object";
+import {SelectionModel} from "@angular/cdk/collections";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'data-table',
@@ -27,8 +29,12 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input()
   httpDataSource: HttpDataSource<unknown>;
 
+  @Output()
+  changeId = new EventEmitter<number>();
+
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
+  private selection = new SelectionModel<unknown>(false, []);
   loadingText = 'درحال واکشی...';
   rowNoTitle = 'ردیف';
 
@@ -60,7 +66,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       return [];
     }
     let columnToDisplay = this.tableColumns.filter(value => !value.hidden).map(value => value.fieldName);
-    columnToDisplay.unshift('rowNo');
+    columnToDisplay.unshift('select', 'rowNo');
     return columnToDisplay;
   }
 
@@ -94,6 +100,19 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     // }
     // console.log(pipChain);
     // return result + pipChain;
+    return result;
+  }
+
+  // TODO must refactor and separate method implementation
+  toggle(row: any, $event: MatCheckboxChange): any {
+    let result = $event ? this.selection.toggle(row) : null;
+
+    if (this.selection.isSelected(row)) {
+      this.changeId.emit(row['id']);
+    } else {
+      this.changeId.emit(undefined);
+
+    }
     return result;
   }
 }

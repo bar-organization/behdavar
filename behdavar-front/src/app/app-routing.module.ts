@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
 import {AuthGuardService} from "./service/auth/auth-guard.service";
 import {MyBasketComponent} from "./navigation-tab/my-basket/my-basket.component";
@@ -11,6 +11,7 @@ import {GuarantorsComponent} from "./guarantors/guarantors.component";
 import {FollowingComponent} from "./following/following.component";
 import {CustomerComponent} from "./customer/customer.component";
 import {DocumentAttachmentComponent} from "./document-attachment/document-attachment.component";
+import {DocumentComponent} from "./document/document.component";
 
 const routes: Routes = [
   // HOME
@@ -18,8 +19,26 @@ const routes: Routes = [
     path: '', component: HomeComponent, canActivate: [AuthGuardService],
     children: [
       {path: '', redirectTo: 'my-basket', pathMatch: 'full'},
-      {path: 'my-basket', component: MyBasketComponent},
-      {path: 'search', component: SearchPanelComponent},
+      {
+        path: 'my-basket', component: MyBasketComponent,
+        children: [
+          {path: '', redirectTo: 'find', pathMatch: 'full'},
+          {path: 'find', component: DocumentComponent},
+          {path: 'following/:id', component: FollowingComponent},
+          {path: 'guarantors/:id', component: GuarantorsComponent},
+          {path: 'customers/:id', component: CustomerComponent},
+        ]
+      },
+      {
+        path: 'search', component: SearchPanelComponent,
+        children: [
+          {path: '', redirectTo: 'find', pathMatch: 'full'},
+          {path: 'find', component: DocumentComponent},
+          {path: 'following/:id', component: FollowingComponent},
+          {path: 'guarantors/:id', component: GuarantorsComponent},
+          {path: 'customers/:id', component: CustomerComponent},
+        ]
+      },
       {path: 'reports', component: ReportsComponent},
       {path: 'tools', component: UtilityToolsComponent},
 
@@ -41,4 +60,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

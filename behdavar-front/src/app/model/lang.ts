@@ -5,6 +5,7 @@ export class Lang {
   appTitle = 'بهداور';
   logout = 'خروج';
   row = 'ردیف';
+  back = 'بازگشت';
 }
 
 export class LoginLang extends Lang {
@@ -43,7 +44,7 @@ export class DocumentToolbarLang extends Lang {
   projectFlow = 'گردش پرونده';
 }
 
-export class DocumentSearchLang extends PersonLang {
+export class DocumentLang extends PersonLang {
   bankMachine = 'بانک/ماشین';
   document = 'پرونده';
   customer = 'مشتری';

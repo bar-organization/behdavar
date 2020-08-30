@@ -1,0 +1,5 @@
+<app-document-search></app-document-search>
+
+<app-document-toolbar [id]="table.changeId | async" ></app-document-toolbar>
+
+<data-table #table [httpDataSource]="catalogHttpDataSource" [tableColumns]="tableColumns"></data-table>

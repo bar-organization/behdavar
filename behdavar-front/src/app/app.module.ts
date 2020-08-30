@@ -1,6 +1,6 @@
 ﻿import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppComponent} from './app.component';
@@ -42,6 +42,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
 import {DataTableComponent} from './_custom-component/data-table/data-table.component'
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AuthInterceptorService} from "./service/auth/AuthInterceptorService";
+import {DocumentComponent} from "./document/document.component";
 
 @NgModule({
   imports: [
@@ -70,6 +71,7 @@ import {AuthInterceptorService} from "./service/auth/AuthInterceptorService";
     MatSortModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    FormsModule,
   ],
   declarations: [
     AppComponent,
@@ -89,6 +91,7 @@ import {AuthInterceptorService} from "./service/auth/AuthInterceptorService";
     ReportsComponent,
     UtilityToolsComponent,
     DataTableComponent,
+    DocumentComponent,
   ],
 
   providers: [

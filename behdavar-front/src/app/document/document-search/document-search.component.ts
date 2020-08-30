@@ -1,12 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {DocumentSearchLang} from '../../model/lang';
+import {DocumentLang} from '../../model/lang';
 import {animate, state, style, transition, trigger} from "@angular/animations";
-import {TableColumn} from "../../_custom-component/data-table/data-table.component";
-import {CartableDto} from "../../model/model";
-import HttpDataSource from "../../_custom-component/data-table/HttpDataSource";
-import Url from "../../model/url";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-document-search',
@@ -28,9 +23,9 @@ export class DocumentSearchComponent implements OnInit {
   customerSearchFormGroup: FormGroup;
   documentSearchFormGroup: FormGroup;
 
-  documentSearchLang: DocumentSearchLang = new DocumentSearchLang();
+  documentSearchLang: DocumentLang = new DocumentLang();
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient) {
+  constructor(private fb: FormBuilder) {
     this.bankMachineSearchFormGroup = fb.group({
       bank: [''],
       branch: [''],
@@ -69,17 +64,7 @@ export class DocumentSearchComponent implements OnInit {
     console.log(this.parentForm);
   }
 
-  // TODO httpClint not be required for constructor
-  catalogHttpDataSource: HttpDataSource<CartableDto> = new HttpDataSource<CartableDto>(Url.CARTABLE_FIND_PAGING, this.httpClient);
 
-  tableColumns: TableColumn[] = [
-    {fieldName: "receiver.firstName", title: this.documentSearchLang.customerName},
-    {fieldName: 'contract.lendingNumber', title: this.documentSearchLang.facilityNumber},
-    {fieldName: 'contract.contractStatus', title: this.documentSearchLang.status},
-    {fieldName: 'contract.lateFees', title: this.documentSearchLang.lateFees},
-    {fieldName: 'contract.defferedAmount', title:  this.documentSearchLang.deferredAmount},
-    {fieldName: 'contract.defferedCount', title:  this.documentSearchLang.deferredCount},
-    {fieldName: 'contract.masterAmount', title:  this.documentSearchLang.totalAmount},
-    {fieldName: 'contract.submitDate', title: this.documentSearchLang.registrationDate},
-  ]
 }
+
+

@@ -11,9 +11,11 @@ export default class HttpDataSource<T> implements DataSource<T> {
 
   private subject = new BehaviorSubject<T[]>(null);
   private url: string;
+  private httpClient: HttpClient;
 
-  constructor(url: string, private httpClient: HttpClient) {
+  constructor(url: string, httpClient: HttpClient) {
     this.url = url;
+    this.httpClient = httpClient;
   }
 
   connect(collectionViewer: CollectionViewer): Observable<T[]> {

@@ -1,7 +1,8 @@
-<div>
-  <button *ngIf="!isSearch" mat-flat-button (click)="onExit()" class="bg-secondary text-white">X</button>
-  <app-document-search *ngIf="isSearch"></app-document-search>
-  <app-following *ngIf="isFollowing"></app-following>
-  <app-guarantors *ngIf="isGuarantor"></app-guarantors>
-  <app-customer *ngIf="isCustomer"></app-customer>
-</div>
+<mat-toolbar *ngIf="!route.url.match('find')" fxLayout="row" fxLayoutAlign="end center" style="height: 3rem">
+  <button mat-button routerLink="./find">
+    <span>{{lang.back}}</span>
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+</mat-toolbar>
+<router-outlet></router-outlet>
