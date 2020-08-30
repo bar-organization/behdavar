@@ -54,11 +54,4 @@ public class PaymentTransformer {
         entity.setVersion(0L);
         return entity;
     }
-
-    public static PaymentDto CREATE_DTO_FOR_RELATION(Long id) {
-        PaymentDto dto = new PaymentDto();
-        dto.setId(id);
-        dto.setVersion(0L);
-        return dto;
-    }
 }
