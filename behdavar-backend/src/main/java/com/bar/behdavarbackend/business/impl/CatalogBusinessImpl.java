@@ -12,6 +12,9 @@ import com.bar.behdavardatabase.repository.CatalogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service(CatalogBusinessImpl.BEAN_NAME)
 public class CatalogBusinessImpl implements CatalogBusiness {
     public static final String BEAN_NAME = "catalogBusinessImpl";
@@ -20,8 +23,10 @@ public class CatalogBusinessImpl implements CatalogBusiness {
     private CatalogRepository catalogRepository;
 
     @Override
-    public CatalogEntity findById(Long id) {
-        return catalogRepository.findById(id).orElseThrow(() -> new BusinessException("error.catalog.not.found", id));
+    public CatalogDto findById(Long id) {
+        CatalogEntity entity = catalogRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("error.catalog.not.found", id));
+        return CatalogTransformer.ENTITY_TO_DTO(entity, new CatalogDto());
     }
 
     @Override
@@ -32,7 +37,8 @@ public class CatalogBusinessImpl implements CatalogBusiness {
 
     @Override
     public void update(CatalogDto dto) {
-        CatalogEntity catalogEntity = CatalogTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
+        CatalogEntity catalogEntity = CatalogTransformer.DTO_TO_ENTITY(dto, catalogRepository.findById(dto.getId())
+                .orElseThrow(() -> new BusinessException("error.catalog.not.found", dto.getId())));
         catalogRepository.save(catalogEntity);
     }
 
@@ -43,7 +49,15 @@ public class CatalogBusinessImpl implements CatalogBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(catalogRepository, pagingRequest);
-        return executor.execute();
+        PagingExecutor<CatalogEntity, Long> executor = new PagingExecutor<>(catalogRepository, pagingRequest);
+
+        PagingResponse pagingResponse = executor.execute();
+        if (pagingResponse.getData() != null) {
+            List<CatalogEntity> data = (List<CatalogEntity>) pagingResponse.getData();
+            List<CatalogDto> output = new ArrayList<>();
+            data.forEach(e -> output.add(CatalogTransformer.ENTITY_TO_DTO(e, new CatalogDto())));
+            pagingResponse.setData(output);
+        }
+        return pagingResponse;
     }
 }

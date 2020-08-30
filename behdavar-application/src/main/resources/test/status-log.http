@@ -59,8 +59,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2O
   "max": 3,
   "filters": [
     {
-      "key": "contract.id",
-      "value": "2",
+      "key": "status",
+      "value": 0,
       "operation": "EQUAL"
     }
   ]

@@ -12,38 +12,50 @@ import com.bar.behdavardatabase.repository.CatalogDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service(CatalogDetailBusinessImpl.BEAN_NAME)
 public class CatalogDetailBusinessImpl implements CatalogDetailBusiness {
     public static final String BEAN_NAME = "CatalogDetailBusinessImpl";
 
     @Autowired
-    private CatalogDetailRepository CatalogDetailRepository;
+    private CatalogDetailRepository catalogDetailRepository;
 
     @Override
-    public CatalogDetailEntity findById(Long id) {
-        return CatalogDetailRepository.findById(id).orElseThrow(() -> new BusinessException("error.CatalogDetail.not.found", id));
+    public CatalogDetailDto findById(Long id) {
+        CatalogDetailEntity catalogDetailEntity = catalogDetailRepository.findById(id).orElseThrow(() -> new BusinessException("error.CatalogDetail.not.found", id));
+        return CatalogDetailTransformer.ENTITY_TO_DTO(catalogDetailEntity, new CatalogDetailDto());
     }
 
     @Override
     public Long save(CatalogDetailDto dto) {
-        CatalogDetailEntity CatalogDetailEntity = CatalogDetailTransformer.DTO_TO_ENTITY(dto, new CatalogDetailEntity());
-        return CatalogDetailRepository.save(CatalogDetailEntity).getId();
+        CatalogDetailEntity catalogDetailEntity = CatalogDetailTransformer.DTO_TO_ENTITY(dto, new CatalogDetailEntity());
+        return catalogDetailRepository.save(catalogDetailEntity).getId();
     }
 
     @Override
     public void update(CatalogDetailDto dto) {
-        CatalogDetailEntity CatalogDetailEntity = CatalogDetailTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
-        CatalogDetailRepository.save(CatalogDetailEntity);
+        CatalogDetailEntity catalogDetailEntity = CatalogDetailTransformer.DTO_TO_ENTITY(dto, catalogDetailRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.CatalogDetail.not.found", dto.getId())));
+        catalogDetailRepository.save(catalogDetailEntity);
     }
 
     @Override
     public void delete(Long id) {
-        CatalogDetailRepository.deleteById(id);
+        catalogDetailRepository.deleteById(id);
     }
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(CatalogDetailRepository, pagingRequest);
-        return executor.execute();
+        PagingExecutor<CatalogDetailEntity, Long> executor = new PagingExecutor<>(catalogDetailRepository, pagingRequest);
+
+        PagingResponse pagingResponse = executor.execute();
+        if (pagingResponse.getData() != null) {
+            List<CatalogDetailEntity> data = (List<CatalogDetailEntity>) pagingResponse.getData();
+            List<CatalogDetailDto> output = new ArrayList<>();
+            data.forEach(e -> output.add(CatalogDetailTransformer.ENTITY_TO_DTO(e, new CatalogDetailDto())));
+            pagingResponse.setData(output);
+        }
+        return pagingResponse;
     }
 }

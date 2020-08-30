@@ -9,7 +9,6 @@ import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import com.bar.behdavardatabase.entity.CustomerEntity;
 import com.bar.behdavardatabase.repository.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -20,8 +19,11 @@ import java.util.List;
 public class CustomerBusinessImpl implements CustomerBusiness {
     public static final String BEAN_NAME = "CustomerBusinessImpl";
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+
+    public CustomerBusinessImpl(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
 
     @Override
     public CustomerDto findById(Long id) {
@@ -51,16 +53,14 @@ public class CustomerBusinessImpl implements CustomerBusiness {
         List<CustomerDto> customerDtos = new ArrayList<>();
         List<CustomerEntity> allByContractId = customerRepository.findByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
-            allByContractId.forEach(e -> {
-                customerDtos.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON));
-            });
+            allByContractId.forEach(e -> customerDtos.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON)));
         }
         return customerDtos;
     }
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(customerRepository, pagingRequest);
+        PagingExecutor<CustomerEntity, Long> executor = new PagingExecutor<>(customerRepository, pagingRequest);
 
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
