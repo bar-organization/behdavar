@@ -1,8 +1,12 @@
 package com.bar.behdavarcommon.enumeration;
 
 public enum ContractStatus implements AbstractEnum<Integer> {
-    STATUS_1(0),
-    STATUS_2(1);
+    AVAILABLE(0),
+    CLEARING(1),
+    RAW(2),
+    LEGAL(3),
+    PARKING(4),
+    RETURN(5);
 
     private Integer value;
 

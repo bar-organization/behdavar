@@ -1,8 +1,12 @@
 package com.bar.behdavarcommon.enumeration;
 
 public enum PaymentType implements AbstractEnum<Integer> {
-    PAYMENT_TYPE_1(0),
-    PAYMENT_TYPE_2(1);
+    CHECK(0),
+    CASH(1),
+    NOTEBOOK(2),
+    OTHER(3),
+    INSTALLMENT_LOCATION_CASH(4),
+    INSTALLMENTS(5);
 
     private Integer value;
 
