@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {Lang} from "../../model/lang";
 
 @Component({
@@ -10,7 +10,7 @@ import {Lang} from "../../model/lang";
 export class MyBasketComponent implements OnInit {
   private lang = new Lang();
 
-  constructor(private route:Router) {
+  constructor(private route: Router) {
   }
 
   ngOnInit(): void {
