@@ -43,6 +43,8 @@ import {DataTableComponent} from './_custom-component/data-table/data-table.comp
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {AuthInterceptorService} from "./service/auth/AuthInterceptorService";
 import {DocumentComponent} from "./document/document.component";
+import {NgxSpinnerModule} from "ngx-spinner";
+import {SpinnerHttpInterceptor} from "./service/SpinnerHttpInterceptor";
 
 @NgModule({
   imports: [
@@ -72,6 +74,7 @@ import {DocumentComponent} from "./document/document.component";
     MatPaginatorModule,
     MatProgressSpinnerModule,
     FormsModule,
+    NgxSpinnerModule
   ],
   declarations: [
     AppComponent,
@@ -95,7 +98,8 @@ import {DocumentComponent} from "./document/document.component";
   ],
 
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })

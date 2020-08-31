@@ -10,7 +10,7 @@ import {Lang} from "../../model/lang";
 export class MyBasketComponent implements OnInit {
   private lang = new Lang();
 
-  constructor(private route: Router) {
+  constructor(public route: Router) {
   }
 
   ngOnInit(): void {
