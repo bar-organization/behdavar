@@ -43,7 +43,7 @@ public class PaymentRest {
     @PostMapping("/update")
     public ResponseEntity<Void> update(@RequestBody @Valid PaymentDto dto) {
         paymentBusiness.update(dto);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/find-paging")

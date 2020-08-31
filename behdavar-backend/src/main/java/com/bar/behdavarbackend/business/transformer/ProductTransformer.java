@@ -3,7 +3,7 @@ package com.bar.behdavarbackend.business.transformer;
 import com.bar.behdavarbackend.dto.ProductDto;
 import com.bar.behdavardatabase.entity.ProductEntity;
 
-public class ProductTransformer {
+public class ProductTransformer extends BaseAuditorTransformer {
 
     public static ProductEntity DTO_TO_ENTITY(ProductDto dto, ProductEntity entity) {
         entity.setProductName(dto.getProductName());
@@ -13,8 +13,8 @@ public class ProductTransformer {
     }
 
     public static ProductDto ENTITY_TO_DTO(ProductEntity entity, ProductDto dto) {
+        transformAuditingFields(entity, dto);
         dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
         dto.setProductName(entity.getProductName());
         dto.setProductPlate(entity.getProductPlate());
         dto.setProductShasiNumber(entity.getProductShasiNumber());

@@ -5,7 +5,7 @@ import com.bar.behdavardatabase.entity.GeoDivisionEntity;
 
 import java.util.Optional;
 
-public class GeoDivisionTransformer {
+public class GeoDivisionTransformer extends BaseAuditorTransformer {
 
     public static GeoDivisionEntity DTO_TO_ENTITY(GeoDivisionDto dto, GeoDivisionEntity entity) {
         entity.setCode(dto.getCode());
@@ -17,8 +17,8 @@ public class GeoDivisionTransformer {
     }
 
     public static GeoDivisionDto ENTITY_TO_DTO(GeoDivisionEntity entity, GeoDivisionDto dto) {
+        transformAuditingFields(entity, dto);
         dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
         dto.setCode(entity.getCode());
         dto.setGeoDivisionType(entity.getGeoDivisionType());
         dto.setName(entity.getName());

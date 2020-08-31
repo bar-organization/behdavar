@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CustomerTransformer {
+public class CustomerTransformer extends BaseAuditorTransformer {
 
     public static CustomerEntity DTO_TO_ENTITY(CustomerDto dto, CustomerEntity entity) {
         entity.setContract(ContractTransformer.CREATE_ENTITY_FOR_RELATION(dto.getContract().getId()));

@@ -1,6 +1,7 @@
 package com.bar.behdavarbackend.dto;
 
 import com.bar.behdavarbackend.dto.common.BaseDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
@@ -14,5 +15,6 @@ public class UserLogDto extends BaseDto<Long> {
     @NotNull(message = "validation.error.not.null")
     private UserDto user;
     @NotNull(message = "validation.error.not.null")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime lastLogin;
 }

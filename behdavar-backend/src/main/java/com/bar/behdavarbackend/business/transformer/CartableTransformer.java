@@ -5,7 +5,7 @@ import com.bar.behdavarbackend.dto.ContractDto;
 import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavardatabase.entity.CartableEntity;
 
-public class CartableTransformer {
+public class CartableTransformer extends BaseAuditorTransformer {
 
     public static CartableEntity DTO_TO_ENTITY(CartableDto dto, CartableEntity entity) {
         entity.setReceiver(UserTransformer.CREATE_ENTITY_FOR_RELATION(dto.getReceiver().getId()));
@@ -22,6 +22,7 @@ public class CartableTransformer {
         dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
         dto.setReceiver(UserTransformer.ENTITY_TO_DTO(entity.getReceiver(), new UserDto()));
         dto.setSender(UserTransformer.ENTITY_TO_DTO(entity.getSender(), new UserDto()));
+        transformAuditingFields(entity, dto);
         return dto;
     }
 

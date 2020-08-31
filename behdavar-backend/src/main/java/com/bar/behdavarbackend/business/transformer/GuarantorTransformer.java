@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GuarantorTransformer {
+public class GuarantorTransformer extends BaseAuditorTransformer {
 
     public static GuarantorEntity DTO_TO_ENTITY(GuarantorDto dto, GuarantorEntity entity) {
         entity.setContract(ContractTransformer.CREATE_ENTITY_FOR_RELATION(dto.getContract().getId()));
@@ -20,8 +20,8 @@ public class GuarantorTransformer {
 
     public static GuarantorDto ENTITY_TO_DTO(GuarantorEntity entity, GuarantorDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
+        transformAuditingFields(entity, dto);
         dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
         dto.setRelationType(entity.getRelationType());
 
         if (fields.contains(GuarantorEntity.CONTRACT)) {

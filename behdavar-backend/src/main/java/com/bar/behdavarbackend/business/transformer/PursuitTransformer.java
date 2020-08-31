@@ -7,7 +7,7 @@ import com.bar.behdavardatabase.entity.PursuitEntity;
 
 import java.util.Optional;
 
-public class PursuitTransformer {
+public class PursuitTransformer extends BaseAuditorTransformer {
 
     public static PursuitEntity DTO_TO_ENTITY(PursuitDto dto, PursuitEntity entity) {
         entity.setContract(ContractTransformer.CREATE_ENTITY_FOR_RELATION(dto.getContract().getId()));
@@ -25,8 +25,8 @@ public class PursuitTransformer {
     }
 
     public static PursuitDto ENTITY_TO_DTO(PursuitEntity entity, PursuitDto dto) {
+        transformAuditingFields(entity, dto);
         dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
         dto.setCoordinateAppointment(entity.getCoordinateAppointment());
         dto.setCustomerDeposit(entity.getCustomerDeposit());
         dto.setDepositAppointment(entity.getDepositAppointment());

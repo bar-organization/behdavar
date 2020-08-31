@@ -6,7 +6,7 @@ import com.bar.behdavardatabase.entity.LendingEntity;
 
 import java.util.Optional;
 
-public class LendingTransformer {
+public class LendingTransformer extends BaseAuditorTransformer {
 
     public static LendingEntity DTO_TO_ENTITY(LendingDto dto, LendingEntity entity) {
         Optional.ofNullable(dto.getBranchBank()).ifPresent(bankDto -> entity.setBranchBank(BankTransformer.CREATE_ENTITY_FOR_RELATION(bankDto.getId())));
@@ -17,8 +17,8 @@ public class LendingTransformer {
     }
 
     public static LendingDto ENTITY_TO_DTO(LendingEntity entity, LendingDto dto) {
+        transformAuditingFields(entity, dto);
         dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
         Optional.ofNullable(entity.getBranchBank()).ifPresent(branchEntity -> dto.setBranchBank(BankTransformer.ENTITY_TO_DTO(branchEntity, new BankDto())));
         dto.setIdeaIssueDate(entity.getIdeaIssueDate());
         dto.setMasterAmount(entity.getMasterAmount());

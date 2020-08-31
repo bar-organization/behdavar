@@ -8,7 +8,7 @@ import com.bar.behdavardatabase.entity.ContractEntity;
 
 import java.util.Optional;
 
-public class ContractTransformer {
+public class ContractTransformer extends BaseAuditorTransformer {
 
     public static ContractEntity DTO_TO_ENTITY(ContractDto dto, ContractEntity entity) {
         entity.setContractStatus(dto.getContractStatus());
@@ -29,8 +29,8 @@ public class ContractTransformer {
     }
 
     public static ContractDto ENTITY_TO_DTO(ContractEntity entity, ContractDto dto) {
+        transformAuditingFields(entity, dto);
         dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
         dto.setContractStatus(entity.getContractStatus());
         dto.setContractType(entity.getContractType());
         dto.setDefferedAmount(entity.getDefferedAmount());
