@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StatusLogTransformer {
+public class StatusLogTransformer extends BaseAuditorTransformer {
 
     public static StatusLogEntity DTO_TO_ENTITY(StatusLogDto dto, StatusLogEntity entity) {
         entity.setContract(ContractTransformer.CREATE_ENTITY_FOR_RELATION(dto.getContract().getId()));
@@ -20,8 +20,7 @@ public class StatusLogTransformer {
 
     public static StatusLogDto ENTITY_TO_DTO(StatusLogEntity entity, StatusLogDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
+        transformAuditingFields(entity, dto);
         dto.setStatus(entity.getStatus());
         if (fields.contains(StatusLogEntity.CONTRACT)) {
             dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));

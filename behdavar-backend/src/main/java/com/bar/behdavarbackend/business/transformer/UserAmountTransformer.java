@@ -4,7 +4,7 @@ import com.bar.behdavarbackend.dto.UserAmountDto;
 import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavardatabase.entity.UserAmountEntity;
 
-public class UserAmountTransformer {
+public class UserAmountTransformer extends BaseAuditorTransformer {
 
     public static UserAmountEntity DTO_TO_ENTITY(UserAmountDto dto, UserAmountEntity entity) {
         entity.setReceiveAmount(dto.getReceiveAmount());
@@ -14,8 +14,7 @@ public class UserAmountTransformer {
     }
 
     public static UserAmountDto ENTITY_TO_DTO(UserAmountEntity entity, UserAmountDto dto) {
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
+        transformAuditingFields(entity, dto);
         dto.setReceiveAmount(entity.getReceiveAmount());
         dto.setTotalAmount(entity.getTotalAmount());
         dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));

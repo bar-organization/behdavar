@@ -4,7 +4,7 @@ import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavarbackend.dto.UserLogDto;
 import com.bar.behdavardatabase.entity.UserLogEntity;
 
-public class UserLogTransformer {
+public class UserLogTransformer extends BaseAuditorTransformer {
 
     public static UserLogEntity DTO_TO_ENTITY(UserLogDto dto, UserLogEntity entity) {
         entity.setLastLogin(dto.getLastLogin());
@@ -14,7 +14,6 @@ public class UserLogTransformer {
 
 
     public static UserLogDto ENTITY_TO_DTO(UserLogEntity entity, UserLogDto dto) {
-        dto.setId(entity.getId());
         dto.setLastLogin(entity.getLastLogin());
         dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));
         return dto;

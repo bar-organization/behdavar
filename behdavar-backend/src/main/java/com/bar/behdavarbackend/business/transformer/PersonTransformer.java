@@ -3,15 +3,14 @@ package com.bar.behdavarbackend.business.transformer;
 import com.bar.behdavarbackend.dto.PersonDto;
 import com.bar.behdavardatabase.entity.PersonEntity;
 
-public class PersonTransformer {
+public class PersonTransformer extends BaseAuditorTransformer {
 
     public static PersonEntity DTO_TO_ENTITY(PersonDto dto, PersonEntity entity) {
         return entity;
     }
 
     public static PersonDto ENTITY_TO_DTO(PersonEntity entity, PersonDto dto) {
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
+        transformAuditingFields(entity, dto);
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
         return dto;

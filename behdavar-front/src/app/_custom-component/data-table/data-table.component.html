@@ -1,12 +1,4 @@
 <div class="card my-1">
-  <div class="example-loading-shade"
-       *ngIf="loading$ | async">
-    <mat-spinner *ngIf="loading$ | async"></mat-spinner>
-    <div class="example-rate-limit-reached" *ngIf="loading$ | async">
-      {{loadingText}}
-    </div>
-  </div>
-
   <table mat-table [dataSource]="httpDataSource" matSort class="w-100">
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">

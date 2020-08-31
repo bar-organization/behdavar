@@ -5,7 +5,7 @@ import com.bar.behdavardatabase.entity.AddressEntity;
 
 import java.util.Optional;
 
-public class AddressTransformer {
+public class AddressTransformer extends BaseAuditorTransformer {
 
     public static AddressEntity DTO_TO_ENTITY(AddressDto dto, AddressEntity entity) {
         entity.setDescription(dto.getDescription());
@@ -21,8 +21,7 @@ public class AddressTransformer {
     }
 
     public static AddressDto ENTITY_TO_DTO(AddressEntity entity, AddressDto dto) {
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
+        transformAuditingFields(entity, dto);
         //TODO add required fields
         return dto;
     }

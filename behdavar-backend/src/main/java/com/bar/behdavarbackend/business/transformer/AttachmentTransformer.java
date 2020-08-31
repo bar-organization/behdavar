@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class AttachmentTransformer {
+public class AttachmentTransformer extends BaseAuditorTransformer {
 
     public static AttachmentEntity DTO_TO_ENTITY(AttachmentDto dto, AttachmentEntity entity) {
         entity.setAttachmentType(CatalogDetailTransformer.CREATE_ENTITY_FOR_RELATION(dto.getAttachmentType().getId()));
@@ -25,8 +25,7 @@ public class AttachmentTransformer {
 
     public static AttachmentDto ENTITY_TO_DTO(AttachmentEntity entity, AttachmentDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
+        transformAuditingFields(entity, dto);
         dto.setFileName(entity.getFileName());
         dto.setContent(Base64Utils.encodeToString(entity.getContent()));
         if (fields.contains(AttachmentEntity.CONTRACT)) {

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class PaymentTransformer {
+public class PaymentTransformer extends BaseAuditorTransformer {
 
     public static PaymentEntity DTO_TO_ENTITY(PaymentDto dto, PaymentEntity entity) {
         entity.setAmount(dto.getAmount());
@@ -26,10 +26,10 @@ public class PaymentTransformer {
 
     public static PaymentDto ENTITY_TO_DTO(PaymentEntity entity, PaymentDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
+        transformAuditingFields(entity, dto);
         dto.setAmount(entity.getAmount());
         dto.setPaymentDate(entity.getPaymentDate());
         dto.setPaymentType(entity.getPaymentType());
-        dto.setId(entity.getId());
 
         if (fields.contains(PaymentEntity.CONTRACT)) {
             dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));

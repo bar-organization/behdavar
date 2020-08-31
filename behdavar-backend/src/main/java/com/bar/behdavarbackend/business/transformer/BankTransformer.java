@@ -7,7 +7,7 @@ import com.bar.behdavardatabase.entity.BankBranchEntity;
 
 import java.util.Optional;
 
-public class BankTransformer {
+public class BankTransformer extends BaseAuditorTransformer {
 
     public static BankBranchEntity DTO_TO_ENTITY(BankDto dto, BankBranchEntity entity) {
         entity.setCode(dto.getCode());
@@ -19,8 +19,7 @@ public class BankTransformer {
     }
 
     public static BankDto ENTITY_TO_DTO(BankBranchEntity entity, BankDto dto) {
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
+        transformAuditingFields(entity, dto);
         dto.setCode(entity.getCode());
         Optional.ofNullable(entity.getAddress()).ifPresent(addressEntity -> dto.setAddress(AddressTransformer.ENTITY_TO_DTO(addressEntity, new AddressDto())));
         dto.setBankType(CatalogDetailTransformer.ENTITY_TO_DTO(entity.getBankType(), new CatalogDetailDto()));

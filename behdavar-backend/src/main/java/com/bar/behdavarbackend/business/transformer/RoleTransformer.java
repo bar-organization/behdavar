@@ -10,14 +10,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RoleTransformer {
-    public static RoleDto ENTITY_TO_DTO(RoleEntity roleEntity, RoleDto roleDto) {
-        Set<PrivilegeEntity> privileges = roleEntity.getPrivileges();
+public class RoleTransformer extends BaseAuditorTransformer {
+    public static RoleDto ENTITY_TO_DTO(RoleEntity entity, RoleDto dto) {
+        Set<PrivilegeEntity> privileges = entity.getPrivileges();
+        transformAuditingFields(entity, dto);
+        dto.setRoleName(entity.getName());
+        dto.setPrivileges(getPrivileges(privileges));
 
-        roleDto.setRoleName(roleEntity.getName());
-        roleDto.setPrivileges(getPrivileges(privileges));
-
-        return roleDto;
+        return dto;
     }
 
     private static List<String> getPrivileges(Set<PrivilegeEntity> privileges) {

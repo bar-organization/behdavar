@@ -8,7 +8,7 @@ import com.bar.behdavardatabase.entity.ContractEntity;
 
 import java.util.Optional;
 
-public class ContractTransformer {
+public class ContractTransformer extends BaseAuditorTransformer {
 
     public static ContractEntity DTO_TO_ENTITY(ContractDto dto, ContractEntity entity) {
         entity.setContractStatus(dto.getContractStatus());
@@ -29,16 +29,15 @@ public class ContractTransformer {
     }
 
     public static ContractDto ENTITY_TO_DTO(ContractEntity entity, ContractDto dto) {
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
-        dto.setContractStatus(entity.getContractStatus());
+        transformAuditingFields(entity, dto);
         dto.setContractType(entity.getContractType());
+        dto.setContractStatus(entity.getContractStatus());
         dto.setDefferedAmount(entity.getDefferedAmount());
-        dto.setDefferedCount(entity.defferedCount);
-        dto.setIdealIssueDate(entity.idealIssueDate);
+        dto.setDefferedCount(entity.getDefferedCount());
+        dto.setIdealIssueDate(entity.getIdealIssueDate());
         dto.setLateFees(entity.getLateFees());
-        dto.setLendingNumber(entity.lendingNumber);
-        dto.setMasterAmount(entity.masterAmount);
+        dto.setLendingNumber(entity.getLendingNumber());
+        dto.setMasterAmount(entity.getMasterAmount());
         dto.setLateFees(entity.getLateFees());
         dto.setSubmitDate(entity.getSubmitDate());
         Optional.ofNullable(entity.getCorporation()).ifPresent(catalogDetail -> dto.setCorporation(CatalogDetailTransformer.ENTITY_TO_DTO(catalogDetail, new CatalogDetailDto())));
