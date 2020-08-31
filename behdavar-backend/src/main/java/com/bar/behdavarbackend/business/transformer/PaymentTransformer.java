@@ -30,7 +30,6 @@ public class PaymentTransformer extends BaseAuditorTransformer {
         dto.setAmount(entity.getAmount());
         dto.setPaymentDate(entity.getPaymentDate());
         dto.setPaymentType(entity.getPaymentType());
-        dto.setId(entity.getId());
 
         if (fields.contains(PaymentEntity.CONTRACT)) {
             dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));

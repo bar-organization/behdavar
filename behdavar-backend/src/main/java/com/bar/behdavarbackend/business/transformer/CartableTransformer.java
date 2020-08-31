@@ -16,13 +16,11 @@ public class CartableTransformer extends BaseAuditorTransformer {
     }
 
     public static CartableDto ENTITY_TO_DTO(CartableEntity entity, CartableDto dto) {
-        dto.setId(entity.getId());
-        dto.setVersion(entity.getVersion());
+        transformAuditingFields(entity, dto);
         dto.setActive(entity.getActive());
         dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
         dto.setReceiver(UserTransformer.ENTITY_TO_DTO(entity.getReceiver(), new UserDto()));
         dto.setSender(UserTransformer.ENTITY_TO_DTO(entity.getSender(), new UserDto()));
-        transformAuditingFields(entity, dto);
         return dto;
     }
 

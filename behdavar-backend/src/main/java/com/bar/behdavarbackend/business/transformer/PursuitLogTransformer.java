@@ -29,7 +29,6 @@ public class PursuitLogTransformer extends BaseAuditorTransformer {
 
     public static PursuitLogDto ENTITY_TO_DTO(PursuitLogEntity entity, PursuitLogDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
         dto.setCoordinateAppointment(entity.getCoordinateAppointment());
         dto.setCustomerDeposit(entity.getCustomerDeposit());

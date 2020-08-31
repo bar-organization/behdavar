@@ -14,7 +14,6 @@ public class UserLogTransformer extends BaseAuditorTransformer {
 
 
     public static UserLogDto ENTITY_TO_DTO(UserLogEntity entity, UserLogDto dto) {
-        dto.setId(entity.getId());
         dto.setLastLogin(entity.getLastLogin());
         dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));
         return dto;

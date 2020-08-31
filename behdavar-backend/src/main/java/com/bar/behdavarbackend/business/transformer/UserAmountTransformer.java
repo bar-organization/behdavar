@@ -15,7 +15,6 @@ public class UserAmountTransformer extends BaseAuditorTransformer {
 
     public static UserAmountDto ENTITY_TO_DTO(UserAmountEntity entity, UserAmountDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         dto.setReceiveAmount(entity.getReceiveAmount());
         dto.setTotalAmount(entity.getTotalAmount());
         dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));

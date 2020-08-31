@@ -18,7 +18,6 @@ public class LendingTransformer extends BaseAuditorTransformer {
 
     public static LendingDto ENTITY_TO_DTO(LendingEntity entity, LendingDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         Optional.ofNullable(entity.getBranchBank()).ifPresent(branchEntity -> dto.setBranchBank(BankTransformer.ENTITY_TO_DTO(branchEntity, new BankDto())));
         dto.setIdeaIssueDate(entity.getIdeaIssueDate());
         dto.setMasterAmount(entity.getMasterAmount());

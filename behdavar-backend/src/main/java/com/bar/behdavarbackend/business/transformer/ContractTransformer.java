@@ -30,15 +30,14 @@ public class ContractTransformer extends BaseAuditorTransformer {
 
     public static ContractDto ENTITY_TO_DTO(ContractEntity entity, ContractDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
-        dto.setContractStatus(entity.getContractStatus());
         dto.setContractType(entity.getContractType());
+        dto.setContractStatus(entity.getContractStatus());
         dto.setDefferedAmount(entity.getDefferedAmount());
-        dto.setDefferedCount(entity.defferedCount);
-        dto.setIdealIssueDate(entity.idealIssueDate);
+        dto.setDefferedCount(entity.getDefferedCount());
+        dto.setIdealIssueDate(entity.getIdealIssueDate());
         dto.setLateFees(entity.getLateFees());
-        dto.setLendingNumber(entity.lendingNumber);
-        dto.setMasterAmount(entity.masterAmount);
+        dto.setLendingNumber(entity.getLendingNumber());
+        dto.setMasterAmount(entity.getMasterAmount());
         dto.setLateFees(entity.getLateFees());
         dto.setSubmitDate(entity.getSubmitDate());
         Optional.ofNullable(entity.getCorporation()).ifPresent(catalogDetail -> dto.setCorporation(CatalogDetailTransformer.ENTITY_TO_DTO(catalogDetail, new CatalogDetailDto())));

@@ -14,7 +14,6 @@ public class ProductTransformer extends BaseAuditorTransformer {
 
     public static ProductDto ENTITY_TO_DTO(ProductEntity entity, ProductDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         dto.setProductName(entity.getProductName());
         dto.setProductPlate(entity.getProductPlate());
         dto.setProductShasiNumber(entity.getProductShasiNumber());

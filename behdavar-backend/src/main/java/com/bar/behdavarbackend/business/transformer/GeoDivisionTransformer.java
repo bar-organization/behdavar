@@ -18,7 +18,6 @@ public class GeoDivisionTransformer extends BaseAuditorTransformer {
 
     public static GeoDivisionDto ENTITY_TO_DTO(GeoDivisionEntity entity, GeoDivisionDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         dto.setCode(entity.getCode());
         dto.setGeoDivisionType(entity.getGeoDivisionType());
         dto.setName(entity.getName());

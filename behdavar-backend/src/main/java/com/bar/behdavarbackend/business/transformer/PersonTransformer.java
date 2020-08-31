@@ -11,7 +11,6 @@ public class PersonTransformer extends BaseAuditorTransformer {
 
     public static PersonDto ENTITY_TO_DTO(PersonEntity entity, PersonDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
         return dto;

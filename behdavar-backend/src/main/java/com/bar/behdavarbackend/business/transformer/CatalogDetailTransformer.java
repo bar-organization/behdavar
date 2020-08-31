@@ -17,7 +17,6 @@ public class CatalogDetailTransformer extends BaseAuditorTransformer {
 
     public static CatalogDetailDto ENTITY_TO_DTO(CatalogDetailEntity entity, CatalogDetailDto dto) {
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         dto.setCode(entity.getCode());
         dto.setEnglishTitle(entity.getEnglishTitle());
         dto.setActive(entity.getActive());

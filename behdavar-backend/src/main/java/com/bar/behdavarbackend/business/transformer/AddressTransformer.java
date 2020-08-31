@@ -21,7 +21,6 @@ public class AddressTransformer extends BaseAuditorTransformer {
     }
 
     public static AddressDto ENTITY_TO_DTO(AddressEntity entity, AddressDto dto) {
-        dto.setId(entity.getId());
         transformAuditingFields(entity, dto);
         //TODO add required fields
         return dto;

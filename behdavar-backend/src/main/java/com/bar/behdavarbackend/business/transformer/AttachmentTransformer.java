@@ -25,7 +25,6 @@ public class AttachmentTransformer extends BaseAuditorTransformer {
 
     public static AttachmentDto ENTITY_TO_DTO(AttachmentEntity entity, AttachmentDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
-        dto.setId(entity.getId());
         transformAuditingFields(entity, dto);
         dto.setFileName(entity.getFileName());
         dto.setContent(Base64Utils.encodeToString(entity.getContent()));

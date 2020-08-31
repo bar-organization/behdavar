@@ -19,7 +19,6 @@ public class BankTransformer extends BaseAuditorTransformer {
     }
 
     public static BankDto ENTITY_TO_DTO(BankBranchEntity entity, BankDto dto) {
-        dto.setId(entity.getId());
         transformAuditingFields(entity, dto);
         dto.setCode(entity.getCode());
         Optional.ofNullable(entity.getAddress()).ifPresent(addressEntity -> dto.setAddress(AddressTransformer.ENTITY_TO_DTO(addressEntity, new AddressDto())));

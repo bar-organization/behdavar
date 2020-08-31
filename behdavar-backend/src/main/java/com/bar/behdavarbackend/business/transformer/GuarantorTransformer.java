@@ -21,7 +21,6 @@ public class GuarantorTransformer extends BaseAuditorTransformer {
     public static GuarantorDto ENTITY_TO_DTO(GuarantorEntity entity, GuarantorDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         transformAuditingFields(entity, dto);
-        dto.setId(entity.getId());
         dto.setRelationType(entity.getRelationType());
 
         if (fields.contains(GuarantorEntity.CONTRACT)) {
