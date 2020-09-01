@@ -2,4 +2,4 @@
 
 <app-document-toolbar [id]="table.changeId | async" ></app-document-toolbar>
 
-<data-table #table [httpDataSource]="catalogHttpDataSource" [tableColumns]="tableColumns"></data-table>
+<data-table #table [httpDataSource]="catalogHttpDataSource" [tableColumns]="tableColumns" idFieldName="contract.id"></data-table>

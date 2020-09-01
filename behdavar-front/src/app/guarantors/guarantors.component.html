@@ -1,60 +1,83 @@
-<div fxLayout="row" fxLayoutAlign="center none">
-  <mat-card class="w-75 bg-blue-grey-50">
-    <mat-card-title class="text-center card-header">{{lang.guarantorsInformation}}</mat-card-title>
-    <form fxLayout="column" [formGroup]="guarantorsForm" (ngSubmit)="onSubmit()">
-      <div fxLayout="row" fxLayoutGap="0.5rem">
-        <mat-form-field class="flex-fill">
-          <label>{{lang.name}}</label>
-          <input matInput formControlName="name" [errorStateMatcher]="matcher">
-        </mat-form-field>
-        <mat-form-field class="flex-fill">
-          <label>{{lang.family}}</label>
-          <input matInput formControlName="family" [errorStateMatcher]="matcher">
-        </mat-form-field>
-        <mat-form-field class="flex-fill">
-          <label>{{lang.fatherName}}</label>
-          <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">
-        </mat-form-field>
+<div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">
+  <div class="w-25 card">
+    <div class="text-center card-header">{{lang.guarantorList}}</div>
+    <div class="card-title">
+      <mat-selection-list #GLSelect (selectionChange)="guarantorSelectChange()" class="overflow-auto" style="max-height: 20rem" #shoes
+                          [multiple]="false">
+        <mat-list-option *ngFor="let guarantorDto of guarantorDtoList" [value]="guarantorDto">
+          {{guarantorDto?.person?.firstName}} {{guarantorDto?.person?.lastName}}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </div>
+  <div class="p-2 card w-50" >
+    <form [formGroup]="guarantorsForm" (ngSubmit)="onSubmit()" >
+      <div fxLayout="column" fxLayoutGap="1rem" formGroupName="person">
 
-        <mat-form-field class="flex-fill">
-          <label>{{lang.birthDate}}</label>
-          <input matInput formControlName="birthDate" [errorStateMatcher]="matcher">
-        </mat-form-field>
-      </div>
+        <div fxLayout="row" fxLayoutGap="0.5rem">
+          <mat-form-field class="flex-fill">
+            <label>{{lang.name}}</label>
+            <input matInput formControlName="firstName" [errorStateMatcher]="matcher">
+          </mat-form-field>
+          <mat-form-field class="flex-fill">
+            <label>{{lang.family}}</label>
+            <input matInput formControlName="lastName" [errorStateMatcher]="matcher">
+          </mat-form-field>
+          <mat-form-field class="flex-fill">
+            <label>{{lang.fatherName}}</label>
+            <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">
+          </mat-form-field>
+
+        </div>
 
 
-      <div fxLayout="row" fxLayoutGap="0.5rem">
-        <mat-form-field class="flex-fill">
-          <label>{{lang.birthPlace}}</label>
-          <input matInput formControlName="birthPlace" [errorStateMatcher]="matcher">
-        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="0.5rem">
+          <mat-form-field class="flex-fill">
+            <label>{{lang.birthDate}}</label>
+            <input matInput formControlName="birthDate" [errorStateMatcher]="matcher">
+          </mat-form-field>
 
-        <mat-form-field class="flex-fill">
-          <label>{{lang.nationalNumber}}</label>
-          <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">
-        </mat-form-field>
-        <mat-form-field class="flex-fill">
-          <label>{{lang.mobile}}</label>
-          <input
-            matInput formControlName="mobile" [errorStateMatcher]="matcher">
-        </mat-form-field>
+          <mat-form-field class="flex-fill">
+            <label>{{lang.birthPlace}}</label>
+            <input matInput formControlName="birthPlace" [errorStateMatcher]="matcher">
+          </mat-form-field>
 
-        <mat-form-field class="flex-fill">
-          <label>{{lang.postalCode}}</label>
-          <input
-            matInput formControlName="postalCode" [errorStateMatcher]="matcher">
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutGap="0.5rem">
-        <mat-form-field>
-          <label>{{lang.workPlacePhone}}</label>
-          <input matInput formControlName="workPlacePhone" [errorStateMatcher]="matcher">
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
-        <button mat-raised-button class="px-5" color="primary">{{lang.save}}</button>
+          <mat-form-field class="flex-fill">
+            <label>{{lang.nationalNumber}}</label>
+            <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="0.5rem">
+          <mat-form-field class="flex-fill">
+            <label>{{lang.mobile}}</label>
+            <input
+              matInput formControlName="mobile" [errorStateMatcher]="matcher">
+          </mat-form-field>
+
+          <mat-form-field class="flex-fill">
+            <label>{{lang.postalCode}}</label>
+            <input
+              matInput formControlName="postalCode" [errorStateMatcher]="matcher">
+          </mat-form-field>
+          <mat-form-field>
+            <label>{{lang.workPlacePhone}}</label>
+            <input matInput formControlName="workPlacePhone" [errorStateMatcher]="matcher">
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
+          <button mat-raised-button class="px-5" color="primary">
+            <mat-icon>add_box</mat-icon>
+            <span class="px-2">{{lang.new}}</span>
+          </button>
+          <button mat-raised-button class="px-5" color="accent">
+            <mat-icon>edit</mat-icon>
+            <span class="px-2">{{lang.edit}}</span>
+          </button>
+        </div>
       </div>
     </form>
-  </mat-card>
+  </div>
+
 </div>
 

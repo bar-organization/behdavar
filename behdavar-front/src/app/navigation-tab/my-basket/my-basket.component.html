@@ -1,8 +1,21 @@
-<mat-toolbar *ngIf="!route.url.match('find')" fxLayout="row" fxLayoutAlign="end center" style="height: 3rem">
-  <button mat-button routerLink="./find">
-    <span>{{lang.back}}</span>
-    <mat-icon>arrow_back</mat-icon>
-  </button>
+<div *ngIf="!route.url.match('find') else normal" class="card p-2" fxLayout="row" fxLayoutAlign="start stretch">
+  <div fxFlex="90">
+    <router-outlet></router-outlet>
+  </div>
 
-</mat-toolbar>
-<router-outlet></router-outlet>
+  <div fxFlex="10">
+    <button mat-stroked-button color="primary" routerLink="./find">
+      <span>{{lang.back}}</span>
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+  </div>
+
+</div>
+
+<ng-template #normal>
+  <div class="card p-2">
+    <router-outlet></router-outlet>
+  </div>
+
+</ng-template>

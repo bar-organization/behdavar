@@ -3,7 +3,7 @@ import {JwtHelperService} from "@auth0/angular-jwt";
 import {HttpClient} from '@angular/common/http';
 import Url from "../../model/url";
 import {Router} from '@angular/router';
-import {AuthenticationRequest, AuthenticationResponse} from "../../model/model";
+import {AuthenticationRequest, AuthenticationResponse} from "./auth-model";
 import {BehaviorSubject, Observable} from "rxjs";
 import {tap} from "rxjs/operators";
 

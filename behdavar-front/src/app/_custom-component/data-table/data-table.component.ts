@@ -32,6 +32,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Output()
   changeId = new EventEmitter<number>();
 
+  @Input()
+  idFieldName: string;
+
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
   private selection = new SelectionModel<unknown>(false, []);
@@ -108,7 +111,10 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     let result = $event ? this.selection.toggle(row) : null;
 
     if (this.selection.isSelected(row)) {
-      this.changeId.emit(row['id']);
+      if (!this.idFieldName) {
+        this.idFieldName = 'id';
+      }
+      this.changeId.emit(dot.pick(this.idFieldName, row));
     } else {
       this.changeId.emit(undefined);
 

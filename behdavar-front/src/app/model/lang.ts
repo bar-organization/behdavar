@@ -1,5 +1,8 @@
 export class Lang {
   save = 'ذخیره';
+  insert = 'افزودن';
+  new = 'جدید';
+  edit = 'ویرایش';
   search = 'جستجو';
   reset = 'بازنشانی'
   appTitle = 'بهداور';
@@ -79,6 +82,7 @@ export class FollowingLang extends Lang {
 
 export class GuarantorsLang extends PersonLang {
   guarantorsInformation = 'اطلاعات ضامنین';
+  guarantorList = 'لیست ضامنین';
 }
 
 export class CustomerLang extends PersonLang {

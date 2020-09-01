@@ -7,20 +7,16 @@ import {DocumentLang} from "../model/lang";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
-  selector:'app-document',
-  templateUrl:'./document.component.html'
+  selector: 'app-document',
+  templateUrl: './document.component.html'
 })
 export class DocumentComponent {
-  documentId: number = 1;
 
-  // onChangge(event: number) {
-  //   this.documentId = event;
-  //   console.log(event);
-  // }
   documentLang = new DocumentLang();
 
   constructor(private httpClient: HttpClient) {
   }
+
   catalogHttpDataSource: HttpDataSource<CartableDto> = new HttpDataSource<CartableDto>(Url.CARTABLE_FIND_PAGING, this.httpClient);
 
   tableColumns: TableColumn[] = [

@@ -21,20 +21,37 @@ export class Person {
   workPlacePhone?: string;
 }
 
-export class AuthenticationRequest {
-  username: string;
-  password: string;
+export class BaseAuditorDto<U, I> {
+  id: I;
+  createdBy: U;
+  createdDate: Date;
+  lastModifiedBy: U;
+  lastModifiedDate: Date;
+  version: number;
 }
 
-export class AuthenticationResponse {
-  jwt: string;
-  userDto: UserDto;
+export class GuarantorDto extends BaseAuditorDto<string, number> {
+  relationType: RelationType;
+  contract: ContractDto;
+  person: PersonDto;
 }
 
-export class UserDto {
+export class CustomerDto extends BaseAuditorDto<string, number> {
+  person: PersonDto;
+  contract: ContractDto;
+}
+
+export class PersonDto extends BaseAuditorDto<string, number> {
   firstName: string;
   lastName: string;
-  fullName:string = `${this.firstName} ${this.lastName}`
+  email: string;
+  description: string;
+}
+
+export class UserDto extends BaseAuditorDto<string, number> {
+  firstName: string;
+  lastName: string;
+  fullName: string = `${this.firstName} ${this.lastName}`
   username: string;
   enabled: boolean;
   tokenExpired: boolean;
@@ -44,7 +61,7 @@ export class UserDto {
   roles: RoleDto[];
 }
 
-export class CatalogDto {
+export class CatalogDto extends BaseAuditorDto<string, number> {
   id: number;
   code: string;
   englishTitle: string;
@@ -52,13 +69,13 @@ export class CatalogDto {
   active: boolean;
 }
 
-export class CartableDto {
+export class CartableDto extends BaseAuditorDto<string, number> {
   sender: UserDto;
   receiver: UserDto;
   contract: ContractDto;
 }
 
-export class ContractDto {
+export class ContractDto extends BaseAuditorDto<string, number> {
   masterAmount: number;
   defferedAmount: number;
   idealIssueDate: Date;
@@ -73,7 +90,7 @@ export class ContractDto {
   contractType: ContractType;
 }
 
-export class LendingDto {
+export class LendingDto extends BaseAuditorDto<string, number> {
   masterAmount: number;
   ideaIssueDate: Date;
   receiveLendingDate: Date;
@@ -81,13 +98,13 @@ export class LendingDto {
 
 }
 
-export class ProductDto {
+export class ProductDto extends BaseAuditorDto<string, number> {
   productShasiNumber: string;
   productPlate: string;
   productName: string;
 }
 
-export class BankDto {
+export class BankDto extends BaseAuditorDto<string, number> {
   code: string;
   name: string;
   phone: string;
@@ -98,7 +115,7 @@ export class BankDto {
   active: boolean;
 }
 
-export class CatalogDetailDto {
+export class CatalogDetailDto extends BaseAuditorDto<string, number> {
   englishTitle: string;
   title: string;
   code: string;
@@ -107,7 +124,7 @@ export class CatalogDetailDto {
 
 }
 
-export class AddressDto {
+export class AddressDto extends BaseAuditorDto<string, number> {
   mainStreet: string;
   subStreet: string;
   mainAlley: string;
@@ -119,7 +136,7 @@ export class AddressDto {
   person: Person;
 }
 
-export class GeoDivisionDto {
+export class GeoDivisionDto extends BaseAuditorDto<string, number> {
   code: string;
   name: string;
   geoDivisionType: GeoDivisionType;
@@ -132,7 +149,7 @@ export enum GeoDivisionType {
   CITY = "CITY"
 }
 
-export class RoleDto {
+export class RoleDto extends BaseAuditorDto<string, number> {
   roleName: string;
   privileges: string[];
 }
@@ -145,4 +162,11 @@ export enum ContractStatus {
 export enum ContractType {
   TYPE_1 = "TYPE_1",
   TYPE_2 = "TYPE_2"
+}
+
+export enum RelationType {
+  GUARANTOR = "GUARANTOR",
+  S1 = "S1",
+  S2 = "S2"
+
 }

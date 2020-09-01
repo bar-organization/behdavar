@@ -45,6 +45,7 @@ import {AuthInterceptorService} from "./service/auth/AuthInterceptorService";
 import {DocumentComponent} from "./document/document.component";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerHttpInterceptor} from "./service/SpinnerHttpInterceptor";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import {SpinnerHttpInterceptor} from "./service/SpinnerHttpInterceptor";
     MatPaginatorModule,
     MatProgressSpinnerModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ScrollingModule
   ],
   declarations: [
     AppComponent,
