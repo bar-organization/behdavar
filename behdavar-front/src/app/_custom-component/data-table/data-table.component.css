@@ -1,15 +1,14 @@
 th.mat-header-cell, td.mat-cell {
   text-align: right;
   max-width: 20rem;
-  min-width: 10rem;
+  min-width: 8rem;
 }
 
 th.mat-header-cell:last-child, td.mat-cell:last-child {
   text-align: right;
-  min-width: 10rem;
+  min-width: 8rem;
   width: 100%;
 }
-
 .example-loading-shade {
   position: absolute;
   top: 0;

@@ -2,10 +2,10 @@
   <table mat-table [dataSource]="httpDataSource" matSort class="w-100">
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
+      <th mat-header-cell  style="min-width: 5rem" *matHeaderCellDef>
           __
       </th>
-      <td mat-cell *matCellDef="let row">
+      <td mat-cell style="min-width: 5rem"  *matCellDef="let row">
         <mat-checkbox (click)="$event.stopPropagation()"
                       (change)="toggle(row,$event)"
                       [checked]="selection.isSelected(row)"
@@ -13,14 +13,15 @@
         </mat-checkbox>
       </td>
     </ng-container>
+
     <ng-container matColumnDef="rowNo">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{rowNoTitle}}</th>
-      <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1 }} </td>
+      <th mat-header-cell style="min-width: 5rem"  *matHeaderCellDef mat-sort-header> {{rowNoTitle}}</th>
+      <td mat-cell style="min-width: 5rem"  *matCellDef="let element; let i = index;"> {{i + 1 }} </td>
     </ng-container>
 
     <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col.fieldName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{col.title}}</th>
-      <td mat-cell *matCellDef="let element"> {{handelDotAndPip(element, col) }} </td>
+      <td mat-cell *matCellDef="let element"> {{applyPip(handelDot(element, col.fieldName),col.pipNames) }} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>

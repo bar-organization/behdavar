@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, PipeTransform, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
@@ -88,21 +88,22 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  handelDotAndPip(element: any, col: TableColumn): string {
-    if (!element || !col || !col.fieldName) {
+  handelDot(element: any, fieldName: string): string {
+    if (!element || !fieldName) {
       return '';
     }
+    return dot.pick(fieldName, element);
+  }
 
-    let result = dot.pick(col.fieldName, element);
-    // TODO must handel pip
-    // let pipChain = '';
-    // if (col.pipNames && col.pipNames.length > 0) {
-    //   for (let pipName of col.pipNames) {
-    //     pipChain += ' | ' + pipName;
-    //   }
-    // }
-    // console.log(pipChain);
-    // return result + pipChain;
+  applyPip(value: any, pips: PipeWrapper[]): string {
+    if (!pips || pips.length == 0) {
+      return value;
+    }
+
+    let result: string = value;
+    for (let pipName of pips) {
+      result = pipName.pip.transform(result);
+    }
     return result;
   }
 
@@ -127,7 +128,12 @@ export interface TableColumn {
   fieldName: string;
   title: string;
   hidden?: boolean;
-  pipNames?: string[];
+  pipNames?: PipeWrapper[];
+}
+
+export interface PipeWrapper {
+  pip: PipeTransform,
+  args?: string[]
 }
 
 export declare type DataSourceType = 'array' | 'http' | undefined;

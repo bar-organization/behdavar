@@ -11,11 +11,20 @@ export class Lang {
   back = 'بازگشت';
 }
 
+export class AuthLang extends Lang {
+  usernameNotFound = 'نام کاربری یافت نشد';
+  incorrectUsernameOrPassword = 'رمز عبور اشتباه است';
+  other = 'خطا در احراز هویت';
+}
+
 export class LoginLang extends Lang {
   loginMessage = 'ورود به سیستم';
   usernameMessage = 'نام کاربری';
   passwordMessage = 'رمز عبور';
   enterMessage = 'ورود';
+  userNameRequired = 'نام کاربری اجباری است';
+  passwordRequired = 'رمز عبور اجباری است';
+
 }
 
 export class PersonLang extends Lang {
@@ -64,6 +73,9 @@ export class DocumentLang extends PersonLang {
   facilityReceivingDate = 'تاریخ دریافت تسهیلات';
   plateNumber = 'پلاک خودرو';
   vehicleType = 'نوع خودرو';
+  expert = 'کارشناس';
+    ideaIssueDate = 'تاریخ صدور رای';
+  receiveLendingDate='تاریخ دریافت تسهیلات'
 }
 
 export class FollowingLang extends Lang {

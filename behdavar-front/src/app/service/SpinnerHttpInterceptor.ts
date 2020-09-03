@@ -20,9 +20,7 @@ export class SpinnerHttpInterceptor implements HttpInterceptor {
     return next.handle(req)
 
       .pipe(tap(
-        event => console.log(event),
-
-        error => console.log(error)
+            // TODO is necessary to something hear ?
         ), finalize(() => {
 
           this.count--;

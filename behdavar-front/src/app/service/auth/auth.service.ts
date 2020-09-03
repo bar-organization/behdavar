@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {JwtHelperService} from "@auth0/angular-jwt";
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import Url from "../../model/url";
 import {Router} from '@angular/router';
-import {AuthenticationRequest, AuthenticationResponse} from "./auth-model";
-import {BehaviorSubject, Observable} from "rxjs";
-import {tap} from "rxjs/operators";
+import {AuthenticationException, AuthenticationRequest, AuthenticationResponse} from "./auth-model";
+import {BehaviorSubject, Observable, throwError} from "rxjs";
+import {catchError, tap} from "rxjs/operators";
 
 const jwtHelper = new JwtHelperService();
 
@@ -34,7 +34,7 @@ export class AuthService {
     const authenticationRequest: AuthenticationRequest = {username, password};
 
     return this.http.post<AuthenticationResponse>(Url.LOGIN, authenticationRequest)
-      .pipe(tap(resData => {
+      .pipe(catchError(this.handelError), tap(resData => {
         this.authResponseSubject.next(resData);
         localStorage.setItem(AuthService.AUTH_RESPONSE, JSON.stringify(resData));
       }));
@@ -53,6 +53,32 @@ export class AuthService {
     }
     // TODO must check if jwt inside localStorage not expired, then added to subject
     this.authResponseSubject.next(authResponseStorage);
+  }
+
+  private handelError(errorRes: HttpErrorResponse): Observable<never> {
+
+    if (!errorRes || !errorRes.error || !errorRes.error['message'])
+      return throwError(AuthenticationException.OTHER)
+
+    if (AuthService.isInvalidUserName(errorRes.error['message'])) {
+      return throwError(AuthenticationException.USERNAME_NOT_FOUND)
+    }
+
+    if (AuthService.isInvalidPassword(errorRes.error['message'])) {
+      return throwError(AuthenticationException.INCORRECT_USERNAME_OR_PASSWORD)
+
+    }
+
+
+    return throwError(AuthenticationException.OTHER)
+  }
+
+  private static isInvalidUserName(errorMessage: string) {
+    return !!errorMessage.match('Username not found');
+  }
+
+  private static isInvalidPassword(errorMessage: string): boolean {
+    return !!errorMessage.match('Incorrect username or password');
   }
 }
 

@@ -5,6 +5,8 @@ import Url from "../model/url";
 import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import {DocumentLang} from "../model/lang";
 import {HttpClient} from "@angular/common/http";
+import {JalaliPipe} from "../_pip/jalali.pipe";
+import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 
 @Component({
   selector: 'app-document',
@@ -27,6 +29,22 @@ export class DocumentComponent {
     {fieldName: 'contract.defferedAmount', title: this.documentLang.deferredAmount},
     {fieldName: 'contract.defferedCount', title: this.documentLang.deferredCount},
     {fieldName: 'contract.masterAmount', title: this.documentLang.totalAmount},
-    {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate},
-  ]
+    {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: this.getDatePip()},
+    {fieldName: 'sender.firstName', title: this.documentLang.expert},
+    // {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
+    // {fieldName: 'contract.lending.receiveLendingDate', title: this.documentLang.receiveLendingDate, pipNames: this.getDatePip()},
+    // {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch,pipNames:this.getSimplePip()},
+    // {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.product.productName', title: this.documentLang.vehicleType,pipNames:this.getSimplePip()},
+  ];
+
+  private getDatePip() {
+    return [{pip: new JalaliPipe()},{pip:new BlankToDashPipe()}];
+  }
+
+  private getSimplePip() {
+    return [{pip:new BlankToDashPipe()}];
+
+  }
 }

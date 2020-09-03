@@ -8,4 +8,6 @@ export default class Url {
   public static readonly GUARANTOR_FIND_BY_CONTRACT = `${Url.BASE_API}/guarantor/find-by-contract`;
 
   public static readonly CUSTOMER_FIND_BY_CONTRACT = `${Url.BASE_API}/customer/find-by-contract`;
+
+  public static readonly PURSUIT_FIND_BY_CONTRACT = `${Url.BASE_API}/pursuit/find-by-contract`;
 }
