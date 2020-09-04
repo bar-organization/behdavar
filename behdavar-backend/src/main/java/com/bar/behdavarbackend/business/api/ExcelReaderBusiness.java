@@ -1,7 +1,7 @@
 package com.bar.behdavarbackend.business.api;
 
-import com.bar.behdavarbackend.dto.UploadExcelDto;
+import com.bar.behdavarbackend.dto.InputExcelDto;
 
 public interface ExcelReaderBusiness {
-    void readAndSave(UploadExcelDto dto);
+    void readAndSave(InputExcelDto dto);
 }

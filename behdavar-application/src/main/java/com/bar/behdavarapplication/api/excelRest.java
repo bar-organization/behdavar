@@ -2,7 +2,7 @@ package com.bar.behdavarapplication.api;
 
 import com.bar.behdavarbackend.business.api.ExcelReaderBusiness;
 import com.bar.behdavarbackend.dto.CartableDto;
-import com.bar.behdavarbackend.dto.UploadExcelDto;
+import com.bar.behdavarbackend.dto.InputExcelDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class excelRest {
     ExcelReaderBusiness excelReaderBusiness;
 
     @PostMapping("/upload")
-    public ResponseEntity<CartableDto> findById(@RequestBody @Valid UploadExcelDto dto) {
+    public ResponseEntity<CartableDto> findById(@RequestBody @Valid InputExcelDto dto) {
         excelReaderBusiness.readAndSave(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -96,4 +96,8 @@ public class InputExcelLendingEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "PLAQUE_NUMBER")
     private String plaqueNumber;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "INPUT_EXCEL_ID", nullable = false, foreignKey = @ForeignKey(name = "INPUT_EXCEL_LENDING_FILE_FK"))
+    private InputExcelEntity inputExcel;
+
 }

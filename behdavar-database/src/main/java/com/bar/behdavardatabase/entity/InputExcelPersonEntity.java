@@ -55,4 +55,8 @@ public abstract class InputExcelPersonEntity extends BaseAuditorEntity<String, L
     @Column(name = "TEL2")
     private Long tel2;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "INPUT_EXCEL_ID", nullable = false)
+    private InputExcelEntity inputExcel;
+
 }

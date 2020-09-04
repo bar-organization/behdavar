@@ -4,9 +4,10 @@ import com.bar.behdavarbackend.business.api.ExcelReaderBusiness;
 import com.bar.behdavarbackend.business.transformer.InputExcelLendingTransformer;
 import com.bar.behdavarbackend.business.transformer.InputExcelPersonTransformer;
 import com.bar.behdavarbackend.dto.InputExcelDebtorDto;
+import com.bar.behdavarbackend.dto.InputExcelDto;
 import com.bar.behdavarbackend.dto.InputExcelGuarantorDto;
 import com.bar.behdavarbackend.dto.InputExcelLendingDto;
-import com.bar.behdavarbackend.dto.UploadExcelDto;
+import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavardatabase.entity.InputExcelDebtorEntity;
 import com.bar.behdavardatabase.entity.InputExcelEntity;
 import com.bar.behdavardatabase.entity.InputExcelGuarantorEntity;
@@ -45,33 +46,52 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
 
     @Override
     @Transactional
-    public void readAndSave(UploadExcelDto dto) {
+    public void readAndSave(InputExcelDto dto) {
         byte[] bytes = Base64Utils.decodeFromString(dto.getContent());
         InputExcelEntity inputExcelEntity = new InputExcelEntity();
         inputExcelEntity.setContent(bytes);
         inputExcelEntity.setFileName(dto.getFileName());
-        inputExcelRepository.save(inputExcelEntity);
+        inputExcelEntity = inputExcelRepository.save(inputExcelEntity);
+        InputExcelEntity finalInputExcelEntity = inputExcelEntity;
 
 
         List<InputExcelLendingDto> inputExcelLendingDtos = Poiji.fromExcel(new ByteArrayInputStream(bytes), PoijiExcelType.XLSX, InputExcelLendingDto.class);
         if (!CollectionUtils.isEmpty(inputExcelLendingDtos)) {
             List<InputExcelLendingEntity> inputExcelLendingEntities = new ArrayList<>();
-            inputExcelLendingDtos.forEach(inputExcelLendingDto -> inputExcelLendingEntities.add(InputExcelLendingTransformer.DTO_TO_ENTITY(inputExcelLendingDto, new InputExcelLendingEntity())));
+            inputExcelLendingDtos.forEach(inputExcelLendingDto -> {
+                InputExcelLendingEntity entity = InputExcelLendingTransformer.DTO_TO_ENTITY(inputExcelLendingDto, new InputExcelLendingEntity());
+                entity.setInputExcel(finalInputExcelEntity);
+                inputExcelLendingEntities.add(entity);
+            });
             inputExcelLendingRepository.saveAll(inputExcelLendingEntities);
+        } else {
+            throw new BusinessException("invalid.input.excel.file");
         }
 
         List<InputExcelGuarantorDto> inputExcelGuarantorDtos = Poiji.fromExcel(new ByteArrayInputStream(bytes), PoijiExcelType.XLSX, InputExcelGuarantorDto.class);
         if (!CollectionUtils.isEmpty(inputExcelGuarantorDtos)) {
-            List<InputExcelGuarantorEntity> inputExcelLendingEntities = new ArrayList<>();
-            inputExcelGuarantorDtos.forEach(excelGuarantorDto -> inputExcelLendingEntities.add((InputExcelGuarantorEntity) InputExcelPersonTransformer.DTO_TO_ENTITY(excelGuarantorDto, new InputExcelGuarantorEntity())));
-            inputExcelGuarantorRepository.saveAll(inputExcelLendingEntities);
+            List<InputExcelGuarantorEntity> inputExcelGuarantorEntities = new ArrayList<>();
+            inputExcelGuarantorDtos.forEach(excelGuarantorDto -> {
+                InputExcelGuarantorEntity entity = (InputExcelGuarantorEntity) InputExcelPersonTransformer.DTO_TO_ENTITY(excelGuarantorDto, new InputExcelGuarantorEntity());
+                entity.setInputExcel(finalInputExcelEntity);
+                inputExcelGuarantorEntities.add(entity);
+            });
+            inputExcelGuarantorRepository.saveAll(inputExcelGuarantorEntities);
+        } else {
+            throw new BusinessException("invalid.input.excel.file");
         }
 
         List<InputExcelDebtorDto> inputExcelDebtorDtos = Poiji.fromExcel(new ByteArrayInputStream(bytes), PoijiExcelType.XLSX, InputExcelDebtorDto.class);
         if (!CollectionUtils.isEmpty(inputExcelDebtorDtos)) {
             List<InputExcelDebtorEntity> inputExcelDebtorEntities = new ArrayList<>();
-            inputExcelDebtorDtos.forEach(inputExcelDebtorDto -> inputExcelDebtorEntities.add((InputExcelDebtorEntity) InputExcelPersonTransformer.DTO_TO_ENTITY(inputExcelDebtorDto, new InputExcelDebtorEntity())));
+            inputExcelDebtorDtos.forEach(inputExcelDebtorDto -> {
+                InputExcelDebtorEntity entity = (InputExcelDebtorEntity) InputExcelPersonTransformer.DTO_TO_ENTITY(inputExcelDebtorDto, new InputExcelDebtorEntity());
+                entity.setInputExcel(finalInputExcelEntity);
+                inputExcelDebtorEntities.add(entity);
+            });
             inputExcelDebtorRepository.saveAll(inputExcelDebtorEntities);
+        } else {
+            throw new BusinessException("invalid.input.excel.file");
         }
 
 

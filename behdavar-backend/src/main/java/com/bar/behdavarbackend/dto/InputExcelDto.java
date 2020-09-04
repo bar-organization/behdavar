@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class UploadExcelDto extends BaseAuditorDto<String, Long> {
+public class InputExcelDto extends BaseAuditorDto<String, Long> {
 
     @NotNull(message = "validation.error.not.null")
     private String fileName;

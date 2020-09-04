@@ -79,4 +79,5 @@ public class InputExcelLendingDto extends BaseAuditorDto<String, Long> {
     private String motorNumber;
     @ExcelCell(33)
     private String plaqueNumber;
+    private InputExcelDto inputExcel;
 }

@@ -38,4 +38,6 @@ public abstract class InputExcelPersonDto extends BaseAuditorDto<String, Long> {
     private long tel1;
     @ExcelCell(13)
     private Long tel2;
+
+    private InputExcelDto inputExcel;
 }
