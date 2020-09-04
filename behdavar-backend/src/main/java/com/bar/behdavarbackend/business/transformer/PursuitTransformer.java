@@ -4,6 +4,7 @@ import com.bar.behdavarbackend.dto.PaymentDto;
 import com.bar.behdavarbackend.dto.PursuitDto;
 import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavardatabase.entity.PursuitEntity;
+import com.bar.behdavardatabase.util.SecurityUtil;
 
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class PursuitTransformer extends BaseAuditorTransformer {
         entity.setPursuitType(dto.getPursuitType());
         entity.setResultType(dto.getResultType());
         entity.setSubmitAccordingFinal(dto.getSubmitAccordingFinal());
-        entity.setUser(UserTransformer.CREATE_ENTITY_FOR_RELATION(dto.getUser().getId()));
+        entity.setUser(UserTransformer.CREATE_ENTITY_FOR_RELATION(SecurityUtil.getCurrentUserId()));
         Optional.ofNullable(dto.getPayment()).ifPresent(paymentDto -> entity.setPayment(PaymentTransformer.CREATE_ENTITY_FOR_RELATION(paymentDto.getId())));
         return entity;
     }
