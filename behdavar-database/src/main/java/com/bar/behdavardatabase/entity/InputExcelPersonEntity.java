@@ -1,0 +1,58 @@
+package com.bar.behdavardatabase.entity;
+
+import com.bar.behdavardatabase.common.BaseAuditorEntity;
+import com.bar.behdavardatabase.constant.common.BaseConstant;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
+
+@Setter
+@Getter
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class InputExcelPersonEntity extends BaseAuditorEntity<String, Long> {
+
+    public static final String TABLE_NAME = BASE_TABLE_PREFIX + "INPUT_EXCEL_PERSON";
+    public static final String SEQ_NAME = "INPUT_EXCEL_PERSON" + BaseConstant.SEQUENCE;
+
+    @Column(name = "ID")
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = InputExcelPersonEntity.SEQ_NAME)
+    @SequenceGenerator(name = InputExcelPersonEntity.SEQ_NAME, sequenceName = InputExcelPersonEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
+    private Long id;
+
+    @Column(name = "ROW_INDEX")
+    private Integer rowIndex;
+    @Column(name = "ROW_NO")
+    private Integer rowNo;
+    @Column(name = "CONTRACT_NUMBER")
+    private String contractNumber;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "LAST_NAME")
+    private String lastName;
+    @Column(name = "NATIONAL_CODE")
+    private String nationalCode;
+    @Column(name = "IDENTIFICATION_CODE")
+    private String identificationCode;
+    @Column(name = "BIRTH_PLACE")
+    private String birthPlace;
+    @Column(name = "BIRTH_DATE")
+    private String birthDate;
+    @Column(name = "FATHER_NAME")
+    private String fatherName;
+    @Column(name = "ADDRESS")
+    private String address;
+    @Column(name = "MOBILE1")
+    private String mobile1;
+    @Column(name = "MOBILE2")
+    private Long mobile2;
+    @Column(name = "TEL1")
+    private long tel1;
+    @Column(name = "TEL2")
+    private Long tel2;
+
+}
