@@ -46,11 +46,14 @@ import {DocumentComponent} from "./document/document.component";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerHttpInterceptor} from "./service/SpinnerHttpInterceptor";
 import {ScrollingModule} from "@angular/cdk/scrolling";
-import {JalaliPipe} from './_pip/jalali.pipe';;
-import { BlankToDashPipe } from './_pip/blank-to-dash.pipe';
-import { FinancialStatusComponent } from './financial-status/financial-status.component';
+import {JalaliPipe} from './_pip/jalali.pipe';
+import {BlankToDashPipe} from './_pip/blank-to-dash.pipe';
+import {FinancialStatusComponent} from './financial-status/financial-status.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+
 @NgModule({
   imports: [
+    MatSnackBarModule,
     AppRoutingModule,
     BrowserModule,
     ReactiveFormsModule,
@@ -99,11 +102,9 @@ import { FinancialStatusComponent } from './financial-status/financial-status.co
     UtilityToolsComponent,
     DataTableComponent,
     DocumentComponent,
-    JalaliPipe
-,
-    BlankToDashPipe ,
-    FinancialStatusComponent
-  ],
+    JalaliPipe,
+    BlankToDashPipe,
+    FinancialStatusComponent],
 
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},

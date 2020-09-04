@@ -43,6 +43,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
 
   ngOnInit(): void {
+    this.configureTableColumns()
     this.configureMatTableDataSource();
     this.configureHttpDataSource();
   }
@@ -68,7 +69,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     if (!this.tableColumns) {
       return [];
     }
-    let columnToDisplay = this.tableColumns.filter(value => !value.hidden).map(value => value.fieldName);
+    let columnToDisplay = this.tableColumns.filter(value => !value.hidden).map(value => value.colName);
     columnToDisplay.unshift('select', 'rowNo');
     return columnToDisplay;
   }
@@ -102,7 +103,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
     let result: string = value;
     for (let pipName of pips) {
-      result = pipName.pip.transform(result);
+      result = pipName.pip.transform(result, pipName.args);
     }
     return result;
   }
@@ -122,10 +123,21 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
     return result;
   }
+
+  private configureTableColumns() {
+    if (this.tableColumns) {
+      this.tableColumns.forEach((column,index) => {
+        if (!column.colName) {
+          column.colName = `col${index}`;
+        }
+      });
+    }
+  }
 }
 
 export interface TableColumn {
   fieldName: string;
+  colName?: string;
   title: string;
   hidden?: boolean;
   pipNames?: PipeWrapper[];

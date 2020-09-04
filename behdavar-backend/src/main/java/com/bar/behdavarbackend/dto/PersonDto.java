@@ -12,5 +12,6 @@ public class PersonDto extends BaseAuditorDto<String, Long> {
     private String firstName;
     private String lastName;
     private String email;
+    private String phoneNumber;
     private String description;
 }

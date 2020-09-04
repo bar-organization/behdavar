@@ -1,7 +1,7 @@
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {catchError, finalize, map} from "rxjs/operators";
-import {PagingRequest, PagingResponse} from "./PaginationModel";
+import {PagingRequest, PagingResponse, SearchCriteria} from "./PaginationModel";
 import {HttpClient} from "@angular/common/http";
 
 export default class HttpDataSource<T> implements DataSource<T> {
@@ -12,10 +12,13 @@ export default class HttpDataSource<T> implements DataSource<T> {
   private subject = new BehaviorSubject<T[]>(null);
   private url: string;
   private httpClient: HttpClient;
+  private filters: SearchCriteria[];
+  private request: PagingRequest;
 
-  constructor(url: string, httpClient: HttpClient) {
+  constructor(url: string, httpClient: HttpClient, filters?: SearchCriteria[]) {
     this.url = url;
     this.httpClient = httpClient;
+    this.filters = filters;
   }
 
   connect(collectionViewer: CollectionViewer): Observable<T[]> {
@@ -30,11 +33,19 @@ export default class HttpDataSource<T> implements DataSource<T> {
     // start active loading
     this.loadingSubject.next(true);
 
+    this.request = request;
+    request.filters = this.filters;
     // call http service
     this.httpClient.post<PagingResponse<T>>(this.url, request)
-      .pipe(catchError(err => this.handleError(err)),finalize(() => this.stopLoading()))
+      .pipe(catchError(err => this.handleError(err)), finalize(() => this.stopLoading()))
       .pipe(map(value => this.mapResponseToDto(value)))
       .subscribe(value => this.subject.next(value));
+  }
+
+  public reload() {
+    if (this.request) {
+      this.find(this.request);
+    }
   }
 
   private stopLoading() {

@@ -42,7 +42,7 @@
           <mat-form-field class="flex-fill">
             <label>{{lang.mobile}}</label>
             <input
-              matInput formControlName="mobile" [errorStateMatcher]="matcher">
+              matInput formControlName="phoneNumber" [errorStateMatcher]="matcher">
           </mat-form-field>
 
           <mat-form-field class="flex-fill">
@@ -58,10 +58,6 @@
         </div>
 
         <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
-          <button mat-raised-button class="px-5" color="primary">
-            <mat-icon>add_box</mat-icon>
-            <span class="px-2">{{lang.new}}</span>
-          </button>
           <button mat-raised-button class="px-5" color="accent">
             <mat-icon>edit</mat-icon>
             <span class="px-2">{{lang.edit}}</span>

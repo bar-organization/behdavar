@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {GuarantorDto} from "../model/model";
 import {MatSelectionList} from "@angular/material/list";
 import {MyErrorStateMatcher} from "../model/MyErrorStateMatcher";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-guarantors',
@@ -26,12 +27,13 @@ export class GuarantorsComponent implements OnInit {
   guarantorDtoList: GuarantorDto[];
 
 
-  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute) {
+  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute,private _snackBar:MatSnackBar) {
   }
 
   ngOnInit(): void {
     this.guarantorsForm = this.fb.group({
       person: this.fb.group({
+        id:[''],
         firstName: [''],
         lastName: [''],
         email: [''],
@@ -40,16 +42,20 @@ export class GuarantorsComponent implements OnInit {
         birthDate: [''],
         nationalNumber: [''],
         postalCode: [''],
-        mobile: [''],
+        phoneNumber: [''],
         telephone: [''],
         birthPlace: [''],
         workPlacePhone: [''],
       })
     });
 
+    this.updateGuarantorList();
+
+  }
+
+  private updateGuarantorList() {
     this.httpClient.post<GuarantorDto[]>(Url.GUARANTOR_FIND_BY_CONTRACT, this.getIdParam())
       .subscribe(value => this.guarantorDtoList = value);
-
   }
 
   private getIdParam(): number {
@@ -63,7 +69,19 @@ export class GuarantorsComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.guarantorsForm.value);
 
+    this.httpClient.post<unknown>(Url.PERSON_UPDATE, this.guarantorsForm.value['person'])
+      .subscribe(value => {
+          this._snackBar.open(this.lang.successSave, 'X', {
+            duration: 5000, panelClass: ['bg-success', 'text-white']
+          });
+          this.updateGuarantorList();
+        },
+        error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
+          duration: 5000, panelClass: ['bg-danger', 'text-white']
+        })
+      );
   }
 
   guarantorSelectChange() {

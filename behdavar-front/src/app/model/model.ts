@@ -1,3 +1,6 @@
+import {PursuitType} from "./enum/PursuitType";
+import {ResultType} from "./enum/ResultType";
+
 class BaseModel<T> {
   id: T;
   version ?: number;
@@ -45,6 +48,7 @@ export class PersonDto extends BaseAuditorDto<string, number> {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber: string;
   description: string;
 }
 
@@ -66,7 +70,8 @@ export class PursuitDto extends BaseAuditorDto<string, number> {
   coordinateAppointment: boolean;
   depositAppointment: boolean;
   submitAccordingFinal: boolean;
-  nextPursuitDate: Date;
+  // TODO use string for because use moment.format() to fix issue of Jackson convert to Java LocalDate. must fix...
+  nextPursuitDate: string;
   customerDeposit: boolean;
   pursuitType: PursuitType;
   resultType: ResultType;
@@ -199,55 +204,6 @@ export enum RelationType {
   S1 = "S1",
   S2 = "S2"
 
-}
-
-export enum PursuitType {
-  PHONE_CALL = "PHONE_CALL",
-  APPOINTMENT = "APPOINTMENT",
-  NOTICE = "NOTICE",
-  PAYMENT = "PAYMENT",
-  REFER_PROPERTY = "REFER_PROPERTY",
-  OTHER = "OTHER",
-  INQUIRY_BRANCH = "INQUIRY_BRANCH",
-  RECEIPT_POST_FAX = "RECEIPT_POST_FAX",
-  SEND_SMS = "SEND_SMS",
-  REVIEW_DOCUMENT = "REVIEW_DOCUMENT",
-  REQUEST_DOCUMENT = "REQUEST_DOCUMENT",
-  PEACE_AND_RECONCILIATION = "PEACE_AND_RECONCILIATION",
-  LETTER_HELP = "LETTER_HELP",
-  LEGAL_REVIEW = "LEGAL_REVIEW",
-  REFER_LAWYER = "REFER_LAWYER",
-  PREPARING_REFER_LAWYER = "PREPARING_REFER_LAWYER",
-  REQUEST_RELIGION_DOCUMENTS = "REQUEST_RELIGION_DOCUMENTS",
-  SEND_LETTER = "SEND_LETTER",
-  EXECUTIVE_REGISTRATION_LETTER = "EXECUTIVE_REGISTRATION_LETTER",
-  NOTIFICATION_RECEIVE = "NOTIFICATION_RECEIVE",
-  REGISTRATION_EXECUTIVE_CLASS = "REGISTRATION_EXECUTIVE_CLASS",
-  PROPERTY_IDENTIFICATION = "PROPERTY_IDENTIFICATION",
-  MISSION = "MISSION",
-  REPRESENTATIVE_REFER = "REPRESENTATIVE_REFER",
-  REQUEST_SEIZURE = "REQUEST_SEIZURE",
-  IVR = "IVR",
-  UPDATED = "UPDATED"
-}
-
-export enum ResultType {
-  RETURNED = "RETURNED",
-  NOT_ANNOUNCED = "NOT_ANNOUNCED",
-  COLLECTION = "COLLECTION",
-  RETURN = "RETURN",
-  GUARANTEE = "GUARANTEE",
-  CONVERSION = "CONVERSION",
-  DURATION = "DURATION",
-  ACCEPTED = "ACCEPTED",
-  DAY_CHECK = "DAY_CHECK",
-  SEND_TO_BANK = "SEND_TO_BANK",
-  SEND_TO_FINANCE = "SEND_TO_FINANCE",
-  SEND_TO_BRANCH = "SEND_TO_BRANCH",
-  SEND_TO_AREA = "SEND_TO_AREA",
-  NON_APPROVAL_AREA = "NON_APPROVAL_AREA",
-  FINAL_CONFIRMATION = "FINAL_CONFIRMATION",
-  RENEWAL_BANK_RESOURCES = "RENEWAL_BANK_RESOURCES"
 }
 
 export enum PaymentType {

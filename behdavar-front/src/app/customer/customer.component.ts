@@ -6,6 +6,7 @@ import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute} from "@angular/router";
 import {CustomerDto} from "../model/model";
 import Url from "../model/url";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-customer',
@@ -19,12 +20,13 @@ export class CustomerComponent implements OnInit , AfterViewInit{
   matcher = new MyErrorStateMatcher();
 
 
-  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute) {
+  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute,private _snackBar:MatSnackBar) {
   }
 
   ngOnInit(): void {
     this.customerForm = this.fb.group({
       person: this.fb.group({
+        id:[''],
         firstName: [''],
         lastName: [''],
         email: [''],
@@ -33,7 +35,7 @@ export class CustomerComponent implements OnInit , AfterViewInit{
         birthDate: [''],
         nationalNumber: [''],
         postalCode: [''],
-        mobile: [''],
+        phoneNumber: [''],
         telephone: [''],
         birthPlace: [''],
         workPlacePhone: [''],
@@ -41,7 +43,7 @@ export class CustomerComponent implements OnInit , AfterViewInit{
     });
 
     this.httpClient.post<CustomerDto>(Url.CUSTOMER_FIND_BY_CONTRACT, this.getIdParam())
-      .subscribe(value => this.customerForm.patchValue(value));
+      .subscribe(value => {this.customerForm.patchValue(value[0]);console.log(value)});
 
   }
   ngAfterViewInit(): void {
@@ -51,8 +53,19 @@ export class CustomerComponent implements OnInit , AfterViewInit{
 
   onSubmit() {
     this.submitted = true;
-    this.httpClient.post<CustomerDto>(Url.CUSTOMER_FIND_BY_CONTRACT, this.getIdParam())
-      .subscribe(value => this.customerForm.patchValue(value));
+
+      this.httpClient.post<unknown>(Url.PERSON_UPDATE, this.customerForm.value['person'])
+        .subscribe(value => {
+            this._snackBar.open(this.lang.successSave, 'X', {
+              duration: 5000, panelClass: ['bg-success', 'text-white']
+            });
+          },
+          error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
+            duration: 5000, panelClass: ['bg-danger', 'text-white']
+          })
+        );
+
+
   }
 
   private getIdParam(): number {

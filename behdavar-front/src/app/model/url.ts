@@ -11,4 +11,10 @@ export default class Url {
   public static readonly CUSTOMER_FIND_BY_CONTRACT = `${Url.BASE_API}/customer/find-by-contract`;
 
   public static readonly PURSUIT_FIND_BY_CONTRACT = `${Url.BASE_API}/pursuit/find-by-contract`;
+
+  public static readonly PURSUIT_FIND_PAGING = `${Url.BASE_API}/pursuit/find-paging`;
+
+  public static readonly PURSUIT_SAVE = `${Url.BASE_API}/pursuit/save`;
+
+  public static readonly PERSON_UPDATE = `${Url.BASE_API}/person/update`;
 }

@@ -9,6 +9,8 @@ export class Lang {
   logout = 'خروج';
   row = 'ردیف';
   back = 'بازگشت';
+  successSave = 'عملیات با موفقیت انجام شد';
+  error = 'خطا در انجام عملیات';
 }
 
 export class AuthLang extends Lang {
@@ -74,12 +76,15 @@ export class DocumentLang extends PersonLang {
   plateNumber = 'پلاک خودرو';
   vehicleType = 'نوع خودرو';
   expert = 'کارشناس';
-    ideaIssueDate = 'تاریخ صدور رای';
-  receiveLendingDate='تاریخ دریافت تسهیلات'
+  ideaIssueDate = 'تاریخ صدور رای';
+  receiveLendingDate = 'تاریخ دریافت تسهیلات'
 }
 
 export class FollowingLang extends Lang {
   followingType = 'نوع پیگیری';
+  date = 'تاریخ';
+  time = 'ساعت';
+  expertName = 'نام کارشناس';
   followingResult = 'نتیجه پیگیری';
   followingResultDescription = 'شرح نتیجه پیگیری';
   depostidAmount = 'مبلغ واریز شده مشتری';
@@ -119,4 +124,52 @@ export class FinancialStatusLang extends Lang{
   expert = 'کارشناس' ;
   contractStatus = 'وضعیت پرونده';
   paymentDate = 'تاریخ' ;
+}
+export class PursuitTypeLang extends Lang {
+  PHONE_CALL = "تماس تلفنی";
+  APPOINTMENT = 'قرار ملاقات';
+  NOTICE = "اعلان";
+  PAYMENT = "پرداخت";
+  REFER_PROPERTY = "مراجعه به ملک";
+  OTHER = "سایر موارد";
+  INQUIRY_BRANCH = "واحد تحقیق";
+  RECEIPT_POST_FAX = "دریافت از فکس";
+  SEND_SMS = "ارسال پیامک";
+  REVIEW_DOCUMENT = "بررسی سند";
+  REQUEST_DOCUMENT = "درخواست سند";
+  PEACE_AND_RECONCILIATION = "صلح و سازش";
+  LETTER_HELP = "نامه کمکی";
+  LEGAL_REVIEW = "بررسی حقوقی";
+  REFER_LAWYER = "مراجعه به وکیل";
+  PREPARING_REFER_LAWYER = "آماده مراجعه به وکیل";
+  REQUEST_RELIGION_DOCUMENTS = "درحواست سند دین";
+  SEND_LETTER = "ارسال نامه";
+  EXECUTIVE_REGISTRATION_LETTER = "نامه ثبت نام اجرایی";
+  NOTIFICATION_RECEIVE = "دریافت اعلان";
+  REGISTRATION_EXECUTIVE_CLASS = "ثبت نام کلاس اجرایی";
+  PROPERTY_IDENTIFICATION = "شناسایی ملک";
+  MISSION = "ماموریت";
+  REPRESENTATIVE_REFER = "مرجع نمایندگی";
+  REQUEST_SEIZURE = "درخواست توقیف";
+  IVR = "تلفن گویا";
+  UPDATED = "به روز شده"
+}
+
+export class ResultTypeLang extends Lang {
+  RETURNED = "برگردانده شده";
+  NOT_ANNOUNCED = "اعلام نشده است";
+  COLLECTION = "مجموعه";
+  RETURN = "برگشت داده شده";
+  GUARANTEE = "ضمانت";
+  CONVERSION = "تبدیل";
+  DURATION = "مدت زمان";
+  ACCEPTED = "پذیرفته شده";
+  DAY_CHECK = "بررسی روز";
+  SEND_TO_BANK = "ارسال به بانک";
+  SEND_TO_FINANCE = "ارسال به امور مالی";
+  SEND_TO_BRANCH = "ارسال به شعبه";
+  SEND_TO_AREA = "ارسال به منطقه";
+  NON_APPROVAL_AREA = "منطقه تصویب نشده";
+  FINAL_CONFIRMATION = "تائید نهایی";
+  RENEWAL_BANK_RESOURCES = "تجدید منابع بانک";
 }

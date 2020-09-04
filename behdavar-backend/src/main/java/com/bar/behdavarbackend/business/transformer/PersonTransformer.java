@@ -6,6 +6,11 @@ import com.bar.behdavardatabase.entity.PersonEntity;
 public class PersonTransformer extends BaseAuditorTransformer {
 
     public static PersonEntity DTO_TO_ENTITY(PersonDto dto, PersonEntity entity) {
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setEmail(dto.getEmail());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        entity.setDescription(dto.getDescription());
         return entity;
     }
 
@@ -13,6 +18,8 @@ public class PersonTransformer extends BaseAuditorTransformer {
         transformAuditingFields(entity, dto);
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
+        dto.setPhoneNumber(entity.getPhoneNumber());
+        dto.setDescription(entity.getDescription());
         return dto;
     }
 
