@@ -110,3 +110,13 @@ export class AttachmentLang extends Lang {
   fileDocument = 'فایل مدرک';
 }
 
+export class FinancialStatusLang extends Lang{
+  totalAmount = 'مبلغ کل پرونده';
+  receiveAmount = 'مبلغ کل واریز شده';
+  paymentList = 'لیست و اطلاعات واریزی های مشتری';
+  amount = 'مبلغ';
+  paymentType = 'نوع دریافت';
+  expert = 'کارشناس' ;
+  contractStatus = 'وضعیت پرونده';
+  paymentDate = 'تاریخ' ;
+}

@@ -47,8 +47,8 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {SpinnerHttpInterceptor} from "./service/SpinnerHttpInterceptor";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {JalaliPipe} from './_pip/jalali.pipe';;
-import { BlankToDashPipe } from './_pip/blank-to-dash.pipe'
-
+import { BlankToDashPipe } from './_pip/blank-to-dash.pipe';
+import { FinancialStatusComponent } from './financial-status/financial-status.component';
 @NgModule({
   imports: [
     AppRoutingModule,
@@ -101,7 +101,9 @@ import { BlankToDashPipe } from './_pip/blank-to-dash.pipe'
     DocumentComponent,
     JalaliPipe
 ,
-    BlankToDashPipe  ],
+    BlankToDashPipe ,
+    FinancialStatusComponent
+  ],
 
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},

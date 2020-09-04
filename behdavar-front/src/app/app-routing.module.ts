@@ -12,6 +12,7 @@ import {FollowingComponent} from "./following/following.component";
 import {CustomerComponent} from "./customer/customer.component";
 import {DocumentAttachmentComponent} from "./document-attachment/document-attachment.component";
 import {DocumentComponent} from "./document/document.component";
+import {FinancialStatusComponent} from "./financial-status/financial-status.component";
 
 const routes: Routes = [
   // HOME
@@ -27,6 +28,7 @@ const routes: Routes = [
           {path: 'following/:id', component: FollowingComponent},
           {path: 'guarantors/:id', component: GuarantorsComponent},
           {path: 'customers/:id', component: CustomerComponent},
+          {path: 'financialStatus/:id', component: FinancialStatusComponent},
         ]
       },
       {

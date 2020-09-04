@@ -77,7 +77,6 @@ export class PursuitDto extends BaseAuditorDto<string, number> {
 
 export class PaymentDto {
   amount: number;
-
   paymentDate: Date;
   paymentType: PaymentType;
   contract: ContractDto;
