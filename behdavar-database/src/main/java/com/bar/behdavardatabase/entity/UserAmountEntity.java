@@ -6,6 +6,9 @@ import com.bar.behdavardatabase.constant.common.BaseConstant;
 import com.bar.behdavardatabase.entity.security.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,6 +17,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 
 @Setter
 @Getter
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = UserAmountEntity.TABLE_NAME, schema = ContactConstant.SCHEMA,
         uniqueConstraints = @UniqueConstraint(name = "USER_AMOUNT_USER_UK", columnNames = "USER_ID"))

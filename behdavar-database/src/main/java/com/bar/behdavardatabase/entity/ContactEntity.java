@@ -5,6 +5,9 @@ import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -12,6 +15,8 @@ import static com.bar.behdavardatabase.constant.ContactConstant.SEQ_NAME;
 
 @Setter
 @Getter
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = ContactConstant.TABLE_NAME, schema = ContactConstant.SCHEMA)
 public class ContactEntity extends BaseAuditorEntity<String, Long> {

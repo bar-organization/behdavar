@@ -4,6 +4,9 @@ import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -11,6 +14,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 
 @Setter
 @Getter
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class InputExcelPersonEntity extends BaseAuditorEntity<String, Long> {

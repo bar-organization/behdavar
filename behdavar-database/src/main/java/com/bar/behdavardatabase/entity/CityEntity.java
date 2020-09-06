@@ -6,7 +6,6 @@ import com.bar.behdavardatabase.constant.common.BaseCodeTitleConstant;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = CityConstant.TABLE_NAME, schema = CityConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class CityEntity extends BaseCodeTitleEntity<String, Long> {

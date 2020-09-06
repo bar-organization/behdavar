@@ -5,6 +5,9 @@ import com.bar.behdavardatabase.constant.CatalogConstant;
 import com.bar.behdavardatabase.constant.common.BaseCodeTitleConstant;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
@@ -12,6 +15,8 @@ import static com.bar.behdavardatabase.constant.CatalogConstant.SEQ_NAME;
 
 @Setter
 @Getter
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = CatalogConstant.TABLE_NAME, schema = CatalogConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class CatalogEntity extends BaseAuditorEntity<String, Long>  {

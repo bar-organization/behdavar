@@ -6,6 +6,7 @@ import com.bar.behdavardatabase.constant.common.BaseConstant;
 import com.bar.behdavardatabase.entity.security.UserEntity;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,6 +16,7 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 
 @Setter
 @Getter
+@Audited
 @Entity
 @Table(name = UserLogEntity.TABLE_NAME, schema = ContactConstant.SCHEMA)
 public class UserLogEntity extends BaseEntity<Long> {

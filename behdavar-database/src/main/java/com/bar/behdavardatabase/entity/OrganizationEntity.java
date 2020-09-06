@@ -2,9 +2,14 @@ package com.bar.behdavardatabase.entity;
 
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.OrganizationConstant;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = OrganizationConstant.TABLE_NAME, schema = OrganizationConstant.SCHEMA)
 public class OrganizationEntity extends BaseAuditorEntity<String, Long> {

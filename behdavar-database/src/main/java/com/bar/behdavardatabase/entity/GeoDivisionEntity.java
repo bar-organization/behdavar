@@ -8,6 +8,10 @@ import com.bar.behdavardatabase.constant.common.BaseConstant;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -17,6 +21,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = GeoDivisionEntity.TABLE_NAME, schema = ContactConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = BaseCodeTitleConstant.CODE))
 public class GeoDivisionEntity extends BaseAuditorEntity<String, Long> {
@@ -44,6 +50,7 @@ public class GeoDivisionEntity extends BaseAuditorEntity<String, Long> {
     @JoinColumn(name = "GEO_DIVISION_FK", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "GEO_DIVISION_SELF_FK"))
     private GeoDivisionEntity parent;
 
+    @NotAudited
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
     private Set<GeoDivisionEntity> children;
 

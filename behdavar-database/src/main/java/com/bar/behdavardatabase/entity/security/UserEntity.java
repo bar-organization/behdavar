@@ -7,6 +7,10 @@ import com.bar.behdavardatabase.entity.PersonEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,6 +21,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @Setter
 @Getter
 @NoArgsConstructor
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = UserEntity.TABLE_NAME, schema = ContactConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME"))
 public class UserEntity extends BaseAuditorEntity<String, Long> {
@@ -58,7 +64,7 @@ public class UserEntity extends BaseAuditorEntity<String, Long> {
     @NotNull
     private boolean isCredentialsNonExpired;
 
-
+    @AuditJoinTable
     @ManyToMany
     @JoinTable(
             name = BASE_TABLE_PREFIX + "USERS_ROLES",

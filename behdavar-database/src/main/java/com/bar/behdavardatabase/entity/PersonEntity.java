@@ -4,12 +4,18 @@ import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.PersonConstant;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Setter
 @Getter
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = PersonConstant.TABLE_NAME, schema = PersonConstant.SCHEMA,
         uniqueConstraints = @UniqueConstraint(columnNames = {PersonConstant.FIRST_NAME, PersonConstant.LAST_NAME}))
@@ -34,6 +40,7 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = PersonConstant.DESCRIPTION)
     private String description;
 
+    @NotAudited
     @OneToMany(mappedBy = "person")
     private Set<OrganizationEntity> organizations;
 

@@ -4,11 +4,16 @@ import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.AddressConstant;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.AuditOverride;
+import org.hibernate.envers.AuditOverrides;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@Audited
+@AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = AddressConstant.TABLE_NAME, schema = AddressConstant.SCHEMA)
 public class AddressEntity extends BaseAuditorEntity<String, Long> {
