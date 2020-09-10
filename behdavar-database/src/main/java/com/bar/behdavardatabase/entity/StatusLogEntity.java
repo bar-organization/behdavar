@@ -39,11 +39,11 @@ public class StatusLogEntity extends BaseAuditorEntity<String, Long> {
     private ContractStatus status;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false, foreignKey = @ForeignKey(name = "STATUS_LOG_USER_FK"))
     private UserEntity user;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTRACT_ID", nullable = false, foreignKey = @ForeignKey(name = "STATUS_LOG_CONTRACT_FK"))
     private ContractEntity contract;
 
