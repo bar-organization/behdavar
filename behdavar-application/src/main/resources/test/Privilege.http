@@ -1,0 +1,28 @@
+# call catalog find by id
+POST http://127.0.0.1:8081/api/privilege/find-by-id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NDk3MzksImV4cCI6MTU5OTc1MzMzOX0.lvSOxXImgCvEB2clt3mEYQHr737wj5rhIX21Jt2xZe0
+
+1
+
+###
+# call catalog find paging
+POST http://127.0.0.1:8081/api/privilege/find-paging
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NDk3MzksImV4cCI6MTU5OTc1MzMzOX0.lvSOxXImgCvEB2clt3mEYQHr737wj5rhIX21Jt2xZe0
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+  ]
+}
+
+### Get Token
+POST http://127.0.0.1:8081/auth/token
+Content-Type: application/json
+
+{
+  "username": "behnam",
+  "password": "behnam"
+}

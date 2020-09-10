@@ -42,7 +42,7 @@ public class GeoDivisionRest {
 
     @PostMapping("/delete")
     public ResponseEntity<Void> delete(@RequestBody Long id) {
-        geoDivisionBusiness.findById(id);
+        geoDivisionBusiness.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

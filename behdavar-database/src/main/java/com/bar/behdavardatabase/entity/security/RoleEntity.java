@@ -11,6 +11,7 @@ import org.hibernate.envers.AuditOverrides;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
@@ -32,7 +33,13 @@ public class RoleEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = RoleEntity.SEQ_NAME, sequenceName = RoleEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
+    @Column(name = "NAME", nullable = false)
+    @NotNull
     private String name;
+
+    @NotNull
+    @Column(name = "TITLE", nullable = false)
+    private String title;
 
     @AuditJoinTable
     @ManyToMany(mappedBy = "roles")

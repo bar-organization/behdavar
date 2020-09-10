@@ -21,5 +21,6 @@ public class UserDto extends BaseAuditorDto<String, Long> {
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
     private List<RoleDto> roles;
+    private PersonDto person;
 
 }

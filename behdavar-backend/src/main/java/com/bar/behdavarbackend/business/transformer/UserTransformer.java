@@ -32,6 +32,19 @@ public class UserTransformer extends BaseAuditorTransformer {
         return dto;
     }
 
+    public static UserEntity DTO_TO_ENTITY(UserDto dto, UserEntity entity) {
+        entity.setPerson(PersonTransformer.CREATE_ENTITY_FOR_RELATION(dto.getPerson().getId()));
+        entity.setUsername(entity.getUsername());
+        entity.setPassword(entity.getPassword());
+        entity.setEnabled(entity.isEnabled());
+        entity.setTokenExpired(entity.isTokenExpired());
+        entity.setAccountNonExpired(entity.isAccountNonExpired());
+        entity.setAccountNonLocked(entity.isAccountNonLocked());
+        entity.setCredentialsNonExpired(entity.isCredentialsNonExpired());
+
+        return entity;
+    }
+
     private static List<RoleDto> getUserRoles(Set<RoleEntity> roles) {
         if (Objects.isNull(roles) || roles.isEmpty())
             return Collections.emptyList();
