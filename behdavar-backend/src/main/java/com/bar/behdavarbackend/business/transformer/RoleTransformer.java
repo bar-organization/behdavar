@@ -1,13 +1,12 @@
 package com.bar.behdavarbackend.business.transformer;
 
+import com.bar.behdavarbackend.dto.PrivilegeDto;
 import com.bar.behdavarbackend.dto.RoleDto;
 import com.bar.behdavardatabase.entity.security.PrivilegeEntity;
 import com.bar.behdavardatabase.entity.security.RoleEntity;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class RoleTransformer extends BaseAuditorTransformer {
@@ -17,6 +16,13 @@ public class RoleTransformer extends BaseAuditorTransformer {
         entity.setName(dto.getRoleName());
         entity.setTitle(dto.getTitle());
 
+        if (!CollectionUtils.isEmpty(dto.getPrivilegeDtos())) {
+            Set<PrivilegeEntity> privilegeEntities = new HashSet<>();
+            dto.getPrivilegeDtos().forEach(privilegeDto -> {
+                privilegeEntities.add(PrivilegeTransformer.CREATE_ENTITY_FOR_RELATION(privilegeDto.getId()));
+            });
+            entity.setPrivileges(privilegeEntities);
+        }
         return entity;
     }
 
@@ -35,6 +41,14 @@ public class RoleTransformer extends BaseAuditorTransformer {
         transformAuditingFields(entity, dto);
         dto.setRoleName(entity.getName());
         dto.setPrivileges(getPrivileges(privileges));
+
+        if (!CollectionUtils.isEmpty(entity.getPrivileges())) {
+            List<PrivilegeDto> privilegeDtos = new ArrayList<>();
+            entity.getPrivileges().forEach(e -> {
+                privilegeDtos.add(PrivilegeTransformer.ENTITY_TO_DTO(e, new PrivilegeDto()));
+            });
+            dto.setPrivilegeDtos(privilegeDtos);
+        }
 
         return dto;
     }

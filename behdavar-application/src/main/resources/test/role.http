@@ -1,0 +1,75 @@
+# call catalog find by id
+POST http://127.0.0.1:8081/api/role/find-by-id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NTc1NTIsImV4cCI6MTU5OTc2MTE1Mn0.Tuda3cI8kE4Aiy-PTu-ZVCExxKfaWi8HereuQ2ir9Ow
+
+7
+
+###
+# call catalog save
+POST http://127.0.0.1:8081/api/role/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NTc1NTIsImV4cCI6MTU5OTc2MTE1Mn0.Tuda3cI8kE4Aiy-PTu-ZVCExxKfaWi8HereuQ2ir9Ow
+
+{
+  "roleName": "ROLE_TEST_2",
+  "title": "نقش نمونه2",
+  "privilegeDtos": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ]
+}
+
+###
+# call catalog update
+POST http://127.0.0.1:8081/api/role/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NTc1NTIsImV4cCI6MTU5OTc2MTE1Mn0.Tuda3cI8kE4Aiy-PTu-ZVCExxKfaWi8HereuQ2ir9Ow
+
+{
+  "id": 7,
+  "version": 0,
+  "roleName": "ROLE_TEST",
+  "title": "نقش نمونه",
+  "privilegeDtos": [
+    {
+      "id": 3
+    }
+  ]
+}
+
+
+###
+# call catalog find paging
+POST http://127.0.0.1:8081/api/role/find-paging
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NTc1NTIsImV4cCI6MTU5OTc2MTE1Mn0.Tuda3cI8kE4Aiy-PTu-ZVCExxKfaWi8HereuQ2ir9Ow
+
+{
+  "start": 0,
+  "max": 3,
+  "filters": [
+  ]
+}
+
+###
+
+POST http://127.0.0.1:8081/api/role/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NTc1NTIsImV4cCI6MTU5OTc2MTE1Mn0.Tuda3cI8kE4Aiy-PTu-ZVCExxKfaWi8HereuQ2ir9Ow
+
+7
+
+###
+### Get Token
+POST http://127.0.0.1:8081/auth/token
+Content-Type: application/json
+
+{
+  "username": "behnam",
+  "password": "behnam"
+}
