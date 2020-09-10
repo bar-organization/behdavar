@@ -13,6 +13,7 @@ import org.hibernate.envers.AuditOverrides;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
@@ -64,7 +65,8 @@ public class PursuitLogEntity extends BaseAuditorEntity<String, Long> {
     private PaymentEntity payment;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "PURSUIT_LOG_USER_FK"))
+    @JoinColumn(name = "USER_ID", foreignKey = @ForeignKey(name = "PURSUIT_LOG_USER_FK"), nullable = false)
+    @NotNull
     private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
