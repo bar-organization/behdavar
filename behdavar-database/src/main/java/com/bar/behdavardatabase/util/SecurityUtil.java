@@ -23,7 +23,9 @@ public class SecurityUtil {
     }
 
     public static String getCurrentUser() {
-        return ((User) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUsername();
+        if (SecurityContextHolder.getContext().getAuthentication() != null)
+            return ((User) (SecurityContextHolder.getContext().getAuthentication().getPrincipal())).getUsername();
+        return "NO_AUTHENTICATED_USER";
     }
 
     @PostConstruct
