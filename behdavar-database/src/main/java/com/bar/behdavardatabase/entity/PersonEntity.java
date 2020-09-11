@@ -31,6 +31,9 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = PersonConstant.LAST_NAME)
     private String lastName;
 
+    @Column(name = PersonConstant.FULL_NAME)
+    private String fullName;
+
     @Column(name = "NATIONAL_CODE")
     private String nationalCode;
 

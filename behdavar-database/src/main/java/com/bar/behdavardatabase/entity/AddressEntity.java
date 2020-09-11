@@ -40,7 +40,7 @@ public class AddressEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "Plate", columnDefinition = "VARCHAR(10)")
     private String plate;
 
-    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR( 60)")
+    @Column(name = "DESCRIPTION",nullable = false, columnDefinition = "VARCHAR( 60)")
     private String description;
 
     @JoinColumn(name = "GEO_DIVISION_ID", nullable = false, foreignKey = @ForeignKey(name = "ADDRESS_GEO_DIVISION_FK"))
