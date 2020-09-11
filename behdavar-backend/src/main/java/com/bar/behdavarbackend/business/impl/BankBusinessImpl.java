@@ -17,33 +17,33 @@ public class BankBusinessImpl implements BankBusiness {
     public static final String BEAN_NAME = "BankBusinessImpl";
 
     @Autowired
-    private BankRepository BankRepository;
+    private BankRepository bankRepository;
 
     @Override
     public BankBranchEntity findById(Long id) {
-        return BankRepository.findById(id).orElseThrow(() -> new BusinessException("error.Bank.not.found", id));
+        return bankRepository.findById(id).orElseThrow(() -> new BusinessException("error.Bank.not.found", id));
     }
 
     @Override
     public Long save(BankDto dto) {
-        BankBranchEntity BankBranchEntity = BankTransformer.DTO_TO_ENTITY(dto, new BankBranchEntity());
-        return BankRepository.save(BankBranchEntity).getId();
+        BankBranchEntity bankBranchEntity = BankTransformer.dtoToEntity(dto, new BankBranchEntity());
+        return bankRepository.save(bankBranchEntity).getId();
     }
 
     @Override
     public void update(BankDto dto) {
-        BankBranchEntity BankBranchEntity = BankTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
-        BankRepository.save(BankBranchEntity);
+        BankBranchEntity bankBranchEntity = BankTransformer.dtoToEntity(dto, findById(dto.getId()));
+        bankRepository.save(bankBranchEntity);
     }
 
     @Override
     public void delete(Long id) {
-        BankRepository.deleteById(id);
+        bankRepository.deleteById(id);
     }
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(BankRepository, pagingRequest);
+        PagingExecutor<BankBranchEntity, Long> executor = new PagingExecutor<>(bankRepository, pagingRequest);
         return executor.execute();
     }
 }

@@ -5,7 +5,7 @@ import com.bar.behdavardatabase.entity.PersonEntity;
 
 public class PersonTransformer extends BaseAuditorTransformer {
 
-    public static PersonEntity DTO_TO_ENTITY(PersonDto dto, PersonEntity entity) {
+    public static PersonEntity dtoToEntity(PersonDto dto, PersonEntity entity) {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setFullName(dto.getFullName());
@@ -16,7 +16,7 @@ public class PersonTransformer extends BaseAuditorTransformer {
         return entity;
     }
 
-    public static PersonDto ENTITY_TO_DTO(PersonEntity entity, PersonDto dto) {
+    public static PersonDto entityToDto(PersonEntity entity, PersonDto dto) {
         transformAuditingFields(entity, dto);
         dto.setFirstName(entity.getFirstName());
         dto.setLastName(entity.getLastName());
@@ -27,14 +27,14 @@ public class PersonTransformer extends BaseAuditorTransformer {
         return dto;
     }
 
-    public static PersonEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static PersonEntity createEntityForRelation(Long id) {
         PersonEntity entity = new PersonEntity();
         entity.setId(id);
         entity.setVersion(0L);
         return entity;
     }
 
-    public static PersonDto CREATE_DTO_FOR_RELATION(Long id) {
+    public static PersonDto createDtoForRelation(Long id) {
         PersonDto dto = new PersonDto();
         dto.setId(id);
         dto.setVersion(0L);

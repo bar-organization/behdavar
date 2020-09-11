@@ -26,18 +26,18 @@ public class CatalogBusinessImpl implements CatalogBusiness {
     public CatalogDto findById(Long id) {
         CatalogEntity entity = catalogRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("error.catalog.not.found", id));
-        return CatalogTransformer.ENTITY_TO_DTO(entity, new CatalogDto());
+        return CatalogTransformer.entityToDto(entity, new CatalogDto());
     }
 
     @Override
     public Long save(CatalogDto dto) {
-        CatalogEntity catalogEntity = CatalogTransformer.DTO_TO_ENTITY(dto, new CatalogEntity());
+        CatalogEntity catalogEntity = CatalogTransformer.dtoToEntity(dto, new CatalogEntity());
         return catalogRepository.save(catalogEntity).getId();
     }
 
     @Override
     public void update(CatalogDto dto) {
-        CatalogEntity catalogEntity = CatalogTransformer.DTO_TO_ENTITY(dto, catalogRepository.findById(dto.getId())
+        CatalogEntity catalogEntity = CatalogTransformer.dtoToEntity(dto, catalogRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.catalog.not.found", dto.getId())));
         catalogRepository.save(catalogEntity);
     }
@@ -55,7 +55,7 @@ public class CatalogBusinessImpl implements CatalogBusiness {
         if (pagingResponse.getData() != null) {
             List<CatalogEntity> data = (List<CatalogEntity>) pagingResponse.getData();
             List<CatalogDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(CatalogTransformer.ENTITY_TO_DTO(e, new CatalogDto())));
+            data.forEach(e -> output.add(CatalogTransformer.entityToDto(e, new CatalogDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;

@@ -31,7 +31,7 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
 
         //create a new predicate list
         List<Predicate> predicates = new ArrayList<>();
-        List<String> items = new ArrayList<>();
+        List<String> items;
 
         //add add criteria to predicates
         for (SearchCriteria criteria : list) {
@@ -72,9 +72,11 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
                     for (int i = 0; i < (items.size() - 1); i++) {
                         join = root.join(items.get(i));
                     }
-                    predicates.add(builder.equal(
-                            join.get(items.get(items.size() - 1))
-                            , criteria.getValue()));
+                    if (join != null) {
+                        predicates.add(builder.equal(
+                                join.get(items.get(items.size() - 1))
+                                , criteria.getValue()));
+                    }
                 }
             } else if (criteria.getOperation().equals(SearchOperation.MATCH)) {
                 predicates.add(builder.like(

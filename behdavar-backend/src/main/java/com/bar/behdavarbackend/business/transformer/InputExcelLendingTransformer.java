@@ -5,7 +5,7 @@ import com.bar.behdavardatabase.entity.InputExcelLendingEntity;
 
 public class InputExcelLendingTransformer extends BaseAuditorTransformer {
 
-    public static InputExcelLendingEntity DTO_TO_ENTITY(InputExcelLendingDto dto, InputExcelLendingEntity entity) {
+    public static InputExcelLendingEntity dtoToEntity(InputExcelLendingDto dto, InputExcelLendingEntity entity) {
         entity.setRowIndex(dto.getRowIndex());
         entity.setRowNo(dto.getRowNo());
         entity.setContractNumber(dto.getContractNumber());
@@ -44,7 +44,7 @@ public class InputExcelLendingTransformer extends BaseAuditorTransformer {
         return entity;
     }
 
-    public static InputExcelLendingDto ENTITY_TO_DTO(InputExcelLendingEntity entity, InputExcelLendingDto dto) {
+    public static InputExcelLendingDto entityToDto(InputExcelLendingEntity entity, InputExcelLendingDto dto) {
         transformAuditingFields(entity, dto);
         dto.setRowIndex(entity.getRowIndex());
         dto.setRowNo(entity.getRowNo());
@@ -84,14 +84,14 @@ public class InputExcelLendingTransformer extends BaseAuditorTransformer {
         return dto;
     }
 
-    public static InputExcelLendingEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static InputExcelLendingEntity createEntityForRelation(Long id) {
         InputExcelLendingEntity entity = new InputExcelLendingEntity();
         entity.setId(id);
         entity.setVersion(0L);
         return entity;
     }
 
-    public static InputExcelLendingDto CREATE_DTO_FOR_RELATION(Long id) {
+    public static InputExcelLendingDto createDtoForRelation(Long id) {
         InputExcelLendingDto dto = new InputExcelLendingDto();
         dto.setId(id);
         dto.setVersion(0L);

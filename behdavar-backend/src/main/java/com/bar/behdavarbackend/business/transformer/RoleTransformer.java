@@ -12,15 +12,14 @@ import java.util.stream.Collectors;
 public class RoleTransformer extends BaseAuditorTransformer {
 
 
-    public static RoleEntity DTO_TO_ENTITY(RoleDto dto, RoleEntity entity) {
+    public static RoleEntity dtoToEntity(RoleDto dto, RoleEntity entity) {
         entity.setName(dto.getRoleName());
         entity.setTitle(dto.getTitle());
 
         if (!CollectionUtils.isEmpty(dto.getPrivilegeDtos())) {
             Set<PrivilegeEntity> privilegeEntities = new HashSet<>();
-            dto.getPrivilegeDtos().forEach(privilegeDto -> {
-                privilegeEntities.add(PrivilegeTransformer.CREATE_ENTITY_FOR_RELATION(privilegeDto.getId()));
-            });
+            dto.getPrivilegeDtos().forEach(privilegeDto ->
+                    privilegeEntities.add(PrivilegeTransformer.createEntityForRelation(privilegeDto.getId())));
             entity.setPrivileges(privilegeEntities);
         }
         return entity;
@@ -36,7 +35,7 @@ public class RoleTransformer extends BaseAuditorTransformer {
                 .collect(Collectors.toList());
     }
 
-    public static RoleDto ENTITY_TO_DTO(RoleEntity entity, RoleDto dto, String... strings) {
+    public static RoleDto entityToDto(RoleEntity entity, RoleDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         Set<PrivilegeEntity> privileges = entity.getPrivileges();
         transformAuditingFields(entity, dto);
@@ -47,26 +46,26 @@ public class RoleTransformer extends BaseAuditorTransformer {
         if (!CollectionUtils.isEmpty(entity.getPrivileges())) {
             List<PrivilegeDto> privilegeDtos = new ArrayList<>();
             if (fields.contains(RoleEntity.PRIVILEGES)) {
-                entity.getPrivileges().forEach(e -> {
-                    privilegeDtos.add(PrivilegeTransformer.ENTITY_TO_DTO(e, new PrivilegeDto()));
-                });
+                entity.getPrivileges().forEach(e ->
+                        privilegeDtos.add(PrivilegeTransformer.entityToDto(e, new PrivilegeDto()))
+                );
             } else {
 //                entity.getPrivileges().forEach(e ->
-//                        privilegeDtos.add(PrivilegeTransformer.CREATE_DTO_FOR_RELATION(e.getId())));
+//                        privilegeDtos.add(PrivilegeTransformer.createDtoForRelation(e.getId())));
             }
             dto.setPrivilegeDtos(privilegeDtos);
         }
         return dto;
     }
 
-    public static RoleEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static RoleEntity createEntityForRelation(Long id) {
         RoleEntity entity = new RoleEntity();
         entity.setId(id);
         entity.setVersion(0L);
         return entity;
     }
 
-    public static RoleDto CREATE_DTO_FOR_RELATION(Long id) {
+    public static RoleDto createDtoForRelation(Long id) {
         RoleDto dto = new RoleDto();
         dto.setId(id);
         dto.setVersion(0L);

@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class UserTransformer extends BaseAuditorTransformer {
-    public static UserDto ENTITY_TO_DTO(UserEntity entity, UserDto dto, String... strings) {
+    public static UserDto entityToDto(UserEntity entity, UserDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         @NotNull PersonEntity person = entity.getPerson();
         Set<RoleEntity> roles = entity.getRoles();
@@ -32,7 +32,7 @@ public class UserTransformer extends BaseAuditorTransformer {
         } else {
             if (!CollectionUtils.isEmpty(entity.getRoles())) {
                 List<RoleDto> roleDtos = new ArrayList<>();
-                entity.getRoles().forEach(r -> roleDtos.add(RoleTransformer.ENTITY_TO_DTO(r, new RoleDto())));
+                entity.getRoles().forEach(r -> roleDtos.add(RoleTransformer.entityToDto(r, new RoleDto())));
                 dto.setRoles(roleDtos);
             }
         }
@@ -40,7 +40,7 @@ public class UserTransformer extends BaseAuditorTransformer {
         return dto;
     }
 
-    public static UserEntity DTO_TO_ENTITY(UserDto dto, UserEntity entity) {
+    public static UserEntity dtoToEntity(UserDto dto, UserEntity entity) {
         entity.setEnabled(dto.getEnabled());
         entity.setTokenExpired(dto.getTokenExpired());
         entity.setAccountNonExpired(dto.getIsAccountNonExpired());
@@ -48,14 +48,14 @@ public class UserTransformer extends BaseAuditorTransformer {
         entity.setCredentialsNonExpired(dto.getIsCredentialsNonExpired());
         if (dto.getId() == null) {
             entity.setUsername(dto.getUsername());
-            entity.setPerson(PersonTransformer.CREATE_ENTITY_FOR_RELATION(dto.getPerson().getId()));
+            entity.setPerson(PersonTransformer.createEntityForRelation(dto.getPerson().getId()));
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             entity.setPassword(bCryptPasswordEncoder.encode(dto.getPassword()));
         }
 
         if (!CollectionUtils.isEmpty(dto.getRoles())) {
             Set<RoleEntity> roleEntities = new HashSet<>();
-            dto.getRoles().forEach(r -> roleEntities.add(RoleTransformer.CREATE_ENTITY_FOR_RELATION(r.getId())));
+            dto.getRoles().forEach(r -> roleEntities.add(RoleTransformer.createEntityForRelation(r.getId())));
             entity.setRoles(roleEntities);
         }
         entity.setDeleted(false);
@@ -68,18 +68,18 @@ public class UserTransformer extends BaseAuditorTransformer {
 
         return roles
                 .stream()
-                .map(roleEntity -> RoleTransformer.ENTITY_TO_DTO(roleEntity, new RoleDto()))
+                .map(roleEntity -> RoleTransformer.entityToDto(roleEntity, new RoleDto()))
                 .collect(Collectors.toList());
     }
 
-    public static UserEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static UserEntity createEntityForRelation(Long id) {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(id);
         userEntity.setVersion(0L);
         return userEntity;
     }
 
-    public static UserDto CREATE_DTO_FOR_RELATION(Long id) {
+    public static UserDto createDtoForRelation(Long id) {
         UserDto dto = new UserDto();
         dto.setId(id);
         dto.setVersion(0L);

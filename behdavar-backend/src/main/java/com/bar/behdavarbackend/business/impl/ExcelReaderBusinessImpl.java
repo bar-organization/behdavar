@@ -59,7 +59,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         if (!CollectionUtils.isEmpty(inputExcelLendingDtos)) {
             List<InputExcelLendingEntity> inputExcelLendingEntities = new ArrayList<>();
             inputExcelLendingDtos.forEach(inputExcelLendingDto -> {
-                InputExcelLendingEntity entity = InputExcelLendingTransformer.DTO_TO_ENTITY(inputExcelLendingDto, new InputExcelLendingEntity());
+                InputExcelLendingEntity entity = InputExcelLendingTransformer.dtoToEntity(inputExcelLendingDto, new InputExcelLendingEntity());
                 entity.setInputExcel(finalInputExcelEntity);
                 inputExcelLendingEntities.add(entity);
             });
@@ -72,7 +72,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         if (!CollectionUtils.isEmpty(inputExcelGuarantorDtos)) {
             List<InputExcelGuarantorEntity> inputExcelGuarantorEntities = new ArrayList<>();
             inputExcelGuarantorDtos.forEach(excelGuarantorDto -> {
-                InputExcelGuarantorEntity entity = (InputExcelGuarantorEntity) InputExcelPersonTransformer.DTO_TO_ENTITY(excelGuarantorDto, new InputExcelGuarantorEntity());
+                InputExcelGuarantorEntity entity = (InputExcelGuarantorEntity) InputExcelPersonTransformer.dtoToEntity(excelGuarantorDto, new InputExcelGuarantorEntity());
                 entity.setInputExcel(finalInputExcelEntity);
                 inputExcelGuarantorEntities.add(entity);
             });
@@ -85,7 +85,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         if (!CollectionUtils.isEmpty(inputExcelDebtorDtos)) {
             List<InputExcelDebtorEntity> inputExcelDebtorEntities = new ArrayList<>();
             inputExcelDebtorDtos.forEach(inputExcelDebtorDto -> {
-                InputExcelDebtorEntity entity = (InputExcelDebtorEntity) InputExcelPersonTransformer.DTO_TO_ENTITY(inputExcelDebtorDto, new InputExcelDebtorEntity());
+                InputExcelDebtorEntity entity = (InputExcelDebtorEntity) InputExcelPersonTransformer.dtoToEntity(inputExcelDebtorDto, new InputExcelDebtorEntity());
                 entity.setInputExcel(finalInputExcelEntity);
                 inputExcelDebtorEntities.add(entity);
             });

@@ -28,18 +28,18 @@ public class CustomerBusinessImpl implements CustomerBusiness {
     @Override
     public CustomerDto findById(Long id) {
         CustomerEntity customerEntity = customerRepository.findById(id).orElseThrow(() -> new BusinessException("error.Customer.not.found", id));
-        return CustomerTransformer.ENTITY_TO_DTO(customerEntity, new CustomerDto(), CustomerEntity.PERSON);
+        return CustomerTransformer.entityToDto(customerEntity, new CustomerDto(), CustomerEntity.PERSON);
     }
 
     @Override
     public Long save(CustomerDto dto) {
-        CustomerEntity customerEntity = CustomerTransformer.DTO_TO_ENTITY(dto, new CustomerEntity());
+        CustomerEntity customerEntity = CustomerTransformer.dtoToEntity(dto, new CustomerEntity());
         return customerRepository.save(customerEntity).getId();
     }
 
     @Override
     public void update(CustomerDto dto) {
-        CustomerEntity customerEntity = CustomerTransformer.DTO_TO_ENTITY(dto, customerRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Customer.not.found", dto.getId())));
+        CustomerEntity customerEntity = CustomerTransformer.dtoToEntity(dto, customerRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Customer.not.found", dto.getId())));
         customerRepository.save(customerEntity);
     }
 
@@ -53,7 +53,7 @@ public class CustomerBusinessImpl implements CustomerBusiness {
         List<CustomerDto> customerDtos = new ArrayList<>();
         List<CustomerEntity> allByContractId = customerRepository.findByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
-            allByContractId.forEach(e -> customerDtos.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON)));
+            allByContractId.forEach(e -> customerDtos.add(CustomerTransformer.entityToDto(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON)));
         }
         return customerDtos;
     }
@@ -66,7 +66,7 @@ public class CustomerBusinessImpl implements CustomerBusiness {
         if (pagingResponse.getData() != null) {
             List<CustomerEntity> data = (List<CustomerEntity>) pagingResponse.getData();
             List<CustomerDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(CustomerTransformer.ENTITY_TO_DTO(e, new CustomerDto(), CustomerEntity.PERSON)));
+            data.forEach(e -> output.add(CustomerTransformer.entityToDto(e, new CustomerDto(), CustomerEntity.PERSON)));
             pagingResponse.setData(output);
         }
         return pagingResponse;

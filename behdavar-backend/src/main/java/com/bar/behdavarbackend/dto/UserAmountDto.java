@@ -12,5 +12,5 @@ public class UserAmountDto extends BaseAuditorDto<String, Long> {
 
     private BigDecimal totalAmount;
     private BigDecimal receiveAmount;
-    private UserDto User;
+    private UserDto user;
 }

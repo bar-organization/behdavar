@@ -32,13 +32,13 @@ public class UserLogBusinessImpl implements UserLogBusiness {
 
     @Override
     public Long save(UserLogDto dto) {
-        UserLogEntity userLogEntity = UserLogTransformer.DTO_TO_ENTITY(dto, new UserLogEntity());
+        UserLogEntity userLogEntity = UserLogTransformer.dtoToEntity(dto, new UserLogEntity());
         return userLogRepository.save(userLogEntity).getId();
     }
 
     @Override
     public void update(UserLogDto dto) {
-        UserLogEntity userLogEntity = UserLogTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
+        UserLogEntity userLogEntity = UserLogTransformer.dtoToEntity(dto, findById(dto.getId()));
         userLogRepository.save(userLogEntity);
     }
 
@@ -49,12 +49,12 @@ public class UserLogBusinessImpl implements UserLogBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(userLogRepository, pagingRequest);
+        PagingExecutor<UserLogEntity, Long> executor = new PagingExecutor<>(userLogRepository, pagingRequest);
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<UserLogEntity> data = (List<UserLogEntity>) pagingResponse.getData();
             List<UserLogDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(UserLogTransformer.ENTITY_TO_DTO(e, new UserLogDto())));
+            data.forEach(e -> output.add(UserLogTransformer.entityToDto(e, new UserLogDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;

@@ -25,9 +25,9 @@ import java.util.logging.Logger;
 
 @Component
 public class StartupPreparation {
-    public static String SUPERVISOR_ROLE = "SUPERVISOR_ROLE";
-    public static String SUPERVISOR_USER = "SUPERVISOR_USER";
-    public static String SUPERVISOR_PWD = "SUPER@BAR";
+    public static final String SUPERVISOR_ROLE = "SUPERVISOR_ROLE";
+    public static final String SUPERVISOR_USER = "SUPERVISOR_USER";
+    public static final String SUPERVISOR_PWD = "SUPER@BAR";
     @Autowired
     PrivilegeRepository privilegeRepository;
     @Autowired
@@ -37,19 +37,12 @@ public class StartupPreparation {
     @Autowired
     PersonRepository personRepository;
     @Value("${update.user.role.privileges.at.startup}")
-    private Boolean updateAtStartup;
+    private boolean updateAtStartup;
 
     @PostConstruct
     private void init() {
         if (updateAtStartup) {
-            Field[] declaredFields = AuthorityConstant.class.getDeclaredFields();
-            List<Field> staticFields = new ArrayList<Field>();
-            for (Field field : declaredFields) {
-                if (java.lang.reflect.Modifier.isStatic(field.getModifiers())
-                        && field.getType().equals(String.class)) {
-                    staticFields.add(field);
-                }
-            }
+            List<Field> staticFields = getFields();
 
             staticFields.forEach(field -> {
                 PrivilegeEntity entity = new PrivilegeEntity();
@@ -95,5 +88,17 @@ public class StartupPreparation {
             superUser.setRoles(roleEntitySet);
             userRepository.save(superUser);
         }
+    }
+
+    private List<Field> getFields() {
+        Field[] declaredFields = AuthorityConstant.class.getDeclaredFields();
+        List<Field> staticFields = new ArrayList<>();
+        for (Field field : declaredFields) {
+            if (java.lang.reflect.Modifier.isStatic(field.getModifiers())
+                    && field.getType().equals(String.class)) {
+                staticFields.add(field);
+            }
+        }
+        return staticFields;
     }
 }

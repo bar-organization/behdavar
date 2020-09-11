@@ -27,19 +27,19 @@ public class RoleBusinessImpl implements RoleBusiness {
     @Override
     public RoleDto findById(Long id) {
         return repository.findById(id)
-                .map(RoleEntity -> RoleTransformer.ENTITY_TO_DTO(RoleEntity, new RoleDto(), RoleEntity.PRIVILEGES))
+                .map(entity -> RoleTransformer.entityToDto(entity, new RoleDto(), RoleEntity.PRIVILEGES))
                 .orElseThrow(() -> new BusinessException("error.Role.not.found", id));
     }
 
     @Override
     public Long save(RoleDto dto) {
-        RoleEntity roleEntity = RoleTransformer.DTO_TO_ENTITY(dto, new RoleEntity());
+        RoleEntity roleEntity = RoleTransformer.dtoToEntity(dto, new RoleEntity());
         return repository.save(roleEntity).getId();
     }
 
     @Override
     public void update(RoleDto dto) {
-        RoleEntity roleEntity = RoleTransformer.DTO_TO_ENTITY(dto, repository
+        RoleEntity roleEntity = RoleTransformer.dtoToEntity(dto, repository
                 .findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.Role.not.found", dto.getId())));
         repository.save(roleEntity);
@@ -52,14 +52,14 @@ public class RoleBusinessImpl implements RoleBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor<RoleEntity, Long> executor = new PagingExecutor(repository, pagingRequest);
+        PagingExecutor<RoleEntity, Long> executor = new PagingExecutor<>(repository, pagingRequest);
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
-            List<RoleDto> RoleDtos = new ArrayList<>();
+            List<RoleDto> roleDtos = new ArrayList<>();
             ((List<RoleEntity>) pagingResponse.getData()).forEach(e ->
-                    RoleDtos.add(RoleTransformer.ENTITY_TO_DTO(e, new RoleDto()))
+                    roleDtos.add(RoleTransformer.entityToDto(e, new RoleDto()))
             );
-            pagingResponse.setData(RoleDtos);
+            pagingResponse.setData(roleDtos);
         }
         return pagingResponse;
     }
@@ -69,7 +69,7 @@ public class RoleBusinessImpl implements RoleBusiness {
         List<RoleEntity> roleEntities = repository.findAllByNameOrTitle(suggest, PageRequest.of(0, 10)).getContent();
         List<RoleDto> result = new ArrayList<>();
         if (!CollectionUtils.isEmpty(roleEntities)) {
-            roleEntities.forEach(e -> result.add(RoleTransformer.ENTITY_TO_DTO(e, new RoleDto())));
+            roleEntities.forEach(e -> result.add(RoleTransformer.entityToDto(e, new RoleDto())));
         }
         return result;
     }

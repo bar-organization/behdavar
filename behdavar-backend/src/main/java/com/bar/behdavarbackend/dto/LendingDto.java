@@ -17,14 +17,9 @@ public class LendingDto extends BaseAuditorDto<String, Long> {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate receiveLendingDate;
     private BankDto branchBank;
-
-    public BigDecimal masterAmount;
-
-    public BigDecimal defferedAmount;
-
-    public String lendingNumber;
-
-    public Long defferedCount;
-
-    public BigDecimal lateFees;
+    private BigDecimal masterAmount;
+    private BigDecimal defferedAmount;
+    private String lendingNumber;
+    private Long defferedCount;
+    private BigDecimal lateFees;
 }

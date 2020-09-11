@@ -5,14 +5,14 @@ import com.bar.behdavardatabase.entity.ProductEntity;
 
 public class ProductTransformer extends BaseAuditorTransformer {
 
-    public static ProductEntity DTO_TO_ENTITY(ProductDto dto, ProductEntity entity) {
+    public static ProductEntity dtoToEntity(ProductDto dto, ProductEntity entity) {
         entity.setProductName(dto.getProductName());
         entity.setProductPlate(dto.getProductPlate());
         entity.setProductShasiNumber(dto.getProductShasiNumber());
         return entity;
     }
 
-    public static ProductDto ENTITY_TO_DTO(ProductEntity entity, ProductDto dto) {
+    public static ProductDto entityToDto(ProductEntity entity, ProductDto dto) {
         transformAuditingFields(entity, dto);
         dto.setProductName(entity.getProductName());
         dto.setProductPlate(entity.getProductPlate());
@@ -20,7 +20,7 @@ public class ProductTransformer extends BaseAuditorTransformer {
         return dto;
     }
 
-    public static ProductEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static ProductEntity createEntityForRelation(Long id) {
         ProductEntity entity = new ProductEntity();
         entity.setId(id);
         entity.setVersion(0L);

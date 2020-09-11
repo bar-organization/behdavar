@@ -29,13 +29,13 @@ public class UserAmountBusinessImpl implements UserAmountBusiness {
     @Override
     public UserAmountDto findById(Long id) {
         UserAmountEntity userAmountEntity = userAmountRepository.findById(id).orElseThrow(() -> new BusinessException("error.UserAmount.not.found", id));
-        return UserAmountTransformer.ENTITY_TO_DTO(userAmountEntity, new UserAmountDto());
+        return UserAmountTransformer.entityToDto(userAmountEntity, new UserAmountDto());
     }
 
     @Override
     @Transactional
     public Long save(UserAmountDto dto) {
-        UserAmountEntity userAmountEntity = UserAmountTransformer.DTO_TO_ENTITY(dto, new UserAmountEntity());
+        UserAmountEntity userAmountEntity = UserAmountTransformer.dtoToEntity(dto, new UserAmountEntity());
         userAmountEntity.setId(userAmountRepository.save(userAmountEntity).getId());
         return userAmountEntity.getId();
     }
@@ -43,7 +43,7 @@ public class UserAmountBusinessImpl implements UserAmountBusiness {
     @Override
     @Transactional
     public void update(UserAmountDto dto) {
-        UserAmountEntity userAmountEntity = UserAmountTransformer.DTO_TO_ENTITY(dto, userAmountRepository.findById(dto.getId())
+        UserAmountEntity userAmountEntity = UserAmountTransformer.dtoToEntity(dto, userAmountRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.UserAmount.not.found", dto.getId())));
         userAmountRepository.save(userAmountEntity);
     }
@@ -55,13 +55,13 @@ public class UserAmountBusinessImpl implements UserAmountBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(userAmountRepository, pagingRequest);
+        PagingExecutor<UserAmountEntity, Long> executor = new PagingExecutor<>(userAmountRepository, pagingRequest);
 
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<UserAmountEntity> data = (List<UserAmountEntity>) pagingResponse.getData();
             List<UserAmountDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(UserAmountTransformer.ENTITY_TO_DTO(e, new UserAmountDto())));
+            data.forEach(e -> output.add(UserAmountTransformer.entityToDto(e, new UserAmountDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;
@@ -79,7 +79,7 @@ public class UserAmountBusinessImpl implements UserAmountBusiness {
     @Override
     public UserAmountDto findByUserId(Long userId) {
         return userAmountRepository.findByUserId(userId)
-                .map(userAmountEntity -> UserAmountTransformer.ENTITY_TO_DTO(userAmountEntity, new UserAmountDto()))
+                .map(userAmountEntity -> UserAmountTransformer.entityToDto(userAmountEntity, new UserAmountDto()))
                 .orElse(null);
     }
 

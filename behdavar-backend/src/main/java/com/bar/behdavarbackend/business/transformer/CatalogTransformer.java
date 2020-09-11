@@ -5,7 +5,7 @@ import com.bar.behdavardatabase.entity.CatalogEntity;
 
 public class CatalogTransformer extends BaseAuditorTransformer {
 
-    public static CatalogEntity DTO_TO_ENTITY(CatalogDto dto, CatalogEntity entity) {
+    public static CatalogEntity dtoToEntity(CatalogDto dto, CatalogEntity entity) {
         entity.setCode(dto.getCode());
         entity.setEnglishTitle(dto.getEnglishTitle());
         entity.setActive(dto.getActive());
@@ -13,7 +13,7 @@ public class CatalogTransformer extends BaseAuditorTransformer {
         return entity;
     }
 
-    public static CatalogDto ENTITY_TO_DTO(CatalogEntity entity, CatalogDto dto) {
+    public static CatalogDto entityToDto(CatalogEntity entity, CatalogDto dto) {
         transformAuditingFields(entity, dto);
         dto.setCode(entity.getCode());
         dto.setEnglishTitle(entity.getEnglishTitle());
@@ -22,7 +22,7 @@ public class CatalogTransformer extends BaseAuditorTransformer {
         return dto;
     }
 
-    public static CatalogEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static CatalogEntity createEntityForRelation(Long id) {
         CatalogEntity entity = new CatalogEntity();
         entity.setId(id);
         return entity;

@@ -5,7 +5,7 @@ import com.bar.behdavardatabase.entity.InputExcelPersonEntity;
 
 public class InputExcelPersonTransformer extends BaseAuditorTransformer {
 
-    public static <D extends InputExcelPersonDto, E extends InputExcelPersonEntity> InputExcelPersonEntity DTO_TO_ENTITY(D dto, E entity) {
+    public static <D extends InputExcelPersonDto, E extends InputExcelPersonEntity> InputExcelPersonEntity dtoToEntity(D dto, E entity) {
         entity.setRowIndex(dto.getRowIndex());
         entity.setRowNo(dto.getRowNo());
         entity.setContractNumber(dto.getContractNumber());
@@ -23,7 +23,7 @@ public class InputExcelPersonTransformer extends BaseAuditorTransformer {
         return entity;
     }
 
-    public static InputExcelPersonDto ENTITY_TO_DTO(InputExcelPersonEntity entity, InputExcelPersonDto dto) {
+    public static InputExcelPersonDto entityToDto(InputExcelPersonEntity entity, InputExcelPersonDto dto) {
         transformAuditingFields(entity, dto);
         dto.setRowIndex(entity.getRowIndex());
         dto.setRowNo(entity.getRowNo());

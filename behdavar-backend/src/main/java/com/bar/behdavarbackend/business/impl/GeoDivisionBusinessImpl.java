@@ -25,22 +25,22 @@ public class GeoDivisionBusinessImpl implements GeoDivisionBusiness {
     @Override
     public GeoDivisionDto findById(Long id) {
         return repository.findById(id)
-                .map(geoDivisionEntity -> GeoDivisionTransformer.ENTITY_TO_DTO(geoDivisionEntity, new GeoDivisionDto()))
+                .map(geoDivisionEntity -> GeoDivisionTransformer.entityToDto(geoDivisionEntity, new GeoDivisionDto()))
                 .orElseThrow(() -> new BusinessException("error.GeoDivision.not.found", id));
     }
 
     @Override
     public Long save(GeoDivisionDto dto) {
-        GeoDivisionEntity GeoDivisionEntity = GeoDivisionTransformer.DTO_TO_ENTITY(dto, new GeoDivisionEntity());
-        return repository.save(GeoDivisionEntity).getId();
+        GeoDivisionEntity geoDivisionEntity = GeoDivisionTransformer.dtoToEntity(dto, new GeoDivisionEntity());
+        return repository.save(geoDivisionEntity).getId();
     }
 
     @Override
     public void update(GeoDivisionDto dto) {
-        GeoDivisionEntity GeoDivisionEntity = GeoDivisionTransformer.DTO_TO_ENTITY(dto, repository
+        GeoDivisionEntity geoDivisionEntity = GeoDivisionTransformer.dtoToEntity(dto, repository
                 .findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.GeoDivision.not.found", dto.getId())));
-        repository.save(GeoDivisionEntity);
+        repository.save(geoDivisionEntity);
     }
 
     @Override
@@ -50,12 +50,12 @@ public class GeoDivisionBusinessImpl implements GeoDivisionBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor<GeoDivisionEntity, Long> executor = new PagingExecutor(repository, pagingRequest);
+        PagingExecutor<GeoDivisionEntity, Long> executor = new PagingExecutor<>(repository, pagingRequest);
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<GeoDivisionDto> geoDivisionDtos = new ArrayList<>();
             ((List<GeoDivisionEntity>) pagingResponse.getData()).forEach(e ->
-                    geoDivisionDtos.add(GeoDivisionTransformer.ENTITY_TO_DTO(e, new GeoDivisionDto()))
+                    geoDivisionDtos.add(GeoDivisionTransformer.entityToDto(e, new GeoDivisionDto()))
             );
             pagingResponse.setData(geoDivisionDtos);
         }

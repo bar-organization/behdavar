@@ -26,24 +26,24 @@ public class PursuitLogBusinessImpl implements PursuitLogBusiness {
     @Override
     public PursuitLogDto findById(Long id) {
         PursuitLogEntity pursuitLogEntity = pursuitLogRepository.findById(id).orElseThrow(() -> new BusinessException("error.PursuitLog.not.found", id));
-        return PursuitLogTransformer.ENTITY_TO_DTO(pursuitLogEntity, new PursuitLogDto());
+        return PursuitLogTransformer.entityToDto(pursuitLogEntity, new PursuitLogDto());
     }
 
     @Override
     public Long save(PursuitEntity entity) {
-        PursuitLogEntity pursuitLogEntity = PursuitLogTransformer.PURSUIT_ENTITY_TO_LOG_ENTITY(entity, new PursuitLogEntity());
+        PursuitLogEntity pursuitLogEntity = PursuitLogTransformer.pursuitEntityToLogEntity(entity, new PursuitLogEntity());
         return pursuitLogRepository.save(pursuitLogEntity).getId();
     }
 
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(pursuitLogRepository, pagingRequest);
+        PagingExecutor<PursuitLogEntity, Long> executor = new PagingExecutor<>(pursuitLogRepository, pagingRequest);
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<PursuitLogEntity> data = (List<PursuitLogEntity>) pagingResponse.getData();
             List<PursuitLogDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(PursuitLogTransformer.ENTITY_TO_DTO(e, new PursuitLogDto())));
+            data.forEach(e -> output.add(PursuitLogTransformer.entityToDto(e, new PursuitLogDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;

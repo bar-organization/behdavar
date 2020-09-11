@@ -7,34 +7,34 @@ import java.util.Optional;
 
 public class GeoDivisionTransformer extends BaseAuditorTransformer {
 
-    public static GeoDivisionEntity DTO_TO_ENTITY(GeoDivisionDto dto, GeoDivisionEntity entity) {
+    public static GeoDivisionEntity dtoToEntity(GeoDivisionDto dto, GeoDivisionEntity entity) {
         entity.setCode(dto.getCode());
         entity.setGeoDivisionType(dto.getGeoDivisionType());
         entity.setName(dto.getName());
         Optional.ofNullable(dto.getParent())
-                .ifPresent(divisionDto -> entity.setParent(CREATE_ENTITY_FOR_RELATION(dto.getParent().getId())));
+                .ifPresent(divisionDto -> entity.setParent(createEntityForRelation(dto.getParent().getId())));
         return entity;
     }
 
-    public static GeoDivisionDto ENTITY_TO_DTO(GeoDivisionEntity entity, GeoDivisionDto dto) {
+    public static GeoDivisionDto entityToDto(GeoDivisionEntity entity, GeoDivisionDto dto) {
         transformAuditingFields(entity, dto);
         dto.setCode(entity.getCode());
         dto.setGeoDivisionType(entity.getGeoDivisionType());
         dto.setName(entity.getName());
         Optional.ofNullable(entity.getParent())
-                .ifPresent(divisionDto -> dto.setParent(CREATE_DTO_FOR_RELATION(entity.getParent().getId())));
+                .ifPresent(divisionDto -> dto.setParent(createDtoForRelation(entity.getParent().getId())));
         return dto;
     }
 
 
-    public static GeoDivisionEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static GeoDivisionEntity createEntityForRelation(Long id) {
         GeoDivisionEntity entity = new GeoDivisionEntity();
         entity.setId(id);
         entity.setVersion(0L);
         return entity;
     }
 
-    public static GeoDivisionDto CREATE_DTO_FOR_RELATION(Long id) {
+    public static GeoDivisionDto createDtoForRelation(Long id) {
         GeoDivisionDto dto = new GeoDivisionDto();
         dto.setId(id);
         dto.setVersion(0L);

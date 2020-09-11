@@ -8,22 +8,22 @@ import java.util.Optional;
 
 public class LendingTransformer extends BaseAuditorTransformer {
 
-    public static LendingEntity DTO_TO_ENTITY(LendingDto dto, LendingEntity entity) {
-        Optional.ofNullable(dto.getBranchBank()).ifPresent(bankDto -> entity.setBranchBank(BankTransformer.CREATE_ENTITY_FOR_RELATION(bankDto.getId())));
+    public static LendingEntity dtoToEntity(LendingDto dto, LendingEntity entity) {
+        Optional.ofNullable(dto.getBranchBank()).ifPresent(bankDto -> entity.setBranchBank(BankTransformer.createEntityForRelation(bankDto.getId())));
         entity.setIdeaIssueDate(dto.getIdeaIssueDate());
         entity.setMasterAmount(dto.getMasterAmount());
         entity.setDefferedAmount(dto.getDefferedAmount());
-        entity.setDefferedCount(dto.defferedCount);
+        entity.setDefferedCount(dto.getDefferedCount());
         entity.setLateFees(dto.getLateFees());
-        entity.setLendingNumber(dto.lendingNumber);
+        entity.setLendingNumber(dto.getLendingNumber());
         entity.setLateFees(dto.getLateFees());
         entity.setReceiveLendingDate(dto.getReceiveLendingDate());
         return entity;
     }
 
-    public static LendingDto ENTITY_TO_DTO(LendingEntity entity, LendingDto dto) {
+    public static LendingDto entityToDto(LendingEntity entity, LendingDto dto) {
         transformAuditingFields(entity, dto);
-        Optional.ofNullable(entity.getBranchBank()).ifPresent(branchEntity -> dto.setBranchBank(BankTransformer.ENTITY_TO_DTO(branchEntity, new BankDto())));
+        Optional.ofNullable(entity.getBranchBank()).ifPresent(branchEntity -> dto.setBranchBank(BankTransformer.entityToDto(branchEntity, new BankDto())));
         dto.setIdeaIssueDate(entity.getIdeaIssueDate());
         dto.setMasterAmount(entity.getMasterAmount());
         dto.setDefferedAmount(entity.getDefferedAmount());
@@ -35,7 +35,7 @@ public class LendingTransformer extends BaseAuditorTransformer {
         return dto;
     }
 
-    public static LendingEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static LendingEntity createEntityForRelation(Long id) {
         LendingEntity entity = new LendingEntity();
         entity.setId(id);
         entity.setVersion(0L);

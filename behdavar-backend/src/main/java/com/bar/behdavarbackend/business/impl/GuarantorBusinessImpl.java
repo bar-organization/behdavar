@@ -26,19 +26,19 @@ public class GuarantorBusinessImpl implements GuarantorBusiness {
     @Override
     public GuarantorDto findById(Long id) {
         GuarantorEntity entity = guarantorRepository.findById(id).orElseThrow(() -> new BusinessException("error.Guarantor.not.found", id));
-        return GuarantorTransformer.ENTITY_TO_DTO(entity, new GuarantorDto());
+        return GuarantorTransformer.entityToDto(entity, new GuarantorDto());
     }
 
     @Override
     public Long save(GuarantorDto dto) {
-        GuarantorEntity GuarantorEntity = GuarantorTransformer.DTO_TO_ENTITY(dto, new GuarantorEntity());
-        return guarantorRepository.save(GuarantorEntity).getId();
+        GuarantorEntity guarantorEntity = GuarantorTransformer.dtoToEntity(dto, new GuarantorEntity());
+        return guarantorRepository.save(guarantorEntity).getId();
     }
 
     @Override
     public void update(GuarantorDto dto) {
-        GuarantorEntity GuarantorEntity = GuarantorTransformer.DTO_TO_ENTITY(dto, guarantorRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Guarantor.not.found", dto.getId())));
-        guarantorRepository.save(GuarantorEntity);
+        GuarantorEntity guarantorEntity = GuarantorTransformer.dtoToEntity(dto, guarantorRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Guarantor.not.found", dto.getId())));
+        guarantorRepository.save(guarantorEntity);
     }
 
     @Override
@@ -51,16 +51,23 @@ public class GuarantorBusinessImpl implements GuarantorBusiness {
         List<GuarantorDto> guarantorDtos = new ArrayList<>();
         List<GuarantorEntity> allByContractId = guarantorRepository.findAllByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
-            allByContractId.forEach(e -> {
-                guarantorDtos.add(GuarantorTransformer.ENTITY_TO_DTO(e, new GuarantorDto(), GuarantorEntity.CONTRACT, GuarantorEntity.PERSON));
-            });
+            allByContractId.forEach(e ->
+                    guarantorDtos.add(GuarantorTransformer.entityToDto(e, new GuarantorDto(), GuarantorEntity.CONTRACT, GuarantorEntity.PERSON)));
         }
         return guarantorDtos;
     }
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(guarantorRepository, pagingRequest);
-        return executor.execute();
+        PagingExecutor<GuarantorEntity, Long> executor = new PagingExecutor<>(guarantorRepository, pagingRequest);
+
+        PagingResponse pagingResponse = executor.execute();
+        if (pagingResponse.getData() != null) {
+            List<GuarantorEntity> data = (List<GuarantorEntity>) pagingResponse.getData();
+            List<GuarantorDto> output = new ArrayList<>();
+            data.forEach(e -> output.add(GuarantorTransformer.entityToDto(e, new GuarantorDto())));
+            pagingResponse.setData(output);
+        }
+        return pagingResponse;
     }
 }

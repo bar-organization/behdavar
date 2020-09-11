@@ -39,7 +39,7 @@ public class PursuitBusinessImpl implements PursuitBusiness {
     @Override
     public PursuitDto findById(Long id) {
         PursuitEntity pursuitEntity = pursuitRepository.findById(id).orElseThrow(() -> new BusinessException("error.Pursuit.not.found", id));
-        return PursuitTransformer.ENTITY_TO_DTO(pursuitEntity, new PursuitDto());
+        return PursuitTransformer.entityToDto(pursuitEntity, new PursuitDto());
     }
 
     @Override
@@ -54,15 +54,15 @@ public class PursuitBusinessImpl implements PursuitBusiness {
             }
 
             Optional.ofNullable(attachmentId).ifPresent(id ->
-                    dto.getPayment().setAttachment(AttachmentTransformer.CREATE_DTO_FOR_RELATION(id)));
+                    dto.getPayment().setAttachment(AttachmentTransformer.createDtoForRelation(id)));
 
             paymentId = paymentBusiness.save(dto.getPayment());
             userAmountBusiness.increaseReceiveAmount(dto.getPayment().getAmount());
         }
         Optional.ofNullable(paymentId).ifPresent(id ->
-                dto.setPayment(PaymentTransformer.CREATE_DTO_FOR_RELATION(id)));
+                dto.setPayment(PaymentTransformer.createDtoForRelation(id)));
 
-        PursuitEntity pursuitEntity = PursuitTransformer.DTO_TO_ENTITY(dto, new PursuitEntity());
+        PursuitEntity pursuitEntity = PursuitTransformer.dtoToEntity(dto, new PursuitEntity());
         pursuitEntity.setId(pursuitRepository.save(pursuitEntity).getId());
         pursuitLogBusiness.save(pursuitEntity);
         return pursuitEntity.getId();
@@ -71,7 +71,7 @@ public class PursuitBusinessImpl implements PursuitBusiness {
     @Override
     @Transactional
     public void update(PursuitDto dto) {
-        PursuitEntity pursuitEntity = PursuitTransformer.DTO_TO_ENTITY(dto, pursuitRepository.findById(dto.getId())
+        PursuitEntity pursuitEntity = PursuitTransformer.dtoToEntity(dto, pursuitRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.Pursuit.not.found", dto.getId())));
         pursuitRepository.save(pursuitEntity);
         pursuitLogBusiness.save(pursuitEntity);
@@ -90,7 +90,7 @@ public class PursuitBusinessImpl implements PursuitBusiness {
         if (pagingResponse.getData() != null) {
             List<PursuitEntity> data = (List<PursuitEntity>) pagingResponse.getData();
             List<PursuitDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(PursuitTransformer.ENTITY_TO_DTO(e, new PursuitDto())));
+            data.forEach(e -> output.add(PursuitTransformer.entityToDto(e, new PursuitDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;
@@ -99,6 +99,6 @@ public class PursuitBusinessImpl implements PursuitBusiness {
     @Override
     public PursuitDto findByContractId(Long id) {
         PursuitEntity pursuitEntity = pursuitRepository.findFirstByContractId(id);
-        return pursuitEntity != null ? PursuitTransformer.ENTITY_TO_DTO(pursuitEntity, new PursuitDto()) : null;
+        return pursuitEntity != null ? PursuitTransformer.entityToDto(pursuitEntity, new PursuitDto()) : null;
     }
 }

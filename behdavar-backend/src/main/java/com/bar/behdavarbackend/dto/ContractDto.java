@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -15,15 +14,10 @@ import java.time.LocalDate;
 public class ContractDto extends BaseAuditorDto<String, Long> {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    public LocalDate submitDate;
-
-    public LendingDto lending;
-
-    public ProductDto product;
-
-    public CatalogDetailDto corporation;
-
-    public ContractStatus contractStatus;
-
-    public ContractType contractType;
+    private LocalDate submitDate;
+    private LendingDto lending;
+    private ProductDto product;
+    private CatalogDetailDto corporation;
+    private ContractStatus contractStatus;
+    private ContractType contractType;
 }

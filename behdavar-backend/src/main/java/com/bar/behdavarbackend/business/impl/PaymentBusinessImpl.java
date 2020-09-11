@@ -26,14 +26,14 @@ public class PaymentBusinessImpl implements PaymentBusiness {
 
     @Override
     public PaymentDto findById(Long id) {
-        PaymentEntity PaymentEntity = paymentRepository.findById(id).orElseThrow(() -> new BusinessException("error.Payment.not.found", id));
-        return PaymentTransformer.ENTITY_TO_DTO(PaymentEntity, new PaymentDto());
+        PaymentEntity paymentEntity = paymentRepository.findById(id).orElseThrow(() -> new BusinessException("error.Payment.not.found", id));
+        return PaymentTransformer.entityToDto(paymentEntity, new PaymentDto());
     }
 
     @Override
     @Transactional
     public Long save(PaymentDto dto) {
-        PaymentEntity paymentEntity = PaymentTransformer.DTO_TO_ENTITY(dto, new PaymentEntity());
+        PaymentEntity paymentEntity = PaymentTransformer.dtoToEntity(dto, new PaymentEntity());
         paymentEntity.setId(paymentRepository.save(paymentEntity).getId());
         return paymentEntity.getId();
     }
@@ -41,7 +41,7 @@ public class PaymentBusinessImpl implements PaymentBusiness {
     @Override
     @Transactional
     public void update(PaymentDto dto) {
-        PaymentEntity paymentEntity = PaymentTransformer.DTO_TO_ENTITY(dto, paymentRepository.findById(dto.getId())
+        PaymentEntity paymentEntity = PaymentTransformer.dtoToEntity(dto, paymentRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.Payment.not.found", dto.getId())));
         paymentRepository.save(paymentEntity);
     }
@@ -53,13 +53,13 @@ public class PaymentBusinessImpl implements PaymentBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor executor = new PagingExecutor(paymentRepository, pagingRequest);
+        PagingExecutor<PaymentEntity, Long> executor = new PagingExecutor<>(paymentRepository, pagingRequest);
 
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<PaymentEntity> data = (List<PaymentEntity>) pagingResponse.getData();
             List<PaymentDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(PaymentTransformer.ENTITY_TO_DTO(e, new PaymentDto())));
+            data.forEach(e -> output.add(PaymentTransformer.entityToDto(e, new PaymentDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;
@@ -70,9 +70,8 @@ public class PaymentBusinessImpl implements PaymentBusiness {
         List<PaymentDto> paymentDtos = new ArrayList<>();
         List<PaymentEntity> entities = paymentRepository.findByContractId(id);
         if (!CollectionUtils.isEmpty(entities)) {
-            entities.forEach(e -> {
-                paymentDtos.add(PaymentTransformer.ENTITY_TO_DTO(e, new PaymentDto(), PaymentEntity.CONTRACT, PaymentEntity.USER));
-            });
+            entities.forEach(e ->
+                    paymentDtos.add(PaymentTransformer.entityToDto(e, new PaymentDto(), PaymentEntity.CONTRACT, PaymentEntity.USER)));
         }
 
         return paymentDtos;

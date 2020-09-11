@@ -30,13 +30,13 @@ public class AttachmentBusinessImpl implements AttachmentBusiness {
 
     @Override
     public Long save(AttachmentDto dto) {
-        AttachmentEntity attachmentEntity = AttachmentTransformer.DTO_TO_ENTITY(dto, new AttachmentEntity());
+        AttachmentEntity attachmentEntity = AttachmentTransformer.dtoToEntity(dto, new AttachmentEntity());
         return attachmentRepository.save(attachmentEntity).getId();
     }
 
     @Override
     public void update(AttachmentDto dto) {
-        AttachmentEntity attachmentEntity = AttachmentTransformer.DTO_TO_ENTITY(dto, findById(dto.getId()));
+        AttachmentEntity attachmentEntity = AttachmentTransformer.dtoToEntity(dto, findById(dto.getId()));
         attachmentRepository.save(attachmentEntity);
     }
 
@@ -51,7 +51,7 @@ public class AttachmentBusinessImpl implements AttachmentBusiness {
         List<AttachmentEntity> allByContractId = attachmentRepository.findAllByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
             allByContractId.forEach(e -> {
-                attachmentDtos.add(AttachmentTransformer.ENTITY_TO_DTO(e, new AttachmentDto()));
+                attachmentDtos.add(AttachmentTransformer.entityToDto(e, new AttachmentDto()));
             });
         }
         return attachmentDtos;
@@ -65,7 +65,7 @@ public class AttachmentBusinessImpl implements AttachmentBusiness {
         if (pagingResponse.getData() != null) {
             List<AttachmentEntity> data = (List<AttachmentEntity>) pagingResponse.getData();
             List<AttachmentDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(AttachmentTransformer.ENTITY_TO_DTO(e, new AttachmentDto())));
+            data.forEach(e -> output.add(AttachmentTransformer.entityToDto(e, new AttachmentDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;

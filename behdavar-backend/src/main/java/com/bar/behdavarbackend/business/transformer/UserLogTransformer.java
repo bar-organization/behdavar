@@ -6,27 +6,27 @@ import com.bar.behdavardatabase.entity.UserLogEntity;
 
 public class UserLogTransformer extends BaseAuditorTransformer {
 
-    public static UserLogEntity DTO_TO_ENTITY(UserLogDto dto, UserLogEntity entity) {
+    public static UserLogEntity dtoToEntity(UserLogDto dto, UserLogEntity entity) {
         entity.setLastLogin(dto.getLastLogin());
-        entity.setUser(UserTransformer.CREATE_ENTITY_FOR_RELATION(dto.getUser().getId()));
+        entity.setUser(UserTransformer.createEntityForRelation(dto.getUser().getId()));
         return entity;
     }
 
 
-    public static UserLogDto ENTITY_TO_DTO(UserLogEntity entity, UserLogDto dto) {
+    public static UserLogDto entityToDto(UserLogEntity entity, UserLogDto dto) {
         dto.setLastLogin(entity.getLastLogin());
-        dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));
+        dto.setUser(UserTransformer.entityToDto(entity.getUser(), new UserDto()));
         return dto;
     }
 
 
-    public static UserLogEntity CREATE_ENTITY_FOR_RELATION(Long id) {
-        UserLogEntity UserLogEntity = new UserLogEntity();
-        UserLogEntity.setId(id);
-        return UserLogEntity;
+    public static UserLogEntity createEntityForRelation(Long id) {
+        UserLogEntity entity = new UserLogEntity();
+        entity.setId(id);
+        return entity;
     }
 
-    public static UserLogDto CREATE_DTO_FOR_RELATION(Long id) {
+    public static UserLogDto createDtoForRelation(Long id) {
         UserLogDto dto = new UserLogDto();
         dto.setId(id);
         return dto;

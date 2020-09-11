@@ -9,27 +9,27 @@ import java.util.Optional;
 
 public class BankTransformer extends BaseAuditorTransformer {
 
-    public static BankBranchEntity DTO_TO_ENTITY(BankDto dto, BankBranchEntity entity) {
+    public static BankBranchEntity dtoToEntity(BankDto dto, BankBranchEntity entity) {
         entity.setCode(dto.getCode());
-        Optional.ofNullable(dto.getAddress()).ifPresent(addressDto -> entity.setAddress(AddressTransformer.CREATE_ENTITY_FOR_RELATION(addressDto.getId())));
-        entity.setBankType(CatalogDetailTransformer.CREATE_ENTITY_FOR_RELATION(dto.getBankType().getId()));
+        Optional.ofNullable(dto.getAddress()).ifPresent(addressDto -> entity.setAddress(AddressTransformer.createEntityForRelation(addressDto.getId())));
+        entity.setBankType(CatalogDetailTransformer.createEntityForRelation(dto.getBankType().getId()));
         entity.setName(dto.getName());
         entity.setActive(dto.getActive());
         return entity;
     }
 
-    public static BankDto ENTITY_TO_DTO(BankBranchEntity entity, BankDto dto) {
+    public static BankDto entityToDto(BankBranchEntity entity, BankDto dto) {
         transformAuditingFields(entity, dto);
         dto.setCode(entity.getCode());
-        Optional.ofNullable(entity.getAddress()).ifPresent(addressEntity -> dto.setAddress(AddressTransformer.ENTITY_TO_DTO(addressEntity, new AddressDto())));
-        dto.setBankType(CatalogDetailTransformer.ENTITY_TO_DTO(entity.getBankType(), new CatalogDetailDto()));
+        Optional.ofNullable(entity.getAddress()).ifPresent(addressEntity -> dto.setAddress(AddressTransformer.entityToDto(addressEntity, new AddressDto())));
+        dto.setBankType(CatalogDetailTransformer.entityToDto(entity.getBankType(), new CatalogDetailDto()));
         dto.setName(entity.getName());
         dto.setActive(entity.getActive());
         return dto;
     }
 
 
-    public static BankBranchEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static BankBranchEntity createEntityForRelation(Long id) {
         BankBranchEntity entity = new BankBranchEntity();
         entity.setId(id);
         entity.setVersion(0l);

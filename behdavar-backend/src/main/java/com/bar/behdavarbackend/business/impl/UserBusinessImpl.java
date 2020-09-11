@@ -27,21 +27,21 @@ public class UserBusinessImpl implements UserBusiness {
     }
 
     @Override
-    public UserDto findByUserName(String username) throws BusinessException {
+    public UserDto findByUserName(String username) {
         UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new BusinessException("Username not found"));
-        return UserTransformer.ENTITY_TO_DTO(userEntity, new UserDto(), UserEntity.ROLES);
+        return UserTransformer.entityToDto(userEntity, new UserDto(), UserEntity.ROLES);
     }
 
     @Override
     public UserDto findById(Long id) {
         return userRepository.findById(id)
-                .map(UserEntity -> UserTransformer.ENTITY_TO_DTO(UserEntity, new UserDto()))
+                .map(userEntity -> UserTransformer.entityToDto(userEntity, new UserDto()))
                 .orElseThrow(() -> new BusinessException("error.User.not.found", id));
     }
 
     @Override
     public Long save(UserDto dto) {
-        UserEntity userEntity = UserTransformer.DTO_TO_ENTITY(dto, new UserEntity());
+        UserEntity userEntity = UserTransformer.dtoToEntity(dto, new UserEntity());
         return userRepository.save(userEntity).getId();
     }
 
@@ -50,7 +50,7 @@ public class UserBusinessImpl implements UserBusiness {
         if (dto.getUsername().equals(StartupPreparation.SUPERVISOR_USER)) {
            throw new BusinessException("error.invalid.operation");
         }
-        UserEntity userEntity = UserTransformer.DTO_TO_ENTITY(dto, userRepository
+        UserEntity userEntity = UserTransformer.dtoToEntity(dto, userRepository
                 .findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.User.not.found", dto.getId())));
         userRepository.save(userEntity);
@@ -71,14 +71,14 @@ public class UserBusinessImpl implements UserBusiness {
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor<UserEntity, Long> executor = new PagingExecutor(userRepository, pagingRequest);
+        PagingExecutor<UserEntity, Long> executor = new PagingExecutor<>(userRepository, pagingRequest);
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
-            List<UserDto> UserDtos = new ArrayList<>();
+            List<UserDto> userDtos = new ArrayList<>();
             ((List<UserEntity>) pagingResponse.getData()).forEach(e ->
-                    UserDtos.add(UserTransformer.ENTITY_TO_DTO(e, new UserDto()))
+                    userDtos.add(UserTransformer.entityToDto(e, new UserDto()))
             );
-            pagingResponse.setData(UserDtos);
+            pagingResponse.setData(userDtos);
         }
         return pagingResponse;
     }

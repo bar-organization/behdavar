@@ -25,18 +25,18 @@ public class PrivilegeBusinessImpl implements PrivilegeBusiness {
     @Override
     public PrivilegeDto findById(Long id) {
         return repository.findById(id)
-                .map(PrivilegeEntity -> PrivilegeTransformer.ENTITY_TO_DTO(PrivilegeEntity, new PrivilegeDto()))
+                .map(entity -> PrivilegeTransformer.entityToDto(entity, new PrivilegeDto()))
                 .orElseThrow(() -> new BusinessException("error.Privilege.not.found", id));
     }
 
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
-        PagingExecutor<PrivilegeEntity, Long> executor = new PagingExecutor(repository, pagingRequest);
+        PagingExecutor<PrivilegeEntity, Long> executor = new PagingExecutor<>(repository, pagingRequest);
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<PrivilegeDto> privilegeDtos = new ArrayList<>();
             ((List<PrivilegeEntity>) pagingResponse.getData()).forEach(e ->
-                    privilegeDtos.add(PrivilegeTransformer.ENTITY_TO_DTO(e, new PrivilegeDto()))
+                    privilegeDtos.add(PrivilegeTransformer.entityToDto(e, new PrivilegeDto()))
             );
             pagingResponse.setData(privilegeDtos);
         }

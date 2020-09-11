@@ -25,18 +25,18 @@ public class CatalogDetailBusinessImpl implements CatalogDetailBusiness {
     @Override
     public CatalogDetailDto findById(Long id) {
         CatalogDetailEntity catalogDetailEntity = catalogDetailRepository.findById(id).orElseThrow(() -> new BusinessException("error.CatalogDetail.not.found", id));
-        return CatalogDetailTransformer.ENTITY_TO_DTO(catalogDetailEntity, new CatalogDetailDto());
+        return CatalogDetailTransformer.entityToDto(catalogDetailEntity, new CatalogDetailDto());
     }
 
     @Override
     public Long save(CatalogDetailDto dto) {
-        CatalogDetailEntity catalogDetailEntity = CatalogDetailTransformer.DTO_TO_ENTITY(dto, new CatalogDetailEntity());
+        CatalogDetailEntity catalogDetailEntity = CatalogDetailTransformer.dtoToEntity(dto, new CatalogDetailEntity());
         return catalogDetailRepository.save(catalogDetailEntity).getId();
     }
 
     @Override
     public void update(CatalogDetailDto dto) {
-        CatalogDetailEntity catalogDetailEntity = CatalogDetailTransformer.DTO_TO_ENTITY(dto, catalogDetailRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.CatalogDetail.not.found", dto.getId())));
+        CatalogDetailEntity catalogDetailEntity = CatalogDetailTransformer.dtoToEntity(dto, catalogDetailRepository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.CatalogDetail.not.found", dto.getId())));
         catalogDetailRepository.save(catalogDetailEntity);
     }
 
@@ -53,7 +53,7 @@ public class CatalogDetailBusinessImpl implements CatalogDetailBusiness {
         if (pagingResponse.getData() != null) {
             List<CatalogDetailEntity> data = (List<CatalogDetailEntity>) pagingResponse.getData();
             List<CatalogDetailDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(CatalogDetailTransformer.ENTITY_TO_DTO(e, new CatalogDetailDto())));
+            data.forEach(e -> output.add(CatalogDetailTransformer.entityToDto(e, new CatalogDetailDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;

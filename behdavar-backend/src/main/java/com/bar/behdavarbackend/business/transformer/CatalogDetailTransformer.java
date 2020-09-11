@@ -6,26 +6,26 @@ import com.bar.behdavardatabase.entity.CatalogDetailEntity;
 
 public class CatalogDetailTransformer extends BaseAuditorTransformer {
 
-    public static CatalogDetailEntity DTO_TO_ENTITY(CatalogDetailDto dto, CatalogDetailEntity entity) {
+    public static CatalogDetailEntity dtoToEntity(CatalogDetailDto dto, CatalogDetailEntity entity) {
         entity.setCode(dto.getCode());
         entity.setEnglishTitle(dto.getEnglishTitle());
         entity.setActive(dto.getActive());
         entity.setTitle(dto.getTitle());
-        entity.setCatalog(CatalogTransformer.CREATE_ENTITY_FOR_RELATION(dto.getCatalog().getId()));
+        entity.setCatalog(CatalogTransformer.createEntityForRelation(dto.getCatalog().getId()));
         return entity;
     }
 
-    public static CatalogDetailDto ENTITY_TO_DTO(CatalogDetailEntity entity, CatalogDetailDto dto) {
+    public static CatalogDetailDto entityToDto(CatalogDetailEntity entity, CatalogDetailDto dto) {
         transformAuditingFields(entity, dto);
         dto.setCode(entity.getCode());
         dto.setEnglishTitle(entity.getEnglishTitle());
         dto.setActive(entity.getActive());
         dto.setTitle(entity.getTitle());
-        dto.setCatalog(CatalogTransformer.ENTITY_TO_DTO(entity.getCatalog(), new CatalogDto()));
+        dto.setCatalog(CatalogTransformer.entityToDto(entity.getCatalog(), new CatalogDto()));
         return dto;
     }
 
-    public static CatalogDetailEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static CatalogDetailEntity createEntityForRelation(Long id) {
         CatalogDetailEntity entity = new CatalogDetailEntity();
         entity.setId(id);
         entity.setVersion(0L);

@@ -26,7 +26,7 @@ public class PersonBusinessImpl implements PersonBusiness {
     @Override
     @Transactional
     public void update(PersonDto dto) {
-        PersonEntity personEntity = PersonTransformer.DTO_TO_ENTITY(dto, repository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Person.not.found", dto.getId())));
+        PersonEntity personEntity = PersonTransformer.dtoToEntity(dto, repository.findById(dto.getId()).orElseThrow(() -> new BusinessException("error.Person.not.found", dto.getId())));
         repository.save(personEntity);
     }
 
@@ -35,7 +35,7 @@ public class PersonBusinessImpl implements PersonBusiness {
         List<PersonEntity> personEntities = repository.findSuggestion(suggest);
         List<PersonDto> result = new ArrayList<>();
         if (!CollectionUtils.isEmpty(personEntities)) {
-            personEntities.forEach(e -> result.add(PersonTransformer.ENTITY_TO_DTO(e, new PersonDto())));
+            personEntities.forEach(e -> result.add(PersonTransformer.entityToDto(e, new PersonDto())));
         }
         return result;
     }

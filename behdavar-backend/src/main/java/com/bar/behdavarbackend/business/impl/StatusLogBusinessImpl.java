@@ -26,13 +26,13 @@ public class StatusLogBusinessImpl implements StatusLogBusiness {
     @Override
     public StatusLogDto findById(Long id) {
         StatusLogEntity statusLogEntity = statusLogRepository.findById(id).orElseThrow(() -> new BusinessException("error.StatusLog.not.found", id));
-        return StatusLogTransformer.ENTITY_TO_DTO(statusLogEntity, new StatusLogDto());
+        return StatusLogTransformer.entityToDto(statusLogEntity, new StatusLogDto());
     }
 
     @Override
     @Transactional
     public Long save(StatusLogDto dto) {
-        StatusLogEntity statusLogEntity = StatusLogTransformer.DTO_TO_ENTITY(dto, new StatusLogEntity());
+        StatusLogEntity statusLogEntity = StatusLogTransformer.dtoToEntity(dto, new StatusLogEntity());
         statusLogEntity.setId(statusLogRepository.save(statusLogEntity).getId());
         return statusLogEntity.getId();
     }
@@ -40,7 +40,7 @@ public class StatusLogBusinessImpl implements StatusLogBusiness {
     @Override
     @Transactional
     public void update(StatusLogDto dto) {
-        StatusLogEntity statusLogEntity = StatusLogTransformer.DTO_TO_ENTITY(dto, statusLogRepository.findById(dto.getId())
+        StatusLogEntity statusLogEntity = StatusLogTransformer.dtoToEntity(dto, statusLogRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.StatusLog.not.found", dto.getId())));
         statusLogRepository.save(statusLogEntity);
     }
@@ -58,7 +58,7 @@ public class StatusLogBusinessImpl implements StatusLogBusiness {
         if (pagingResponse.getData() != null) {
             List<StatusLogEntity> data = (List<StatusLogEntity>) pagingResponse.getData();
             List<StatusLogDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(StatusLogTransformer.ENTITY_TO_DTO(e, new StatusLogDto())));
+            data.forEach(e -> output.add(StatusLogTransformer.entityToDto(e, new StatusLogDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;

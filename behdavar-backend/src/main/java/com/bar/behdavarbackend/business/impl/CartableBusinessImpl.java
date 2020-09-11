@@ -43,13 +43,13 @@ public class CartableBusinessImpl implements CartableBusiness {
     @Override
     public CartableDto findById(Long id) {
         CartableEntity cartableEntity = cartableRepository.findById(id).orElseThrow(() -> new BusinessException("error.Cartable.not.found", id));
-        return CartableTransformer.ENTITY_TO_DTO(cartableEntity, new CartableDto());
+        return CartableTransformer.entityToDto(cartableEntity, new CartableDto());
     }
 
     @Override
     @Transactional
     public Long save(CartableDto dto) {
-        CartableEntity cartableEntity = CartableTransformer.DTO_TO_ENTITY(dto, new CartableEntity());
+        CartableEntity cartableEntity = CartableTransformer.dtoToEntity(dto, new CartableEntity());
         cartableEntity.setActive(Boolean.TRUE);
         cartableEntity.setId(cartableRepository.save(cartableEntity).getId());
         return cartableEntity.getId();
@@ -58,7 +58,7 @@ public class CartableBusinessImpl implements CartableBusiness {
     @Override
     @Transactional
     public void update(CartableDto dto) {
-        CartableEntity cartableEntity = CartableTransformer.DTO_TO_ENTITY(dto, cartableRepository.findById(dto.getId())
+        CartableEntity cartableEntity = CartableTransformer.dtoToEntity(dto, cartableRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.Cartable.not.found", dto.getId())));
         cartableEntity.setActive(Boolean.TRUE);
         cartableRepository.save(cartableEntity);
@@ -72,13 +72,13 @@ public class CartableBusinessImpl implements CartableBusiness {
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
         pagingRequest.getFilters().add(new SearchCriteria(CartableEntity.RECEIVER, SecurityUtil.getCurrentUserId(), SearchOperation.EQUAL));
-        PagingExecutor executor = new PagingExecutor(cartableRepository, pagingRequest);
+        PagingExecutor<CartableEntity, Long> executor = new PagingExecutor<>(cartableRepository, pagingRequest);
 
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<CartableEntity> data = (List<CartableEntity>) pagingResponse.getData();
             List<CartableDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(CartableTransformer.ENTITY_TO_DTO(e, new CartableDto())));
+            data.forEach(e -> output.add(CartableTransformer.entityToDto(e, new CartableDto())));
             pagingResponse.setData(output);
         }
         return pagingResponse;
@@ -93,16 +93,16 @@ public class CartableBusinessImpl implements CartableBusiness {
                     cartableRepository.save(cartableEntity);
                 });
         CartableEntity newEntity = new CartableEntity();
-        newEntity.setContract(ContractTransformer.CREATE_ENTITY_FOR_RELATION(dto.getContractId()));
-        newEntity.setReceiver(UserTransformer.CREATE_ENTITY_FOR_RELATION(dto.getAssigneeId()));
-        newEntity.setSender(UserTransformer.CREATE_ENTITY_FOR_RELATION(SecurityUtil.getCurrentUserId()));
+        newEntity.setContract(ContractTransformer.createEntityForRelation(dto.getContractId()));
+        newEntity.setReceiver(UserTransformer.createEntityForRelation(dto.getAssigneeId()));
+        newEntity.setSender(UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId()));
         newEntity.setActive(Boolean.TRUE);
         cartableRepository.save(newEntity);
 
         StatusLogDto statusLogDto = new StatusLogDto();
         statusLogDto.setStatus(dto.getStatus());
-        statusLogDto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(dto.getContractId()));
-        statusLogDto.setUser(UserTransformer.CREATE_DTO_FOR_RELATION(SecurityUtil.getCurrentUserId()));
+        statusLogDto.setContract(ContractTransformer.createDtoForRelation(dto.getContractId()));
+        statusLogDto.setUser(UserTransformer.createDtoForRelation(SecurityUtil.getCurrentUserId()));
         statusLogBusiness.save(statusLogDto);
 
 

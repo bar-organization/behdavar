@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public class AddressTransformer extends BaseAuditorTransformer {
 
-    public static AddressEntity DTO_TO_ENTITY(AddressDto dto, AddressEntity entity) {
+    public static AddressEntity dtoToEntity(AddressDto dto, AddressEntity entity) {
         entity.setDescription(dto.getDescription());
-        entity.setGeoDivision(GeoDivisionTransformer.CREATE_ENTITY_FOR_RELATION(dto.getGeoDivision().getId()));
+        entity.setGeoDivision(GeoDivisionTransformer.createEntityForRelation(dto.getGeoDivision().getId()));
         entity.setMainAlley(dto.getMainAlley());
         entity.setMainStreet(dto.getMainStreet());
-        Optional.ofNullable(dto.getPerson()).ifPresent(personDto -> entity.setPerson(PersonTransformer.CREATE_ENTITY_FOR_RELATION(personDto.getId())));
+        Optional.ofNullable(dto.getPerson()).ifPresent(personDto -> entity.setPerson(PersonTransformer.createEntityForRelation(personDto.getId())));
         entity.setPlate(dto.getPlate());
         entity.setPostalCode(dto.getPostalCode());
         entity.setSubAlley(dto.getSubAlley());
@@ -20,13 +20,13 @@ public class AddressTransformer extends BaseAuditorTransformer {
         return entity;
     }
 
-    public static AddressDto ENTITY_TO_DTO(AddressEntity entity, AddressDto dto) {
+    public static AddressDto entityToDto(AddressEntity entity, AddressDto dto) {
         transformAuditingFields(entity, dto);
         //TODO add required fields
         return dto;
     }
 
-    public static AddressEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static AddressEntity createEntityForRelation(Long id) {
         AddressEntity entity = new AddressEntity();
         entity.setId(id);
         entity.setVersion(0L);

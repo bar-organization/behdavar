@@ -6,22 +6,22 @@ import com.bar.behdavardatabase.entity.UserAmountEntity;
 
 public class UserAmountTransformer extends BaseAuditorTransformer {
 
-    public static UserAmountEntity DTO_TO_ENTITY(UserAmountDto dto, UserAmountEntity entity) {
+    public static UserAmountEntity dtoToEntity(UserAmountDto dto, UserAmountEntity entity) {
         entity.setReceiveAmount(dto.getReceiveAmount());
         entity.setTotalAmount(dto.getTotalAmount());
-        entity.setUser(UserTransformer.CREATE_ENTITY_FOR_RELATION(dto.getUser().getId()));
+        entity.setUser(UserTransformer.createEntityForRelation(dto.getUser().getId()));
         return entity;
     }
 
-    public static UserAmountDto ENTITY_TO_DTO(UserAmountEntity entity, UserAmountDto dto) {
+    public static UserAmountDto entityToDto(UserAmountEntity entity, UserAmountDto dto) {
         transformAuditingFields(entity, dto);
         dto.setReceiveAmount(entity.getReceiveAmount());
         dto.setTotalAmount(entity.getTotalAmount());
-        dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));
+        dto.setUser(UserTransformer.entityToDto(entity.getUser(), new UserDto()));
         return dto;
     }
 
-    public static UserAmountEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static UserAmountEntity createEntityForRelation(Long id) {
         UserAmountEntity entity = new UserAmountEntity();
         entity.setId(id);
         entity.setVersion(0L);

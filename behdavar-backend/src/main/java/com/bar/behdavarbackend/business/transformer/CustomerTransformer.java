@@ -11,28 +11,28 @@ import java.util.stream.Collectors;
 
 public class CustomerTransformer extends BaseAuditorTransformer {
 
-    public static CustomerEntity DTO_TO_ENTITY(CustomerDto dto, CustomerEntity entity) {
-        entity.setContract(ContractTransformer.CREATE_ENTITY_FOR_RELATION(dto.getContract().getId()));
-        entity.setPerson(PersonTransformer.CREATE_ENTITY_FOR_RELATION(dto.getPerson().getId()));
+    public static CustomerEntity dtoToEntity(CustomerDto dto, CustomerEntity entity) {
+        entity.setContract(ContractTransformer.createEntityForRelation(dto.getContract().getId()));
+        entity.setPerson(PersonTransformer.createEntityForRelation(dto.getPerson().getId()));
         return entity;
     }
 
-    public static CustomerDto ENTITY_TO_DTO(CustomerEntity entity, CustomerDto dto, String... strings) {
+    public static CustomerDto entityToDto(CustomerEntity entity, CustomerDto dto, String... strings) {
         List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         if (fields.contains(CustomerEntity.CONTRACT)) {
-            dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
+            dto.setContract(ContractTransformer.entityToDto(entity.getContract(), new ContractDto()));
         } else {
-            dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
+            dto.setContract(ContractTransformer.createDtoForRelation(entity.getContract().getId()));
         }
         if (fields.contains(CustomerEntity.PERSON)) {
-            dto.setPerson(PersonTransformer.ENTITY_TO_DTO(entity.getPerson(), new PersonDto()));
+            dto.setPerson(PersonTransformer.entityToDto(entity.getPerson(), new PersonDto()));
         } else {
-            dto.setPerson(PersonTransformer.CREATE_DTO_FOR_RELATION(entity.getPerson().getId()));
+            dto.setPerson(PersonTransformer.createDtoForRelation(entity.getPerson().getId()));
         }
         return dto;
     }
 
-    public static CustomerEntity CREATE_ENTITY_FOR_RELATION(Long id) {
+    public static CustomerEntity createEntityForRelation(Long id) {
         CustomerEntity entity = new CustomerEntity();
         entity.setId(id);
         return entity;
