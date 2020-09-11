@@ -1,0 +1,89 @@
+# call catalog find by id
+POST http://127.0.0.1:8081/api/user/find-by-id
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk4MDE3MDEsImV4cCI6MTU5OTgwNTMwMX0.5tM9p8nDyVqF1L8dyQATlgYr_Ct7RIoFGyGqvrmtLtc
+
+7
+
+###
+# call catalog save
+POST http://127.0.0.1:8081/api/user/save
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk4MDE3MDEsImV4cCI6MTU5OTgwNTMwMX0.5tM9p8nDyVqF1L8dyQATlgYr_Ct7RIoFGyGqvrmtLtc
+
+{
+  "username": "test3",
+  "password": "test3",
+  "enabled": true,
+  "isAccountNonExpired": true,
+  "isAccountNonLocked": true,
+  "isCredentialsNonExpired": true,
+  "roles": [
+    {
+      "id": 1
+    },
+    {
+      "id": 2
+    }
+  ],
+  "person": {
+    "id": 1
+  }
+}
+
+###
+# call catalog update
+POST http://127.0.0.1:8081/api/user/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk4MDE3MDEsImV4cCI6MTU5OTgwNTMwMX0.5tM9p8nDyVqF1L8dyQATlgYr_Ct7RIoFGyGqvrmtLtc
+
+{
+  "id": 7,
+  "version": 0,
+  "username": "test3",
+  "password": "test3",
+  "enabled": true,
+  "isAccountNonExpired": true,
+  "isAccountNonLocked": true,
+  "isCredentialsNonExpired": true,
+  "roles": [
+    {
+      "id": 1
+    }
+  ],
+  "person": {
+    "id": 1
+  }
+}
+
+
+###
+# call catalog find paging
+POST http://127.0.0.1:8081/api/user/find-paging
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk4MDE3MDEsImV4cCI6MTU5OTgwNTMwMX0.5tM9p8nDyVqF1L8dyQATlgYr_Ct7RIoFGyGqvrmtLtc
+
+{
+  "start": 0,
+  "max": 8,
+  "filters": [
+  ]
+}
+
+###
+
+POST http://127.0.0.1:8081/api/user/delete
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk3NTc1NTIsImV4cCI6MTU5OTc2MTE1Mn0.Tuda3cI8kE4Aiy-PTu-ZVCExxKfaWi8HereuQ2ir9Ow
+
+7
+
+###
+### Get Token
+POST http://127.0.0.1:8081/auth/token
+Content-Type: application/json
+
+{
+  "username": "test1",
+  "password": "test1"
+}

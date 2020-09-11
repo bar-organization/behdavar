@@ -11,6 +11,7 @@ public class PersonTransformer extends BaseAuditorTransformer {
         entity.setEmail(dto.getEmail());
         entity.setPhoneNumber(dto.getPhoneNumber());
         entity.setDescription(dto.getDescription());
+        entity.setNationalCode(dto.getNationalCode());
         return entity;
     }
 
@@ -20,6 +21,7 @@ public class PersonTransformer extends BaseAuditorTransformer {
         dto.setLastName(entity.getLastName());
         dto.setPhoneNumber(entity.getPhoneNumber());
         dto.setDescription(entity.getDescription());
+        dto.setNationalCode(entity.getNationalCode());
         return dto;
     }
 

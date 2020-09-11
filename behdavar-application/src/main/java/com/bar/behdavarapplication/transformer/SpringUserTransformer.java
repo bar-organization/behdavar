@@ -13,10 +13,10 @@ public class SpringUserTransformer {
 
         return new User(userDto.getUsername(),
                 userDto.getPassword(),
-                userDto.isEnabled(),
-                userDto.isAccountNonExpired(),
-                userDto.isCredentialsNonExpired(),
-                userDto.isAccountNonLocked(),
+                userDto.getEnabled(),
+                userDto.getIsAccountNonExpired(),
+                userDto.getIsCredentialsNonExpired(),
+                userDto.getIsAccountNonLocked(),
                 getAuthorities(userDto.getRoles()));
     }
 

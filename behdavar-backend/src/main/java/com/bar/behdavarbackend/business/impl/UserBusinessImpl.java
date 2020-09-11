@@ -28,7 +28,7 @@ public class UserBusinessImpl implements UserBusiness {
     @Override
     public UserDto findByUserName(String username) throws BusinessException {
         UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new BusinessException("Username not found"));
-        return UserTransformer.ENTITY_TO_DTO(userEntity, new UserDto());
+        return UserTransformer.ENTITY_TO_DTO(userEntity, new UserDto(), UserEntity.ROLES);
     }
 
     @Override

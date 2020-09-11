@@ -1,0 +1,16 @@
+# call catalog find by id
+POST http://127.0.0.1:8081/api/person/find-suggestion
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTk4MDYzNTgsImV4cCI6MTU5OTgwOTk1OH0.I2ILpIbW354c-Y7u4FKpiZTcdhcswjTG53mE-D96v6A
+
+بهن
+
+
+### Get Token
+POST http://127.0.0.1:8081/auth/token
+Content-Type: application/json
+
+{
+  "username": "behnam",
+  "password": "behnam"
+}

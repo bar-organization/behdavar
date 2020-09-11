@@ -25,7 +25,7 @@ public class RoleBusinessImpl implements RoleBusiness {
     @Override
     public RoleDto findById(Long id) {
         return repository.findById(id)
-                .map(RoleEntity -> RoleTransformer.ENTITY_TO_DTO(RoleEntity, new RoleDto()))
+                .map(RoleEntity -> RoleTransformer.ENTITY_TO_DTO(RoleEntity, new RoleDto(), RoleEntity.PRIVILEGES))
                 .orElseThrow(() -> new BusinessException("error.Role.not.found", id));
     }
 

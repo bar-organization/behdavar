@@ -37,6 +37,7 @@ public class RoleTransformer extends BaseAuditorTransformer {
     }
 
     public static RoleDto ENTITY_TO_DTO(RoleEntity entity, RoleDto dto, String... strings) {
+        List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         Set<PrivilegeEntity> privileges = entity.getPrivileges();
         transformAuditingFields(entity, dto);
         dto.setRoleName(entity.getName());
@@ -44,12 +45,16 @@ public class RoleTransformer extends BaseAuditorTransformer {
 
         if (!CollectionUtils.isEmpty(entity.getPrivileges())) {
             List<PrivilegeDto> privilegeDtos = new ArrayList<>();
-            entity.getPrivileges().forEach(e -> {
-                privilegeDtos.add(PrivilegeTransformer.ENTITY_TO_DTO(e, new PrivilegeDto()));
-            });
+            if (fields.contains(RoleEntity.PRIVILEGES)) {
+                entity.getPrivileges().forEach(e -> {
+                    privilegeDtos.add(PrivilegeTransformer.ENTITY_TO_DTO(e, new PrivilegeDto()));
+                });
+            } else {
+                entity.getPrivileges().forEach(e ->
+                        privilegeDtos.add(PrivilegeTransformer.CREATE_DTO_FOR_RELATION(e.getId())));
+            }
             dto.setPrivilegeDtos(privilegeDtos);
         }
-
         return dto;
     }
 

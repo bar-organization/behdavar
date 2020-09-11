@@ -26,6 +26,9 @@ public class RoleEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "ROLE";
     public static final String SEQ_NAME = "ROLE" + BaseConstant.SEQUENCE;
+    public static final String PRIVILEGES = "privileges";
+    public static final String NAME = "name";
+    public static final String TITLE = "title";
 
     @Column(name = "ID")
     @Id
