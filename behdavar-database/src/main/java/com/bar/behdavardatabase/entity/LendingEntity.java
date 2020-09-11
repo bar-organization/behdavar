@@ -46,4 +46,15 @@ public class LendingEntity extends BaseAuditorEntity<String, Long> {
     @JoinColumn(name = "BANK_ID", foreignKey = @ForeignKey(name = "LENDIING_BANK_FK"))
     private BankBranchEntity branchBank;
 
+    @Column(name = "deffered_Amount", columnDefinition = "NUMBER(24,4)")
+    private BigDecimal defferedAmount;
+    @Column(name = "LENDING_NUMBER", columnDefinition = "VARCHAR(30)")
+    private String lendingNumber;
+    @Column(name = "DEFFERED_COUNT")
+    private Long defferedCount;
+    @Column(name = "late_Fees", columnDefinition = "NUMBER(24,4)")
+    private BigDecimal lateFees;
+
+
+
 }

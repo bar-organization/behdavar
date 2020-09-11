@@ -43,8 +43,5 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = PersonConstant.DESCRIPTION)
     private String description;
 
-    @NotAudited
-    @OneToMany(mappedBy = "person")
-    private Set<OrganizationEntity> organizations;
 
 }
