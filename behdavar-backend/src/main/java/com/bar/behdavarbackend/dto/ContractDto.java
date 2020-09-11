@@ -14,19 +14,6 @@ import java.time.LocalDate;
 @Data
 public class ContractDto extends BaseAuditorDto<String, Long> {
 
-    public BigDecimal masterAmount;
-
-    public BigDecimal defferedAmount;
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    public LocalDate idealIssueDate;
-
-    public String lendingNumber;
-
-    public Long defferedCount;
-
-    public BigDecimal lateFees;
-
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     public LocalDate submitDate;
 

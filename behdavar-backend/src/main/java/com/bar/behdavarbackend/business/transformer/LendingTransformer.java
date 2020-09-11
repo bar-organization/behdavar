@@ -12,6 +12,11 @@ public class LendingTransformer extends BaseAuditorTransformer {
         Optional.ofNullable(dto.getBranchBank()).ifPresent(bankDto -> entity.setBranchBank(BankTransformer.CREATE_ENTITY_FOR_RELATION(bankDto.getId())));
         entity.setIdeaIssueDate(dto.getIdeaIssueDate());
         entity.setMasterAmount(dto.getMasterAmount());
+        entity.setDefferedAmount(dto.getDefferedAmount());
+        entity.setDefferedCount(dto.defferedCount);
+        entity.setLateFees(dto.getLateFees());
+        entity.setLendingNumber(dto.lendingNumber);
+        entity.setLateFees(dto.getLateFees());
         entity.setReceiveLendingDate(dto.getReceiveLendingDate());
         return entity;
     }
@@ -21,6 +26,11 @@ public class LendingTransformer extends BaseAuditorTransformer {
         Optional.ofNullable(entity.getBranchBank()).ifPresent(branchEntity -> dto.setBranchBank(BankTransformer.ENTITY_TO_DTO(branchEntity, new BankDto())));
         dto.setIdeaIssueDate(entity.getIdeaIssueDate());
         dto.setMasterAmount(entity.getMasterAmount());
+        dto.setDefferedAmount(entity.getDefferedAmount());
+        dto.setDefferedCount(entity.getDefferedCount());
+        dto.setLateFees(entity.getLateFees());
+        dto.setLendingNumber(entity.getLendingNumber());
+        dto.setLateFees(entity.getLateFees());
         dto.setReceiveLendingDate(entity.getReceiveLendingDate());
         return dto;
     }

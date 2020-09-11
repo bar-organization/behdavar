@@ -12,10 +12,19 @@ import java.time.LocalDate;
 @Data
 public class LendingDto extends BaseAuditorDto<String, Long> {
 
-    private BigDecimal masterAmount;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate ideaIssueDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate receiveLendingDate;
     private BankDto branchBank;
+
+    public BigDecimal masterAmount;
+
+    public BigDecimal defferedAmount;
+
+    public String lendingNumber;
+
+    public Long defferedCount;
+
+    public BigDecimal lateFees;
 }

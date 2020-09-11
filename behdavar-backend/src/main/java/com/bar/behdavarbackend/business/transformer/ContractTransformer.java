@@ -13,13 +13,7 @@ public class ContractTransformer extends BaseAuditorTransformer {
     public static ContractEntity DTO_TO_ENTITY(ContractDto dto, ContractEntity entity) {
         entity.setContractStatus(dto.getContractStatus());
         entity.setContractType(dto.getContractType());
-        entity.setDefferedAmount(dto.getDefferedAmount());
-        entity.setDefferedCount(dto.defferedCount);
-        entity.setIdealIssueDate(dto.idealIssueDate);
-        entity.setLateFees(dto.getLateFees());
-        entity.setLendingNumber(dto.lendingNumber);
-        entity.setMasterAmount(dto.masterAmount);
-        entity.setLateFees(dto.getLateFees());
+
         entity.setSubmitDate(dto.getSubmitDate());
         Optional.ofNullable(dto.getCorporation()).ifPresent(catalogDetailDto -> entity.setCorporation(CatalogDetailTransformer.CREATE_ENTITY_FOR_RELATION(catalogDetailDto.getId())));
         Optional.ofNullable(dto.getLending()).ifPresent(lendingDto -> entity.setLending(LendingTransformer.CREATE_ENTITY_FOR_RELATION(lendingDto.getId())));
@@ -32,13 +26,6 @@ public class ContractTransformer extends BaseAuditorTransformer {
         transformAuditingFields(entity, dto);
         dto.setContractType(entity.getContractType());
         dto.setContractStatus(entity.getContractStatus());
-        dto.setDefferedAmount(entity.getDefferedAmount());
-        dto.setDefferedCount(entity.getDefferedCount());
-        dto.setIdealIssueDate(entity.getIdealIssueDate());
-        dto.setLateFees(entity.getLateFees());
-        dto.setLendingNumber(entity.getLendingNumber());
-        dto.setMasterAmount(entity.getMasterAmount());
-        dto.setLateFees(entity.getLateFees());
         dto.setSubmitDate(entity.getSubmitDate());
         Optional.ofNullable(entity.getCorporation()).ifPresent(catalogDetail -> dto.setCorporation(CatalogDetailTransformer.ENTITY_TO_DTO(catalogDetail, new CatalogDetailDto())));
         Optional.ofNullable(entity.getLending()).ifPresent(lending -> dto.setLending(LendingTransformer.ENTITY_TO_DTO(lending, new LendingDto())));
