@@ -50,8 +50,8 @@ public class RoleTransformer extends BaseAuditorTransformer {
                     privilegeDtos.add(PrivilegeTransformer.ENTITY_TO_DTO(e, new PrivilegeDto()));
                 });
             } else {
-                entity.getPrivileges().forEach(e ->
-                        privilegeDtos.add(PrivilegeTransformer.CREATE_DTO_FOR_RELATION(e.getId())));
+//                entity.getPrivileges().forEach(e ->
+//                        privilegeDtos.add(PrivilegeTransformer.CREATE_DTO_FOR_RELATION(e.getId())));
             }
             dto.setPrivilegeDtos(privilegeDtos);
         }

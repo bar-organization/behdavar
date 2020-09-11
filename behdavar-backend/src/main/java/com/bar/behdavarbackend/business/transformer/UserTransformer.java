@@ -32,7 +32,7 @@ public class UserTransformer extends BaseAuditorTransformer {
         } else {
             if (!CollectionUtils.isEmpty(entity.getRoles())) {
                 List<RoleDto> roleDtos = new ArrayList<>();
-                entity.getRoles().forEach(r -> roleDtos.add(RoleTransformer.CREATE_DTO_FOR_RELATION(r.getId())));
+                entity.getRoles().forEach(r -> roleDtos.add(RoleTransformer.ENTITY_TO_DTO(r, new RoleDto())));
                 dto.setRoles(roleDtos);
             }
         }
