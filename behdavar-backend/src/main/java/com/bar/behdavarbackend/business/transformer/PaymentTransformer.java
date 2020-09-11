@@ -31,17 +31,17 @@ public class PaymentTransformer extends BaseAuditorTransformer {
         dto.setPaymentDate(entity.getPaymentDate());
         dto.setPaymentType(entity.getPaymentType());
 
-//        if (fields.contains(PaymentEntity.CONTRACT)) {
+        if (fields.contains(PaymentEntity.CONTRACT)) {
             dto.setContract(ContractTransformer.ENTITY_TO_DTO(entity.getContract(), new ContractDto()));
-//        } else {
-//            dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
-//        }
+        } else {
+            dto.setContract(ContractTransformer.CREATE_DTO_FOR_RELATION(entity.getContract().getId()));
+        }
 
-//        if (fields.contains(PaymentEntity.USER)) {
+        if (fields.contains(PaymentEntity.USER)) {
             dto.setUser(UserTransformer.ENTITY_TO_DTO(entity.getUser(), new UserDto()));
-//        } else {
-//            dto.setUser(UserTransformer.CREATE_DTO_FOR_RELATION(entity.getUser().getId()));
-//        }
+        } else {
+            dto.setUser(UserTransformer.CREATE_DTO_FOR_RELATION(entity.getUser().getId()));
+        }
 
         Optional.ofNullable(entity.getAttachment()).ifPresent(attachmentEntity ->
                 dto.setAttachment(AttachmentTransformer.CREATE_DTO_FOR_RELATION(attachmentEntity.getId())));
