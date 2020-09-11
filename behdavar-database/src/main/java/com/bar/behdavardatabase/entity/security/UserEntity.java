@@ -7,6 +7,7 @@ import com.bar.behdavardatabase.entity.PersonEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Where;
 import org.hibernate.envers.AuditJoinTable;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.AuditOverrides;
@@ -25,6 +26,7 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @Table(name = UserEntity.TABLE_NAME, schema = ContactConstant.SCHEMA, uniqueConstraints = @UniqueConstraint(columnNames = "USERNAME"))
+@Where(clause = "DELETED = 0")
 public class UserEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "USER";
@@ -79,4 +81,7 @@ public class UserEntity extends BaseAuditorEntity<String, Long> {
     @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", foreignKey = @ForeignKey(name = "USER_PRESON_FK"), nullable = false)
     @NotNull
     private PersonEntity person;
+
+    @Column(name = "DELETED", nullable = false)
+    private Boolean deleted;
 }

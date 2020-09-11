@@ -58,7 +58,15 @@ public class UserBusinessImpl implements UserBusiness {
 
     @Override
     public void delete(Long id) {
-        userRepository.deleteById(id);
+
+        userRepository.findById(id).ifPresent(userEntity -> {
+            if (!userEntity.getUsername().equals(StartupPreparation.SUPERVISOR_USER)) {
+                userEntity.setDeleted(true);
+                userRepository.save(userEntity);
+            } else {
+                throw new BusinessException("error.invalid.operation");
+            }
+        });
     }
 
     @Override

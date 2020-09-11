@@ -58,7 +58,7 @@ public class UserTransformer extends BaseAuditorTransformer {
             dto.getRoles().forEach(r -> roleEntities.add(RoleTransformer.CREATE_ENTITY_FOR_RELATION(r.getId())));
             entity.setRoles(roleEntities);
         }
-
+        entity.setDeleted(false);
         return entity;
     }
 
