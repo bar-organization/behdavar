@@ -36,7 +36,7 @@ public class AttachmentEntity extends BaseAuditorEntity<String, Long> {
     private Long id;
 
     @Lob
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT",nullable = false)
     private byte[] content;
 
     @Column(name = "FILE_NAME", nullable = false)

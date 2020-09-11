@@ -40,6 +40,5 @@ public class CustomerEntity extends BaseAuditorEntity<String, Long> {
     @JoinColumn(name = "CONTRACT_ID", nullable = false, foreignKey = @ForeignKey(name = "CUSTOMER_CONTRACT_FK"))
     private ContractEntity contract;
 
-    //TODO : add catalog detail
 
 }

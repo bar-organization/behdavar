@@ -10,6 +10,7 @@ import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Setter
@@ -31,6 +32,9 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = PersonConstant.LAST_NAME)
     private String lastName;
 
+    @Column(name = PersonConstant.FULL_NAME)
+    private String fullName;
+
     @Column(name = "NATIONAL_CODE")
     private String nationalCode;
 
@@ -43,8 +47,5 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = PersonConstant.DESCRIPTION)
     private String description;
 
-    @NotAudited
-    @OneToMany(mappedBy = "person")
-    private Set<OrganizationEntity> organizations;
 
 }

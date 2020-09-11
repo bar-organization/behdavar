@@ -36,18 +36,6 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = ContractEntity.SEQ_NAME, sequenceName = ContractEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
-    @Column(name = "MASTER_AMOUNT", nullable = false, columnDefinition = "NUMBER(24,4)")
-    private BigDecimal masterAmount;
-    @Column(name = "deffered_Amount", columnDefinition = "NUMBER(24,4)")
-    private BigDecimal defferedAmount;
-    @Column(name = "IDEAL_ISSUE_DATE")
-    private LocalDate idealIssueDate;
-    @Column(name = "LENDING_NUMBER", columnDefinition = "VARCHAR(30)")
-    private String lendingNumber;
-    @Column(name = "DEFFERED_COUNT")
-    private Long defferedCount;
-    @Column(name = "late_Fees", columnDefinition = "NUMBER(24,4)")
-    private BigDecimal lateFees;
     @Column(name = "submit_Date")
     private LocalDate submitDate;
     @ManyToOne(fetch = FetchType.LAZY)

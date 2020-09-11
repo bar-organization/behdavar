@@ -7,6 +7,7 @@ public final class PersonConstant extends BaseConstant {
     public static final String ID = "PK_PERSON";
     public static final String FIRST_NAME = "FIRST_NAME";
     public static final String LAST_NAME = "LAST_NAME";
+    public static final String FULL_NAME = "FULL_NAME";
     public static final String EMAIL = "EMAIL";
     public static final String PHONE_NUMBER = "PHONE_NUMBER";
     public static final String DESCRIPTION = "DESCRIPTION";
