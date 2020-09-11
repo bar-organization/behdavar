@@ -10,7 +10,9 @@ import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import com.bar.behdavardatabase.entity.security.RoleEntity;
 import com.bar.behdavardatabase.repository.security.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,4 +63,15 @@ public class RoleBusinessImpl implements RoleBusiness {
         }
         return pagingResponse;
     }
+
+    @Override
+    public List<RoleDto> findSuggestion(String suggest) {
+        List<RoleEntity> roleEntities = repository.findAllByNameOrTitle(suggest, PageRequest.of(0, 10)).getContent();
+        List<RoleDto> result = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(roleEntities)) {
+            roleEntities.forEach(e -> result.add(RoleTransformer.ENTITY_TO_DTO(e, new RoleDto())));
+        }
+        return result;
+    }
+
 }

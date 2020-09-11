@@ -1,0 +1,130 @@
+<div fxLayout="row">
+  <aside class="border-left p-2 w-25 h-100">
+    <form [formGroup]="userSearchForm" (ngSubmit)="onSearchUser()" fxLayout="row" fxLayoutAlign="start center"
+          fxLayoutGap="0.5rem">
+      <mat-form-field>
+        <mat-label>{{lang.username}}</mat-label>
+        <input matInput formControlName="username">
+      </mat-form-field>
+      <button mat-flat-button type="submit" color="primary">{{lang.search}}</button>
+    </form>
+
+    <div class="card ">
+      <div class="text-center card-header">{{lang.userList}}</div>
+
+      <mat-selection-list #matUserList [multiple]="false" class="overflow-auto" style="max-height: 20rem"
+                          (selectionChange)="onUserSelectChange()">
+        <mat-list-option *ngFor="let user of userList" [value]="user">
+          <img mat-list-icon src="../../../../assets/image/user.png" alt="User avatar"/>
+          <div mat-line class="text-right">{{user.username}}</div>
+          <div mat-line class="text-right grey-500"> {{user.firstName}} {{user.lastName}}</div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </aside>
+
+  <article class="p-2" style="width: 35%" fxLayout="column" fxLayoutGap="0.5rem">
+
+    <section fxLayout="row" fxLayoutAlign="space-between start" class="w-100">
+
+      <form [formGroup]="newUserFormGroup" fxLayout="column" fxLayoutAlign="end stretch" class="h-100"
+            fxLayoutGap="1rem">
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+          <mat-form-field>
+            <mat-label>{{lang.username}}</mat-label>
+            <input matInput formControlName="username">
+            <mat-error *ngIf="isInvalidUsername">{{lang.usernameNotValid}}</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{lang.password}}</mat-label>
+            <input matInput formControlName="password">
+            <mat-error *ngIf="isInvalidUsername">{{lang.passwordNotValid}}</mat-error>
+          </mat-form-field>
+        </div>
+
+
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3rem">
+          <mat-form-field>
+            <input type="text"
+                   [placeholder]="lang.personRole"
+                   aria-label="Number"
+                   matInput
+                   [formControl]="personAutocompleteControl"
+                   [matAutocomplete]="personAuto">
+            <mat-autocomplete autoActiveFirstOption #personAuto>
+              <mat-option *ngFor="let person of personOptions | async"
+                          [value]="person.firstName + ' ' + person.lastName" [id]="person.id">
+                {{person.firstName}} {{person.lastName}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <mat-checkbox checked="checked" formControlName="isActive">{{lang.active}}</mat-checkbox>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3rem">
+          <form (ngSubmit)="addRole()" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+            <mat-form-field>
+              <input type="text"
+                     [placeholder]="lang.selectRole"
+                     aria-label="Number"
+                     matInput
+                     [formControl]="roleControl"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option *ngFor="let role of roleOptions | async" [value]="role.title" [id]="role.id">
+                  {{role.title}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <button mat-mini-fab color="primary" type="submit">
+              <mat-icon>add</mat-icon>
+            </button>
+          </form>
+
+        </div>
+
+      </form>
+
+      <mat-card fxLayout="column" fxLayoutAlign="center center" class="userImage">
+        <img mat-card-image src="../../../../assets/image/user.png" alt="User avatar">
+        <mat-card-actions>
+          <button mat-button>{{lang.new}}</button>
+          <button mat-button>{{lang.delete}}</button>
+        </mat-card-actions>
+      </mat-card>
+    </section>
+
+
+    <section>
+
+      <div class="card">
+        <div class="card-header text-right">{{lang.userRoles}}</div>
+        <mat-list class="overflow-auto" style="max-height: 15rem">
+          <mat-list-item *ngFor="let role of roleList">
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100 border-bottom">
+              <div [class]="role.active ? '' : 'disableRole'">{{role.role.title}}</div>
+              <div fxLayout="row" fxLayoutGap="0.3rem">
+                <button mat-icon-button (click)="test()" color="primary">
+                  <mat-icon>pageview</mat-icon>
+                </button>
+                <button mat-icon-button (click)="onUserRoleDelete(role)" [color]="role.active ? 'accent' :'primary'">
+                  <mat-icon>{{role.active ? 'highlight_off ' : 'add_circle_outline'}}</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </section>
+
+    <section fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+      <button mat-raised-button color="primary" (click)="newUser()">{{lang.insert}}</button>
+      <button mat-raised-button color="accent">{{lang.edit}}</button>
+      <button mat-raised-button color="warn" (click)="onDeleteUser()">{{lang.delete}}</button>
+    </section>
+
+  </article>
+
+</div>

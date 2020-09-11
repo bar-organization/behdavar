@@ -50,6 +50,11 @@ import {JalaliPipe} from './_pip/jalali.pipe';
 import {BlankToDashPipe} from './_pip/blank-to-dash.pipe';
 import {FinancialStatusComponent} from './financial-status/financial-status.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { UserManagementComponent } from './navigation-tab/user-management/user-management.component';
+import { UserRegistrationComponent } from './navigation-tab/user-management/user-registration/user-registration.component';
+import { RoleRegistrationComponent } from './navigation-tab/user-management/role-registration/role-registration.component';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   imports: [
@@ -81,7 +86,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatProgressSpinnerModule,
     FormsModule,
     NgxSpinnerModule,
-    ScrollingModule
+    ScrollingModule,
+    MatAutocompleteModule,
+    MatTooltipModule
   ],
   declarations: [
     AppComponent,
@@ -104,7 +111,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     DocumentComponent,
     JalaliPipe,
     BlankToDashPipe,
-    FinancialStatusComponent],
+    FinancialStatusComponent,
+    UserManagementComponent,
+    UserRegistrationComponent,
+    RoleRegistrationComponent
+  ],
 
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},

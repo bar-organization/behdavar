@@ -41,6 +41,7 @@ public class RoleTransformer extends BaseAuditorTransformer {
         Set<PrivilegeEntity> privileges = entity.getPrivileges();
         transformAuditingFields(entity, dto);
         dto.setRoleName(entity.getName());
+        dto.setTitle(entity.getTitle());
         dto.setPrivileges(getPrivileges(privileges));
 
         if (!CollectionUtils.isEmpty(entity.getPrivileges())) {

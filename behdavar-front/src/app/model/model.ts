@@ -25,12 +25,12 @@ export class Person {
 }
 
 export class BaseAuditorDto<U, I> {
-  id: I;
-  createdBy: U;
-  createdDate: Date;
-  lastModifiedBy: U;
-  lastModifiedDate: Date;
-  version: number;
+  id?: I;
+  createdBy?: U;
+  createdDate?: Date;
+  lastModifiedBy?: U;
+  lastModifiedDate?: Date;
+  version?: number;
 }
 
 export class GuarantorDto extends BaseAuditorDto<string, number> {
@@ -53,16 +53,18 @@ export class PersonDto extends BaseAuditorDto<string, number> {
 }
 
 export class UserDto extends BaseAuditorDto<string, number> {
-  firstName: string;
-  lastName: string;
-  fullName: string = `${this.firstName} ${this.lastName}`
-  username: string;
-  enabled: boolean;
-  tokenExpired: boolean;
-  isAccountNonExpired: boolean;
-  isAccountNonLocked: boolean;
-  isCredentialsNonExpired: boolean;
-  roles: RoleDto[];
+  firstName?: string;
+  lastName?: string;
+  fullName?: string = `${this.firstName} ${this.lastName}`
+  username?: string;
+  password?: string;
+  enabled?: boolean;
+  tokenExpired?: boolean;
+  isAccountNonExpired?: boolean;
+  isAccountNonLocked?: boolean;
+  isCredentialsNonExpired?: boolean;
+  roles?: RoleDto[];
+  person?:PersonDto;
 }
 
 export class PursuitDto extends BaseAuditorDto<string, number> {
@@ -186,7 +188,13 @@ export enum GeoDivisionType {
 
 export class RoleDto extends BaseAuditorDto<string, number> {
   roleName: string;
-  privileges: string[];
+  title: string;
+  privileges: PrivilegeDto[];
+}
+
+export class PrivilegeDto extends BaseAuditorDto<string, number> {
+  name: string;
+  title: string;
 }
 
 export enum ContractStatus {

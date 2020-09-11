@@ -10,9 +10,9 @@ import {LoginComponent} from "./login/login.component";
 import {GuarantorsComponent} from "./guarantors/guarantors.component";
 import {FollowingComponent} from "./following/following.component";
 import {CustomerComponent} from "./customer/customer.component";
-import {DocumentAttachmentComponent} from "./document-attachment/document-attachment.component";
 import {DocumentComponent} from "./document/document.component";
 import {FinancialStatusComponent} from "./financial-status/financial-status.component";
+import {UserManagementComponent} from "./navigation-tab/user-management/user-management.component";
 
 const routes: Routes = [
   // HOME
@@ -43,18 +43,12 @@ const routes: Routes = [
       },
       {path: 'reports', component: ReportsComponent},
       {path: 'tools', component: UtilityToolsComponent},
+      {path: 'user-manage', component: UserManagementComponent}
 
     ]
   },
   // OTHER....
-  // TODO must fix after authentication added
   {path: 'login', component: LoginComponent},
-  // { path: 'register', component: RegisterComponent },
-  {path: 'guarantors', component: GuarantorsComponent},
-  {path: 'following', component: FollowingComponent},
-  {path: 'customers', component: CustomerComponent},
-  {path: 'attachment', component: DocumentAttachmentComponent},
-
   {path: '**', redirectTo: ''}
 ];
 

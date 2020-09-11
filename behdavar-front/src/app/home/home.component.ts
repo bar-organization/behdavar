@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
 
   lang: HomeLang = new HomeLang();
 
@@ -19,11 +19,11 @@ export class HomeComponent implements OnInit{
     {title: this.lang.search, iconName: "search", routerLink: "search", visible: true},
     {title: this.lang.reports, iconName: "assignment", routerLink: "reports", visible: true},
     {title: this.lang.utilityTools, iconName: "build_circle", routerLink: "tools", visible: true},
+    {title: this.lang.userManagement, iconName: "account_box", routerLink: "user-manage", visible: true},
   ];
 
-  constructor(private authService: AuthService,private router:Router) {
+  constructor(private authService: AuthService, private router: Router) {
   }
-
 
 
   onLogout() {

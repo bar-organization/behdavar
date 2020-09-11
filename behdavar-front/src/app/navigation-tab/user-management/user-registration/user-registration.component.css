@@ -1,0 +1,10 @@
+.disableRole {
+  text-decoration: line-through;
+  color: #9e9e9e;
+}
+
+.userImage img{
+  width: 128px;
+  height: 128px;
+  max-height: 10rem;
+}

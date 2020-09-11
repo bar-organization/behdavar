@@ -4,6 +4,7 @@ export class Lang {
   new = 'جدید';
   edit = 'ویرایش';
   search = 'جستجو';
+  view = 'مشاهده';
   reset = 'بازنشانی'
   appTitle = 'بهداور';
   logout = 'خروج';
@@ -11,6 +12,8 @@ export class Lang {
   back = 'بازگشت';
   successSave = 'عملیات با موفقیت انجام شد';
   error = 'خطا در انجام عملیات';
+  delete = 'حذف';
+  active = 'فعال';
 }
 
 export class AuthLang extends Lang {
@@ -46,8 +49,30 @@ export class HomeLang extends Lang {
   myBasket = 'سبد من';
   reports = 'گزارشات';
   utilityTools = 'ابزارهای کاربردی';
+  userManagement= 'مدیریت کاربران';
 }
 
+export class UserManagementLang extends Lang{
+  users = 'کاربران';
+  roles = 'نقش ها';
+}
+export class UserRegistrationLang extends Lang{
+  userList = 'لیست کاربران';
+  username = 'نام کاربری';
+  password = 'رمز عبور';
+  userRoles = 'نقش های کاربر';
+  personRole = 'انتخاب فرد جدید';
+  selectRole = 'انتخاب نقش جدید';
+  errorOnSearchUser = 'خطا در جستجو کاربران';
+  errorOnSearchPerson = 'خطا در جستجو فرد';
+  errorOnFindRole = 'خطا در جستجو نقش';
+  personNotNull = 'فرد اجباری است';
+  userRoleNotEmpty = 'لیست نقش ها نمی تواند خالی باشد';
+  usernameNotValid = 'نام کاربری معتبر نیست';
+  passwordNotValid = 'رمزعبور معتبر نیست';
+  selectAUserFromList = 'یک کاربر را از لیست انتخاب کنید';
+
+}
 export class DocumentToolbarLang extends Lang {
   followUp = 'پیگیری';
   guarantorInfo = 'اطلاعات ضامنین';
