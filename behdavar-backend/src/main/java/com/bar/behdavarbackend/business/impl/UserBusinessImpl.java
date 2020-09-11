@@ -48,7 +48,7 @@ public class UserBusinessImpl implements UserBusiness {
     @Override
     public void update(UserDto dto) {
         if (dto.getUsername().equals(StartupPreparation.SUPERVISOR_USER)) {
-            new BusinessException("error.invalid.operation");
+           throw new BusinessException("error.invalid.operation");
         }
         UserEntity userEntity = UserTransformer.DTO_TO_ENTITY(dto, userRepository
                 .findById(dto.getId())
