@@ -2,6 +2,7 @@ package com.bar.behdavarbackend.business.impl;
 
 import com.bar.behdavarbackend.business.api.UserBusiness;
 import com.bar.behdavarbackend.business.transformer.UserTransformer;
+import com.bar.behdavarbackend.config.StartupPreparation;
 import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.PagingExecutor;
@@ -46,6 +47,9 @@ public class UserBusinessImpl implements UserBusiness {
 
     @Override
     public void update(UserDto dto) {
+        if (dto.getUsername().equals(StartupPreparation.SUPERVISOR_USER)) {
+            new BusinessException("error.invalid.operation");
+        }
         UserEntity userEntity = UserTransformer.DTO_TO_ENTITY(dto, userRepository
                 .findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.User.not.found", dto.getId())));
