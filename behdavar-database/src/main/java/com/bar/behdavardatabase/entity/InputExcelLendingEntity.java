@@ -11,6 +11,8 @@ import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
+import java.math.BigDecimal;
+
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
 @Setter
@@ -57,13 +59,13 @@ public class InputExcelLendingEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "AMOUNT")
     private Long amount;
     @Column(name = "INSTALLMENT_AMOUNT")
-    private long installmentAmount;
+    private BigDecimal installmentAmount;
     @Column(name = "INSTALLMENT_COUNT")
     private Long installmentCount;
     @Column(name = "REMAIN_DEBT_AMOUNT")
     private Long remainDebtAmount;
     @Column(name = "DEBT_AMOUNT")
-    private Long debtAmount;
+    private BigDecimal debtAmount;
     @Column(name = "LATE_FEES")
     private Long lateFees;
     @Column(name = "DIFFERED_INSTALLMENT_COUNT")

@@ -9,5 +9,5 @@ import java.util.List;
 public interface InputExcelDebtorRepository extends AbstractRepository<InputExcelDebtorEntity, Long> {
     List<InputExcelDebtorEntity> findByInputExcelId(Long inputExcelId);
 
-    List<InputExcelDebtorEntity> findByInputExcelIdAndContractNumber(Long inputExcelId, String contractNumber);
+    InputExcelDebtorEntity findByInputExcelIdAndContractNumber(Long inputExcelId, String contractNumber);
 }

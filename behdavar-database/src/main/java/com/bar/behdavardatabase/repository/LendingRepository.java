@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface LendingRepository extends AbstractRepository<LendingEntity, Long> {
+    LendingEntity findByContractId(Long contractNumber);
 }

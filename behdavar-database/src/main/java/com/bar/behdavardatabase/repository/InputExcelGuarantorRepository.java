@@ -9,5 +9,5 @@ import java.util.List;
 public interface InputExcelGuarantorRepository extends AbstractRepository<InputExcelGuarantorEntity, Long> {
     List<InputExcelGuarantorEntity> findByInputExcelId(Long inputExcelId);
 
-    List<InputExcelGuarantorEntity> findByInputExcelIdAndContractNumber(Long inputExcelId, String contractNumber);
+    InputExcelGuarantorEntity findByInputExcelIdAndContractNumber(Long inputExcelId, String contractNumber);
 }
