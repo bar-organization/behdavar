@@ -178,8 +178,8 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     personEntity.setFullName(byInputExcelIdAndContractNumber.getName() + " " + byInputExcelIdAndContractNumber.getLastName());
                     personEntity.setFatherName(byInputExcelIdAndContractNumber.getFatherName());
                     personEntity.setNationalCode(byInputExcelIdAndContractNumber.getNationalCode());
-                    personEntity.setId(personBusiness.save(personEntity));
-                    personBusiness.save(personEntity);
+                    Long personId = personBusiness.save(personEntity);
+                    personEntity.setId(personId);
 
                     if (byInputExcelIdAndContractNumber.getMobile1() != null) {
                         ContactEntity contactEntity = new ContactEntity();
