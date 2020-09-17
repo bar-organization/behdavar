@@ -33,11 +33,11 @@ public abstract class InputExcelPersonDto extends BaseAuditorDto<String, Long> {
     @ExcelCell(10)
     private String mobile1;
     @ExcelCell(11)
-    private String mobile2;
+    private Long mobile2;
     @ExcelCell(12)
-    private String tel1;
+    private long tel1;
     @ExcelCell(13)
-    private String tel2;
+    private Long tel2;
 
     private InputExcelDto inputExcel;
 }

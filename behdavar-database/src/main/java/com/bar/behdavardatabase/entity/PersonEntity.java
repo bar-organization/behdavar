@@ -32,9 +32,6 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = PersonConstant.FULL_NAME)
     private String fullName;
 
-    @Column(name = "FATHER_NAME")
-    private String fatherName;
-
     @Column(name = "NATIONAL_CODE")
     private String nationalCode;
 

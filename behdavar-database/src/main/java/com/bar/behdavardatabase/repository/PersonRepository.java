@@ -14,8 +14,4 @@ public interface PersonRepository extends AbstractRepository<PersonEntity, Long>
             "concat(p.firstName, p.lastName) like %:suggest% " +
             " or p.nationalCode like %:suggest%")
     List<PersonEntity> findSuggestion(@Param("suggest") String suggest);
-
-    PersonEntity findByNationalCode(String nationalCode);
-
-
 }
