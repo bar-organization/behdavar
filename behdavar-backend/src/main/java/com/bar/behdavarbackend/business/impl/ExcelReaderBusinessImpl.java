@@ -24,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service(ExcelReaderBusinessImpl.BEAN_NAME)
 public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
@@ -128,14 +129,17 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
 
                 if (contractEntity != null) {
-                    LendingEntity lendingEntity = lendingRepository.findByContractId(contractEntity.getId());
-                    lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
-                    lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
-                    lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
-                    lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
-                    lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
-                    lendingRepository.save(lendingEntity);
-                    return;
+                    if (contractEntity.getLending() != null) {
+                        LendingEntity lendingEntity = lendingRepository.findById(contractEntity.getLending().getId()).get();
+                        lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
+                        lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
+                        lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
+                        lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
+                        lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
+                        lendingRepository.save(lendingEntity);
+                        return;
+                    }
+
                 }
 
                 // grantors

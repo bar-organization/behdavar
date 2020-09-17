@@ -6,6 +6,8 @@ import com.poiji.annotation.ExcelRow;
 import com.poiji.annotation.ExcelSheet;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @ExcelSheet("تسهیلات")
 @Data
 public class InputExcelLendingDto extends BaseAuditorDto<String, Long> {
@@ -36,13 +38,13 @@ public class InputExcelLendingDto extends BaseAuditorDto<String, Long> {
     @ExcelCell(11)
     private Long amount;
     @ExcelCell(12)
-    private long installmentAmount;
+    private BigDecimal installmentAmount;
     @ExcelCell(13)
     private Long installmentCount;
     @ExcelCell(14)
     private Long remainDebtAmount;
     @ExcelCell(15)
-    private Long debtAmount;
+    private BigDecimal debtAmount;
     @ExcelCell(16)
     private Long lateFees;
     @ExcelCell(17)
