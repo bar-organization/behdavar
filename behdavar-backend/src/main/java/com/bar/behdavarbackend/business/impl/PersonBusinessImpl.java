@@ -40,4 +40,12 @@ public class PersonBusinessImpl implements PersonBusiness {
         return result;
     }
 
+    public PersonEntity findByNationalCode(String nationalCode) {
+        return repository.findByNationalCode(nationalCode);
+    }
+
+    public Long save(PersonEntity personEntity) {
+        return repository.save(personEntity).getId();
+    }
+
 }

@@ -13,6 +13,7 @@ import org.hibernate.envers.AuditOverrides;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
@@ -23,7 +24,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
 @NoArgsConstructor
-@Table(name = ContractEntity.TABLE_NAME, schema = ContactConstant.SCHEMA)
+@Table(name = ContractEntity.TABLE_NAME, schema = ContactConstant.SCHEMA,
+        uniqueConstraints = @UniqueConstraint(name = "CONTRACT_UK_CONTRACT_NUMBER", columnNames = "CONTRACT_NUMBER"))
 public class ContractEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "CONTRACT";
@@ -34,6 +36,13 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = ContractEntity.SEQ_NAME)
     @SequenceGenerator(name = ContractEntity.SEQ_NAME, sequenceName = ContractEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
+
+    @Column(name = "CONTRACT_NUMBER", nullable = false)
+    @NotNull
+    private String contractNumber;
+
+    @Column(name = "CONTRACT_WEIGHT")
+    private Long contractWeight;
 
     @Column(name = "submit_Date")
     private LocalDate submitDate;
