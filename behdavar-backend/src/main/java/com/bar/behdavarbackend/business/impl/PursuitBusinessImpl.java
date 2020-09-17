@@ -1,6 +1,9 @@
 package com.bar.behdavarbackend.business.impl;
 
-import com.bar.behdavarbackend.business.api.*;
+import com.bar.behdavarbackend.business.api.AttachmentBusiness;
+import com.bar.behdavarbackend.business.api.PaymentBusiness;
+import com.bar.behdavarbackend.business.api.PursuitBusiness;
+import com.bar.behdavarbackend.business.api.UserAmountBusiness;
 import com.bar.behdavarbackend.business.transformer.AttachmentTransformer;
 import com.bar.behdavarbackend.business.transformer.PaymentTransformer;
 import com.bar.behdavarbackend.business.transformer.PursuitTransformer;
@@ -22,14 +25,12 @@ import java.util.Optional;
 public class PursuitBusinessImpl implements PursuitBusiness {
     public static final String BEAN_NAME = "PursuitBusinessImpl";
 
-    private final PursuitLogBusiness pursuitLogBusiness;
     private final PaymentBusiness paymentBusiness;
     private final AttachmentBusiness attachmentBusiness;
     private final UserAmountBusiness userAmountBusiness;
     private final PursuitRepository pursuitRepository;
 
-    public PursuitBusinessImpl(PursuitLogBusiness pursuitLogBusiness, PaymentBusiness paymentBusiness, AttachmentBusiness attachmentBusiness, UserAmountBusiness userAmountBusiness, PursuitRepository pursuitRepository) {
-        this.pursuitLogBusiness = pursuitLogBusiness;
+    public PursuitBusinessImpl(PaymentBusiness paymentBusiness, AttachmentBusiness attachmentBusiness, UserAmountBusiness userAmountBusiness, PursuitRepository pursuitRepository) {
         this.paymentBusiness = paymentBusiness;
         this.attachmentBusiness = attachmentBusiness;
         this.userAmountBusiness = userAmountBusiness;
@@ -55,7 +56,6 @@ public class PursuitBusinessImpl implements PursuitBusiness {
 
             Optional.ofNullable(attachmentId).ifPresent(id ->
                     dto.getPayment().setAttachment(AttachmentTransformer.createDtoForRelation(id)));
-
             paymentId = paymentBusiness.save(dto.getPayment());
             userAmountBusiness.increaseReceiveAmount(dto.getPayment().getAmount());
         }
@@ -64,7 +64,6 @@ public class PursuitBusinessImpl implements PursuitBusiness {
 
         PursuitEntity pursuitEntity = PursuitTransformer.dtoToEntity(dto, new PursuitEntity());
         pursuitEntity.setId(pursuitRepository.save(pursuitEntity).getId());
-        pursuitLogBusiness.save(pursuitEntity);
         return pursuitEntity.getId();
     }
 
@@ -74,7 +73,6 @@ public class PursuitBusinessImpl implements PursuitBusiness {
         PursuitEntity pursuitEntity = PursuitTransformer.dtoToEntity(dto, pursuitRepository.findById(dto.getId())
                 .orElseThrow(() -> new BusinessException("error.Pursuit.not.found", dto.getId())));
         pursuitRepository.save(pursuitEntity);
-        pursuitLogBusiness.save(pursuitEntity);
     }
 
     @Override

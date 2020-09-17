@@ -22,7 +22,7 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @Audited
 @AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
-@Table(name = PursuitEntity.TABLE_NAME, schema = ContactConstant.SCHEMA,uniqueConstraints = @UniqueConstraint(name = "CONTRACT_PURSUIT_UK", columnNames = "CONTRACT_ID"))
+@Table(name = PursuitEntity.TABLE_NAME, schema = ContactConstant.SCHEMA)
 public class PursuitEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "PURSUIT";
