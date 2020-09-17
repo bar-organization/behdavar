@@ -19,7 +19,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 @Audited
 @AuditOverrides({@AuditOverride(forClass = BaseAuditorEntity.class)})
 @Entity
-@Table(name = InputExcelEntity.TABLE_NAME, schema = ContactConstant.SCHEMA)
+@Table(name = InputExcelEntity.TABLE_NAME, schema = ContactConstant.SCHEMA,
+        uniqueConstraints = @UniqueConstraint(name = "INPUT_FILE_UK_FILE_NAME", columnNames = "FILE_NAME"))
 public class InputExcelEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "INPUT_EXCEL";

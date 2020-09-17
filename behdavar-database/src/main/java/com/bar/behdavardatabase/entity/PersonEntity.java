@@ -7,11 +7,8 @@ import lombok.Setter;
 import org.hibernate.envers.AuditOverride;
 import org.hibernate.envers.AuditOverrides;
 import org.hibernate.envers.Audited;
-import org.hibernate.envers.NotAudited;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -34,6 +31,9 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
 
     @Column(name = PersonConstant.FULL_NAME)
     private String fullName;
+
+    @Column(name = "FATHER_NAME")
+    private String fatherName;
 
     @Column(name = "NATIONAL_CODE")
     private String nationalCode;
