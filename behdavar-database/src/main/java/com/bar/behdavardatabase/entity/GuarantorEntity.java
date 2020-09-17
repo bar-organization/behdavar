@@ -35,8 +35,7 @@ public class GuarantorEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = GuarantorEntity.SEQ_NAME, sequenceName = GuarantorEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
-    @NotNull
-    @Column(name = "RELATION_TYPE", nullable = false)
+    @Column(name = "RELATION_TYPE")
     private RelationType relationType;
 
     @NotNull

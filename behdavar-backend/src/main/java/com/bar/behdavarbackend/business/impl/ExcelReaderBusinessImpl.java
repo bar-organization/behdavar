@@ -67,6 +67,9 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
     @Autowired
     CustomerRepository customerRepository;
 
+    @Autowired
+    PersonRepository personRepository;
+
     @Override
     @Transactional
     public void readAndSave(InputExcelDto dto) {
@@ -173,9 +176,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 InputExcelGuarantorEntity byInputExcelIdAndContractNumber = inputExcelGuarantorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
                 if (byInputExcelIdAndContractNumber != null) {
                     PersonEntity personEntity = new PersonEntity();
-                    personEntity.setFirstName(byInputExcelIdAndContractNumber.getName());
-                    personEntity.setLastName(byInputExcelIdAndContractNumber.getLastName());
-                    personEntity.setFullName(byInputExcelIdAndContractNumber.getName() + " " + byInputExcelIdAndContractNumber.getLastName());
+                    personEntity.setFullName(byInputExcelIdAndContractNumber.getLastName());
                     personEntity.setFatherName(byInputExcelIdAndContractNumber.getFatherName());
                     personEntity.setNationalCode(byInputExcelIdAndContractNumber.getNationalCode());
                     Long personId = personBusiness.save(personEntity);
@@ -222,6 +223,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     GuarantorEntity guarantorEntity = new GuarantorEntity();
                     guarantorEntity.setContract(contractEntity);
                     guarantorEntity.setPerson(personEntity);
+                    contractRepository.save(contractEntity);
                     guarantorRepository.save(guarantorEntity);
                 }
                 // end of grantor
@@ -229,9 +231,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 InputExcelDebtorEntity debtorEntities = inputExcelDebtorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
                 if (debtorEntities != null) {
                     PersonEntity personEntity = new PersonEntity();
-                    personEntity.setFirstName(debtorEntities.getName());
-                    personEntity.setLastName(debtorEntities.getLastName());
-                    personEntity.setFullName(debtorEntities.getName() + " " + debtorEntities.getLastName());
+                    personEntity.setFullName(debtorEntities.getLastName());
                     personEntity.setFatherName(debtorEntities.getFatherName());
                     personEntity.setNationalCode(debtorEntities.getNationalCode());
                     personEntity.setId(personBusiness.save(personEntity));
