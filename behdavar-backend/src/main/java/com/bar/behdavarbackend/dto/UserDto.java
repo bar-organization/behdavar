@@ -13,6 +13,7 @@ public class UserDto extends BaseAuditorDto<String, Long> {
     private String lastName;
     private String username;
     private String password;
+    private Long code;
     private boolean enabled;
     private boolean tokenExpired;
     private boolean isAccountNonExpired;
@@ -36,6 +37,8 @@ public class UserDto extends BaseAuditorDto<String, Long> {
     public String getPassword() {
         return password;
     }
+
+    public Long getCode() {return code;}
 
     public boolean getEnabled() {
         return enabled;

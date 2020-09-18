@@ -2,6 +2,7 @@ package com.bar.behdavardatabase.entity;
 
 import com.bar.behdavarcommon.enumeration.ContractStatus;
 import com.bar.behdavarcommon.enumeration.ContractType;
+import com.bar.behdavarcommon.enumeration.ContractWeight;
 import com.bar.behdavardatabase.common.BaseAuditorEntity;
 import com.bar.behdavardatabase.constant.ContactConstant;
 import com.bar.behdavardatabase.constant.common.BaseConstant;
@@ -42,7 +43,7 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     private String contractNumber;
 
     @Column(name = "CONTRACT_WEIGHT")
-    private Long contractWeight;
+    private ContractWeight contractWeight;
 
     @Column(name = "submit_Date")
     private LocalDate submitDate;
