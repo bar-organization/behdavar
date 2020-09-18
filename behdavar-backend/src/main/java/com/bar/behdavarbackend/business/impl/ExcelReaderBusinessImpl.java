@@ -3,6 +3,7 @@ package com.bar.behdavarbackend.business.impl;
 import com.bar.behdavarbackend.business.api.ExcelReaderBusiness;
 import com.bar.behdavarbackend.business.transformer.InputExcelLendingTransformer;
 import com.bar.behdavarbackend.business.transformer.InputExcelPersonTransformer;
+import com.bar.behdavarbackend.business.transformer.UserTransformer;
 import com.bar.behdavarbackend.dto.InputExcelDebtorDto;
 import com.bar.behdavarbackend.dto.InputExcelDto;
 import com.bar.behdavarbackend.dto.InputExcelGuarantorDto;
@@ -16,6 +17,7 @@ import com.bar.behdavardatabase.entity.*;
 import com.bar.behdavardatabase.entity.security.UserEntity;
 import com.bar.behdavardatabase.repository.*;
 import com.bar.behdavardatabase.repository.security.UserRepository;
+import com.bar.behdavardatabase.util.SecurityUtil;
 import com.poiji.bind.Poiji;
 import com.poiji.exception.PoijiExcelType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -157,7 +159,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 // grantors
                 contractEntity = new ContractEntity();
                 contractEntity.setContractNumber(excelLendingEntity.getContractNumber());
-                contractEntity.setContractStatus(ContractStatus.RAW);
+                contractEntity.setContractStatus(ContractStatus.AVAILABLE);
                 if (excelLendingEntity.getMachine() != null){
                     contractEntity.setContractType(ContractType.CARS);
                     ProductEntity productEntity = new ProductEntity();
@@ -243,7 +245,8 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                             cartableEntity.setActive(true);
                             cartableEntity.setContract(contractEntity);
                             cartableEntity.setReceiver(userExpertEntity);
-                            cartableEntity.setSender(new UserEntity());
+                            UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
+                            cartableEntity.setSender(sender);
                             cartableRepository.save(cartableEntity);
                         } else {
                             throw new BusinessException("user.with.code"+excelLendingEntity.getExpertCode()+"not.found");

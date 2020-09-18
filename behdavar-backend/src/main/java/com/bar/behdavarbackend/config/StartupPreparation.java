@@ -79,6 +79,7 @@ public class StartupPreparation {
             }
             superUser.setEnabled(true);
             superUser.setDeleted(false);
+            superUser.setCode(0l);
             superUser.setAccountNonExpired(true);
             superUser.setCredentialsNonExpired(true);
             superUser.setAccountNonLocked(true);
