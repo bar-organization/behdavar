@@ -29,7 +29,6 @@ import org.springframework.util.CollectionUtils;
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service(ExcelReaderBusinessImpl.BEAN_NAME)
 public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
@@ -249,10 +248,10 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                             cartableEntity.setSender(sender);
                             cartableRepository.save(cartableEntity);
                         } else {
-                            throw new BusinessException("user.with.code"+excelLendingEntity.getExpertCode()+"not.found");
+                            throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
                         }
                     } else {
-                        throw new BusinessException("contract.with.contractNumber"+excelLendingEntity.getContractNumber()+"not.have.expertCode");
+                        throw new BusinessException("contract.with.contractNumber.not.have.expertCode", excelLendingEntity.getContractNumber());
                     }
 
 
