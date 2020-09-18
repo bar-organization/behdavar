@@ -4,6 +4,7 @@ import com.bar.behdavarbackend.business.api.PrivilegeBusiness;
 import com.bar.behdavarbackend.dto.PrivilegeDto;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/privilege")
@@ -32,5 +34,10 @@ public class PrivilegeRest {
     @PostMapping("/find-paging")
     public ResponseEntity<PagingResponse> findById(@RequestBody PagingRequest pageRequest) {
         return new ResponseEntity<>(PrivilegeBusiness.findPaging(pageRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/find-suggestion")
+    public ResponseEntity<List<PrivilegeDto>> findSuggestion(@RequestBody @Length(min = 3, max = 30) String suggest) {
+        return new ResponseEntity(PrivilegeBusiness.findSuggestion(suggest), HttpStatus.OK);
     }
 }

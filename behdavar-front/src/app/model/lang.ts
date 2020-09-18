@@ -14,6 +14,7 @@ export class Lang {
   error = 'خطا در انجام عملیات';
   delete = 'حذف';
   active = 'فعال';
+  title = 'عنوان';
 }
 
 export class AuthLang extends Lang {
@@ -72,6 +73,22 @@ export class UserRegistrationLang extends Lang{
   passwordNotValid = 'رمزعبور معتبر نیست';
   selectAUserFromList = 'یک کاربر را از لیست انتخاب کنید';
 
+}
+export class RoleRegistrationLang extends Lang{
+  role = 'نقش';
+  roleList = 'لیست نقش ها';
+  roleName= 'نام نقش';
+  privilegeList = 'لیست دسترسی ها';
+  privilegeName= 'نام دسترسی';
+  selectPrivilege = 'انتخاب دسترسی جدید';
+  errorOnFindPrivilege = 'خطا در جستجو دسترسی';
+  createNewRole = 'ایجاد نقش جدید';
+  rolePrivileges = 'دسترسی ها';
+  roleNameNotValid = 'نام نقش صحیح نمی باشد';
+  roleTitleNotValid = 'عنوان نقش را وارد کنید';
+  roleTitle = 'عنوان';
+  rolePrivilegesNotBeEmpty = 'لیست نقش ها نباید خالی باشد';
+  editRole = 'ویرایش نقش';
 }
 export class DocumentToolbarLang extends Lang {
   followUp = 'پیگیری';

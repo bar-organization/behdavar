@@ -7,7 +7,7 @@ import {HttpClient} from "@angular/common/http";
 export default class HttpDataSource<T> implements DataSource<T> {
   public loadingSubject = new BehaviorSubject<boolean>(false);
   public totalRecordSubject = new BehaviorSubject<number>(0);
-
+  public beforeCall: (request: PagingRequest) => void;
 
   private subject = new BehaviorSubject<T[]>(null);
   private url: string;
@@ -35,6 +35,11 @@ export default class HttpDataSource<T> implements DataSource<T> {
 
     this.request = request;
     request.filters = this.filters;
+
+    // call callback method before call
+    if (this.beforeCall) {
+      this.beforeCall(request);
+    }
     // call http service
     this.httpClient.post<PagingResponse<T>>(this.url, request)
       .pipe(catchError(err => this.handleError(err)), finalize(() => this.stopLoading()))
@@ -42,8 +47,10 @@ export default class HttpDataSource<T> implements DataSource<T> {
       .subscribe(value => this.subject.next(value));
   }
 
-  public reload() {
+  public reload(filters?: SearchCriteria[]) {
     if (this.request) {
+      if (filters)
+        this.filters = filters;
       this.find(this.request);
     }
   }

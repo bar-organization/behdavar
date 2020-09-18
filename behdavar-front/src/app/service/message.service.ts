@@ -9,7 +9,7 @@ export class MessageService {
 
   public showGeneralError(errorMessage: string,error?: any) {
 
-    this._snackBar.open(`${errorMessage} [${error}] `, 'X', {
+    this._snackBar.open(`${errorMessage} ${error ? '[ ' + error + ']' : ''} `, 'X', {
       duration: 5000, panelClass: ['bg-danger', 'text-white']
     });
   }

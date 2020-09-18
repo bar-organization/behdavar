@@ -26,5 +26,10 @@ export default class Url {
 
   public static readonly ROLE_FIND_BY_ID = `${Url.BASE_API}/role/find-by-id`;
   public static readonly ROLE_FIND_PAGING = `${Url.BASE_API}/role/find-paging`;
+  public static readonly ROLE_SAVE = `${Url.BASE_API}/role/save`;
+  public static readonly ROLE_UPDATE = `${Url.BASE_API}/role/update`;
   public static readonly ROLE_FIND_SUGGESTION = `${Url.BASE_API}/role/find-suggestion`;
+
+  public static readonly PRIVILEGE_FIND_PAGING = `${Url.BASE_API}/privilege/find-paging`;
+  public static readonly PRIVILEGE_FIND_SUGGESTION = `${Url.BASE_API}/privilege/find-suggestion`;
 }

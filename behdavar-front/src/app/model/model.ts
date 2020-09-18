@@ -189,7 +189,7 @@ export enum GeoDivisionType {
 export class RoleDto extends BaseAuditorDto<string, number> {
   roleName: string;
   title: string;
-  privileges: PrivilegeDto[];
+  privilegeDtos: PrivilegeDto[];
 }
 
 export class PrivilegeDto extends BaseAuditorDto<string, number> {

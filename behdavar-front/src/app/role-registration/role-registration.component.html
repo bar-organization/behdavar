@@ -1,0 +1,58 @@
+<div fxLayout="row" class="py-2" fxLayoutAlign="center start" fxLayoutGap="0.5rem">
+  <div *ngIf="isAddOrEdit; else searchRole"  class="w-100">
+   <add-role (onBack)="onAddRoleBack()" [(roleId)]="roleId"></add-role>
+  </div>
+
+  <ng-template #searchRole>
+    <section class="w-50">
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <form [formGroup]="roleSearchForm" (ngSubmit)="onSearchRole()" fxLayout="row" fxLayoutAlign="start center"
+              fxLayoutGap="0.5rem">
+          <mat-form-field>
+            <mat-label>{{lang.roleName}}</mat-label>
+            <input matInput formControlName="role">
+          </mat-form-field>
+          <button mat-flat-button type="submit" color="primary">{{lang.search}}</button>
+        </form>
+        <div fxLayoutGap="0.5rem">
+          <button mat-mini-fab color="primary" type="button" (click)="isAddOrEdit = true; roleId = null">
+            <mat-icon>add</mat-icon>
+          </button>
+
+          <button #editRoleButton mat-mini-fab color="accent" type="button" [disabled]="!(roleTable.idFieldChange | async)"
+                  (click)="isAddOrEdit = true">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+        </div>
+      </div>
+      <div class="card">
+        <div class="text-center card-header">{{lang.roleList}}</div>
+        <div class="p-2">
+          <data-table #roleTable [tableColumns]="roleTableColumns" [httpDataSource]="roleHttpDataSource" [(idField)]="roleId"></data-table>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="w-50">
+
+      <form [formGroup]="privilegeSearchForm" (ngSubmit)="onSearchPrivilege()" fxLayout="row"
+            fxLayoutAlign="start center"
+            fxLayoutGap="0.5rem">
+        <mat-form-field>
+          <mat-label>{{lang.privilegeName}}</mat-label>
+          <input matInput formControlName="privilege">
+        </mat-form-field>
+        <button mat-flat-button type="submit" color="primary">{{lang.search}}</button>
+      </form>
+      <div class="card">
+        <div class="text-center card-header">{{lang.privilegeList}}</div>
+        <div class="p-2">
+          <data-table [tableColumns]="privilegeTableColumns" [httpDataSource]="privilegeHttpDataSource"
+                      [selectable]="false"></data-table>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+</div>

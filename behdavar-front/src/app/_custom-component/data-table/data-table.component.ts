@@ -29,11 +29,17 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input()
   httpDataSource: HttpDataSource<unknown>;
 
+  @Input()
+  idField: number;
+
   @Output()
-  changeId = new EventEmitter<number>();
+  idFieldChange = new EventEmitter<number>();
 
   @Input()
   idFieldName: string;
+
+  @Input()
+  selectable: boolean = true;
 
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
@@ -70,7 +76,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       return [];
     }
     let columnToDisplay = this.tableColumns.filter(value => !value.hidden).map(value => value.colName);
-    columnToDisplay.unshift('select', 'rowNo');
+
+    if (this.selectable) {
+      columnToDisplay.unshift('select', 'rowNo');
+    } else {
+      columnToDisplay.unshift('rowNo');
+    }
+
     return columnToDisplay;
   }
 
@@ -116,9 +128,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       if (!this.idFieldName) {
         this.idFieldName = 'id';
       }
-      this.changeId.emit(dot.pick(this.idFieldName, row));
+      this.idFieldChange.emit(dot.pick(this.idFieldName, row));
     } else {
-      this.changeId.emit(undefined);
+      this.idFieldChange.emit(undefined);
 
     }
     return result;
@@ -126,7 +138,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   private configureTableColumns() {
     if (this.tableColumns) {
-      this.tableColumns.forEach((column,index) => {
+      this.tableColumns.forEach((column, index) => {
         if (!column.colName) {
           column.colName = `col${index}`;
         }

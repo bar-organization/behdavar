@@ -1,13 +1,13 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {UserRegistrationLang} from "../../../model/lang";
+import {UserRegistrationLang} from "../model/lang";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {PersonDto, RoleDto, UserDto} from "../../../model/model";
+import {PersonDto, RoleDto, UserDto} from "../model/model";
 import {Subject} from "rxjs";
 import {MatSelectionList} from "@angular/material/list";
 import {HttpClient} from "@angular/common/http";
-import {PagingRequest, PagingResponse, SearchOperation} from "../../../_custom-component/data-table/PaginationModel";
-import Url from "../../../model/url";
-import {MessageService} from "../../../service/message.service";
+import {PagingRequest, PagingResponse, SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import Url from "../model/url";
+import {MessageService} from "../service/message.service";
 import {MatAutocomplete} from "@angular/material/autocomplete";
 
 @Component({
@@ -235,22 +235,6 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
     this.requestSearchUser(this.userSearchForm.value.username);
   }
 
-  onDeleteUser() {
-    const selectedUser = this.matUserList.selectedOptions.selected[0];
-    // is any user not selected , nothing happen
-    if (!selectedUser) {
-      this.messageService.showGeneralError(this.lang.selectAUserFromList);
-      return;
-    }
-
-    // patch only username to form
-    const userDto: UserDto = selectedUser.value;
-
-    this.httpClient
-      .post(Url.USER_DELETE, userDto.id)
-      .subscribe(value => this.messageService.showGeneralSuccess(this.lang.successSave),
-        e => this.messageService.showGeneralError(this.lang.error));
-  }
 }
 
 interface RoleWrapper {
