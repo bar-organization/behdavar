@@ -10,6 +10,7 @@ import com.bar.behdavarbackend.dto.InputExcelLendingDto;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarcommon.enumeration.ContractStatus;
 import com.bar.behdavarcommon.enumeration.ContractType;
+import com.bar.behdavarcommon.enumeration.ContractWeight;
 import com.bar.behdavarcommon.enumeration.PhoneType;
 import com.bar.behdavardatabase.entity.*;
 import com.bar.behdavardatabase.repository.*;
@@ -148,7 +149,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 // grantors
                 contractEntity = new ContractEntity();
                 contractEntity.setContractNumber(excelLendingEntity.getContractNumber());
-                contractEntity.setContractStatus(ContractStatus.AVAILABLE);
+                contractEntity.setContractStatus(ContractStatus.RAW);
                 if (excelLendingEntity.getMachine() != null){
                     contractEntity.setContractType(ContractType.CARS);
                     ProductEntity productEntity = new ProductEntity();
@@ -169,6 +170,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
                 lendingRepository.save(lendingEntity);
                 contractEntity.setLending(lendingEntity);
+                contractEntity.setContractWeight(ContractWeight.LEVEL1);
                 //condition for contractWeight
             /*    if (excelLendingEntity.getAmount() != null) {
 
