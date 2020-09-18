@@ -22,6 +22,7 @@ public class UserTransformer extends BaseAuditorTransformer {
         dto.setLastName(person.getLastName());
         dto.setUsername(entity.getUsername());
         dto.setPassword(entity.getPassword());
+        dto.setCode(entity.getCode());
         dto.setEnabled(entity.isEnabled());
         dto.setTokenExpired(entity.isTokenExpired());
         dto.setAccountNonExpired(entity.isAccountNonExpired());
@@ -45,6 +46,7 @@ public class UserTransformer extends BaseAuditorTransformer {
         entity.setTokenExpired(dto.getTokenExpired());
         entity.setAccountNonExpired(dto.getIsAccountNonExpired());
         entity.setAccountNonLocked(dto.getIsAccountNonLocked());
+        entity.setCode(dto.getCode());
         entity.setCredentialsNonExpired(dto.getIsCredentialsNonExpired());
         if (dto.getId() == null) {
             entity.setUsername(dto.getUsername());

@@ -84,4 +84,7 @@ public class UserEntity extends BaseAuditorEntity<String, Long> {
 
     @Column(name = "DELETED", nullable = false)
     private Boolean deleted;
+
+    @Column(name = "CODE" , nullable = false)
+    private Long code;
 }

@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface UserRepository extends AbstractRepository<UserEntity, Long> {
 
     Optional<UserEntity> findByUsername(String username);
+
+    UserEntity findByCode(Long code);
 }

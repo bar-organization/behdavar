@@ -13,7 +13,9 @@ import com.bar.behdavarcommon.enumeration.ContractType;
 import com.bar.behdavarcommon.enumeration.ContractWeight;
 import com.bar.behdavarcommon.enumeration.PhoneType;
 import com.bar.behdavardatabase.entity.*;
+import com.bar.behdavardatabase.entity.security.UserEntity;
 import com.bar.behdavardatabase.repository.*;
+import com.bar.behdavardatabase.repository.security.UserRepository;
 import com.poiji.bind.Poiji;
 import com.poiji.exception.PoijiExcelType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +72,12 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    CartableRepository cartableRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     @Transactional
@@ -227,6 +235,24 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     guarantorEntity.setPerson(personEntity);
                     contractRepository.save(contractEntity);
                     guarantorRepository.save(guarantorEntity);
+
+                    if (excelLendingEntity.getExpertCode() != null) {
+                        UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
+                        if (userExpertEntity != null) {
+                            CartableEntity cartableEntity = new CartableEntity();
+                            cartableEntity.setActive(true);
+                            cartableEntity.setContract(contractEntity);
+                            cartableEntity.setReceiver(userExpertEntity);
+                            cartableEntity.setSender(new UserEntity());
+                            cartableRepository.save(cartableEntity);
+                        } else {
+                            throw new BusinessException("user.with.code"+excelLendingEntity.getExpertCode()+"not.found");
+                        }
+                    } else {
+                        throw new BusinessException("contract.with.contractNumber"+excelLendingEntity.getContractNumber()+"not.have.expertCode");
+                    }
+
+
                 }
                 // end of grantor
                 //debtors
