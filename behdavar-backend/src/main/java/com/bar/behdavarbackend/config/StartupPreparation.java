@@ -76,6 +76,7 @@ public class StartupPreparation {
                 }
                 superUser.setPerson(personEntity);
                 superUser.setUsername(SUPERVISOR_USER);
+                superUser.setCode(-1L);
             }
             superUser.setEnabled(true);
             superUser.setDeleted(false);
