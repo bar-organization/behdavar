@@ -55,9 +55,9 @@ import {UserRegistrationComponent} from './user-registration/user-registration.c
 import {RoleRegistrationComponent} from './role-registration/role-registration.component';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {AddRoleComponent} from './role-registration/add-role/addRole.component'
-
-;
+import {AddRoleComponent} from './role-registration/add-role/addRole.component';
+import {DocumentInputComponent} from './navigation-tab/document-input/document-input.component';
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   imports: [
@@ -91,7 +91,8 @@ import {AddRoleComponent} from './role-registration/add-role/addRole.component'
     NgxSpinnerModule,
     ScrollingModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatRadioModule
   ],
   declarations: [
     AppComponent,
@@ -118,7 +119,10 @@ import {AddRoleComponent} from './role-registration/add-role/addRole.component'
     UserManagementComponent,
     UserRegistrationComponent,
     RoleRegistrationComponent,
-    AddRoleComponent],
+    AddRoleComponent,
+    DocumentInputComponent,
+
+  ],
 
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},

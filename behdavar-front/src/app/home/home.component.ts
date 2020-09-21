@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     {title: this.lang.reports, iconName: "assignment", routerLink: "reports", visible: true},
     {title: this.lang.utilityTools, iconName: "build_circle", routerLink: "tools", visible: true},
     {title: this.lang.userManagement, iconName: "account_box", routerLink: "user-manage", visible: true},
+    {title: this.lang.documentInput, iconName: "assignment_returned", routerLink: "document-input", visible: true},
   ];
 
   constructor(private authService: AuthService, private router: Router) {

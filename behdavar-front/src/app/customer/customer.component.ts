@@ -3,7 +3,7 @@ import {CustomerLang} from '../model/lang';
 import {MyErrorStateMatcher} from '../model/MyErrorStateMatcher';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 import {CustomerDto} from "../model/model";
 import Url from "../model/url";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -20,7 +20,7 @@ export class CustomerComponent implements OnInit , AfterViewInit{
   matcher = new MyErrorStateMatcher();
 
 
-  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute,private _snackBar:MatSnackBar) {
+  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute,private router:Router,private _snackBar:MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -29,11 +29,12 @@ export class CustomerComponent implements OnInit , AfterViewInit{
         id:[''],
         firstName: [''],
         lastName: [''],
+        fullName:[''],
         email: [''],
         description: [''],
         fatherName: [''],
         birthDate: [''],
-        nationalNumber: [''],
+        nationalCode: [''],
         postalCode: [''],
         phoneNumber: [''],
         telephone: [''],
@@ -59,6 +60,7 @@ export class CustomerComponent implements OnInit , AfterViewInit{
             this._snackBar.open(this.lang.successSave, 'X', {
               duration: 5000, panelClass: ['bg-success', 'text-white']
             });
+            this.router.navigate(['../']);
           },
           error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
             duration: 5000, panelClass: ['bg-danger', 'text-white']

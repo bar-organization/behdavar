@@ -15,6 +15,10 @@
             <input matInput formControlName="lastName" [errorStateMatcher]="matcher">
           </mat-form-field>
           <mat-form-field class="flex-fill">
+            <label>{{lang.fullName}}</label>
+            <input matInput formControlName="fullName" [errorStateMatcher]="matcher">
+          </mat-form-field>
+          <mat-form-field class="flex-fill">
             <label>{{lang.fatherName}}</label>
             <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">
           </mat-form-field>
@@ -34,7 +38,7 @@
 
           <mat-form-field class="flex-fill">
             <label>{{lang.nationalNumber}}</label>
-            <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">
+            <input matInput formControlName="nationalCode" [errorStateMatcher]="matcher">
           </mat-form-field>
         </div>
 

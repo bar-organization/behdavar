@@ -44,7 +44,7 @@
         </div>
 
 
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3rem">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
           <mat-form-field>
             <input type="text"
                    [placeholder]="lang.personRole"
@@ -59,8 +59,11 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-
-          <mat-checkbox checked="checked" formControlName="isActive">{{lang.active}}</mat-checkbox>
+          <mat-form-field>
+            <mat-label>{{lang.code}}</mat-label>
+            <input matInput formControlName="code">
+            <mat-error *ngIf="isInvalidUsername">{{lang.codeNotValid}}</mat-error>
+          </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3rem">
           <form (ngSubmit)="addRole()" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
@@ -82,7 +85,7 @@
               <mat-icon>add</mat-icon>
             </button>
           </form>
-
+          <mat-checkbox checked="checked" formControlName="isActive">{{lang.active}}</mat-checkbox>
         </div>
 
       </form>

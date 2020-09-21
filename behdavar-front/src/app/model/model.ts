@@ -47,6 +47,7 @@ export class CustomerDto extends BaseAuditorDto<string, number> {
 export class PersonDto extends BaseAuditorDto<string, number> {
   firstName: string;
   lastName: string;
+  fullName:string;
   email: string;
   phoneNumber: string;
   description: string;
@@ -58,6 +59,7 @@ export class UserDto extends BaseAuditorDto<string, number> {
   fullName?: string = `${this.firstName} ${this.lastName}`
   username?: string;
   password?: string;
+  code?: string;
   enabled?: boolean;
   tokenExpired?: boolean;
   isAccountNonExpired?: boolean;
@@ -159,6 +161,11 @@ export class CatalogDetailDto extends BaseAuditorDto<string, number> {
   active: boolean;
   catalog: CatalogDto;
 
+}
+
+export class InputExcelDto extends BaseAuditorDto<string, number> {
+  fileName: string;
+  content: string;
 }
 
 export class AddressDto extends BaseAuditorDto<string, number> {

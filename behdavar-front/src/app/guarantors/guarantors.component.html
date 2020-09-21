@@ -5,7 +5,7 @@
       <mat-selection-list #GLSelect (selectionChange)="guarantorSelectChange()" class="overflow-auto" style="max-height: 20rem" #shoes
                           [multiple]="false">
         <mat-list-option *ngFor="let guarantorDto of guarantorDtoList" [value]="guarantorDto">
-          {{guarantorDto?.person?.firstName}} {{guarantorDto?.person?.lastName}}
+          {{guarantorDto?.person?.fullName}}
         </mat-list-option>
       </mat-selection-list>
     </div>
@@ -17,7 +17,7 @@
         <div fxLayout="row" fxLayoutGap="0.5rem">
           <mat-form-field class="flex-fill">
             <label>{{lang.name}}</label>
-            <input matInput formControlName="firstName" [errorStateMatcher]="matcher">
+            <input matInput formControlName="fullName" [errorStateMatcher]="matcher">
           </mat-form-field>
           <mat-form-field class="flex-fill">
             <label>{{lang.family}}</label>
@@ -44,7 +44,7 @@
 
           <mat-form-field class="flex-fill">
             <label>{{lang.nationalNumber}}</label>
-            <input matInput formControlName="nationalNumber" [errorStateMatcher]="matcher">
+            <input matInput formControlName="nationalCode" [errorStateMatcher]="matcher">
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutGap="0.5rem">

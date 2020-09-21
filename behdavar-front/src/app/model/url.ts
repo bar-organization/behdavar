@@ -32,4 +32,6 @@ export default class Url {
 
   public static readonly PRIVILEGE_FIND_PAGING = `${Url.BASE_API}/privilege/find-paging`;
   public static readonly PRIVILEGE_FIND_SUGGESTION = `${Url.BASE_API}/privilege/find-suggestion`;
+
+  public static readonly EXCEL_UPLOAD = `${Url.BASE_API}/excel/upload`;
 }

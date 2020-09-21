@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {RoleRegistrationLang} from "../../model/lang";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {PrivilegeDto, RoleDto} from "../../model/model";
+import {BaseAuditorDto, PrivilegeDto, RoleDto} from "../../model/model";
 import Url from "../../model/url";
 import {HttpClient} from "@angular/common/http";
 import {Subject} from "rxjs";
@@ -135,6 +135,9 @@ export class AddRoleComponent implements OnInit {
     //set active item in privilegeList to newRole
     roleDto.privilegeDtos = this.privilegeList.filter(value => value.active).map(value => value.privilege);
 
+    // clear privilege audit field
+    this.clearAuditField(roleDto.privilegeDtos);
+
     // perform save request
     this.httpClient
       .post<number>(Url.ROLE_SAVE, roleDto)
@@ -144,6 +147,21 @@ export class AddRoleComponent implements OnInit {
         },
         e => this.messageService.showGeneralError(e, this.lang.error));
 
+  }
+
+  private clearAuditField(baseAuditors: any[]) {
+    if(!baseAuditors || baseAuditors.length === 0)
+      return;
+
+    for (let baseAuditor of baseAuditors) {
+      if(baseAuditor){
+        if(baseAuditor.createdDate)
+      baseAuditor.createdDate = null;
+        if(baseAuditor.lastModifiedDate)
+        baseAuditor.lastModifiedDate = null;
+
+      }
+    }
   }
 
   editRole() {
@@ -165,6 +183,9 @@ export class AddRoleComponent implements OnInit {
 
     //set active item in privilegeList to newRole
     roleDto.privilegeDtos = this.privilegeList.filter(value => value.active).map(value => value.privilege);
+
+    // clear privilege audit field
+    this.clearAuditField(roleDto.privilegeDtos);
 
     // perform update request
     this.httpClient

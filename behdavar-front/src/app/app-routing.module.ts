@@ -13,6 +13,7 @@ import {CustomerComponent} from "./customer/customer.component";
 import {DocumentComponent} from "./document/document.component";
 import {FinancialStatusComponent} from "./financial-status/financial-status.component";
 import {UserManagementComponent} from "./navigation-tab/user-management/user-management.component";
+import {DocumentInputComponent} from "./navigation-tab/document-input/document-input.component";
 
 const routes: Routes = [
   // HOME
@@ -43,7 +44,8 @@ const routes: Routes = [
       },
       {path: 'reports', component: ReportsComponent},
       {path: 'tools', component: UtilityToolsComponent},
-      {path: 'user-manage', component: UserManagementComponent}
+      {path: 'user-manage', component: UserManagementComponent},
+      {path: 'document-input', component: DocumentInputComponent},
 
     ]
   },

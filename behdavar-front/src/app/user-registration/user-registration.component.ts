@@ -40,6 +40,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
 
   isInvalidUsername: boolean;
   isInvalidPassword: boolean;
+  isInvalidCode: boolean;
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient, private messageService: MessageService) {
 
@@ -53,6 +54,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
     this.newUserFormGroup = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
+      code: ['', Validators.required],
       isActive: [true]
     });
 
@@ -64,7 +66,6 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
 
   ngAfterViewInit(): void{
     this.personAutocomplete.optionSelected.subscribe(v => {
-      console.log('eeeee', v);
       if(v && v.option){
         this.personDto = new PersonDto();
         this.personDto.id = v.option.id;
@@ -165,7 +166,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
 
     // patch only username to form
     const userDto: UserDto = selectedUser.value;
-    this.newUserFormGroup.patchValue({'username': userDto.username});
+    this.newUserFormGroup.patchValue({'username': userDto.username,'code':userDto.code});
 
     // TODO must optimize service call
     // for each role of selected user , load related role and added to roleList
@@ -184,6 +185,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
   newUser() {
     this.isInvalidUsername = false;
     this.isInvalidPassword = false;
+    this.isInvalidCode = false;
 
 
     const newUser: UserDto = new UserDto();
@@ -191,6 +193,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
     if (!this.newUserFormGroup.valid) {
       this.isInvalidUsername = true;
       this.isInvalidPassword = true;
+      this.isInvalidCode = true;
       this.newUserFormGroup.markAllAsTouched();
       return;
     }
@@ -198,6 +201,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
     newUser.id = null;
     newUser.username = this.newUserFormGroup.value.username;
     newUser.password = this.newUserFormGroup.value.password;
+    newUser.code = this.newUserFormGroup.value.code;
     newUser.enabled = this.newUserFormGroup.value.isActive;
     newUser.tokenExpired = false;
     newUser.isAccountNonExpired = true;
@@ -227,7 +231,7 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
     this.httpClient
       .post<number>(Url.USER_SAVE, newUser)
       .subscribe(value => this.messageService.showGeneralSuccess(this.lang.successSave),
-        e => this.messageService.showGeneralError(e, this.lang.error))
+        e => this.messageService.showGeneralError( this.lang.error,e))
 
   }
 

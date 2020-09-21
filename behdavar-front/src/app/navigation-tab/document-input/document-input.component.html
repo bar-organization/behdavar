@@ -1,0 +1,19 @@
+<div fxLayout="row" class="py-2">
+<form fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="1rem" [formGroup]="form" class="form-group" (ngSubmit)="sendFile()">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem" >
+    <label for="file">{{lang.chooseFile}}</label>
+    <input type="file"
+           id="file"
+           accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+           (change)="handleFileInput($event.target.files)">
+  </div>
+
+  <mat-radio-group  aria-label="Select an option" formControlName="type">
+    <mat-radio-button  disabled="true" value="1">{{lang.manual}}</mat-radio-button>
+    <mat-radio-button [checked]="true"  value="2">{{lang.auto}}</mat-radio-button>
+  </mat-radio-group>
+
+  <button mat-raised-button color="primary" type="submit">{{lang.send}}</button>
+</form>
+
+</div>

@@ -15,6 +15,7 @@ export class Lang {
   delete = 'حذف';
   active = 'فعال';
   title = 'عنوان';
+  send = 'ارسال';
 }
 
 export class AuthLang extends Lang {
@@ -36,6 +37,7 @@ export class LoginLang extends Lang {
 export class PersonLang extends Lang {
   name = 'نام';
   family = 'نام خانوادگی';
+  fullName =  'نام کامل';
   fatherName = 'نام پدر';
   birthDate = 'تاریخ تولد';
   nationalNumber = 'کد ملی';
@@ -51,8 +53,14 @@ export class HomeLang extends Lang {
   reports = 'گزارشات';
   utilityTools = 'ابزارهای کاربردی';
   userManagement= 'مدیریت کاربران';
+  documentInput= 'ورود پرونده';
 }
 
+export class DocumentInputLang extends Lang{
+  manual = 'دستی';
+  auto = 'خودکار';
+  chooseFile = 'انتخاب فایل';
+}
 export class UserManagementLang extends Lang{
   users = 'کاربران';
   roles = 'نقش ها';
@@ -61,6 +69,7 @@ export class UserRegistrationLang extends Lang{
   userList = 'لیست کاربران';
   username = 'نام کاربری';
   password = 'رمز عبور';
+  code = 'کد';
   userRoles = 'نقش های کاربر';
   personRole = 'انتخاب فرد جدید';
   selectRole = 'انتخاب نقش جدید';
@@ -71,6 +80,7 @@ export class UserRegistrationLang extends Lang{
   userRoleNotEmpty = 'لیست نقش ها نمی تواند خالی باشد';
   usernameNotValid = 'نام کاربری معتبر نیست';
   passwordNotValid = 'رمزعبور معتبر نیست';
+  codeNotValid = 'کد معتبر نیست';
   selectAUserFromList = 'یک کاربر را از لیست انتخاب کنید';
 
 }
@@ -123,6 +133,7 @@ export class DocumentLang extends PersonLang {
 }
 
 export class FollowingLang extends Lang {
+  projectFollowing = 'پیگیری پرونده';
   followingType = 'نوع پیگیری';
   date = 'تاریخ';
   time = 'ساعت';
