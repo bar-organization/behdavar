@@ -16,6 +16,7 @@ public class PersonTransformer extends BaseAuditorTransformer {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setFullName(dto.getFullName());
+        entity.setFatherName(dto.getFatherName());
         entity.setEmail(dto.getEmail());
         entity.setPhoneNumber(dto.getPhoneNumber());
         entity.setDescription(dto.getDescription());
