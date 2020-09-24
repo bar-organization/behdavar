@@ -8,6 +8,7 @@ import com.bar.behdavarbackend.util.pagination.PagingExecutor;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import com.bar.behdavardatabase.entity.GuarantorEntity;
+import com.bar.behdavardatabase.entity.PersonEntity;
 import com.bar.behdavardatabase.repository.GuarantorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,8 @@ public class GuarantorBusinessImpl implements GuarantorBusiness {
         List<GuarantorEntity> allByContractId = guarantorRepository.findAllByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
             allByContractId.forEach(e ->
-                    guarantorDtos.add(GuarantorTransformer.entityToDto(e, new GuarantorDto(), GuarantorEntity.CONTRACT, GuarantorEntity.PERSON)));
+                    guarantorDtos.add(GuarantorTransformer.entityToDto(e, new GuarantorDto(), GuarantorEntity.CONTRACT, GuarantorEntity.PERSON, PersonEntity.CONTACTS)));
+
         }
         return guarantorDtos;
     }

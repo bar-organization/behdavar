@@ -10,8 +10,8 @@ import org.hibernate.envers.AuditOverrides;
 import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
-
-import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
+import java.util.HashSet;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -23,6 +23,7 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
 public class PersonEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String SEQ_NAME = "PERSON" + BaseConstant.SEQUENCE;
+    public static final String CONTACTS = "contacts";
 
     @Id
     @Column(name = "ID")
@@ -53,6 +54,9 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
 
     @Column(name = PersonConstant.DESCRIPTION)
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+    private Set<ContactEntity> contacts = new HashSet<>();
 
 
 }

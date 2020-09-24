@@ -4,6 +4,7 @@ import com.bar.behdavarbackend.dto.ContractDto;
 import com.bar.behdavarbackend.dto.GuarantorDto;
 import com.bar.behdavarbackend.dto.PersonDto;
 import com.bar.behdavardatabase.entity.GuarantorEntity;
+import com.bar.behdavardatabase.entity.PersonEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +31,8 @@ public class GuarantorTransformer extends BaseAuditorTransformer {
         }
 
         if (fields.contains(GuarantorEntity.PERSON)) {
-            dto.setPerson(PersonTransformer.entityToDto(entity.getPerson(), new PersonDto()));
+            dto.setPerson(PersonTransformer.entityToDto(entity.getPerson(), new PersonDto(),
+                    fields.contains(PersonEntity.CONTACTS) ? PersonEntity.CONTACTS : null));
         } else {
             dto.setPerson(PersonTransformer.createDtoForRelation(entity.getPerson().getId()));
         }

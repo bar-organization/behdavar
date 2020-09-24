@@ -4,6 +4,7 @@ import com.bar.behdavarbackend.dto.ContractDto;
 import com.bar.behdavarbackend.dto.CustomerDto;
 import com.bar.behdavarbackend.dto.PersonDto;
 import com.bar.behdavardatabase.entity.CustomerEntity;
+import com.bar.behdavardatabase.entity.PersonEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,8 @@ public class CustomerTransformer extends BaseAuditorTransformer {
             dto.setContract(ContractTransformer.createDtoForRelation(entity.getContract().getId()));
         }
         if (fields.contains(CustomerEntity.PERSON)) {
-            dto.setPerson(PersonTransformer.entityToDto(entity.getPerson(), new PersonDto()));
+            dto.setPerson(PersonTransformer.entityToDto(entity.getPerson(), new PersonDto(),
+                    fields.contains(PersonEntity.CONTACTS) ? PersonEntity.CONTACTS : null));
         } else {
             dto.setPerson(PersonTransformer.createDtoForRelation(entity.getPerson().getId()));
         }

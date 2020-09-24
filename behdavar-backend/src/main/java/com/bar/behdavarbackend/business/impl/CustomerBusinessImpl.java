@@ -8,6 +8,7 @@ import com.bar.behdavarbackend.util.pagination.PagingExecutor;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import com.bar.behdavardatabase.entity.CustomerEntity;
+import com.bar.behdavardatabase.entity.PersonEntity;
 import com.bar.behdavardatabase.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -53,7 +54,7 @@ public class CustomerBusinessImpl implements CustomerBusiness {
         List<CustomerDto> customerDtos = new ArrayList<>();
         List<CustomerEntity> allByContractId = customerRepository.findByContractId(contractId);
         if (!CollectionUtils.isEmpty(allByContractId)) {
-            allByContractId.forEach(e -> customerDtos.add(CustomerTransformer.entityToDto(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON)));
+            allByContractId.forEach(e -> customerDtos.add(CustomerTransformer.entityToDto(e, new CustomerDto(), CustomerEntity.CONTRACT, CustomerEntity.PERSON, PersonEntity.CONTACTS)));
         }
         return customerDtos;
     }
