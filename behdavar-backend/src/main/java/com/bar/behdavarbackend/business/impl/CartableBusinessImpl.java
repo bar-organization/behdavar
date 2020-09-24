@@ -1,9 +1,6 @@
 package com.bar.behdavarbackend.business.impl;
 
-import com.bar.behdavarbackend.business.api.CartableBusiness;
-import com.bar.behdavarbackend.business.api.StatusLogBusiness;
-import com.bar.behdavarbackend.business.api.UserAmountBusiness;
-import com.bar.behdavarbackend.business.api.UserLogBusiness;
+import com.bar.behdavarbackend.business.api.*;
 import com.bar.behdavarbackend.business.transformer.CartableTransformer;
 import com.bar.behdavarbackend.business.transformer.ContractTransformer;
 import com.bar.behdavarbackend.business.transformer.UserTransformer;
@@ -35,6 +32,9 @@ public class CartableBusinessImpl implements CartableBusiness {
 
     @Autowired
     private UserLogBusiness userLogBusiness;
+
+    @Autowired
+    private UserBusiness userBusiness;
 
     @Autowired
     private UserAmountBusiness userAmountBusiness;
@@ -112,6 +112,7 @@ public class CartableBusinessImpl implements CartableBusiness {
     public UserInfoDto getUserInfo() {
         UserInfoDto userInfoDto = new UserInfoDto();
         Long currentUserId = SecurityUtil.getCurrentUserId();
+        userInfoDto.setUser(userBusiness.findById(currentUserId));
         userInfoDto.setActiveCount(cartableRepository.findUserActiveCount(currentUserId));
         userInfoDto.setLastLogin(userLogBusiness.getLastLogin());
         userInfoDto.setUserAmount(userAmountBusiness.findByUserId(currentUserId));
