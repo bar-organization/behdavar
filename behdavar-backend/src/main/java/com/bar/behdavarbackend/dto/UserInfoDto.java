@@ -14,4 +14,5 @@ public class UserInfoDto extends BaseAuditorDto<String, Long> {
     private LocalDateTime lastLogin;
     private UserAmountDto userAmount;
     private Long activeCount;
+    private UserDto user;
 }
