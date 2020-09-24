@@ -58,6 +58,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {AddRoleComponent} from './role-registration/add-role/addRole.component';
 import {DocumentInputComponent} from './navigation-tab/document-input/document-input.component';
 import {MatRadioModule} from "@angular/material/radio";
+import {ContactToFlatStringPipe} from "./_pip/contant-to-flat-string.pipe";
 
 @NgModule({
   imports: [
@@ -115,6 +116,7 @@ import {MatRadioModule} from "@angular/material/radio";
     DocumentComponent,
     JalaliPipe,
     BlankToDashPipe,
+    ContactToFlatStringPipe,
     FinancialStatusComponent,
     UserManagementComponent,
     UserRegistrationComponent,

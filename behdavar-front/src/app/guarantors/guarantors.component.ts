@@ -3,8 +3,8 @@ import {GuarantorsLang} from '../model/lang';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import Url from "../model/url";
-import {ActivatedRoute} from "@angular/router";
-import {GuarantorDto} from "../model/model";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ContactDto, GuarantorDto, PersonDto} from "../model/model";
 import {MatSelectionList} from "@angular/material/list";
 import {MyErrorStateMatcher} from "../model/MyErrorStateMatcher";
 import {MatSnackBar} from "@angular/material/snack-bar";
@@ -19,6 +19,8 @@ export class GuarantorsComponent implements OnInit {
   @ViewChild("GLSelect")
   glSelect: MatSelectionList;
 
+  contactList: ContactDto[];
+
   lang = new GuarantorsLang();
   guarantorsForm: FormGroup;
 
@@ -27,16 +29,14 @@ export class GuarantorsComponent implements OnInit {
   guarantorDtoList: GuarantorDto[];
 
 
-  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute,private _snackBar:MatSnackBar) {
+  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private _snackBar: MatSnackBar,private router:Router) {
   }
 
   ngOnInit(): void {
     this.guarantorsForm = this.fb.group({
       person: this.fb.group({
-        id:[''],
-        firstName: [''],
-        lastName: [''],
-        fullName:[''],
+        id: [''],
+        fullName: [''],
         email: [''],
         description: [''],
         fatherName: [''],
@@ -69,15 +69,27 @@ export class GuarantorsComponent implements OnInit {
 
   }
 
+  private removeTraceableField(newPerson: PersonDto) {
+    newPerson.createdDate = null;
+    newPerson.lastModifiedDate = null;
+    if (newPerson.contacts) {
+      for (let contact of newPerson.contacts) {
+        contact.createdDate = null;
+        contact.lastModifiedDate = null;
+      }
+    }
+  }
   onSubmit() {
-    console.log(this.guarantorsForm.value);
-
-    this.httpClient.post<unknown>(Url.PERSON_UPDATE, this.guarantorsForm.value['person'])
+    const newPerson: PersonDto = this.guarantorsForm.value['person'];
+    newPerson.contacts = this.contactList;
+    this.removeTraceableField(newPerson);
+    this.httpClient.post<unknown>(Url.PERSON_UPDATE, newPerson)
       .subscribe(value => {
           this._snackBar.open(this.lang.successSave, 'X', {
             duration: 5000, panelClass: ['bg-success', 'text-white']
           });
           this.updateGuarantorList();
+          this.router.navigate(['../']);
         },
         error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
           duration: 5000, panelClass: ['bg-danger', 'text-white']
@@ -86,7 +98,10 @@ export class GuarantorsComponent implements OnInit {
   }
 
   guarantorSelectChange() {
-    this.guarantorsForm.patchValue(this.glSelect.selectedOptions.selected[0]?.value);
+
+    const guarantorDto: GuarantorDto = this.glSelect.selectedOptions.selected[0]?.value;
+    this.guarantorsForm.patchValue(guarantorDto);
+    this.contactList = guarantorDto?.person?.contacts;
   }
 }
 

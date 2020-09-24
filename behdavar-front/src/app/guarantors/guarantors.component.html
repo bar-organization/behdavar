@@ -10,7 +10,7 @@
       </mat-selection-list>
     </div>
   </div>
-  <div class="p-2 card w-50" >
+  <div class="p-2 card w-75" >
     <form [formGroup]="guarantorsForm" (ngSubmit)="onSubmit()" >
       <div fxLayout="column" fxLayoutGap="1rem" formGroupName="person">
 
@@ -19,10 +19,7 @@
             <label>{{lang.name}}</label>
             <input matInput formControlName="fullName" [errorStateMatcher]="matcher">
           </mat-form-field>
-          <mat-form-field class="flex-fill">
-            <label>{{lang.family}}</label>
-            <input matInput formControlName="lastName" [errorStateMatcher]="matcher">
-          </mat-form-field>
+
           <mat-form-field class="flex-fill">
             <label>{{lang.fatherName}}</label>
             <input matInput formControlName="fatherName" [errorStateMatcher]="matcher">
@@ -32,9 +29,11 @@
 
 
         <div fxLayout="row" fxLayoutGap="0.5rem">
-          <mat-form-field class="flex-fill">
-            <label>{{lang.birthDate}}</label>
-            <input matInput formControlName="birthDate" [errorStateMatcher]="matcher">
+          <mat-form-field color="accent" appearance="standard" class="flex-fill">
+            <mat-label>{{lang.birthDate}}</mat-label>
+            <input matInput formControlName="birthDate" [matDatepicker]="picker2" [errorStateMatcher]="matcher">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field class="flex-fill">
@@ -49,12 +48,6 @@
         </div>
         <div fxLayout="row" fxLayoutGap="0.5rem">
           <mat-form-field class="flex-fill">
-            <label>{{lang.mobile}}</label>
-            <input
-              matInput formControlName="phoneNumber" [errorStateMatcher]="matcher">
-          </mat-form-field>
-
-          <mat-form-field class="flex-fill">
             <label>{{lang.postalCode}}</label>
             <input
               matInput formControlName="postalCode" [errorStateMatcher]="matcher">
@@ -63,6 +56,18 @@
             <label>{{lang.workPlacePhone}}</label>
             <input matInput formControlName="workPlacePhone" [errorStateMatcher]="matcher">
           </mat-form-field>
+        </div>
+        <div class="card" fxLayout="row" fxLayoutGap="0.5rem">
+          <div fxLayout="column" fxLayoutAlign="center center" class="text-center card-header">
+            {{lang.contactList}}
+          </div>
+          <div class="card-title">
+            <mat-selection-list role="list" [multiple]="false">
+              <mat-list-option *ngFor="let contact of contactList" [value]="contact">
+                <div fxLayout="row">{{contact | contactToFlatStringPipe}}</div>
+              </mat-list-option>
+            </mat-selection-list>
+          </div>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">

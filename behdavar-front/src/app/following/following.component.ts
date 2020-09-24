@@ -4,7 +4,7 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import Url from "../model/url";
 import {ContractDto, PursuitDto} from "../model/model";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import {PURSUIT_TYPE_TITLE, PursuitType} from "../model/enum/PursuitType";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
@@ -37,7 +37,7 @@ export class FollowingComponent implements OnInit {
   resultTypeList: EnumValueTitle<ResultType>[] = RESULT_TYPE_TITLE;
   followingHttpDataSource: HttpDataSource<PursuitDto>;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private _snackBar: MatSnackBar) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private _snackBar: MatSnackBar, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -68,9 +68,17 @@ export class FollowingComponent implements OnInit {
 
   submitted = false;
   followingTableColumn: TableColumn[] = [
-    {fieldName: 'pursuitType', title: this.lang.followingType,pipNames:[{pip:new BlankToDashPipe()}]},
-    {fieldName: 'createdDate', title: this.lang.date,pipNames:[{pip: new JalaliPipe()},{pip:new BlankToDashPipe()}]},
-    {fieldName: 'createdDate', title: this.lang.time,pipNames:[{pip: new JalaliPipe(),args:['HH:mm']},{pip:new BlankToDashPipe()}]},
+    {fieldName: 'pursuitType', title: this.lang.followingType, pipNames: [{pip: new BlankToDashPipe()}]},
+    {
+      fieldName: 'createdDate',
+      title: this.lang.date,
+      pipNames: [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}]
+    },
+    {
+      fieldName: 'createdDate',
+      title: this.lang.time,
+      pipNames: [{pip: new JalaliPipe(), args: ['HH:mm']}, {pip: new BlankToDashPipe()}]
+    },
     {fieldName: 'user.firstName', title: this.lang.expertName},
   ];
 
@@ -86,6 +94,7 @@ export class FollowingComponent implements OnInit {
             duration: 5000, panelClass: ['bg-success', 'text-white']
           });
           this.followingHttpDataSource.reload();
+          this.router.navigate(['../']);
         },
 
 

@@ -16,6 +16,7 @@ export class Lang {
   active = 'فعال';
   title = 'عنوان';
   send = 'ارسال';
+  description = 'توضیحات';
 }
 
 export class AuthLang extends Lang {
@@ -35,9 +36,7 @@ export class LoginLang extends Lang {
 }
 
 export class PersonLang extends Lang {
-  name = 'نام';
-  family = 'نام خانوادگی';
-  fullName =  'نام کامل';
+  name = 'نام و نام خانوادگی';
   fatherName = 'نام پدر';
   birthDate = 'تاریخ تولد';
   nationalNumber = 'کد ملی';
@@ -52,20 +51,22 @@ export class HomeLang extends Lang {
   myBasket = 'سبد من';
   reports = 'گزارشات';
   utilityTools = 'ابزارهای کاربردی';
-  userManagement= 'مدیریت کاربران';
-  documentInput= 'ورود پرونده';
+  userManagement = 'مدیریت کاربران';
+  documentInput = 'ورود پرونده';
 }
 
-export class DocumentInputLang extends Lang{
+export class DocumentInputLang extends Lang {
   manual = 'دستی';
   auto = 'خودکار';
   chooseFile = 'انتخاب فایل';
 }
-export class UserManagementLang extends Lang{
+
+export class UserManagementLang extends Lang {
   users = 'کاربران';
   roles = 'نقش ها';
 }
-export class UserRegistrationLang extends Lang{
+
+export class UserRegistrationLang extends Lang {
   userList = 'لیست کاربران';
   username = 'نام کاربری';
   password = 'رمز عبور';
@@ -84,12 +85,13 @@ export class UserRegistrationLang extends Lang{
   selectAUserFromList = 'یک کاربر را از لیست انتخاب کنید';
 
 }
-export class RoleRegistrationLang extends Lang{
+
+export class RoleRegistrationLang extends Lang {
   role = 'نقش';
   roleList = 'لیست نقش ها';
-  roleName= 'نام نقش';
+  roleName = 'نام نقش';
   privilegeList = 'لیست دسترسی ها';
-  privilegeName= 'نام دسترسی';
+  privilegeName = 'نام دسترسی';
   selectPrivilege = 'انتخاب دسترسی جدید';
   errorOnFindPrivilege = 'خطا در جستجو دسترسی';
   createNewRole = 'ایجاد نقش جدید';
@@ -100,6 +102,7 @@ export class RoleRegistrationLang extends Lang{
   rolePrivilegesNotBeEmpty = 'لیست نقش ها نباید خالی باشد';
   editRole = 'ویرایش نقش';
 }
+
 export class DocumentToolbarLang extends Lang {
   followUp = 'پیگیری';
   guarantorInfo = 'اطلاعات ضامنین';
@@ -153,12 +156,26 @@ export class FollowingLang extends Lang {
 export class GuarantorsLang extends PersonLang {
   guarantorsInformation = 'اطلاعات ضامنین';
   guarantorList = 'لیست ضامنین';
+  contactList = 'اطلاعات تماس';
 }
 
 export class CustomerLang extends PersonLang {
   customerInformation = 'اطلاعات مشتری';
+  contactList = 'اطلاعات تماس';
 }
 
+export class ContactLang extends Lang {
+  number = 'شماره تماس';
+  preCode = 'کد';
+  confirmed = 'تایید شده';
+  phoneType = 'نوع';
+}
+
+export class PhoneTypeLang extends Lang{
+  phone = 'تلفن ثابت';
+  mobile = 'شماره همراه';
+  fax = 'فکس';
+}
 export class AttachmentLang extends Lang {
   documentAttachment = 'ضمائم پرونده';
   documentNumber = 'شماره پرونده';
@@ -168,16 +185,17 @@ export class AttachmentLang extends Lang {
   fileDocument = 'فایل مدرک';
 }
 
-export class FinancialStatusLang extends Lang{
+export class FinancialStatusLang extends Lang {
   totalAmount = 'مبلغ کل پرونده';
   receiveAmount = 'مبلغ کل واریز شده';
   paymentList = 'لیست و اطلاعات واریزی های مشتری';
   amount = 'مبلغ';
   paymentType = 'نوع دریافت';
-  expert = 'کارشناس' ;
+  expert = 'کارشناس';
   contractStatus = 'وضعیت پرونده';
-  paymentDate = 'تاریخ' ;
+  paymentDate = 'تاریخ';
 }
+
 export class PursuitTypeLang extends Lang {
   PHONE_CALL = "تماس تلفنی";
   APPOINTMENT = 'قرار ملاقات';

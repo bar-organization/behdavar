@@ -1,5 +1,6 @@
 import {PursuitType} from "./enum/PursuitType";
 import {ResultType} from "./enum/ResultType";
+import {PhoneType} from "./enum/PhoneType";
 
 class BaseModel<T> {
   id: T;
@@ -33,6 +34,14 @@ export class BaseAuditorDto<U, I> {
   version?: number;
 }
 
+export class ContactDto extends BaseAuditorDto<string, number> {
+  number?: string;
+  description?: string;
+  preCode?: string;
+  confirmed?: boolean;
+  phoneType?: PhoneType;
+}
+
 export class GuarantorDto extends BaseAuditorDto<string, number> {
   relationType: RelationType;
   contract: ContractDto;
@@ -47,10 +56,11 @@ export class CustomerDto extends BaseAuditorDto<string, number> {
 export class PersonDto extends BaseAuditorDto<string, number> {
   firstName: string;
   lastName: string;
-  fullName:string;
+  fullName: string;
   email: string;
   phoneNumber: string;
   description: string;
+  contacts?: ContactDto[];
 }
 
 export class UserDto extends BaseAuditorDto<string, number> {
@@ -66,7 +76,7 @@ export class UserDto extends BaseAuditorDto<string, number> {
   isAccountNonLocked?: boolean;
   isCredentialsNonExpired?: boolean;
   roles?: RoleDto[];
-  person?:PersonDto;
+  person?: PersonDto;
 }
 
 export class PursuitDto extends BaseAuditorDto<string, number> {
