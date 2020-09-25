@@ -35,6 +35,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Output()
   idFieldChange = new EventEmitter<number>();
 
+  @Output()
+  rowSelectChange = new EventEmitter();
+
   @Input()
   idFieldName: string;
 
@@ -129,8 +132,10 @@ export class DataTableComponent implements OnInit, AfterViewInit {
         this.idFieldName = 'id';
       }
       this.idFieldChange.emit(dot.pick(this.idFieldName, row));
+      this.rowSelectChange.emit(row);
     } else {
       this.idFieldChange.emit(undefined);
+      this.rowSelectChange.emit(undefined);
 
     }
     return result;

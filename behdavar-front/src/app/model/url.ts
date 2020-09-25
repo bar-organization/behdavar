@@ -22,6 +22,7 @@ export default class Url {
   public static readonly USER_FIND_PAGING = `${Url.BASE_API}/user/find-paging`;
   public static readonly USER_FIND_BY_ID = `${Url.BASE_API}/user/find-by-id`;
   public static readonly USER_SAVE = `${Url.BASE_API}/user/save`;
+  public static readonly USER_UPDATE = `${Url.BASE_API}/user/update`;
   public static readonly USER_DELETE = `${Url.BASE_API}/user/delete`;
 
   public static readonly ROLE_FIND_BY_ID = `${Url.BASE_API}/role/find-by-id`;

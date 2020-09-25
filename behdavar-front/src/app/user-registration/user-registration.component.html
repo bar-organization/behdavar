@@ -1,51 +1,50 @@
-<div fxLayout="row">
-  <aside class="border-left p-2 w-25 h-100">
+<div fxLayout="row" fxLayoutAlign="start stretch"  fxLayout.sm="column">
+  <aside class="p-2 w-50 h-100">
     <form [formGroup]="userSearchForm" (ngSubmit)="onSearchUser()" fxLayout="row" fxLayoutAlign="start center"
           fxLayoutGap="0.5rem">
       <mat-form-field>
         <mat-label>{{lang.username}}</mat-label>
         <input matInput formControlName="username">
       </mat-form-field>
+      <mat-checkbox  checked="checked" formControlName="isActive">{{lang.active}}</mat-checkbox>
       <button mat-flat-button type="submit" color="primary">{{lang.search}}</button>
     </form>
 
-    <div class="card ">
+    <div class="card">
       <div class="text-center card-header">{{lang.userList}}</div>
-
-      <mat-selection-list #matUserList [multiple]="false" class="overflow-auto" style="max-height: 20rem"
-                          (selectionChange)="onUserSelectChange()">
-        <mat-list-option *ngFor="let user of userList" [value]="user">
-          <img mat-list-icon src="../../assets/image/user.png" alt="User avatar"/>
-          <div mat-line class="text-right">{{user.username}}</div>
-          <div mat-line class="text-right grey-500"> {{user.firstName}} {{user.lastName}}</div>
-        </mat-list-option>
-      </mat-selection-list>
+      <data-table [tableColumns]="userTableColumns" [httpDataSource]="userHttpDatasource" (rowSelectChange)="onUserSelectChange($event)"></data-table>
     </div>
   </aside>
 
-  <article class="p-2" style="width: 35%" fxLayout="column" fxLayoutGap="0.5rem">
+  <article class="py-5 px-2 w-50 border-right" fxLayout="column" fxLayoutGap="0.5rem">
 
-    <section fxLayout="row" fxLayoutAlign="space-between start" class="w-100">
+    <section fxLayout="row" fxLayout.sm="column" fxLayoutAlign="start center" fxLayoutGap="0.5rem" class="w-100">
 
-      <form [formGroup]="newUserFormGroup" fxLayout="column" fxLayoutAlign="end stretch" class="h-100"
+      <form [formGroup]="newUserFormGroup" fxLayout="column" fxFlex="75" fxLayoutAlign="end stretch" class="h-100"
             fxLayoutGap="1rem">
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-          <mat-form-field>
+          <mat-form-field fxFlex="50">
             <mat-label>{{lang.username}}</mat-label>
             <input matInput formControlName="username">
             <mat-error *ngIf="isInvalidUsername">{{lang.usernameNotValid}}</mat-error>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field fxFlex="50">
             <mat-label>{{lang.password}}</mat-label>
-            <input matInput formControlName="password">
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (keydown.space)="hide = !hide" (mousedown)="hide = !hide"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
             <mat-error *ngIf="isInvalidUsername">{{lang.passwordNotValid}}</mat-error>
           </mat-form-field>
+
         </div>
 
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-          <mat-form-field>
+          <mat-form-field fxFlex="50">
             <input type="text"
                    [placeholder]="lang.personRole"
                    aria-label="Number"
@@ -59,15 +58,15 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field fxFlex="50">
             <mat-label>{{lang.code}}</mat-label>
             <input matInput formControlName="code">
             <mat-error *ngIf="isInvalidUsername">{{lang.codeNotValid}}</mat-error>
           </mat-form-field>
         </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3rem">
-          <form (ngSubmit)="addRole()" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-            <mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+          <form (ngSubmit)="addRole()" fxFlex="50" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+            <mat-form-field fxFlex="90">
               <input type="text"
                      [placeholder]="lang.selectRole"
                      aria-label="Number"
@@ -81,16 +80,16 @@
               </mat-autocomplete>
             </mat-form-field>
 
-            <button mat-mini-fab color="primary" type="submit">
+            <button mat-mini-fab color="primary" type="submit" >
               <mat-icon>add</mat-icon>
             </button>
           </form>
-          <mat-checkbox checked="checked" formControlName="isActive">{{lang.active}}</mat-checkbox>
+          <mat-checkbox  checked="checked" formControlName="isActive">{{lang.active}}</mat-checkbox>
         </div>
 
       </form>
 
-      <mat-card fxLayout="column" fxLayoutAlign="center center" class="userImage">
+      <mat-card fxLayout="column" fxLayoutAlign="center center" fxFlex="25" class="userImage">
         <img mat-card-image src="../../assets/image/user.png" alt="User avatar">
         <mat-card-actions>
           <button mat-button>{{lang.new}}</button>
@@ -101,7 +100,6 @@
 
 
     <section>
-
       <div class="card">
         <div class="card-header text-right">{{lang.userRoles}}</div>
         <mat-list class="overflow-auto" style="max-height: 15rem">
@@ -109,7 +107,7 @@
             <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100 border-bottom">
               <div [class]="role.active ? '' : 'disableRole'">{{role.role.title}}</div>
               <div fxLayout="row" fxLayoutGap="0.3rem">
-                <button mat-icon-button (click)="test()" color="primary">
+                <button mat-icon-button color="primary">
                   <mat-icon>pageview</mat-icon>
                 </button>
                 <button mat-icon-button (click)="onUserRoleDelete(role)" [color]="role.active ? 'accent' :'primary'">
@@ -124,7 +122,7 @@
 
     <section fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
       <button mat-raised-button color="primary" (click)="newUser()">{{lang.insert}}</button>
-      <button mat-raised-button color="accent">{{lang.edit}}</button>
+      <button mat-raised-button color="accent" (click)="updateUser()">{{lang.edit}}</button>
     </section>
 
   </article>

@@ -1,3 +1,5 @@
+import {PersonDto} from "./model";
+
 export class Lang {
     save = 'ذخیره';
     insert = 'افزودن';
@@ -32,11 +34,14 @@ export class LoginLang extends Lang {
     enterMessage = 'ورود';
     userNameRequired = 'نام کاربری اجباری است';
     passwordRequired = 'رمز عبور اجباری است';
+    loginTitle = 'نرم افزار جامع پیگیری وصول مطالبات';
 
 }
 
 export class PersonLang extends Lang {
     name = 'نام و نام خانوادگی';
+    firstName = 'نام';
+    lastName = 'نام خانوادگی';
     fatherName = 'نام پدر';
     birthDate = 'تاریخ تولد';
     nationalNumber = 'کد ملی';
@@ -66,7 +71,7 @@ export class UserManagementLang extends Lang {
     roles = 'نقش ها';
 }
 
-export class UserRegistrationLang extends Lang {
+export class UserRegistrationLang extends PersonLang {
     userList = 'لیست کاربران';
     username = 'نام کاربری';
     password = 'رمز عبور';

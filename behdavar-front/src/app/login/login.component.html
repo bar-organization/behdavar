@@ -1,36 +1,39 @@
 ﻿<div fxLayout="row" fxLayoutAlign="center center" fxFill class="login">
+  <mat-card class="w-50 pt-3 pb-5" style="border-radius: 2rem" fxLayout="column">
+    <h2 class="text-center border-bottom pb-2" style="color: #ff1744">{{loginLang.loginTitle}}</h2>
 
-  <mat-card class="w-50 pt-5 pb-5" fxLayout="row" fxLayoutAlign="center stretch" fxLayout.xs="column">
+    <div class="px-5 py-4" fxLayout="row" fxLayoutAlign="center stretch" fxLayout.xs="column" fxLayoutGap="2rem" >
+      <div fxLayout="column" fxLayoutAlign="center center" class="imageBorder">
+        <img src="../../assets/image/icon.jpg" alt="logo" class="w-75" >
+      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center stretch"
+            fxLayoutGap="1.5rem"
+            class="w-50">
+        <h3 class="text-center">{{loginLang.loginMessage}}</h3>
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center stretch"
-          fxLayoutGap="1.5rem"
-          class="w-100">
-      <h3 class="text-center">{{loginLang.loginMessage}}</h3>
+        <mat-form-field appearance="outline">
+          <mat-label>{{loginLang.usernameMessage}}</mat-label>
+          <input matInput formControlName="username">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="isInvalidUserName">{{userErrorMessage}}</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>{{loginLang.usernameMessage}}</mat-label>
-        <input matInput formControlName="username">
-        <mat-icon matSuffix>person</mat-icon>
-        <mat-error *ngIf="isInvalidUserName">{{userErrorMessage}}</mat-error>
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>{{loginLang.passwordMessage}}</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix (keydown.space)="hide = !hide" (mousedown)="hide = !hide"
+                  [attr.aria-label]="'Hide password'"
+                  [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="isInvalidPassword">{{passwordErrorMessage}}</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>{{loginLang.passwordMessage}}</mat-label>
-        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
-        <button mat-icon-button matSuffix (keydown.space)="hide = !hide" (mousedown)="hide = !hide"
-                [attr.aria-label]="'Hide password'"
-                [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-        <mat-error *ngIf="isInvalidPassword">{{passwordErrorMessage}}</mat-error>
-      </mat-form-field>
+        <button mat-raised-button type="submit" color="primary">{{loginLang.enterMessage}}</button>
+      </form>
 
-      <button mat-raised-button type="submit" color="primary">{{loginLang.enterMessage}}</button>
-    </form>
-
-    <div fxLayout="column" fxLayoutAlign="center center">
-      <img src="../../assets/image/logo.png" alt="logo" class="w-75">
     </div>
+
 
   </mat-card>
 

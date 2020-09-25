@@ -3,43 +3,55 @@ import {UserRegistrationLang} from "../model/lang";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PersonDto, RoleDto, UserDto} from "../model/model";
 import {Subject} from "rxjs";
-import {MatSelectionList} from "@angular/material/list";
 import {HttpClient} from "@angular/common/http";
-import {PagingRequest, PagingResponse, SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import Url from "../model/url";
 import {MessageService} from "../service/message.service";
 import {MatAutocomplete} from "@angular/material/autocomplete";
+import {TableColumn} from "../_custom-component/data-table/data-table.component";
+import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 
 @Component({
   selector: 'user-registration',
   templateUrl: './user-registration.component.html',
   styleUrls: ['./user-registration.component.css']
 })
-export class UserRegistrationComponent implements OnInit,AfterViewInit {
+export class UserRegistrationComponent implements OnInit, AfterViewInit {
+
+  private static readonly SUPERVISOR_FILTER: SearchCriteria = {
+    key: 'username',
+    value: 'SUPERVISOR_USER',
+    operation: SearchOperation.NOT_EQUAL
+  };
 
   lang: UserRegistrationLang = new UserRegistrationLang();
   userSearchForm: FormGroup;
   userList: UserDto[];
-  roleList: RoleWrapper[] = [];
+  selectedUser: UserDto;
+  hide: boolean = true;
 
-  @ViewChild("matUserList")
-  matUserList: MatSelectionList;
+
+  roleList: RoleWrapper[] = [];
+  userTableColumns: TableColumn[];
+
+  userHttpDatasource: HttpDataSource<UserDto>;
   @ViewChild("auto")
   roleAutocomplete: MatAutocomplete;
+
   @ViewChild("personAuto")
   personAutocomplete: MatAutocomplete;
-
   personDto: PersonDto;
   personOptions: Subject<PersonDto[]> = new Subject<PersonDto[]>();
+
   roleOptions: Subject<RoleDto[]> = new Subject<RoleDto[]>();
 
   newUserFormGroup: FormGroup;
-
   personAutocompleteControl = new FormControl();
-  roleControl = new FormControl();
 
+  roleControl = new FormControl();
   isInvalidUsername: boolean;
   isInvalidPassword: boolean;
+
   isInvalidCode: boolean;
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient, private messageService: MessageService) {
@@ -48,7 +60,8 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     this.userSearchForm = this.fb.group({
-      username: ['']
+      username: [''],
+      isActive: [true]
     });
 
     this.newUserFormGroup = this.fb.group({
@@ -58,15 +71,16 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
       isActive: [true]
     });
 
-    this.requestSearchUser();
+    this.configUserDataTable();
 
     this.personAutocompleteControl.valueChanges.subscribe(value => this.personAutocompleteFilter(value));
     this.roleControl.valueChanges.subscribe(value => this._filter(value));
   }
 
-  ngAfterViewInit(): void{
+
+  ngAfterViewInit(): void {
     this.personAutocomplete.optionSelected.subscribe(v => {
-      if(v && v.option){
+      if (v && v.option) {
         this.personDto = new PersonDto();
         this.personDto.id = v.option.id;
       }
@@ -75,24 +89,20 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
   }
 
 
-  private requestSearchUser(username?: string) {
-    const request = new PagingRequest();
-    request.start = 0;
-    request.max = 10;
+  private configUserDataTable(username?: string) {
+    this.userTableColumns = [
+      {fieldName: 'firstName', title: this.lang.firstName},
+      {fieldName: 'lastName', title: this.lang.lastName},
+      {fieldName: 'username', title: this.lang.username},
+    ];
+    this.userHttpDatasource = new HttpDataSource<UserDto>(Url.USER_FIND_PAGING, this.httpClient, [UserRegistrationComponent.SUPERVISOR_FILTER]);
 
-    if (username) {
-      request.filters = [{key: 'username', value: username, operation: SearchOperation.MATCH}];
-    }
-
-    this.httpClient.post<PagingResponse<UserDto>>(Url.USER_FIND_PAGING, request).subscribe(value => {
-        this.userList = value.data;
-      },
-      e => this.messageService.showGeneralError(this.lang.errorOnSearchUser, e)
-    );
   }
 
-
   private _filter(filterValue: string) {
+    if (!filterValue) {
+      return;
+    }
     if (filterValue.length < 3) {
       return;
     }
@@ -102,6 +112,9 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
   }
 
   private personAutocompleteFilter(filterValue: string) {
+    if (!filterValue) {
+      return;
+    }
     if (filterValue.length < 3) {
       return;
     }
@@ -117,10 +130,6 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
       role.active = !role.active;
 
     }
-  }
-
-  test() {
-
   }
 
   // TODO must refactor
@@ -154,23 +163,24 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
 
   }
 
-  onUserSelectChange() {
-    const selectedUser = this.matUserList.selectedOptions.selected[0];
+  onUserSelectChange(selectedUser: any) {
+
     // is any user not selected , nothing happen
     if (!selectedUser) {
+      this.selectedUser = null;
       return;
     }
+    this.selectedUser = selectedUser;
 
     // clear roleList
     this.roleList = [];
 
     // patch only username to form
-    const userDto: UserDto = selectedUser.value;
-    this.newUserFormGroup.patchValue({'username': userDto.username,'code':userDto.code});
+    this.newUserFormGroup.patchValue({'username': this.selectedUser.username, 'code': this.selectedUser.code, 'isActive': this.selectedUser.enabled});
 
     // TODO must optimize service call
     // for each role of selected user , load related role and added to roleList
-    userDto.roles.forEach(value => {
+    this.selectedUser.roles.forEach(value => {
         this.httpClient
           .post<RoleDto>(Url.ROLE_FIND_BY_ID, value.id)
           .subscribe(value => this.roleList.push({role: value, active: true, isNew: false}),
@@ -230,15 +240,105 @@ export class UserRegistrationComponent implements OnInit,AfterViewInit {
     // perform save request
     this.httpClient
       .post<number>(Url.USER_SAVE, newUser)
-      .subscribe(value => this.messageService.showGeneralSuccess(this.lang.successSave),
-        e => this.messageService.showGeneralError( this.lang.error,e))
+      .subscribe(value => {
+          this.messageService.showGeneralSuccess(this.lang.successSave);
+          this.userHttpDatasource.reload([UserRegistrationComponent.SUPERVISOR_FILTER]);
+          this.newUserFormGroup.reset();
+          this.personAutocompleteControl.reset();
+          this.roleControl.reset();
+          this.roleList = [];
+        },
+        e => this.messageService.showGeneralError(this.lang.error, e))
 
   }
 
   onSearchUser() {
-    this.requestSearchUser(this.userSearchForm.value.username);
+    const username = this.userSearchForm.value.username;
+    const isActive = this.userSearchForm.value.isActive;
+
+    const searchCriteriaList: SearchCriteria[] = [UserRegistrationComponent.SUPERVISOR_FILTER,
+      {
+        key: 'username',
+        value: username,
+        operation: SearchOperation.MATCH
+      },
+      {
+        key: 'enabled',
+        value: isActive,
+        operation: SearchOperation.EQUAL
+      }];
+
+    this.userHttpDatasource.reload(searchCriteriaList);
   }
 
+  updateUser() {
+    if (!this.selectedUser) {
+      this.messageService.showGeneralError(this.lang.selectAUserFromList);
+      return;
+    }
+    this.isInvalidUsername = false;
+    this.isInvalidPassword = false;
+    this.isInvalidCode = false;
+
+
+    // validation
+    if (!this.newUserFormGroup.valid) {
+      this.isInvalidUsername = true;
+      this.isInvalidPassword = true;
+      this.isInvalidCode = true;
+      this.newUserFormGroup.markAllAsTouched();
+      return;
+    }
+    // extract date form form
+    this.selectedUser.username = this.newUserFormGroup.value.username;
+    this.selectedUser.password = this.newUserFormGroup.value.password;
+    this.selectedUser.code = this.newUserFormGroup.value.code;
+    this.selectedUser.enabled = this.newUserFormGroup.value.isActive;
+    this.selectedUser.tokenExpired = false;
+    this.selectedUser.isAccountNonExpired = true;
+    this.selectedUser.isAccountNonLocked = true;
+    this.selectedUser.isCredentialsNonExpired = true;
+    this.selectedUser.createdDate = null;
+    this.selectedUser.lastModifiedDate = null;
+
+    //extract selected person id
+    if (!this.personDto || !this.personDto.id) {
+      this.messageService.showGeneralError(this.lang.personNotNull)
+      return;
+    }
+
+    this.selectedUser.person = this.personDto;
+
+    //check roleList
+    if (this.roleList.length === 0) {
+      this.messageService.showGeneralError(this.lang.userRoleNotEmpty)
+      return;
+    }
+
+    //set active item in roleList to newUser
+    this.selectedUser.roles = this.roleList.filter(value => value.active).map(value => value.role);
+    //
+    this.selectedUser.roles.forEach(value => {
+      value.lastModifiedDate = null;
+      value.createdDate = null;
+      value.privilegeDtos.forEach(value1 => {
+        value1.lastModifiedDate = null;
+        value1.createdDate = null;
+      })
+    });
+    // perform save request
+    this.httpClient
+      .post<number>(Url.USER_UPDATE, this.selectedUser)
+      .subscribe(value => {
+          this.messageService.showGeneralSuccess(this.lang.successSave);
+          this.userHttpDatasource.reload([UserRegistrationComponent.SUPERVISOR_FILTER]);
+          this.newUserFormGroup.reset();
+          this.personAutocompleteControl.reset();
+          this.roleControl.reset();
+          this.roleList = [];
+        },
+        e => this.messageService.showGeneralError(this.lang.error, e))
+  }
 }
 
 interface RoleWrapper {
