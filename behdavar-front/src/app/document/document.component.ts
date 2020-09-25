@@ -22,20 +22,20 @@ export class DocumentComponent {
   catalogHttpDataSource: HttpDataSource<CartableDto> = new HttpDataSource<CartableDto>(Url.CARTABLE_FIND_PAGING, this.httpClient);
 
   tableColumns: TableColumn[] = [
-    {fieldName: "receiver.firstName", title: this.documentLang.customerName},
-    {fieldName: 'contract.lendingNumber', title: this.documentLang.facilityNumber},
-    {fieldName: 'contract.contractStatus', title: this.documentLang.status},
-    {fieldName: 'contract.lateFees', title: this.documentLang.lateFees},
-    {fieldName: 'contract.defferedAmount', title: this.documentLang.deferredAmount},
-    {fieldName: 'contract.defferedCount', title: this.documentLang.deferredCount},
-    {fieldName: 'contract.masterAmount', title: this.documentLang.totalAmount},
+    {fieldName: "contract.customers[0].person.fullName", title: this.documentLang.customerName},
+    {fieldName: 'contract.lendingNumber', title: this.documentLang.facilityNumber,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.contractStatus', title: this.documentLang.status,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.lateFees', title: this.documentLang.lateFees,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.defferedAmount', title: this.documentLang.deferredAmount,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.defferedCount', title: this.documentLang.deferredCount,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.masterAmount', title: this.documentLang.totalAmount,pipNames:this.getSimplePip()},
     {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: this.getDatePip()},
     {fieldName: 'sender.firstName', title: this.documentLang.expert},
     // {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
     // {fieldName: 'contract.lending.receiveLendingDate', title: this.documentLang.receiveLendingDate, pipNames: this.getDatePip()},
     // {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch,pipNames:this.getSimplePip()},
     // {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank,pipNames:this.getSimplePip()},
-    {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber,pipNames:this.getSimplePip()  },
     {fieldName: 'contract.product.productName', title: this.documentLang.vehicleType,pipNames:this.getSimplePip()},
   ];
 

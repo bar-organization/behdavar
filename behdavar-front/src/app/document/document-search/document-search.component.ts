@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {DocumentLang} from '../../model/lang';
 import {animate, state, style, transition, trigger} from "@angular/animations";
+import {DataTableComponent} from "../../_custom-component/data-table/data-table.component";
+import {SearchCriteria} from "../../_custom-component/data-table/PaginationModel";
 
 @Component({
   selector: 'app-document-search',
@@ -17,6 +19,9 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 })
 export class DocumentSearchComponent implements OnInit {
   panelOpenState = false;
+
+  @Input()
+  documentSearchDataTable:DataTableComponent;
 
   parentForm: FormGroup;
   bankMachineSearchFormGroup: FormGroup;
@@ -36,7 +41,6 @@ export class DocumentSearchComponent implements OnInit {
 
     this.customerSearchFormGroup = this.fb.group({
       name: [''],
-      family: [''],
       fatherName: [''],
       birthDate: [''],
       nationalNumber: [''],
@@ -61,7 +65,10 @@ export class DocumentSearchComponent implements OnInit {
   }
 
   onSub() {
-    console.log(this.parentForm);
+    console.log(this.parentForm.value);
+
+    const filter: SearchCriteria[] = [];
+    this.documentSearchDataTable.httpDataSource.reload()
   }
 
 

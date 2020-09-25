@@ -16,12 +16,22 @@ export class ContactToFlatStringPipe implements PipeTransform {
       return '-';
     }
     return `${this.lang.number}: [${value.number? value.number:this.nullStringSymbol}] , ${this.lang.phoneType} : [${this.getPhoneTypeTitle(value)?this.getPhoneTypeTitle(value):this.nullStringSymbol}]
-     , ${this.lang.confirmed}:[${value.confirmed ? 'بله': 'خیر'}] , ${this.lang?.description}: [${value.description ? value.description : this.nullStringSymbol}]
+     , ${this.lang.confirmed}:[${value.confirmed ? 'بله': 'خیر'}] , ${this.lang?.description}: [${this.getDescription(value.description)}]
     `;
   }
 
 
   private getPhoneTypeTitle(value: ContactDto) {
     return this.phoneType.find(phoneType => phoneType.value === value.phoneType).title;
+  }
+
+  private getDescription(description:string) {
+    if (!description) {
+      return this.nullStringSymbol;
+    }
+    if (description.length > 10) {
+      return description.substr(0,9) + '...'
+    }
+    return description;
   }
 }

@@ -137,6 +137,7 @@ export class ContractDto extends BaseAuditorDto<string, number> {
   corporation: CatalogDetailDto;
   contractStatus: ContractStatus;
   contractType: ContractType;
+  customers: CustomerDto[];
 }
 
 export class LendingDto extends BaseAuditorDto<string, number> {
