@@ -55,6 +55,7 @@ public class InputExcelLendingEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "DUE_DATE")
     private String dueDate;
     @Column(name = "INPUT_DATE")
+    //todo:important
     private String inputDate;
     @Column(name = "AMOUNT")
     private Long amount;
