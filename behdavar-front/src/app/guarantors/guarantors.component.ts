@@ -170,6 +170,7 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
       if (value.contact === selectedContact) {
         value.contact = {
           id: value.contact.id,
+          version:value.contact.version,
           number: this.contactForm.value.number,
           confirmed: this.contactForm.value.confirmed,
           phoneType: this.contactForm.value.phoneType,
