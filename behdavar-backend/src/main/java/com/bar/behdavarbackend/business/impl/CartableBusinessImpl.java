@@ -11,6 +11,8 @@ import com.bar.behdavarbackend.dto.UserInfoDto;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.*;
 import com.bar.behdavardatabase.entity.CartableEntity;
+import com.bar.behdavardatabase.entity.ContractEntity;
+import com.bar.behdavardatabase.entity.CustomerEntity;
 import com.bar.behdavardatabase.repository.CartableRepository;
 import com.bar.behdavardatabase.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,7 +80,8 @@ public class CartableBusinessImpl implements CartableBusiness {
         if (pagingResponse.getData() != null) {
             List<CartableEntity> data = (List<CartableEntity>) pagingResponse.getData();
             List<CartableDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(CartableTransformer.entityToDto(e, new CartableDto())));
+            data.forEach(e -> output.add(CartableTransformer.entityToDto(e, new CartableDto(),
+                    CartableEntity.CONTRACT, ContractEntity.CUSTOMERS, CustomerEntity.PERSON)));
             pagingResponse.setData(output);
         }
         return pagingResponse;

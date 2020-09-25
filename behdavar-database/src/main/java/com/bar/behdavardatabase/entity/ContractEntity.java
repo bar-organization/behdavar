@@ -16,6 +16,8 @@ import org.hibernate.envers.Audited;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
@@ -31,6 +33,7 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "CONTRACT";
     public static final String SEQ_NAME = "CONTRACT" + BaseConstant.SEQUENCE;
+    public static final String CUSTOMERS = "customers";
 
     @Column(name = "ID")
     @Id
@@ -60,6 +63,9 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     private ContractStatus contractStatus;
     @Column(name = "CONTRACT_TYPE", nullable = false, columnDefinition = "Number(2)")
     private ContractType contractType;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract")
+    private Set<CustomerEntity> customers = new HashSet<>();
 
     private ContractEntity(Long id) {
         this.id = id;

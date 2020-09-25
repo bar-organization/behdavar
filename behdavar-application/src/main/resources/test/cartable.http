@@ -8,7 +8,7 @@ Content-Type: application/json
 # call cartable find by id
 POST http://127.0.0.1:8081/api/cartable/get-user-info
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg3MzE5ODIsImV4cCI6MTU5ODczNTU4Mn0.xPGCWLSatOUVJWJ3PszYg5PnMSbyIvBmNA25OOHmK_k
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTVVBFUlZJU09SX1VTRVIiLCJpYXQiOjE2MDEwMTY4NjEsImV4cCI6MTYwMTAyMDQ2MX0.yLwKBIVuj1B11uxEPXrTtD0aQbfFvkhUwO0Iliec8xY
 
 ###
 # call cartable save
@@ -53,17 +53,12 @@ Content-Type: application/json
 # call cartable find paging
 POST http://127.0.0.1:8081/api/cartable/find-paging
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2Mjk0MTMsImV4cCI6MTU5ODYzMzAxM30.1UiJgfnGeRzlNtxxNUMLV7OEvTKx4KD5pj5-FT2HVTI
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTVVBFUlZJU09SX1VTRVIiLCJpYXQiOjE2MDEwMzIwNjMsImV4cCI6MTYwMTAzNTY2M30.UPWYaE20b37VIKfUXmu9gG2NctXHE8UkWFGh1ER1CLI
 
 {
   "start": 0,
-  "max": 3,
+  "max": 1,
   "filters": [
-    {
-      "key": "contract.lendingNumber",
-      "value": "3213",
-      "operation": "EQUAL"
-    }
   ]
 }
 

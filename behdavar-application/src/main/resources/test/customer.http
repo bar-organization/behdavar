@@ -10,9 +10,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2O
 # call customer find by contract
 POST http://127.0.0.1:8081/api/customer/find-by-contract
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTU4MTEsImV4cCI6MTU5ODY5OTQxMX0.irkK9m-JlwJGNTtj1th6nPgTohEn73r7jocfGpM1FyM
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTVVBFUlZJU09SX1VTRVIiLCJpYXQiOjE2MDA5NTc5MTEsImV4cCI6MTYwMDk2MTUxMX0.uh6kXvozE3QNVAJB5VhF2bQfBjynUzZW11aibEwuHI8
 
-2
+50
 
 ###
 # call customer save

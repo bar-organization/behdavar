@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Data
@@ -20,4 +22,5 @@ public class ContractDto extends BaseAuditorDto<String, Long> {
     private CatalogDetailDto corporation;
     private ContractStatus contractStatus;
     private ContractType contractType;
+    private Set<CustomerDto> customers = new HashSet<>();
 }

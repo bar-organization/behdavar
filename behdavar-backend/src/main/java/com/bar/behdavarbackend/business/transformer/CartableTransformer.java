@@ -5,6 +5,10 @@ import com.bar.behdavarbackend.dto.ContractDto;
 import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavardatabase.entity.CartableEntity;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class CartableTransformer extends BaseAuditorTransformer {
 
     public static CartableEntity dtoToEntity(CartableDto dto, CartableEntity entity) {
@@ -15,10 +19,11 @@ public class CartableTransformer extends BaseAuditorTransformer {
         return entity;
     }
 
-    public static CartableDto entityToDto(CartableEntity entity, CartableDto dto) {
+    public static CartableDto entityToDto(CartableEntity entity, CartableDto dto, String... strings) {
+        List<String> fields = Arrays.stream(strings).collect(Collectors.toList());
         transformAuditingFields(entity, dto);
         dto.setActive(entity.getActive());
-        dto.setContract(ContractTransformer.entityToDto(entity.getContract(), new ContractDto()));
+        dto.setContract(ContractTransformer.entityToDto(entity.getContract(), new ContractDto(), strings));
         dto.setReceiver(UserTransformer.entityToDto(entity.getReceiver(), new UserDto()));
         dto.setSender(UserTransformer.entityToDto(entity.getSender(), new UserDto()));
         return dto;

@@ -2,7 +2,10 @@
 POST http://127.0.0.1:8081/auth/token
 Content-Type: application/json
 
-{"username":"behnam","password":"behnam"}
+{
+  "username": "SUPERVISOR_USER",
+  "password": "SUPER@BAR"
+}
 
 
 ### Test Token
