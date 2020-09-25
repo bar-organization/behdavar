@@ -31,7 +31,7 @@ public class ExcelRest {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @PreAuthorize("hasAuthority('" + AuthorityConstant.CONVERT + "')")
+    @PreAuthorize("hasAuthority('" + AuthorityConstant.CONVERT + "')")
     @PostMapping("/convert")
     public void convert(@RequestBody @Valid Long inputExcelId) {
         excelReaderBusiness.convert(inputExcelId);
