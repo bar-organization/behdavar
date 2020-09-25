@@ -3,6 +3,7 @@ package com.bar.behdavarbackend.business.impl;
 import com.bar.behdavarbackend.business.api.ExcelReaderBusiness;
 import com.bar.behdavarbackend.business.transformer.InputExcelLendingTransformer;
 import com.bar.behdavarbackend.business.transformer.InputExcelPersonTransformer;
+import com.bar.behdavarbackend.business.transformer.UserAmountTransformer;
 import com.bar.behdavarbackend.business.transformer.UserTransformer;
 import com.bar.behdavarbackend.dto.InputExcelDebtorDto;
 import com.bar.behdavarbackend.dto.InputExcelDto;
@@ -27,8 +28,10 @@ import org.springframework.util.Base64Utils;
 import org.springframework.util.CollectionUtils;
 
 import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service(ExcelReaderBusinessImpl.BEAN_NAME)
 public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
@@ -79,6 +82,9 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    UserAmountRepository userAmountRepository;
 
     @Override
     @Transactional
@@ -152,7 +158,6 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         lendingRepository.save(lendingEntity);
                         return;
                     }
-
                 }
 
                 // grantors
@@ -247,6 +252,15 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                             UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
                             cartableEntity.setSender(sender);
                             cartableRepository.save(cartableEntity);
+                            UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(userExpertEntity.getId()).orElse(null);
+                            if (userAmountEntity == null) {
+                                userAmountEntity = new UserAmountEntity();
+                                userAmountEntity.setTotalAmount(new BigDecimal("0"));
+                                userAmountEntity.setReceiveAmount(new BigDecimal("0"));
+                                userAmountEntity.setUser(userExpertEntity);
+                            }
+                            userAmountEntity.setTotalAmount(userAmountEntity.getTotalAmount().add(BigDecimal.valueOf(excelLendingEntity.getRemainDebtAmount())));
+                            userAmountRepository.save(userAmountEntity);
                         } else {
                             throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
                         }
