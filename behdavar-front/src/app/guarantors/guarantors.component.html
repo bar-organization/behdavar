@@ -2,7 +2,8 @@
   <div class="w-25 card">
     <div class="text-center card-header">{{lang.guarantorList}}</div>
     <div class="card-title">
-      <mat-selection-list #GLSelect (selectionChange)="guarantorSelectChange()" class="overflow-auto" style="max-height: 20rem" #shoes
+      <mat-selection-list #GLSelect (selectionChange)="guarantorSelectChange()" class="overflow-auto"
+                          style="max-height: 20rem" #shoes
                           [multiple]="false">
         <mat-list-option *ngFor="let guarantorDto of guarantorDtoList" [value]="guarantorDto">
           {{guarantorDto?.person?.fullName}}
@@ -10,8 +11,8 @@
       </mat-selection-list>
     </div>
   </div>
-  <div class="p-2 card w-75" >
-    <form [formGroup]="guarantorsForm" (ngSubmit)="onSubmit()" >
+  <div class="p-2 card w-75">
+    <form [formGroup]="guarantorsForm" (ngSubmit)="onSubmit()">
       <div fxLayout="column" fxLayoutGap="1rem" formGroupName="person">
 
         <div fxLayout="row" fxLayoutGap="0.5rem">
@@ -62,12 +63,45 @@
             {{lang.contactList}}
           </div>
           <div class="card-title">
-            <mat-selection-list role="list" [multiple]="false">
-              <mat-list-option *ngFor="let contact of contactList" [value]="contact">
-                <div fxLayout="row">{{contact | contactToFlatStringPipe}}</div>
+            <mat-selection-list #contactSelect role="list" (selectionChange)="contactSelectChange()" [multiple]="false">
+              <mat-list-option *ngFor="let contactWrapper of contactWrapperList" [value]="contactWrapper.contact">
+                <div fxLayout="row" fxLayoutAlign="space-between center" >
+                  <span [class]="contactWrapper.active ? '' : 'disableRole'">{{contactWrapper.contact | contactToFlatStringPipe}}</span>
+                  <button mat-icon-button type="button" (click)="onContactDelete(contactWrapper)" [color]="contactWrapper.active ? 'accent' :'primary'">
+                    <mat-icon>{{contactWrapper.active ? 'highlight_off ' : 'add_circle_outline'}}</mat-icon>
+                  </button>
+
+                </div>
               </mat-list-option>
             </mat-selection-list>
           </div>
+          <form [formGroup]="contactForm" class="card-body border-right" fxLayout="column"
+                fxLayoutAlign="start stretch">
+            <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center">
+              <mat-form-field>
+                <input matInput formControlName="number" [placeholder]="contactLang.number">
+              </mat-form-field>
+              <mat-checkbox formControlName="confirmed">{{contactLang.confirmed}}</mat-checkbox>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center">
+              <mat-form-field>
+                <mat-select formControlName="phoneType" [placeholder]="contactLang.phoneType">
+                  <mat-option *ngFor="let phoneType of phoneTypeList" [value]="phoneType.value">
+                    {{phoneType.title}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="flex-fill">
+                <textarea matInput formControlName="description" [placeholder]="contactLang.description"></textarea>
+              </mat-form-field>
+            </div>
+
+            <div fxLayout="row" fxLayoutGap="0.5rem">
+              <button mat-stroked-button color="primary" (click)="addNewContact()">{{lang.new}}</button>
+              <button mat-stroked-button color="accent" (click)="editContact(contactSelect)">{{lang.edit}}</button>
+            </div>
+          </form>
         </div>
 
         <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">

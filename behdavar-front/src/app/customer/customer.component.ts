@@ -3,12 +3,11 @@ import {ContactLang, CustomerLang} from '../model/lang';
 import {MyErrorStateMatcher} from '../model/MyErrorStateMatcher';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute, Route, Router} from "@angular/router";
-import {ContactDto, CustomerDto, GuarantorDto, PersonDto, RoleDto} from "../model/model";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ContactDto, CustomerDto, PersonDto} from "../model/model";
 import Url from "../model/url";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatTableDataSource} from "@angular/material/table";
-import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 import {PHONE_TYPE_TITLE, PhoneType} from "../model/enum/PhoneType";
 import {MatSelectionList} from "@angular/material/list";
@@ -31,7 +30,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   @ViewChild("contactSelect")
   contactSelect: MatSelectionList;
 
-  constructor(public messageService:MessageService,public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar) {
+  constructor(public messageService: MessageService, public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar) {
   }
 
   submitted = false;
@@ -160,11 +159,11 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     }
 
 
- this.contactWrapperList.forEach(value => {
+    this.contactWrapperList.forEach(value => {
       const selectedContact: ContactDto = contactSelect.selectedOptions.selected[0]?.value;
-      if( value.contact === selectedContact){
+      if (value.contact === selectedContact) {
         value.contact = {
-          id : value.contact.id,
+          id: value.contact.id,
           number: this.contactForm.value.number,
           confirmed: this.contactForm.value.confirmed,
           phoneType: this.contactForm.value.phoneType,

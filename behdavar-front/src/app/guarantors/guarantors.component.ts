@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {GuarantorsLang} from '../model/lang';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {ContactLang, GuarantorsLang} from '../model/lang';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import Url from "../model/url";
@@ -8,18 +8,28 @@ import {ContactDto, GuarantorDto, PersonDto} from "../model/model";
 import {MatSelectionList} from "@angular/material/list";
 import {MyErrorStateMatcher} from "../model/MyErrorStateMatcher";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {EnumValueTitle} from "../model/enum/EnumValueTitle";
+import {PHONE_TYPE_TITLE, PhoneType} from "../model/enum/PhoneType";
+import {MessageService} from "../service/message.service";
 
 @Component({
   selector: 'app-guarantors',
   templateUrl: './guarantors.component.html',
   styleUrls: ['./guarantors.component.css']
 })
-export class GuarantorsComponent implements OnInit {
+export class GuarantorsComponent implements OnInit,AfterViewInit {
 
   @ViewChild("GLSelect")
   glSelect: MatSelectionList;
 
   contactList: ContactDto[];
+  contactWrapperList: ContactWrapper[];
+  contactForm: FormGroup;
+  contactLang = new ContactLang();
+  phoneTypeList: EnumValueTitle<PhoneType>[] = PHONE_TYPE_TITLE;
+
+  @ViewChild("contactSelect")
+  contactSelect: MatSelectionList;
 
   lang = new GuarantorsLang();
   guarantorsForm: FormGroup;
@@ -29,7 +39,7 @@ export class GuarantorsComponent implements OnInit {
   guarantorDtoList: GuarantorDto[];
 
 
-  constructor(public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private _snackBar: MatSnackBar,private router:Router) {
+  constructor(private messageService:MessageService,public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private _snackBar: MatSnackBar, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -50,10 +60,19 @@ export class GuarantorsComponent implements OnInit {
       })
     });
 
+    this.contactForm = this.fb.group({
+      number: [''],
+      phoneType: [PhoneType.MOBILE],
+      confirmed: [false],
+      description: [''],
+    });
+
     this.updateGuarantorList();
 
   }
+  ngAfterViewInit(): void{
 
+  }
   private updateGuarantorList() {
     this.httpClient.post<GuarantorDto[]>(Url.GUARANTOR_FIND_BY_CONTRACT, this.getIdParam())
       .subscribe(value => this.guarantorDtoList = value);
@@ -79,9 +98,10 @@ export class GuarantorsComponent implements OnInit {
       }
     }
   }
+
   onSubmit() {
     const newPerson: PersonDto = this.guarantorsForm.value['person'];
-    newPerson.contacts = this.contactList;
+    newPerson.contacts = this.contactWrapperList.filter(value => value.active).map(value => value.contact);
     this.removeTraceableField(newPerson);
     this.httpClient.post<unknown>(Url.PERSON_UPDATE, newPerson)
       .subscribe(value => {
@@ -101,7 +121,70 @@ export class GuarantorsComponent implements OnInit {
 
     const guarantorDto: GuarantorDto = this.glSelect.selectedOptions.selected[0]?.value;
     this.guarantorsForm.patchValue(guarantorDto);
-    this.contactList = guarantorDto?.person?.contacts;
+    const contactList: ContactDto[] = guarantorDto?.person?.contacts;
+    if (contactList) {
+      this.contactWrapperList = contactList.map(value => <ContactWrapper>{
+        contact: value,
+        active: true,
+        isNew: false
+      });
+    }
+  }
+
+  contactSelectChange() {
+    const contactDto: ContactDto = this.contactSelect.selectedOptions.selected[0]?.value;
+    this.contactForm.reset({phoneType: PhoneType.MOBILE});
+    this.contactForm.patchValue(contactDto);
+  }
+
+  onContactDelete(contact: ContactWrapper) {
+    if (contact.isNew) {
+      this.contactWrapperList = this.contactWrapperList.filter(value => value !== contact);
+    } else {
+      contact.active = !contact.active;
+    }
+  }
+
+  addNewContact() {
+    if (this.contactWrapperList) {
+      const contact: ContactDto = {
+        number: this.contactForm.value.number,
+        confirmed: this.contactForm.value.confirmed,
+        phoneType: this.contactForm.value.phoneType,
+        description: this.contactForm.value.description
+      }
+      this.contactWrapperList.push(<ContactWrapper>{contact: contact, active: true, isNew: true})
+    }
+  }
+
+  editContact(contactSelect: MatSelectionList) {
+
+    if (!contactSelect || !contactSelect.selectedOptions.selected[0]?.value) {
+      this.messageService.showGeneralError(this.contactLang.selectOneItem)
+      return;
+    }
+
+
+    this.contactWrapperList.forEach(value => {
+      const selectedContact: ContactDto = contactSelect.selectedOptions.selected[0]?.value;
+      if (value.contact === selectedContact) {
+        value.contact = {
+          id: value.contact.id,
+          number: this.contactForm.value.number,
+          confirmed: this.contactForm.value.confirmed,
+          phoneType: this.contactForm.value.phoneType,
+          description: this.contactForm.value.description
+        }
+      }
+    });
   }
 }
+
+
+interface ContactWrapper {
+  contact: ContactDto;
+  active: boolean;
+  isNew?: boolean;
+}
+
 
