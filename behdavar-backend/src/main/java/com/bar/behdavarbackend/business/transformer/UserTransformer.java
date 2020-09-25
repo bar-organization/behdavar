@@ -30,7 +30,8 @@ public class UserTransformer extends BaseAuditorTransformer {
         dto.setCredentialsNonExpired(entity.isCredentialsNonExpired());
         if (fields.contains(UserEntity.ROLES)) {
             dto.setRoles(getUserRoles(roles));
-        } else {
+        }
+        if (fields.contains(UserEntity.ROLE_DETAILS)) {
             if (!CollectionUtils.isEmpty(entity.getRoles())) {
                 List<RoleDto> roleDtos = new ArrayList<>();
                 entity.getRoles().forEach(r -> roleDtos.add(RoleTransformer.entityToDto(r, new RoleDto())));

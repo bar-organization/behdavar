@@ -35,7 +35,7 @@ public class UserBusinessImpl implements UserBusiness {
     @Override
     public UserDto findById(Long id) {
         return userRepository.findById(id)
-                .map(userEntity -> UserTransformer.entityToDto(userEntity, new UserDto()))
+                .map(userEntity -> UserTransformer.entityToDto(userEntity, new UserDto(), UserEntity.ROLE_DETAILS))
                 .orElseThrow(() -> new BusinessException("error.User.not.found", id));
     }
 
@@ -76,7 +76,7 @@ public class UserBusinessImpl implements UserBusiness {
         if (pagingResponse.getData() != null) {
             List<UserDto> userDtos = new ArrayList<>();
             ((List<UserEntity>) pagingResponse.getData()).forEach(e ->
-                    userDtos.add(UserTransformer.entityToDto(e, new UserDto()))
+                    userDtos.add(UserTransformer.entityToDto(e, new UserDto(), UserEntity.ROLE_DETAILS))
             );
             pagingResponse.setData(userDtos);
         }

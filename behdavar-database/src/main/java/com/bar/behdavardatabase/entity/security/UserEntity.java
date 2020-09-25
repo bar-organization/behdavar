@@ -32,6 +32,7 @@ public class UserEntity extends BaseAuditorEntity<String, Long> {
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "USER";
     public static final String SEQ_NAME = "USER" + BaseConstant.SEQUENCE;
     public static final String ROLES = "roles";
+    public static final String ROLE_DETAILS = "roleDetails";
 
     @Column(name = "ID")
     @Id
