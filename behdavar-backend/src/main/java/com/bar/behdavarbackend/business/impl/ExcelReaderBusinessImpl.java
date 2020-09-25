@@ -135,8 +135,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         } else {
             throw new BusinessException("invalid.input.excel.file");
         }
-
-
+        convert(inputExcelEntity.getId());
     }
 
     @Transactional

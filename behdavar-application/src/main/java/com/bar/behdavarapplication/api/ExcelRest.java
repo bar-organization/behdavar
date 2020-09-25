@@ -30,10 +30,4 @@ public class ExcelRest {
         excelReaderBusiness.readAndSave(dto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @PreAuthorize("hasAuthority('" + AuthorityConstant.CONVERT + "')")
-    @PostMapping("/convert")
-    public void convert(@RequestBody @Valid Long inputExcelId) {
-        excelReaderBusiness.convert(inputExcelId);
-    }
 }
