@@ -14,3 +14,50 @@ Content-Type: application/json
   "username": "behnam",
   "password": "behnam"
 }
+
+###
+# call catalog find by id
+POST http://127.0.0.1:8081/api/person/update
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTVVBFUlZJU09SX1VTRVIiLCJpYXQiOjE2MDEwNDU2MjUsImV4cCI6MTYwMTA0OTIyNX0.Jg1wvE0_NGd-aUAwEEvWgHJOmn2A554fdzcWgKsiC_c
+
+{
+  "id": 80,
+  "version": 3,
+  "fullName": "بهادر فضلي پور",
+  "nationalCode": "5979232370",
+  "fatherName": "حسن",
+  "contacts": [
+    {
+      "id": 235,
+      "version": 3,
+      "number": "09125941350",
+      "phoneType": "MOBILE",
+      "person": {
+        "id": 80,
+        "version": 0
+      }
+    },
+    {
+      "id": 236,
+      "version": 3,
+      "number": "09123121193",
+      "phoneType": "MOBILE",
+      "person": {
+        "id": 80,
+        "version": 0
+      }
+    },
+    {
+      "id": 237,
+      "version": 3,
+      "number": "9154776747",
+      "phoneType": "MOBILE",
+      "person": {
+        "id": 80,
+        "version": 0
+      }
+    }
+  ]
+}
+

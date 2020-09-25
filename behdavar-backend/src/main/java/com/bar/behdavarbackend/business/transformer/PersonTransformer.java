@@ -2,12 +2,11 @@ package com.bar.behdavarbackend.business.transformer;
 
 import com.bar.behdavarbackend.dto.ContactDto;
 import com.bar.behdavarbackend.dto.PersonDto;
+import com.bar.behdavardatabase.entity.ContactEntity;
 import com.bar.behdavardatabase.entity.PersonEntity;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PersonTransformer extends BaseAuditorTransformer {
@@ -21,6 +20,11 @@ public class PersonTransformer extends BaseAuditorTransformer {
         entity.setPhoneNumber(dto.getPhoneNumber());
         entity.setDescription(dto.getDescription());
         entity.setNationalCode(dto.getNationalCode());
+        if (!CollectionUtils.isEmpty(dto.getContacts())) {
+            Set<ContactEntity> contactEntities = new HashSet<>();
+            dto.getContacts().forEach(contactDto -> contactEntities.add(ContactTransformer.dtoToEntity(contactDto, new ContactEntity())));
+            entity.setContacts(contactEntities);
+        }
         return entity;
     }
 

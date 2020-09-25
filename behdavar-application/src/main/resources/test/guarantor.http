@@ -1,7 +1,7 @@
 # call guarantor find by id
 POST http://127.0.0.1:8081/api/guarantor/find-by-id
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2OTA2NjEsImV4cCI6MTU5ODY5NDI2MX0.ATKjbHuDVMhqwV3zltxry-jPm4e5PdOGSVLd6qBB2d8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTVVBFUlZJU09SX1VTRVIiLCJpYXQiOjE2MDEwNDU2MjUsImV4cCI6MTYwMTA0OTIyNX0.Jg1wvE0_NGd-aUAwEEvWgHJOmn2A554fdzcWgKsiC_c
 
 5
 
@@ -9,7 +9,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiZWhuYW0iLCJpYXQiOjE1OTg2O
 # call guarantor find by contract
 POST http://127.0.0.1:8081/api/guarantor/find-by-contract
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTVVBFUlZJU09SX1VTRVIiLCJpYXQiOjE2MDA5NTc5MTEsImV4cCI6MTYwMDk2MTUxMX0.uh6kXvozE3QNVAJB5VhF2bQfBjynUzZW11aibEwuHI8
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJTVVBFUlZJU09SX1VTRVIiLCJpYXQiOjE2MDEwNDU2MjUsImV4cCI6MTYwMTA0OTIyNX0.Jg1wvE0_NGd-aUAwEEvWgHJOmn2A554fdzcWgKsiC_c
 
 41
 

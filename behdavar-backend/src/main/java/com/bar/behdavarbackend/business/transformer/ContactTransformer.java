@@ -12,6 +12,8 @@ public class ContactTransformer extends BaseAuditorTransformer {
         entity.setConfirmed(dto.getConfirmed());
         entity.setPreCode(dto.getPreCode());
         entity.setDescription(dto.getDescription());
+        entity.setId(dto.getId());
+        entity.setVersion(dto.getVersion());
 
         return entity;
     }

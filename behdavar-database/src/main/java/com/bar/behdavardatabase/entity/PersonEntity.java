@@ -55,7 +55,8 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = PersonConstant.DESCRIPTION)
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person")
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = CascadeType.ALL)
     private Set<ContactEntity> contacts = new HashSet<>();
 
 
