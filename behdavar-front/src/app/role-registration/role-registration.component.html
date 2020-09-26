@@ -1,6 +1,6 @@
 <div fxLayout="row" class="py-2" fxLayoutAlign="center start" fxLayoutGap="0.5rem">
-  <div *ngIf="isAddOrEdit; else searchRole"  class="w-100">
-   <add-role (onBack)="onAddRoleBack()" [(roleId)]="roleId"></add-role>
+  <div *ngIf="isAddOrEdit; else searchRole" class="w-100">
+    <add-role (onBack)="onAddRoleBack()" [(roleId)]="roleId"></add-role>
   </div>
 
   <ng-template #searchRole>
@@ -19,7 +19,8 @@
             <mat-icon>add</mat-icon>
           </button>
 
-          <button #editRoleButton mat-mini-fab color="accent" type="button" [disabled]="!(roleTable.idFieldChange | async)"
+          <button #editRoleButton mat-mini-fab color="accent" type="button"
+                  [disabled]="!(roleTable.idFieldChange | async)"
                   (click)="isAddOrEdit = true">
             <mat-icon>edit</mat-icon>
           </button>
@@ -29,7 +30,8 @@
       <div class="card">
         <div class="text-center card-header">{{lang.roleList}}</div>
         <div class="p-2">
-          <data-table #roleTable [tableColumns]="roleTableColumns" [httpDataSource]="roleHttpDataSource" [(idField)]="roleId"></data-table>
+          <data-table #roleTable [tableColumns]="roleTableColumns" [httpDataSource]="roleHttpDataSource"
+                      [(idField)]="roleId"></data-table>
 
         </div>
       </div>

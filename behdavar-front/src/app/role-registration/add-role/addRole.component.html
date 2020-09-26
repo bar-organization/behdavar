@@ -1,84 +1,74 @@
-<div class="card p-2 w-100" fxLayout="row" fxLayoutAlign="start stretch">
-  <div fxFlex="90">
-    <div class="w-25">
-
-      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1rem">
-        <header>
-          <h6 class="text-right">{{!roleId ? lang.createNewRole: lang.editRole}}</h6>
-          <hr>
-        </header>
-        <form [formGroup]="roleForm">
-          <div fxLayout="row" fxLayoutGap="1rem">
-            <mat-form-field>
-              <mat-label>{{lang.roleName}}</mat-label>
-              <input matInput formControlName="roleName">
-              <mat-error *ngIf="isInvalidRoleName">{{lang.roleNameNotValid}}</mat-error>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>{{lang.roleTitle}}</mat-label>
-              <input matInput formControlName="roleTitle">
-              <mat-error *ngIf="isInvalidRoleTitle">{{lang.roleTitleNotValid}}</mat-error>
-            </mat-form-field>
-          </div>
-        </form>
-
-        <form (ngSubmit)="addPrivilege()" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="0.5rem">
-          <mat-form-field class="w-100">
-            <input type="text"
-                   [placeholder]="lang.selectPrivilege"
-                   aria-label="Number"
-                   matInput
-                   [formControl]="privilegeControl"
-                   [matAutocomplete]="auto">
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-              <mat-option *ngFor="let prv of privilegeOptions | async" [value]="prv.name" [id]="prv.id">
-                {{prv.name}}
-              </mat-option>
-            </mat-autocomplete>
+<div fxLayout="row" fxLayoutGap="1rem">
+  <div class="card p-2 w-100" fxLayout="row" fxLayoutAlign="start stretch">
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1rem" fxFill>
+      <header>
+        <h4 class="text-center">{{!roleId ? lang.createNewRole : lang.editRole}}</h4>
+        <hr>
+      </header>
+      <form [formGroup]="roleForm">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+          <mat-form-field>
+            <mat-label>{{lang.roleName}}</mat-label>
+            <input matInput formControlName="roleName">
+            <mat-error *ngIf="isInvalidRoleName">{{lang.roleNameNotValid}}</mat-error>
           </mat-form-field>
-
-          <button mat-mini-fab color="primary" type="submit">
-            <mat-icon>add</mat-icon>
-          </button>
-        </form>
-
-        <section>
-
-          <div class="card w-100">
-            <div class="card-header text-right">{{lang.rolePrivileges}}</div>
-            <mat-list class="overflow-auto" style="max-height: 15rem">
-              <mat-list-item *ngFor="let prv of privilegeList">
-                <div fxLayout="row" fxLayoutAlign="space-between center" class="w-100 border-bottom">
-                  <div [class]="prv.active ? '' : 'disableRole'">{{prv.privilege.name}}</div>
-                  <div fxLayout="row" fxLayoutGap="0.3rem">
-                    <button mat-icon-button (click)="onUserRoleDelete(prv)" [color]="prv.active ? 'accent' :'primary'">
-                      <mat-icon>{{prv.active ? 'highlight_off ' : 'add_circle_outline'}}</mat-icon>
-                    </button>
-                  </div>
-                </div>
-              </mat-list-item>
-            </mat-list>
-          </div>
-        </section>
-
-        <section fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-          <button mat-raised-button color="primary" *ngIf="!roleId else edit" (click)="newRole()">{{lang.insert}}</button>
+          <mat-form-field>
+            <mat-label>{{lang.roleTitle}}</mat-label>
+            <input matInput formControlName="roleTitle">
+            <mat-error *ngIf="isInvalidRoleTitle">{{lang.roleTitleNotValid}}</mat-error>
+          </mat-form-field>
+          <button mat-raised-button color="primary" *ngIf="!roleId else edit"
+                  (click)="newRole()">{{lang.insert}}</button>
           <ng-template #edit>
-          <button mat-raised-button color="accent" (click)="editRole()">{{lang.edit}}</button>
+            <button mat-raised-button color="accent" (click)="editRole()">{{lang.edit}}</button>
           </ng-template>
-        </section>
+        </div>
+      </form>
+
+      <div fxLayout="row">
+
+        <div class="card w-100">
+          <div class="card-header text-right">{{lang.rolePrivileges}}</div>
+          <mat-selection-list #currentPrvSelect  class="overflow-auto" style="max-height: 30rem">
+            <mat-list-option *ngFor="let prv of currentPrivilegeList" [value]="prv" >
+              <div fxLayout="row">
+                <b>{{lang.privilegeName}}</b>:[{{prv.name}}] ,
+                <b>{{lang.privilegeTitle}}</b>:[{{prv.title}}]
+              </div>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
+          <button mat-icon-button (click)="addPrivilege()">
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+          <button mat-icon-button (click)="subtractPrivilege()">
+            <mat-icon>thumb_down</mat-icon>
+          </button>
+        </div>
+
+        <div class="card w-100">
+          <div class="card-header text-right">{{lang.remainingPrivileges}}</div>
+          <mat-selection-list  #systemPrvSelect class="overflow-auto" style="max-height: 30rem">
+            <mat-list-option  *ngFor="let prv of allSystemPrivilegeList" [value]="prv" >
+              <div fxLayout="row">
+                <b>{{lang.privilegeName}}</b>:[{{prv.name}}] ,
+                <b>{{lang.privilegeTitle}}</b>:[{{prv.title}}]
+              </div>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+
 
       </div>
 
     </div>
   </div>
-
-  <div fxFlex="10">
+  <div>
     <button mat-stroked-button color="primary" (click)="back()">
       <span>{{lang.back}}</span>
       <mat-icon>arrow_back</mat-icon>
     </button>
-
   </div>
-
 </div>
