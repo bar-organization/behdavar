@@ -207,6 +207,8 @@ export enum GeoDivisionType {
 export class RoleDto extends BaseAuditorDto<string, number> {
   roleName: string;
   title: string;
+  // TODO must user PrivilegeDto
+  privileges: string[];
   privilegeDtos: PrivilegeDto[];
 }
 

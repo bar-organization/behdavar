@@ -92,4 +92,9 @@ public interface AuthorityConstant {
     String USER_VIEW = "USER_VIEW";
     String USER_SEARCH = "USER_SEARCH";
 
+    String VIEW_USER_MANAGEMENT = "VIEW_USER_MANAGEMENT";
+    String VIEW_SEARCH_MENU = "VIEW_SEARCH_MENU";
+    String VIEW_DOCUMENT_ENTRY = "VIEW_DOCUMENT_ENTRY";
+    String VIEW_UTILITY_TOOLS = "VIEW_UTILITY_TOOLS";
+
 }

@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {AuthenticationException, AuthenticationRequest, AuthenticationResponse} from "./auth-model";
 import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
+import {AuthorityConstantEnum} from "../../model/enum/AuthorityConstantEnum";
+import {UserDto} from "../../model/model";
 
 const jwtHelper = new JwtHelperService();
 
@@ -13,10 +15,13 @@ const jwtHelper = new JwtHelperService();
   providedIn: 'root'
 })
 export class AuthService {
-  authResponseSubject = new BehaviorSubject<AuthenticationResponse>(null);
+  authResponseSubject:BehaviorSubject<AuthenticationResponse>;
   private static readonly AUTH_RESPONSE = "authResponse";
 
   constructor(private http: HttpClient, private router: Router) {
+    if (!this.authResponseSubject) {
+      this.authResponseSubject = new BehaviorSubject<AuthenticationResponse>(null);
+    }
   }
 
   public isAuthenticated(jwtToken: string): boolean {
@@ -79,6 +84,26 @@ export class AuthService {
 
   private static isInvalidPassword(errorMessage: string): boolean {
     return !!errorMessage.match('Incorrect username or password');
+  }
+
+  public hasAuthority(authority: AuthorityConstantEnum): boolean {
+    if (!this.authResponseSubject || !this.authResponseSubject.value || !this.authResponseSubject.value.userDto) {
+      console.log('No authentication instance')
+      return true;
+    }
+
+    const user: UserDto = this.authResponseSubject.value.userDto;
+
+    for (let role of user.roles) {
+      for (let privilege of role.privileges) {
+        if (privilege === authority.toString()) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+
   }
 }
 
