@@ -120,7 +120,13 @@ export class DocumentToolbarLang extends Lang {
   changeStatus = 'تغییر وضعیت پرونده';
   projectFlow = 'گردش پرونده';
 }
-
+export class UtilityToolsLang extends Lang{
+  link_118 = 'وب سایت سامانه ۱۱۸';
+  link_insurance = 'وب سایت سامانه استعلام بیمه';
+  link_map = 'گوگل مپ';
+  link_saipa = 'وب سایت سامانه رایان سایپا';
+  link_behdavar = 'شرکت بهداور اندیش عدالت';
+}
 export class DocumentLang extends PersonLang {
   bankMachine = 'بانک/ماشین';
   document = 'پرونده';

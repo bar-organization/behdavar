@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthService} from "../service/auth/auth.service";
 
 @Component({
   selector: 'app-user-info',
@@ -10,7 +11,7 @@ export class UserInfoComponent implements OnInit {
 
   userStatistic: UserStatistic = {
     userInfoList: [
-      {key: 'کاربر فعال', value: '-'},
+      {key: 'کاربر فعال', value: this.authService.getUserFullName()},
       {key: 'نقش', value: '-'},
       {key: 'آخرین آپدیت طرح و برنامه', value: '-'},
       {key: 'مبلغ کل پرنده ها', value: '-'},
@@ -25,7 +26,7 @@ export class UserInfoComponent implements OnInit {
     ]
   }
 
-  constructor() {
+  constructor(private authService: AuthService) {
   }
 
 

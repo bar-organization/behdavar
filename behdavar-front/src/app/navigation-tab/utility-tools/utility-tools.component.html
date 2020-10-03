@@ -1,1 +1,10 @@
-<p>utility-tools works!</p>
+<div fxLayout="row" style="padding: 1rem">
+  <div fxLayout="column" fxLayoutGap="1rem">
+    <a  class="card-link" *ngFor="let link of links" [href]="link.link" target="_blank"
+        fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+        <mat-icon style="transform: scale(1.5)">{{link.icon}}</mat-icon>
+      <h4>{{link.title}}</h4>
+    </a>
+  </div>
+
+</div>

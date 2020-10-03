@@ -87,7 +87,7 @@ export class AuthService {
   }
 
   public hasAuthority(authority: AuthorityConstantEnum): boolean {
-    if (!this.authResponseSubject || !this.authResponseSubject.value || !this.authResponseSubject.value.userDto) {
+    if (!this.isUserDoAvailable()) {
       console.log('No authentication instance')
       return true;
     }
@@ -104,6 +104,23 @@ export class AuthService {
 
     return false;
 
+  }
+
+  private isUserDoAvailable() {
+    return this.authResponseSubject  && this.authResponseSubject.value && this.authResponseSubject.value.userDto;
+  }
+
+  public getUserInfo():UserDto {
+    if (!this.isUserDoAvailable()) {
+      console.log('No authentication instance')
+      return {};
+    }
+    return  this.authResponseSubject.value.userDto;
+  }
+
+  public getUserFullName(): string {
+    const userDto = this.getUserInfo();
+    return userDto ? `${userDto.firstName} ${userDto.lastName}`:'';
   }
 }
 
