@@ -1,1 +1,77 @@
-<p>reports works!</p>
+<div class="card m-2">
+  <div class="card-title">
+    <h4 class="text-right border-bottom py-2 px-4 ">{{lang.reportTitle}}</h4>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="reportForm" (ngSubmit)="takeReport()">
+      <div fxLayout="row" fxLayoutGap="2rem">
+        <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="2rem">
+          <mat-checkbox formControlName="countOfFollowing">{{lang.countOfFollowing}}</mat-checkbox>
+          <mat-checkbox formControlName="amountReceived">{{lang.amountReceived}}</mat-checkbox>
+          <mat-checkbox formControlName="countOfDocument">{{lang.countOfDocument}}</mat-checkbox>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start start"  fxLayoutGap="0.5rem">
+          <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="0.5rem"  class="w-100">
+            <mat-form-field appearance="standard">
+              <mat-label>{{lang.groupBy}}</mat-label>
+              <mat-select formControlName="groupBy">
+                <mat-option *ngFor="let groupBy of groupByItems" [value]="groupBy.value">
+                  {{groupBy.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard" *ngIf="reportForm.value.groupBy === '1'" class="w-100">
+              <mat-label>{{lang.period}}</mat-label>
+              <mat-select formControlName="period">
+                <mat-option *ngFor="let period of periodItems" [value]="period.value">
+                  {{period.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard" *ngIf="reportForm.value.groupBy === '2'" class="w-100">
+              <mat-label>{{lang.documentType}}</mat-label>
+              <mat-select formControlName="documentType">
+                <mat-option *ngFor="let documentType of documentTypeItems" [value]="documentType.value">
+                  {{documentType.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard" *ngIf="reportForm.value.groupBy === '3'" class="w-100">
+              <mat-label>{{lang.documentStatus}}</mat-label>
+              <mat-select formControlName="documentStatus">
+                <mat-option *ngFor="let documentStatus of documentStatusItems" [value]="documentStatus.value">
+                  {{documentStatus.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end start"  fxLayoutGap="0.5rem" class="w-100">
+            <mat-form-field color="accent" appearance="standard">
+              <mat-label>{{lang.fromDate}}</mat-label>
+              <input matInput formControlName="fromDate" [matDatepicker]="fromDatePicker">
+              <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #fromDatePicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field color="accent" appearance="standard">
+              <mat-label>{{lang.toDate}}</mat-label>
+              <input matInput formControlName="toDate" [matDatepicker]="toDatePicker">
+              <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #toDatePicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end start" class="w-100">
+            <button mat-raised-button color="primary" type="submit">{{lang.report}}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+
+
+</div>
+

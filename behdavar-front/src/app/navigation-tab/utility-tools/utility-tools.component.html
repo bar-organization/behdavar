@@ -2,8 +2,8 @@
   <div fxLayout="column" fxLayoutGap="1rem">
     <a  class="card-link" *ngFor="let link of links" [href]="link.link" target="_blank"
         fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-        <mat-icon style="transform: scale(1.5)">{{link.icon}}</mat-icon>
-      <h4>{{link.title}}</h4>
+        <mat-icon>{{link.icon}}</mat-icon>
+      <h5>{{link.title}}</h5>
     </a>
   </div>
 

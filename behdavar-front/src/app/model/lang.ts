@@ -120,13 +120,15 @@ export class DocumentToolbarLang extends Lang {
   changeStatus = 'تغییر وضعیت پرونده';
   projectFlow = 'گردش پرونده';
 }
-export class UtilityToolsLang extends Lang{
+
+export class UtilityToolsLang extends Lang {
   link_118 = 'وب سایت سامانه ۱۱۸';
   link_insurance = 'وب سایت سامانه استعلام بیمه';
   link_map = 'گوگل مپ';
   link_saipa = 'وب سایت سامانه رایان سایپا';
   link_behdavar = 'شرکت بهداور اندیش عدالت';
 }
+
 export class DocumentLang extends PersonLang {
   bankMachine = 'بانک/ماشین';
   document = 'پرونده';
@@ -259,4 +261,35 @@ export class ResultTypeLang extends Lang {
   NON_APPROVAL_AREA = "منطقه تصویب نشده";
   FINAL_CONFIRMATION = "تائید نهایی";
   RENEWAL_BANK_RESOURCES = "تجدید منابع بانک";
+}
+
+export class ReportsLang extends Lang {
+  reportTitle = 'گزارش گیری';
+  fromDate = 'از تاریخ';
+  toDate = 'تا تاریخ';
+  groupByPeriod = 'به تفکیک دوره';
+  groupByDocumentType = 'به تفکیک نوع پرونده';
+  groupByDocumentStatus = 'به تفکیک وضعیت پرونده';
+  period = 'دوره';
+  documentType = 'نوع پرونده';
+  documentStatus = 'وضعیت پرنده';
+  countOfFollowing = 'گزارش تعداد و متن پیگیری های انجام شده';
+  amountReceived = 'گزارش مبلغ مالی وصول شده';
+  countOfDocument = 'گزارش تعداد پرونده وصول شده';
+  oneMonth = 'ماهانه';
+  trimester = 'سه ماهه';
+  sixMonth = 'شش ماهه';
+  yearly = 'سالانه';
+  bank = 'بانک';
+  machine = 'ماشین';
+  available = 'در دسترس';
+  clearing = 'تسویه (ارجاع به طرح و برنامه)';
+  raw = 'پرونده خام';
+  legal = 'حقوقی (ارجاع حقوقی)';
+  parking = 'پارکینگی';
+  comeback = 'بازگشت';
+  groupBy = 'به تفکیک';
+  report = 'تهیه گزارش';
+
+
 }
