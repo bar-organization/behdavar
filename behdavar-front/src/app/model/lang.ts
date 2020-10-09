@@ -52,12 +52,21 @@ export class PersonLang extends Lang {
 
 export class HomeLang extends Lang {
   myBasket = 'سبد من';
+  documentManagement = 'مدیریت پرونده ها';
   reports = 'گزارشات';
   utilityTools = 'ابزارهای کاربردی';
   userManagement = 'مدیریت کاربران';
   documentInput = 'ورود پرونده';
 }
+export class ChangeExpertLang extends Lang{
+  title = 'تغییر کارشناس پرونده';
+  documentNumber = 'شماره پرونده';
+  referToExpert = 'ارجاع به کارشناس';
+  newExpert = 'انتخاب کارشناس جدید';
+  changeExpertHistory = 'سابقه وضعیت کارشناسان پرونده';
 
+
+}
 export class DocumentInputLang extends Lang {
   manual = 'دستی';
   auto = 'خودکار';
@@ -119,6 +128,7 @@ export class DocumentToolbarLang extends Lang {
   financialSituation = 'وضعیت مالی';
   changeStatus = 'تغییر وضعیت پرونده';
   projectFlow = 'گردش پرونده';
+  changeExpert = 'تغییر کارشناس';
 }
 
 export class UtilityToolsLang extends Lang {

@@ -14,6 +14,8 @@ import {DocumentComponent} from "./document/document.component";
 import {FinancialStatusComponent} from "./financial-status/financial-status.component";
 import {UserManagementComponent} from "./navigation-tab/user-management/user-management.component";
 import {DocumentInputComponent} from "./navigation-tab/document-input/document-input.component";
+import {DocumentManagementComponent} from "./navigation-tab/document-management/document-management.component";
+import {ChangeExpertComponent} from "./change-expert/change-expert.component";
 
 const routes: Routes = [
   // HOME
@@ -46,7 +48,18 @@ const routes: Routes = [
       {path: 'tools', component: UtilityToolsComponent},
       {path: 'user-manage', component: UserManagementComponent},
       {path: 'document-input', component: DocumentInputComponent},
-
+      {
+        path: 'document-manage', component: DocumentManagementComponent,
+        children: [
+          {path: '', redirectTo: 'find', pathMatch: 'full'},
+          {path: 'find', component: DocumentComponent},
+          {path: 'following/:id', component: FollowingComponent},
+          {path: 'guarantors/:id', component: GuarantorsComponent},
+          {path: 'customers/:id', component: CustomerComponent},
+          {path: 'financialStatus/:id', component: FinancialStatusComponent},
+          {path: 'change-expert/:id', component: ChangeExpertComponent},
+        ]
+      },
     ]
   },
   // OTHER....

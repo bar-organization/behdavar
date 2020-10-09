@@ -1,5 +1,8 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DocumentToolbarLang} from "../../model/lang";
+import {AuthService} from "../../service/auth/auth.service";
+import {AuthorityConstantEnum} from "../../model/enum/AuthorityConstantEnum";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-document-toolbar',
@@ -12,6 +15,12 @@ export class DocumentToolbarComponent implements OnInit {
 
   @Input()
   id: number;
+  canShowChangeExpert: boolean;
+
+  constructor(public authService: AuthService, private route: Router) {
+    // TODO must change to right permission
+    this.canShowChangeExpert = route.url.match('document-manage') && this.authService.hasAuthority(AuthorityConstantEnum.VIEW_USER_MANAGEMENT);
+  }
 
   ngOnInit(): void {
   }

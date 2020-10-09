@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {Lang} from "../../model/lang";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'search-panel',
@@ -6,8 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-panel.component.css']
 })
 export class SearchPanelComponent implements OnInit {
+  private lang = new Lang();
 
-  constructor() { }
+  constructor(public route: Router) {
+  }
 
   ngOnInit(): void {
   }

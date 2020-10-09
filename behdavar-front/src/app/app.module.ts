@@ -59,6 +59,8 @@ import {AddRoleComponent} from './role-registration/add-role/addRole.component';
 import {DocumentInputComponent} from './navigation-tab/document-input/document-input.component';
 import {MatRadioModule} from "@angular/material/radio";
 import {ContactToFlatStringPipe} from "./_pip/contant-to-flat-string.pipe";
+import {DocumentManagementComponent} from "./navigation-tab/document-management/document-management.component";
+import {ChangeExpertComponent} from "./change-expert/change-expert.component";
 
 @NgModule({
   imports: [
@@ -123,6 +125,8 @@ import {ContactToFlatStringPipe} from "./_pip/contant-to-flat-string.pipe";
     RoleRegistrationComponent,
     AddRoleComponent,
     DocumentInputComponent,
+    DocumentManagementComponent,
+    ChangeExpertComponent,
 
   ],
 
