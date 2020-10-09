@@ -8,6 +8,8 @@ export default class Url {
   public static readonly CARTABLE_ASSIGN = `${Url.BASE_API}/cartable/assign`;
   public static readonly CARTABLE_GET_USER_INFO = `${Url.BASE_API}/cartable/get-user-info`;
 
+  public static readonly CONTRACT_FIND_BY_ID = `${Url.BASE_API}/contract/find-by-id`;
+
   public static readonly PAYMENT_FIND_BY_CONTRACT = `${Url.BASE_API}/payment/find-by-contract`;
   public static readonly GUARANTOR_FIND_BY_ID = `${Url.BASE_API}/guarantor/find-by-id`;
   public static readonly GUARANTOR_FIND_BY_CONTRACT = `${Url.BASE_API}/guarantor/find-by-contract`;
@@ -40,4 +42,6 @@ export default class Url {
   public static readonly PRIVILEGE_FIND_SUGGESTION = `${Url.BASE_API}/privilege/find-suggestion`;
 
   public static readonly EXCEL_UPLOAD = `${Url.BASE_API}/excel/upload`;
+  public static readonly ATTACHMENT_SAVE = `${Url.BASE_API}/attachment/save`;
+  public static readonly ATTACHMENT_FIND_PAGING = `${Url.BASE_API}/attachment/find-paging`;
 }

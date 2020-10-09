@@ -6,7 +6,7 @@
             [class]="!id ? 'px-4 mx-2': 'px-4 mx-2 bg-indigo-500 indigo-50' ">{{documentToolbarLang.guarantorInfo}}</button>
     <button mat-stroked-button [disabled]="!id" routerLink="../customers/{{id}}"
             [class]="!id ? 'px-4 mx-2' :'px-4 mx-2 bg-light-blue-500 light-blue-50'">{{documentToolbarLang.customerInfo}}</button>
-    <button mat-stroked-button [disabled]="!id"
+    <button mat-stroked-button [disabled]="!id" routerLink="../attachment/{{id}}"
             [class]="!id ? 'px-4 mx-2' : 'px-4 mx-2 bg-green-500 green-50'">{{documentToolbarLang.contents}}</button>
     <button mat-stroked-button [disabled]="!id" routerLink="../financialStatus/{{id}}"
             [class]="!id ? 'px-4 mx-2': 'px-4 mx-2 bg-deep-purple-500 deep-purple-50'">{{documentToolbarLang.financialSituation}}</button>

@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ChangeExpertLang} from "../model/lang";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
-import {AssignContractDto, CartableDto, ContractStatus, UserDto} from "../model/model";
+import {AssignContractDto, CartableDto, ContractDto, ContractStatus, UserDto} from "../model/model";
 import Url from "../model/url";
 import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import {JalaliPipe} from "../_pip/jalali.pipe";
@@ -70,21 +70,8 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
 
 
   private findContractNumber() {
-    if (!this.catalogHttpDataSource.subject)
-      return;
-
-    this.catalogHttpDataSource.subject.subscribe(value => {
-      if (!value)
-        return;
-
-      value.forEach(v => {
-        if (v && v.contract && v.contract.id === this.getIdParam()) {
-          this.documentNumber = v.contract.contractNumber;
-          return;
-        }
-      });
-    });
-
+    this.httpClient.post<ContractDto>(Url.CONTRACT_FIND_BY_ID, this.getIdParam())
+      .subscribe(value => this.documentNumber = value.contractNumber);
   }
 
   private getIdParam(): number {

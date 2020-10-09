@@ -16,6 +16,7 @@ import {UserManagementComponent} from "./navigation-tab/user-management/user-man
 import {DocumentInputComponent} from "./navigation-tab/document-input/document-input.component";
 import {DocumentManagementComponent} from "./navigation-tab/document-management/document-management.component";
 import {ChangeExpertComponent} from "./change-expert/change-expert.component";
+import {DocumentAttachmentComponent} from "./document-attachment/document-attachment.component";
 
 const routes: Routes = [
   // HOME
@@ -31,6 +32,7 @@ const routes: Routes = [
           {path: 'following/:id', component: FollowingComponent},
           {path: 'guarantors/:id', component: GuarantorsComponent},
           {path: 'customers/:id', component: CustomerComponent},
+          {path: 'attachment/:id', component: DocumentAttachmentComponent},
           {path: 'financialStatus/:id', component: FinancialStatusComponent},
         ]
       },
@@ -41,6 +43,7 @@ const routes: Routes = [
           {path: 'find', component: DocumentComponent},
           {path: 'following/:id', component: FollowingComponent},
           {path: 'guarantors/:id', component: GuarantorsComponent},
+          {path: 'attachment/:id', component: DocumentAttachmentComponent},
           {path: 'customers/:id', component: CustomerComponent},
         ]
       },
@@ -56,6 +59,7 @@ const routes: Routes = [
           {path: 'following/:id', component: FollowingComponent},
           {path: 'guarantors/:id', component: GuarantorsComponent},
           {path: 'customers/:id', component: CustomerComponent},
+          {path: 'attachment/:id', component: DocumentAttachmentComponent},
           {path: 'financialStatus/:id', component: FinancialStatusComponent},
           {path: 'change-expert/:id', component: ChangeExpertComponent},
         ]

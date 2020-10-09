@@ -125,20 +125,20 @@ export class CartableDto extends BaseAuditorDto<string, number> {
 }
 
 export class ContractDto extends BaseAuditorDto<string, number> {
-  contractNumber: string;
-  masterAmount: number;
-  defferedAmount: number;
-  idealIssueDate: Date;
-  lendingNumber: string;
-  defferedCount: number;
-  lateFees: number;
-  submitDate: Date;
-  lending: LendingDto;
-  product: ProductDto;
-  corporation: CatalogDetailDto;
-  contractStatus: ContractStatus;
-  contractType: ContractType;
-  customers: CustomerDto[];
+  contractNumber?: string;
+  masterAmount?: number;
+  defferedAmount?: number;
+  idealIssueDate?: Date;
+  lendingNumber?: string;
+  defferedCount?: number;
+  lateFees?: number;
+  submitDate?: Date;
+  lending?: LendingDto;
+  product?: ProductDto;
+  corporation?: CatalogDetailDto;
+  contractStatus?: ContractStatus;
+  contractType?: ContractType;
+  customers?: CustomerDto[];
 }
 
 export class AssignContractDto {
@@ -186,11 +186,11 @@ export class BankDto extends BaseAuditorDto<string, number> {
 }
 
 export class CatalogDetailDto extends BaseAuditorDto<string, number> {
-  englishTitle: string;
-  title: string;
-  code: string;
-  active: boolean;
-  catalog: CatalogDto;
+  englishTitle?: string;
+  title?: string;
+  code?: string;
+  active?: boolean;
+  catalog?: CatalogDto;
 
 }
 

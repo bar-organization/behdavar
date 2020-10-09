@@ -217,6 +217,10 @@ export class AttachmentLang extends Lang {
   documentList = 'لیست مدارک';
   titleDocument = 'عنوان مدرک';
   fileDocument = 'فایل مدرک';
+  chooseFile = 'انتخاب فایل';
+  attachDocumentHistory = 'لیست مدارک ضمیمه شده';
+
+
 }
 
 export class FinancialStatusLang extends Lang {
