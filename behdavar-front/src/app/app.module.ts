@@ -137,6 +137,7 @@ import {MatChipsModule} from "@angular/material/chips";
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
+    JalaliPipe,
   ],
   bootstrap: [AppComponent]
 })

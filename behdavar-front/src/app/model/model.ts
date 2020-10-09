@@ -147,6 +147,18 @@ export class AssignContractDto {
   status: ContractStatus;
 }
 
+export class UserInfoDto extends BaseAuditorDto<string, number> {
+  lastLogin: Date;
+  userAmount: UserAmountDto;
+  activeCount: number;
+  user: UserDto;
+}
+
+export class UserAmountDto {
+  totalAmount: number;
+  receiveAmount: number;
+  user: UserDto;
+}
 
 export class LendingDto extends BaseAuditorDto<string, number> {
   masterAmount: number;

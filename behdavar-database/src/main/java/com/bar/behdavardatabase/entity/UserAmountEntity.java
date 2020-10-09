@@ -24,8 +24,8 @@ import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_P
         uniqueConstraints = @UniqueConstraint(name = "USER_AMOUNT_USER_UK", columnNames = "USER_ID"))
 public class UserAmountEntity extends BaseAuditorEntity<String, Long> {
 
-    public static final String TABLE_NAME = BASE_TABLE_PREFIX + "USERـAMOUNT";
-    public static final String SEQ_NAME = "USERـAMOUNT" + BaseConstant.SEQUENCE;
+    public static final String TABLE_NAME = BASE_TABLE_PREFIX + "USER_AMOUNT";
+    public static final String SEQ_NAME = "USER_AMOUNT" + BaseConstant.SEQUENCE;
 
     @Column(name = "ID")
     @Id
