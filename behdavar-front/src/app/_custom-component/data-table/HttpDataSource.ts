@@ -9,7 +9,7 @@ export default class HttpDataSource<T> implements DataSource<T> {
   public totalRecordSubject = new BehaviorSubject<number>(0);
   public beforeCall: (request: PagingRequest) => void;
 
-  private subject = new BehaviorSubject<T[]>(null);
+  private _subject = new BehaviorSubject<T[]>(null);
   private url: string;
   private httpClient: HttpClient;
   private filters: SearchCriteria[];
@@ -22,11 +22,11 @@ export default class HttpDataSource<T> implements DataSource<T> {
   }
 
   connect(collectionViewer: CollectionViewer): Observable<T[]> {
-    return this.subject.asObservable();
+    return this._subject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
-    this.subject.complete();
+    this._subject.complete();
   }
 
   public find(request: PagingRequest) {
@@ -44,7 +44,7 @@ export default class HttpDataSource<T> implements DataSource<T> {
     this.httpClient.post<PagingResponse<T>>(this.url, request)
       .pipe(catchError(err => this.handleError(err)), finalize(() => this.stopLoading()))
       .pipe(map(value => this.mapResponseToDto(value)))
-      .subscribe(value => this.subject.next(value));
+      .subscribe(value => this._subject.next(value));
   }
 
   public reload(filters?: SearchCriteria[]) {
@@ -77,4 +77,8 @@ export default class HttpDataSource<T> implements DataSource<T> {
     };
   }
 
+
+  get subject(): BehaviorSubject<T[]> {
+    return this._subject;
+  }
 }

@@ -12,6 +12,7 @@ import com.bar.behdavardatabase.entity.security.UserEntity;
 import com.bar.behdavardatabase.repository.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,7 @@ public class UserBusinessImpl implements UserBusiness {
     @Override
     public void update(UserDto dto) {
         if (dto.getUsername().equals(StartupPreparation.SUPERVISOR_USER)) {
-           throw new BusinessException("error.invalid.operation");
+            throw new BusinessException("error.invalid.operation");
         }
         UserEntity userEntity = UserTransformer.dtoToEntity(dto, userRepository
                 .findById(dto.getId())
@@ -81,5 +82,15 @@ public class UserBusinessImpl implements UserBusiness {
             pagingResponse.setData(userDtos);
         }
         return pagingResponse;
+    }
+
+    @Override
+    public List<UserDto> findSuggestion(String suggest) {
+        List<UserEntity> userEntities = userRepository.findSuggestion(suggest);
+        List<UserDto> result = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(userEntities)) {
+            userEntities.forEach(e -> result.add(UserTransformer.entityToDto(e, new UserDto())));
+        }
+        return result;
     }
 }

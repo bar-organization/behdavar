@@ -125,6 +125,7 @@ export class CartableDto extends BaseAuditorDto<string, number> {
 }
 
 export class ContractDto extends BaseAuditorDto<string, number> {
+  contractNumber: string;
   masterAmount: number;
   defferedAmount: number;
   idealIssueDate: Date;
@@ -139,6 +140,13 @@ export class ContractDto extends BaseAuditorDto<string, number> {
   contractType: ContractType;
   customers: CustomerDto[];
 }
+
+export class AssignContractDto {
+  assigneeId: number;
+  contractId: number;
+  status: ContractStatus;
+}
+
 
 export class LendingDto extends BaseAuditorDto<string, number> {
   masterAmount: number;
@@ -218,13 +226,17 @@ export class PrivilegeDto extends BaseAuditorDto<string, number> {
 }
 
 export enum ContractStatus {
-  STATUS_1 = "STATUS_1",
-  STATUS_2 = "STATUS_2"
+  AVAILABLE = 'AVAILABLE',
+  CLEARING = 'CLEARING',
+  RAW = 'RAW',
+  LEGAL = 'LEGAL',
+  PARKING = 'PARKING',
+  RETURN = 'RETURN'
 }
 
 export enum ContractType {
-  TYPE_1 = "TYPE_1",
-  TYPE_2 = "TYPE_2"
+  BANKS = " BANKS",
+  CARS = " CARS"
 }
 
 export enum RelationType {

@@ -4,6 +4,8 @@ import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 
+import java.util.List;
+
 public interface UserBusiness {
     UserDto findByUserName(String username);
 
@@ -16,4 +18,6 @@ public interface UserBusiness {
     void delete(Long id);
 
     PagingResponse findPaging(PagingRequest pagingRequest);
+
+    List<UserDto> findSuggestion(String suggest);
 }

@@ -16,6 +16,7 @@ import java.util.Set;
 public class ContractDto extends BaseAuditorDto<String, Long> {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    private String contractNumber;
     private LocalDate submitDate;
     private LendingDto lending;
     private ProductDto product;

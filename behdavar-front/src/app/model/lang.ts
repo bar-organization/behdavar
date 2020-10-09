@@ -65,6 +65,12 @@ export class ChangeExpertLang extends Lang{
   newExpert = 'انتخاب کارشناس جدید';
   changeExpertHistory = 'سابقه وضعیت کارشناسان پرونده';
 
+  firstName = 'نام';
+  lastName = 'نام خانوادگی';
+  date = 'تاریخ';
+  errorOnSearchExpert = 'خطا در واکشی لیست کارشناسان';
+  newExpertRequired = 'یک کارشناس انتخاب کنید';
+
 
 }
 export class DocumentInputLang extends Lang {

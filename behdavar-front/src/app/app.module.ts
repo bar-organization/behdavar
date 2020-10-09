@@ -61,6 +61,8 @@ import {MatRadioModule} from "@angular/material/radio";
 import {ContactToFlatStringPipe} from "./_pip/contant-to-flat-string.pipe";
 import {DocumentManagementComponent} from "./navigation-tab/document-management/document-management.component";
 import {ChangeExpertComponent} from "./change-expert/change-expert.component";
+import {AutocompleteComponent} from "./_custom-component/autocomplete/autocomplete.component";
+import {MatChipsModule} from "@angular/material/chips";
 
 @NgModule({
   imports: [
@@ -95,7 +97,8 @@ import {ChangeExpertComponent} from "./change-expert/change-expert.component";
     ScrollingModule,
     MatAutocompleteModule,
     MatTooltipModule,
-    MatRadioModule
+    MatRadioModule,
+    MatChipsModule
   ],
   declarations: [
     AppComponent,
@@ -127,6 +130,7 @@ import {ChangeExpertComponent} from "./change-expert/change-expert.component";
     DocumentInputComponent,
     DocumentManagementComponent,
     ChangeExpertComponent,
+    AutocompleteComponent,
 
   ],
 

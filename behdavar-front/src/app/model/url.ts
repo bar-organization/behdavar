@@ -4,6 +4,9 @@ export default class Url {
   public static readonly LOGIN = `${Url.BASE_URL}/auth/login`;
 
   public static readonly CARTABLE_FIND_PAGING = `${Url.BASE_API}/cartable/find-paging`;
+  public static readonly CARTABLE_FIND_PAGING_ALL = `${Url.BASE_API}/cartable/find-paging-all`;
+  public static readonly CARTABLE_ASSIGN = `${Url.BASE_API}/cartable/assign`;
+
   public static readonly PAYMENT_FIND_BY_CONTRACT = `${Url.BASE_API}/payment/find-by-contract`;
   public static readonly GUARANTOR_FIND_BY_ID = `${Url.BASE_API}/guarantor/find-by-id`;
   public static readonly GUARANTOR_FIND_BY_CONTRACT = `${Url.BASE_API}/guarantor/find-by-contract`;
@@ -20,6 +23,7 @@ export default class Url {
   public static readonly PERSON_FIND_SUGGESTION = `${Url.BASE_API}/person/find-suggestion`;
 
   public static readonly USER_FIND_PAGING = `${Url.BASE_API}/user/find-paging`;
+  public static readonly USER_FIND_SUGGESTION = `${Url.BASE_API}/user/find-suggestion`;
   public static readonly USER_FIND_BY_ID = `${Url.BASE_API}/user/find-by-id`;
   public static readonly USER_SAVE = `${Url.BASE_API}/user/save`;
   public static readonly USER_UPDATE = `${Url.BASE_API}/user/update`;

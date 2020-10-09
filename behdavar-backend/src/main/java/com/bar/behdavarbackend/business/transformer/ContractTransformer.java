@@ -28,6 +28,7 @@ public class ContractTransformer extends BaseAuditorTransformer {
         dto.setContractType(entity.getContractType());
         dto.setContractStatus(entity.getContractStatus());
         dto.setSubmitDate(entity.getSubmitDate());
+        dto.setContractNumber(entity.getContractNumber());
         Optional.ofNullable(entity.getCorporation()).ifPresent(catalogDetail -> dto.setCorporation(CatalogDetailTransformer.entityToDto(catalogDetail, new CatalogDetailDto())));
         Optional.ofNullable(entity.getLending()).ifPresent(lending -> dto.setLending(LendingTransformer.entityToDto(lending, new LendingDto())));
         Optional.ofNullable(entity.getProduct()).ifPresent(product -> dto.setProduct(ProductTransformer.entityToDto(product, new ProductDto())));

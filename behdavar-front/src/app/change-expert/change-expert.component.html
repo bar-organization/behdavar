@@ -5,16 +5,26 @@
           (ngSubmit)="changeExpert()">
 
       <span>{{lang.documentNumber}}: {{documentNumber}}</span>
-      <mat-form-field fxFlex="25">
-        <mat-label>{{lang.newExpert}}</mat-label>
-        <input matInput formControlName="newExpert">
+      <mat-form-field fxFlex="50">
+        <input type="text"
+               [placeholder]="lang.newExpert"
+               aria-label="Number"
+               matInput
+               [formControl]="newExpertAutocompleteControl"
+               [matAutocomplete]="newExpertAuto">
+        <mat-autocomplete autoActiveFirstOption #newExpertAuto>
+          <mat-option *ngFor="let user of userOptions | async"
+                      [value]="user.username + ' (' + user.firstName + ' ' + user.lastName + ')'" [id]="user.id">
+           {{user.username}} ({{user.firstName}} {{user.lastName}})
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
 
       <button mat-raised-button type="submit" color="primary">{{lang.referToExpert}}</button>
     </form>
     <div>
     <h6 class="text-right ">{{lang.changeExpertHistory}}</h6>
-    <data-table></data-table>
+    <data-table [httpDataSource]="catalogHttpDataSource" [tableColumns]="tableColumns" [selectable]="false"></data-table>
     </div>
   </div>
 </div>
