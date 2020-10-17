@@ -17,6 +17,7 @@ export class Lang {
   title = 'عنوان';
   send = 'ارسال';
   description = 'توضیحات';
+  errorOnSearch = 'خطا در جستجو';
 }
 
 export class AuthLang extends Lang {
