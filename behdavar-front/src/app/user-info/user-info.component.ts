@@ -42,7 +42,7 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
       this.userStatistic = {
         userInfoList: [
           {key: 'کاربر فعال', value: `${value?.user?.firstName} ${value?.user?.lastName}`},
-          {key: 'نقش', value: value?.user?.roles[0]?.roleName},
+          {key: 'نقش', value: value?.user?.roles[0]?.title},
           {key: 'آخرین آپدیت طرح و برنامه', value: this.jalaliPipe.transform(value.lastLogin)},
 
         ],

@@ -1,8 +1,8 @@
-<div fxLayout="row" style="padding: 1rem">
+<div fxLayout="row" style="padding: 5rem 2rem">
   <div fxLayout="column" fxLayoutGap="1rem">
-    <a  class="card-link" *ngFor="let link of links" [href]="link.link" target="_blank"
+    <a  class="link" *ngFor="let link of links" [href]="link.link" target="_blank"
         fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
-        <mat-icon>{{link.icon}}</mat-icon>
+      <img mat-card-avatar [src]="link.icon" alt="User avatar" class="avatar">
       <h5>{{link.title}}</h5>
     </a>
   </div>
