@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
 import {JalaliPipe} from "../_pip/jalali.pipe";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {Router} from "@angular/router";
+import {ContractStatusPip} from "../_pip/ContractStatusPip";
 
 @Component({
   selector: 'app-document',
@@ -29,14 +30,14 @@ export class DocumentComponent {
 
   tableColumns: TableColumn[] = [
     {fieldName: "contract.customers[0].person.fullName", title: this.documentLang.customerName},
-    {fieldName: 'contract.lendingNumber', title: this.documentLang.facilityNumber, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.contractStatus', title: this.documentLang.status, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.lateFees', title: this.documentLang.lateFees, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.defferedAmount', title: this.documentLang.deferredAmount, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.defferedCount', title: this.documentLang.deferredCount, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.masterAmount', title: this.documentLang.totalAmount, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.contractNumber', title: this.documentLang.facilityNumber, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.contractStatus', title: this.documentLang.status, pipNames: this.getContractStatusPip()},
+    {fieldName: 'contract.lending.lateFees', title: this.documentLang.lateFees, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.lending.defferedAmount', title: this.documentLang.deferredAmount, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.lending.defferedCount', title: this.documentLang.deferredCount, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.lending.masterAmount', title: this.documentLang.totalAmount, pipNames: this.getSimplePip()},
     {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: this.getDatePip()},
-    {fieldName: 'sender.firstName', title: this.documentLang.expert},
+    {fieldName: 'sender.firstName+sender.lastName', title: this.documentLang.expert},
     // {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
     // {fieldName: 'contract.lending.receiveLendingDate', title: this.documentLang.receiveLendingDate, pipNames: this.getDatePip()},
     // {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch,pipNames:this.getSimplePip()},
@@ -52,5 +53,9 @@ export class DocumentComponent {
   private getSimplePip() {
     return [{pip: new BlankToDashPipe()}];
 
+  }
+
+  private getContractStatusPip() {
+    return [{pip: new ContractStatusPip()}, {pip: new BlankToDashPipe()}];
   }
 }

@@ -1,6 +1,7 @@
 import {PursuitType} from "./enum/PursuitType";
 import {ResultType} from "./enum/ResultType";
 import {PhoneType} from "./enum/PhoneType";
+import {ContractStatus} from "./enum/ContractStatus";
 
 class BaseModel<T> {
   id: T;
@@ -165,6 +166,10 @@ export class LendingDto extends BaseAuditorDto<string, number> {
   ideaIssueDate: Date;
   receiveLendingDate: Date;
   branchBank: BankDto;
+  defferedAmount: number;
+  lendingNumber: string;
+  defferedCount: number;
+  lateFees: number;
 
 }
 
@@ -237,14 +242,6 @@ export class PrivilegeDto extends BaseAuditorDto<string, number> {
   title: string;
 }
 
-export enum ContractStatus {
-  AVAILABLE = 'AVAILABLE',
-  CLEARING = 'CLEARING',
-  RAW = 'RAW',
-  LEGAL = 'LEGAL',
-  PARKING = 'PARKING',
-  RETURN = 'RETURN'
-}
 
 export enum ContractType {
   BANKS = " BANKS",

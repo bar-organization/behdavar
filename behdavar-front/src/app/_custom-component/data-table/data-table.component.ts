@@ -108,6 +108,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     if (!element || !fieldName) {
       return '';
     }
+    if (fieldName.includes("+")) {
+      let result = '';
+      fieldName.split('+').forEach(v => {
+        result += dot.pick(v, element) + ' '
+      });
+      return result;
+    }
     return dot.pick(fieldName, element);
   }
 

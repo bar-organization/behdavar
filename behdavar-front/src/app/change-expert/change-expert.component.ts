@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ChangeExpertLang} from "../model/lang";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
-import {AssignContractDto, CartableDto, ContractDto, ContractStatus, UserDto} from "../model/model";
+import {AssignContractDto, CartableDto, ContractDto, UserDto} from "../model/model";
 import Url from "../model/url";
 import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import {JalaliPipe} from "../_pip/jalali.pipe";
@@ -13,6 +13,7 @@ import {Subject} from "rxjs";
 import {MessageService} from "../service/message.service";
 import {MatAutocomplete} from "@angular/material/autocomplete";
 import {SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {ContractStatus} from "../model/enum/ContractStatus";
 
 @Component({
   selector: 'change-expert',

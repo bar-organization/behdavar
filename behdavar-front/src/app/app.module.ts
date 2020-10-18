@@ -63,6 +63,7 @@ import {DocumentManagementComponent} from "./navigation-tab/document-management/
 import {ChangeExpertComponent} from "./change-expert/change-expert.component";
 import {AutocompleteComponent} from "./_custom-component/autocomplete/autocomplete.component";
 import {MatChipsModule} from "@angular/material/chips";
+import {ContractStatusPip} from "./_pip/ContractStatusPip";
 
 @NgModule({
   imports: [
@@ -122,6 +123,7 @@ import {MatChipsModule} from "@angular/material/chips";
     JalaliPipe,
     BlankToDashPipe,
     ContactToFlatStringPipe,
+    ContractStatusPip,
     FinancialStatusComponent,
     UserManagementComponent,
     UserRegistrationComponent,

@@ -284,6 +284,15 @@ export class ResultTypeLang extends Lang {
   RENEWAL_BANK_RESOURCES = "تجدید منابع بانک";
 }
 
+export class ContractStatusLang extends Lang {
+  AVAILABLE = 'در دسترس';
+  CLEARING = 'پاک شده';
+  RAW = 'خام';
+  LEGAL = 'مجاز';
+  PARKING = 'توقیف وسیله';
+  RETURN = 'برگشت داده شده';
+}
+
 export class ReportsLang extends Lang {
   reportTitle = 'گزارش گیری';
   fromDate = 'از تاریخ';
