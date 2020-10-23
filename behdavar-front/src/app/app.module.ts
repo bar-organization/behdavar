@@ -64,6 +64,7 @@ import {ChangeExpertComponent} from "./change-expert/change-expert.component";
 import {AutocompleteComponent} from "./_custom-component/autocomplete/autocomplete.component";
 import {MatChipsModule} from "@angular/material/chips";
 import {ContractStatusPip} from "./_pip/ContractStatusPip";
+import {PursuitTypePip} from "./_pip/PursuitTypePip";
 
 @NgModule({
   imports: [
@@ -124,6 +125,7 @@ import {ContractStatusPip} from "./_pip/ContractStatusPip";
     BlankToDashPipe,
     ContactToFlatStringPipe,
     ContractStatusPip,
+    PursuitTypePip,
     FinancialStatusComponent,
     UserManagementComponent,
     UserRegistrationComponent,

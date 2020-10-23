@@ -2,9 +2,7 @@
   <mat-card class="w-75">
     <mat-card-title class="text-center card-header">{{lang.customerInformation}}</mat-card-title>
     <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
-
-
-      <div fxLayout="column" formGroupName="person">
+      <div fxLayout="column" fxLayoutGap="0.5rem" formGroupName="person">
         <div fxLayout="row" fxLayoutGap="0.5rem">
           <mat-form-field class="flex-fill">
             <label>{{lang.name}}</label>
@@ -56,33 +54,31 @@
           <div class="flex-fill"></div>
         </div>
 
-        <div class="card" fxLayout="row" fxLayoutGap="0.5rem">
+        <div class="card" fxLayout="column" fxLayoutGap="0.5rem">
           <div fxLayout="column" fxLayoutAlign="center center" class="text-center card-header">
             {{lang.contactList}}
           </div>
           <div class="card-title">
-            <mat-selection-list #contactSelect role="list" (selectionChange)="contactSelectChange()" [multiple]="false">
+            <mat-selection-list class="border mx-2" #contactSelect role="list" (selectionChange)="contactSelectChange()" [multiple]="false">
               <mat-list-option *ngFor="let contactWrapper of contactWrapperList" [value]="contactWrapper.contact">
-                <div fxLayout="row" fxLayoutAlign="space-between center" >
-                  <span [class]="contactWrapper.active ? '' : 'disableRole'">{{contactWrapper.contact | contactToFlatStringPipe}}</span>
-                <button mat-icon-button type="button" (click)="onContactDelete(contactWrapper)" [color]="contactWrapper.active ? 'accent' :'primary'">
-                  <mat-icon>{{contactWrapper.active ? 'highlight_off ' : 'add_circle_outline'}}</mat-icon>
-                </button>
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <span
+                    [class]="contactWrapper.active ? '' : 'disableRole'">{{contactWrapper.contact | contactToFlatStringPipe}}</span>
+                  <button mat-icon-button type="button" (click)="onContactDelete(contactWrapper)"
+                          [color]="contactWrapper.active ? 'accent' :'primary'">
+                    <mat-icon>{{contactWrapper.active ? 'highlight_off ' : 'add_circle_outline'}}</mat-icon>
+                  </button>
 
                 </div>
               </mat-list-option>
             </mat-selection-list>
           </div>
-          <form [formGroup]="contactForm" class="card-body border-right" fxLayout="column" fxLayoutAlign="start stretch"  >
-           <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center" >
-             <mat-form-field>
-
-               <input matInput formControlName="number" [placeholder]="contactLang.number">
-             </mat-form-field>
-             <mat-checkbox formControlName="confirmed">{{contactLang.confirmed}}</mat-checkbox>
-           </div>
-
-            <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center" >
+          <form [formGroup]="contactForm" class="card-body border-right" fxLayout="column"
+                fxLayoutAlign="start stretch">
+            <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center">
+              <mat-form-field>
+                <input matInput formControlName="number" [placeholder]="contactLang.number">
+              </mat-form-field>
               <mat-form-field>
                 <mat-select formControlName="phoneType" [placeholder]="contactLang.phoneType">
                   <mat-option *ngFor="let phoneType of phoneTypeList" [value]="phoneType.value">
@@ -90,20 +86,23 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+              <mat-checkbox formControlName="confirmed">{{contactLang.confirmed}}</mat-checkbox>
+              <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem" class="w-100 justify-content-end">
+                <button mat-stroked-button color="primary" (click)="addNewContact()">{{lang.new}}</button>
+                <button mat-stroked-button color="accent" (click)="editContact(contactSelect)">{{lang.edit}}</button>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="0.5rem" fxLayoutAlign="start center">
               <mat-form-field appearance="outline" class="flex-fill">
                 <textarea matInput formControlName="description" [placeholder]="contactLang.description"></textarea>
               </mat-form-field>
             </div>
 
-            <div fxLayout="row" fxLayoutGap="0.5rem">
-              <button mat-stroked-button color="primary" (click)="addNewContact()">{{lang.new}}</button>
-              <button mat-stroked-button color="accent" (click)="editContact(contactSelect)">{{lang.edit}}</button>
-            </div>
           </form>
         </div>
 
 
-        <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
+        <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="1.5rem">
           <button mat-raised-button class="px-5" color="accent">
             <mat-icon>edit</mat-icon>
             <span class="px-2">{{lang.edit}}</span>

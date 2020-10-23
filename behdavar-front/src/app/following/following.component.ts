@@ -15,6 +15,8 @@ import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import {JalaliPipe} from "../_pip/jalali.pipe";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
+import {PursuitTypePip} from "../_pip/PursuitTypePip";
+import {MatCheckboxChange} from "@angular/material/checkbox";
 
 interface Food {
   value: string;
@@ -31,7 +33,7 @@ export class FollowingComponent implements OnInit {
 
   lang = new FollowingLang();
   followingForm: FormGroup;
-
+  depostidAmountDisable: boolean;
   pursuit: PursuitDto;
   pursuitTypeList: EnumValueTitle<PursuitType>[] = PURSUIT_TYPE_TITLE;
   resultTypeList: EnumValueTitle<ResultType>[] = RESULT_TYPE_TITLE;
@@ -50,6 +52,7 @@ export class FollowingComponent implements OnInit {
       customerDeposit: [''],
       pursuitType: [''],
       resultType: [''],
+      depostidAmount: [{value: null, disabled: true}],
     });
 
     const filter: SearchCriteria[] = [{key: 'contract.id', value: this.getIdParam(), operation: SearchOperation.EQUAL}];
@@ -68,7 +71,7 @@ export class FollowingComponent implements OnInit {
 
   submitted = false;
   followingTableColumn: TableColumn[] = [
-    {fieldName: 'pursuitType', title: this.lang.followingType, pipNames: [{pip: new BlankToDashPipe()}]},
+    {fieldName: 'pursuitType', title: this.lang.followingType, pipNames: this.getPursuitTypePip()},
     {
       fieldName: 'createdDate',
       title: this.lang.date,
@@ -79,8 +82,12 @@ export class FollowingComponent implements OnInit {
       title: this.lang.time,
       pipNames: [{pip: new JalaliPipe(), args: ['HH:mm']}, {pip: new BlankToDashPipe()}]
     },
-    {fieldName: 'user.firstName', title: this.lang.expertName},
+    {fieldName: 'user.firstName+user.lastName', title: this.lang.expertName},
   ];
+
+  private getPursuitTypePip() {
+    return [{pip: new PursuitTypePip()}, {pip: new BlankToDashPipe()}];
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -123,5 +130,14 @@ export class FollowingComponent implements OnInit {
       model.resultType = null
     }
 
+  }
+
+  onCustomerDepositChange(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.followingForm.controls['depostidAmount'].enable();
+    } else {
+      this.followingForm.patchValue({depostidAmount: null});
+      this.followingForm.controls['depostidAmount'].disable();
+    }
   }
 }
