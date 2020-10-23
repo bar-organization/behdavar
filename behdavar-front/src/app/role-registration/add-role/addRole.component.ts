@@ -26,9 +26,9 @@ export class AddRoleComponent implements OnInit {
   }
 
   @Input()
-  roleId: number;
+  role: RoleDto;
   @Output()
-  roleIdChange = new EventEmitter<number>();
+  roleChange = new EventEmitter<RoleDto>();
 
   @Output()
   onBack = new EventEmitter<boolean>();
@@ -144,7 +144,7 @@ export class AddRoleComponent implements OnInit {
   editRole() {
 
     const roleDto: RoleDto = new RoleDto();
-    roleDto.id = this.roleId;
+    roleDto.id = this.role.id;
 
     if (!this.isFormValid()) {
       return;
@@ -223,8 +223,8 @@ export class AddRoleComponent implements OnInit {
 
     this.httpClient.post<PagingResponse<PrivilegeDto>>(Url.PRIVILEGE_FIND_PAGING, request)
       .subscribe(allPrivilegeRes => {
-        if (this.roleId) {
-          this.httpClient.post<RoleDto>(Url.ROLE_FIND_BY_ID, this.roleId)
+        if (this.role && this.role.id) {
+          this.httpClient.post<RoleDto>(Url.ROLE_FIND_BY_ID, this.role.id)
             .subscribe(value => {
               this.roleForm.patchValue({'roleName': value.roleName, 'roleTitle': value.title});
               if (value.privilegeDtos) {

@@ -1,6 +1,6 @@
 <div fxLayout="row" class="py-2" fxLayoutAlign="center start" fxLayoutGap="0.5rem">
   <div *ngIf="isAddOrEdit; else searchRole" class="w-100">
-    <add-role (onBack)="onAddRoleBack()" [(roleId)]="roleId"></add-role>
+    <add-role (onBack)="onAddRoleBack()" [(role)]="selectedRole"></add-role>
   </div>
 
   <ng-template #searchRole>
@@ -15,12 +15,12 @@
           <button mat-flat-button type="submit" color="primary">{{lang.search}}</button>
         </form>
         <div fxLayoutGap="0.5rem">
-          <button mat-mini-fab color="primary" type="button" (click)="isAddOrEdit = true; roleId = null">
+          <button mat-mini-fab color="primary" type="button" (click)="isAddOrEdit = true; selectedRole = null">
             <mat-icon>add</mat-icon>
           </button>
 
           <button #editRoleButton mat-mini-fab color="accent" type="button"
-                  [disabled]="!(roleTable.idFieldChange | async)"
+                  [disabled]="!(roleTable.selectedValueChange | async)"
                   (click)="isAddOrEdit = true">
             <mat-icon>edit</mat-icon>
           </button>
@@ -31,7 +31,7 @@
         <div class="text-center card-header">{{lang.roleList}}</div>
         <div class="p-2">
           <data-table #roleTable [tableColumns]="roleTableColumns" [httpDataSource]="roleHttpDataSource"
-                      [(idField)]="roleId"></data-table>
+                      [(selectedValue)]="selectedRole"></data-table>
 
         </div>
       </div>

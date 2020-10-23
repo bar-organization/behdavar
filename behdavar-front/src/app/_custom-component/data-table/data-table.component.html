@@ -2,32 +2,41 @@
   <table mat-table [dataSource]="httpDataSource" matSort class="w-100">
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
-      <th mat-header-cell  style="min-width: 5rem" *matHeaderCellDef>
-          __
+      <th mat-header-cell style="min-width: 5rem" *matHeaderCellDef>
+        <mat-checkbox *ngIf="multiSelectable else doubleDash" (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      [aria-label]="checkboxLabel()">
+        </mat-checkbox>
+        <ng-template #doubleDash>
+          <span>--</span>
+        </ng-template>
+
       </th>
-      <td mat-cell style="min-width: 5rem"  *matCellDef="let row">
+      <td mat-cell style="min-width: 5rem" *matCellDef="let row">
         <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="toggle(row,$event)"
+                      (change)="$event ? selection.toggle(row) : null"
                       [checked]="selection.isSelected(row)"
-        >
+                      [aria-label]="checkboxLabel(row)">
         </mat-checkbox>
       </td>
     </ng-container>
 
     <ng-container matColumnDef="rowNo">
-      <th mat-header-cell style="min-width: 5rem"  *matHeaderCellDef mat-sort-header> {{rowNoTitle}}</th>
-      <td mat-cell style="min-width: 5rem"  *matCellDef="let element; let i = index;"> {{i + 1 }} </td>
+      <th mat-header-cell style="min-width: 5rem" *matHeaderCellDef mat-sort-header> {{rowNoTitle}}</th>
+      <td mat-cell style="min-width: 5rem" *matCellDef="let element; let i = index;"> {{i + 1 }} </td>
     </ng-container>
 
     <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col.colName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{col.title}}</th>
-      <td mat-cell *matCellDef="let element"> {{applyPip(handelDot(element, col.fieldName),col.pipNames) }} </td>
+      <td mat-cell *matCellDef="let element"> {{getColumnValue(element, col) }} </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
-    <tr mat-row *matRowDef="let row; columns: getDisplayedColumns();"></tr>
+    <tr mat-header-row *matHeaderRowDef="columnToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnToDisplay;" (click)="selection.toggle(row)"></tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10]" [length]="totalRecord$ | async" [pageSize]="5"
+  <mat-paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10]" [length]="totalRecord$ | async"
+                 [pageSize]="5"
                  showFirstLastButtons></mat-paginator>
 
 </div>

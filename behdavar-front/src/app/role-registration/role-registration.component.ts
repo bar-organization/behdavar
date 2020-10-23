@@ -29,7 +29,7 @@ export class RoleRegistrationComponent implements OnInit {
   roleTable: DataTableComponent;
 
   isAddOrEdit: boolean;
-  roleId: number;
+  selectedRole: RoleDto;
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient) {
   }

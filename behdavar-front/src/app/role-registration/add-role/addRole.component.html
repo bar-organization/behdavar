@@ -2,7 +2,7 @@
   <div class="card p-2 w-100" fxLayout="row" fxLayoutAlign="start stretch">
     <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="1rem" fxFill>
       <header>
-        <h4 class="text-center">{{!roleId ? lang.createNewRole : lang.editRole}}</h4>
+        <h4 class="text-center">{{!role ? lang.createNewRole : lang.editRole}}</h4>
         <hr>
       </header>
       <form [formGroup]="roleForm">
@@ -17,7 +17,7 @@
             <input matInput formControlName="roleTitle">
             <mat-error *ngIf="isInvalidRoleTitle">{{lang.roleTitleNotValid}}</mat-error>
           </mat-form-field>
-          <button mat-raised-button color="primary" *ngIf="!roleId else edit"
+          <button mat-raised-button color="primary" *ngIf="!role else edit"
                   (click)="newRole()">{{lang.insert}}</button>
           <ng-template #edit>
             <button mat-raised-button color="accent" (click)="editRole()">{{lang.edit}}</button>

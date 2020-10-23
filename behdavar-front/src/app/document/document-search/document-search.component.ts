@@ -64,6 +64,7 @@ export class DocumentSearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //TODO must complete search
   onSub() {
     console.log(this.parentForm.value);
 

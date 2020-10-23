@@ -1,5 +1,5 @@
 <app-document-search [documentSearchDataTable]="table" ></app-document-search>
 
-<app-document-toolbar [id]="table.idFieldChange | async" ></app-document-toolbar>
+<app-document-toolbar [id]="contractId" ></app-document-toolbar>
 
-<data-table #table [httpDataSource]="catalogHttpDataSource" [tableColumns]="tableColumns" idFieldName="contract.id"></data-table>
+<data-table #table [httpDataSource]="catalogHttpDataSource" (selectedValueChange)="onSelectedValueChange($event)" [tableColumns]="tableColumns"></data-table>

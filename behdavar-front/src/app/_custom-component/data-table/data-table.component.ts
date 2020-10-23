@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, PipeTransform, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
-import {MatPaginator} from "@angular/material/paginator";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import HttpDataSource from "./HttpDataSource";
 import {PagingRequest} from "./PaginationModel";
@@ -8,7 +8,6 @@ import {tap} from "rxjs/operators";
 import {BehaviorSubject, Observable} from "rxjs";
 import dot from "dot-object";
 import {SelectionModel} from "@angular/cdk/collections";
-import {MatCheckboxChange} from "@angular/material/checkbox";
 
 @Component({
   selector: 'data-table',
@@ -20,36 +19,19 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  @Input()
-  tableColumns: TableColumn[];
-
-  @Input()
-  matTableDataSource: MatTableDataSource<unknown>;
-
-  @Input()
-  httpDataSource: HttpDataSource<unknown>;
-
-  @Input()
-  idField: number;
-
-  @Output()
-  idFieldChange = new EventEmitter<number>();
-
-  @Output()
-  rowSelectChange = new EventEmitter();
-
-  @Input()
-  idFieldName: string;
-
-  @Input()
-  selectable: boolean = true;
+  @Input() multiSelectable: boolean;
+  @Input() tableColumns: TableColumn[];
+  @Input() matTableDataSource: MatTableDataSource<unknown>;
+  @Input() httpDataSource: HttpDataSource<unknown>;
+  @Input() selectedValue: unknown | unknown[];
+  @Output() selectedValueChange = new EventEmitter<unknown | unknown[]>();
+  @Input() selectable: boolean = true;
 
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
-  private selection = new SelectionModel<unknown>(false, []);
-  loadingText = 'درحال واکشی...';
+  private selection: SelectionModel<unknown>;
   rowNoTitle = 'ردیف';
-
+  columnToDisplay: string[];
 
   ngOnInit(): void {
     this.configureTableColumns()
@@ -74,19 +56,32 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     return request;
   }
 
-  getDisplayedColumns(): string[] {
-    if (!this.tableColumns) {
-      return [];
-    }
-    let columnToDisplay = this.tableColumns.filter(value => !value.hidden).map(value => value.colName);
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    return this.paginator?.pageSize === numSelected;
+  }
 
-    if (this.selectable) {
-      columnToDisplay.unshift('select', 'rowNo');
+  // TODO must refactor
+  masterToggle() {
+    if (this.isAllSelected()) {
+      this.selection.clear()
+
     } else {
-      columnToDisplay.unshift('rowNo');
+      if (this.matTableDataSource) {
+        this.matTableDataSource.data.forEach(row => this.selection.select(row));
+      } else {
+        this.httpDataSource.subject.getValue().forEach(row => this.selection.select(row));
+
+      }
     }
 
-    return columnToDisplay;
+  }
+
+  checkboxLabel(row?: unknown): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row`;
   }
 
   private configureMatTableDataSource() {
@@ -102,6 +97,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       this.loading$ = this.httpDataSource.loadingSubject.asObservable();
       this.totalRecord$ = this.httpDataSource.totalRecordSubject.asObservable();
     }
+  }
+
+  getColumnValue(element: any, col: TableColumn) {
+    const fieldValue = this.handelDot(element, col.fieldName);
+    return this.applyPip(fieldValue, col.pipNames);
   }
 
   handelDot(element: any, fieldName: string): string {
@@ -130,32 +130,45 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     return result;
   }
 
-  // TODO must refactor and separate method implementation
-  toggle(row: any, $event: MatCheckboxChange): any {
-    let result = $event ? this.selection.toggle(row) : null;
+  private multiToggle(multiRow: any[]) {
+    this.selectedValueChange.emit(multiRow.filter(row => this.selection.isSelected(row)));
+  }
 
-    if (this.selection.isSelected(row)) {
-      if (!this.idFieldName) {
-        this.idFieldName = 'id';
-      }
-      this.idFieldChange.emit(dot.pick(this.idFieldName, row));
-      this.rowSelectChange.emit(row);
-    } else {
-      this.idFieldChange.emit(undefined);
-      this.rowSelectChange.emit(undefined);
-
-    }
-    return result;
+  toggle(row: any): any {
+    this.selectedValueChange.emit(this.selection.isSelected(row) ? row : undefined);
   }
 
   private configureTableColumns() {
+    this.configureMultiSelectable();
+
     if (this.tableColumns) {
       this.tableColumns.forEach((column, index) => {
         if (!column.colName) {
           column.colName = `col${index}`;
         }
       });
+
+      this.columnToDisplay = this.tableColumns ? this.tableColumns.filter(col => !col.hidden).map(col => col.colName) : [];
+
+      this.configureDefaultColumns();
     }
+  }
+
+  private configureDefaultColumns() {
+    if (this.selectable) {
+      this.columnToDisplay.unshift('select', 'rowNo');
+    } else {
+      this.columnToDisplay.unshift('rowNo');
+    }
+  }
+
+  onPageChange() {
+    this.selection.clear();
+  }
+
+  private configureMultiSelectable() {
+    this.selection = new SelectionModel<unknown>(this.multiSelectable, []);
+    this.selection.changed.subscribe(change => this.multiSelectable ? this.multiToggle(change.added) : this.toggle(change.added[0]))
   }
 }
 

@@ -163,7 +163,7 @@ export class UserRegistrationComponent implements OnInit, AfterViewInit {
 
   }
 
-  onUserSelectChange(selectedUser: any) {
+  onUserSelectChange(selectedUser: UserDto) {
 
     // is any user not selected , nothing happen
     if (!selectedUser) {

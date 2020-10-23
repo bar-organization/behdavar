@@ -9,17 +9,19 @@ import {JalaliPipe} from "../_pip/jalali.pipe";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {Router} from "@angular/router";
 import {ContractStatusPip} from "../_pip/ContractStatusPip";
+import {AuthService} from "../service/auth/auth.service";
+import {AuthorityConstantEnum} from "../model/enum/AuthorityConstantEnum";
 
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html'
 })
 export class DocumentComponent {
-
+  contractId: number;
   documentLang = new DocumentLang();
   catalogHttpDataSource: HttpDataSource<CartableDto>;
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpClient: HttpClient, private router: Router, private authService: AuthService) {
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient);
   }
 
@@ -33,15 +35,29 @@ export class DocumentComponent {
     {fieldName: 'contract.contractNumber', title: this.documentLang.facilityNumber, pipNames: this.getSimplePip()},
     {fieldName: 'contract.contractStatus', title: this.documentLang.status, pipNames: this.getContractStatusPip()},
     {fieldName: 'contract.lending.lateFees', title: this.documentLang.lateFees, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.lending.defferedAmount', title: this.documentLang.deferredAmount, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.lending.defferedCount', title: this.documentLang.deferredCount, pipNames: this.getSimplePip()},
+    {
+      fieldName: 'contract.lending.defferedAmount',
+      title: this.documentLang.deferredAmount,
+      pipNames: this.getSimplePip()
+    },
+    {
+      fieldName: 'contract.lending.defferedCount',
+      title: this.documentLang.deferredCount,
+      pipNames: this.getSimplePip()
+    },
     {fieldName: 'contract.lending.masterAmount', title: this.documentLang.totalAmount, pipNames: this.getSimplePip()},
     {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: this.getDatePip()},
-    {fieldName: 'sender.firstName+sender.lastName', title: this.documentLang.expert},
+    {
+      fieldName: 'sender.firstName+sender.lastName',
+      title: this.documentLang.expert,
+      hidden:  !this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY)
+    },
+
     // {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
     // {fieldName: 'contract.lending.receiveLendingDate', title: this.documentLang.receiveLendingDate, pipNames: this.getDatePip()},
     // {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch,pipNames:this.getSimplePip()},
     // {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank,pipNames:this.getSimplePip()},
+
     {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber, pipNames: this.getSimplePip()},
     {fieldName: 'contract.product.productName', title: this.documentLang.vehicleType, pipNames: this.getSimplePip()},
   ];
@@ -57,5 +73,9 @@ export class DocumentComponent {
 
   private getContractStatusPip() {
     return [{pip: new ContractStatusPip()}, {pip: new BlankToDashPipe()}];
+  }
+
+  onSelectedValueChange(selectedValue: CartableDto) {
+    this.contractId = selectedValue?.contract?.id;
   }
 }

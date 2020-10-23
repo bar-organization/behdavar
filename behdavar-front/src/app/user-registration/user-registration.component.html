@@ -12,7 +12,7 @@
 
     <div class="card">
       <div class="text-center card-header">{{lang.userList}}</div>
-      <data-table [tableColumns]="userTableColumns" [httpDataSource]="userHttpDatasource" (rowSelectChange)="onUserSelectChange($event)"></data-table>
+      <data-table [tableColumns]="userTableColumns" [httpDataSource]="userHttpDatasource" (selectedValueChange)="onUserSelectChange($event)"></data-table>
     </div>
   </aside>
 
