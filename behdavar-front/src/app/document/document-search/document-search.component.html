@@ -5,7 +5,7 @@
       <mat-panel-title>{{documentSearchLang.search}}</mat-panel-title>
     </mat-expansion-panel-header>
     <mat-divider></mat-divider>
-    <form [formGroup]="parentForm" (ngSubmit)="onSub()" fxLayout="column" fxLayoutAlign="start start"
+    <form [formGroup]="parentForm" (ngSubmit)="onSearch()" fxLayout="column" fxLayoutAlign="start start"
           fxLayoutGap="0.5rem" >
       <!-- Document Search -->
       <div [formGroup]="documentSearchFormGroup" class="card" fxLayout="row">

@@ -10,12 +10,14 @@ import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import com.bar.behdavardatabase.entity.security.UserEntity;
 import com.bar.behdavardatabase.repository.security.UserRepository;
+import com.bar.behdavardatabase.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserBusinessImpl implements UserBusiness {
@@ -79,7 +81,7 @@ public class UserBusinessImpl implements UserBusiness {
             ((List<UserEntity>) pagingResponse.getData()).forEach(e ->
                     userDtos.add(UserTransformer.entityToDto(e, new UserDto(), UserEntity.ROLE_DETAILS))
             );
-            pagingResponse.setData(userDtos);
+            pagingResponse.setData(this.filterSupervisorUser(userDtos));
         }
         return pagingResponse;
     }
@@ -91,6 +93,15 @@ public class UserBusinessImpl implements UserBusiness {
         if (!CollectionUtils.isEmpty(userEntities)) {
             userEntities.forEach(e -> result.add(UserTransformer.entityToDto(e, new UserDto())));
         }
-        return result;
+        return filterSupervisorUser(result);
+    }
+
+    // TODO must filter with query
+    private List<UserDto> filterSupervisorUser(List<UserDto> userDtos) {
+        if (!SecurityUtil.getCurrentUser().equals(StartupPreparation.SUPERVISOR_USER)) {
+            return userDtos.stream().filter(user -> !user.getUsername().equals(StartupPreparation.SUPERVISOR_USER))
+                    .collect(Collectors.toList());
+        }
+        return userDtos;
     }
 }

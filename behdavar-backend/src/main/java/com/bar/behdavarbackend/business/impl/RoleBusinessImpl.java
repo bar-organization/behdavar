@@ -2,6 +2,7 @@ package com.bar.behdavarbackend.business.impl;
 
 import com.bar.behdavarbackend.business.api.RoleBusiness;
 import com.bar.behdavarbackend.business.transformer.RoleTransformer;
+import com.bar.behdavarbackend.config.StartupPreparation;
 import com.bar.behdavarbackend.dto.RoleDto;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.PagingExecutor;
@@ -9,6 +10,7 @@ import com.bar.behdavarbackend.util.pagination.PagingRequest;
 import com.bar.behdavarbackend.util.pagination.PagingResponse;
 import com.bar.behdavardatabase.entity.security.RoleEntity;
 import com.bar.behdavardatabase.repository.security.RoleRepository;
+import com.bar.behdavardatabase.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service(RoleBusinessImpl.BEAN_NAME)
 public class RoleBusinessImpl implements RoleBusiness {
@@ -59,7 +62,8 @@ public class RoleBusinessImpl implements RoleBusiness {
             ((List<RoleEntity>) pagingResponse.getData()).forEach(e ->
                     roleDtos.add(RoleTransformer.entityToDto(e, new RoleDto()))
             );
-            pagingResponse.setData(roleDtos);
+            // TODO must filter this with query
+            pagingResponse.setData(this.filterSupervisorRole(roleDtos));
         }
         return pagingResponse;
     }
@@ -71,7 +75,15 @@ public class RoleBusinessImpl implements RoleBusiness {
         if (!CollectionUtils.isEmpty(roleEntities)) {
             roleEntities.forEach(e -> result.add(RoleTransformer.entityToDto(e, new RoleDto())));
         }
-        return result;
+        // TODO must filter this with query
+        return this.filterSupervisorRole(result);
+    }
+
+    private List<RoleDto> filterSupervisorRole(List<RoleDto> roleDtos) {
+        if (!SecurityUtil.getCurrentUser().equals(StartupPreparation.SUPERVISOR_USER)) {
+            return roleDtos.stream().filter(role -> !role.getRoleName().equals(StartupPreparation.SUPERVISOR_ROLE)).collect(Collectors.toList());
+        }
+        return roleDtos;
     }
 
 }

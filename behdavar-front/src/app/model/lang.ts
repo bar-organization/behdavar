@@ -14,6 +14,7 @@ export class Lang {
   error = 'خطا در انجام عملیات';
   delete = 'حذف';
   active = 'فعال';
+  inactive = 'غیر فعال';
   title = 'عنوان';
   send = 'ارسال';
   description = 'توضیحات';

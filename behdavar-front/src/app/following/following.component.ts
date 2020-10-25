@@ -17,6 +17,7 @@ import {JalaliPipe} from "../_pip/jalali.pipe";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {PursuitTypePip} from "../_pip/PursuitTypePip";
 import {MatCheckboxChange} from "@angular/material/checkbox";
+import {MessageService} from "../service/message.service";
 
 interface Food {
   value: string;
@@ -39,7 +40,7 @@ export class FollowingComponent implements OnInit {
   resultTypeList: EnumValueTitle<ResultType>[] = RESULT_TYPE_TITLE;
   followingHttpDataSource: HttpDataSource<PursuitDto>;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private _snackBar: MatSnackBar, private router: Router) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -97,17 +98,10 @@ export class FollowingComponent implements OnInit {
 
     this.httpClient.post<PursuitDto>(Url.PURSUIT_SAVE, saveModel)
       .subscribe(value => {
-          this._snackBar.open(this.lang.successSave, 'X', {
-            duration: 5000, panelClass: ['bg-success', 'text-white']
-          });
-          this.followingHttpDataSource.reload();
+          this.messageService.showGeneralSuccess(this.lang.successSave);
           this.router.navigate(['../']);
         },
-
-
-        error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
-          duration: 5000, panelClass: ['bg-danger', 'text-white']
-        })
+        error => this.messageService.showGeneralError(this.lang.error,error)
       );
   }
 

@@ -3,7 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {DocumentLang} from '../../model/lang';
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {DataTableComponent} from "../../_custom-component/data-table/data-table.component";
-import {SearchCriteria} from "../../_custom-component/data-table/PaginationModel";
+import {SearchCriteria, SearchOperation} from "../../_custom-component/data-table/PaginationModel";
 
 @Component({
   selector: 'app-document-search',
@@ -21,7 +21,7 @@ export class DocumentSearchComponent implements OnInit {
   panelOpenState = false;
 
   @Input()
-  documentSearchDataTable:DataTableComponent;
+  documentSearchDataTable: DataTableComponent;
 
   parentForm: FormGroup;
   bankMachineSearchFormGroup: FormGroup;
@@ -64,12 +64,16 @@ export class DocumentSearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  //TODO must complete search
-  onSub() {
+  onSearch() {
     console.log(this.parentForm.value);
 
     const filter: SearchCriteria[] = [];
-    this.documentSearchDataTable.httpDataSource.reload()
+
+    const facilityNumber = this.parentForm.value?.documentSearchFormGroup?.facilityNumber;
+    if (facilityNumber)
+      filter.push({key: 'contract.contractNumber', value: facilityNumber, operation: SearchOperation.EQUAL})
+
+    this.documentSearchDataTable.httpDataSource.reload(filter);
   }
 
 
