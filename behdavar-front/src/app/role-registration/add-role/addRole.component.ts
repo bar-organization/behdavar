@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {RoleRegistrationLang} from "../../model/lang";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PrivilegeDto, RoleDto} from "../../model/model";
@@ -6,27 +6,25 @@ import Url from "../../model/url";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "../../service/message.service";
 import {PagingRequest, PagingResponse} from "../../_custom-component/data-table/PaginationModel";
-import {MatSelectionList} from "@angular/material/list";
+import {MatSelectionList, MatSelectionListChange} from "@angular/material/list";
 
 @Component({
   selector: 'add-role',
   templateUrl: './addRole.component.html',
   styleUrls: ['./addRole.component.css']
 })
-export class AddRoleComponent implements OnInit {
+export class AddRoleComponent implements OnInit,AfterViewInit {
   lang = new RoleRegistrationLang();
 
   @ViewChild("currentPrvSelect")
   currentPrvSelect: MatSelectionList;
-
-  @ViewChild("systemPrvSelect")
-  systemPrvSelect: MatSelectionList;
 
   constructor(private httpClient: HttpClient, private messageService: MessageService, private fb: FormBuilder) {
   }
 
   @Input()
   role: RoleDto;
+
   @Output()
   roleChange = new EventEmitter<RoleDto>();
 
@@ -38,8 +36,9 @@ export class AddRoleComponent implements OnInit {
   isInvalidRoleTitle: boolean;
   roleForm: FormGroup;
 
-  currentPrivilegeList: PrivilegeDto[];
-  allSystemPrivilegeList: PrivilegeDto[];
+  privilegeWrapperList: PrivilegeDtoWrapper[];
+  isIndeterminate: boolean = false;
+  selectAll: boolean = false;
 
 
   ngOnInit(): void {
@@ -48,36 +47,9 @@ export class AddRoleComponent implements OnInit {
       roleTitle: ['', Validators.required]
     });
 
-    this.loadAllPrivileges();
   }
-
-
-  // TODO must refactor
-
-  addPrivilege() {
-    if (!this.allSystemPrivilegeList || this.allSystemPrivilegeList.length === 0) {
-      return;
-    }
-
-    if (!this.systemPrvSelect.selectedOptions.selected || this.systemPrvSelect.selectedOptions.selected.length === 0) {
-      this.messageService.showGeneralError(this.lang.selectSystemPrivilege);
-      return;
-    }
-    //
-    const selectedSystemPrivilege: PrivilegeDto[] = this.systemPrvSelect.selectedOptions.selected.map(value => value.value);
-
-    // add selectedSystemPrivilege to currentPrivilegeList
-    if (!this.currentPrivilegeList) {
-      this.currentPrivilegeList = [];
-    }
-    selectedSystemPrivilege.forEach(value => {
-      if (!this.currentPrivilegeList.find(v => v.id === value.id)) {
-        this.currentPrivilegeList.push(value);
-      }
-    });
-
-    this.allSystemPrivilegeList = this.allSystemPrivilegeList.filter(value => !selectedSystemPrivilege.find(v => v.id === value.id));
-
+  ngAfterViewInit(): void {
+    this.loadAllPrivileges();
   }
 
 
@@ -94,9 +66,12 @@ export class AddRoleComponent implements OnInit {
     return true;
   }
 
-  newRole() {
+  saveOrUpdateRole() {
 
     const roleDto: RoleDto = new RoleDto();
+    if (this.isEditMode()) {
+      roleDto.id = this.role.id;
+    }
 
     if (!this.isFormValid()) {
       return;
@@ -105,19 +80,16 @@ export class AddRoleComponent implements OnInit {
     this.extractDataFromForm(roleDto);
 
     //check privilegeList
-    if (!this.currentPrivilegeList || this.currentPrivilegeList.length === 0) {
-      this.messageService.showGeneralError(this.lang.rolePrivilegesNotBeEmpty)
+    if (!this.getSelectedPrivilegeId() || this.getSelectedPrivilegeId().length === 0) {
+      this.messageService.showGeneralError(this.lang.selectAPrivilege)
       return;
     }
 
-    roleDto.privilegeDtos = this.currentPrivilegeList;
-
-    // clear privilege audit field
-    this.clearAuditField(roleDto.privilegeDtos);
+    roleDto.privilegeDtos = this.getSelectedPrivilegeId().map(prvId => this.selectedPrivilegeIdToPrivilege(prvId));
 
     // perform save request
     this.httpClient
-      .post<number>(Url.ROLE_SAVE, roleDto)
+      .post<number>(this.isEditMode() ? Url.ROLE_UPDATE : Url.ROLE_SAVE, roleDto)
       .subscribe(value => {
           this.messageService.showGeneralSuccess(this.lang.successSave);
           this.back();
@@ -126,55 +98,11 @@ export class AddRoleComponent implements OnInit {
 
   }
 
-  private clearAuditField(baseAuditors: any[]) {
-    if (!baseAuditors || baseAuditors.length === 0)
-      return;
-
-    for (let baseAuditor of baseAuditors) {
-      if (baseAuditor) {
-        if (baseAuditor.createdDate)
-          baseAuditor.createdDate = null;
-        if (baseAuditor.lastModifiedDate)
-          baseAuditor.lastModifiedDate = null;
-
-      }
-    }
+  private selectedPrivilegeIdToPrivilege(prvId: string): PrivilegeDto {
+    const privilegeDto = new PrivilegeDto();
+    privilegeDto.id = Number(prvId);
+    return privilegeDto;
   }
-
-  editRole() {
-
-    const roleDto: RoleDto = new RoleDto();
-    roleDto.id = this.role.id;
-
-    if (!this.isFormValid()) {
-      return;
-    }
-
-    this.extractDataFromForm(roleDto);
-
-    //check privilegeList
-    if (!this.currentPrivilegeList || this.currentPrivilegeList.length === 0) {
-      this.messageService.showGeneralError(this.lang.rolePrivilegesNotBeEmpty)
-      return;
-    }
-
-    //set active item in privilegeList to newRole
-    roleDto.privilegeDtos = this.currentPrivilegeList;
-
-    // clear privilege audit field
-    this.clearAuditField(roleDto.privilegeDtos);
-
-    // perform update request
-    this.httpClient
-      .post<number>(Url.ROLE_UPDATE, roleDto)
-      .subscribe(value => {
-          this.messageService.showGeneralSuccess(this.lang.successSave);
-          this.back();
-        },
-        e => this.messageService.showGeneralError(e, this.lang.error));
-
-  }
-
 
   private extractDataFromForm(roleDto: RoleDto) {
     roleDto.roleName = this.roleForm.value.roleName;
@@ -187,32 +115,6 @@ export class AddRoleComponent implements OnInit {
     this.onBack.emit(true);
   }
 
-  subtractPrivilege() {
-    if (!this.currentPrivilegeList || this.currentPrivilegeList.length === 0) {
-      return;
-    }
-    if (!this.currentPrvSelect.selectedOptions.selected || this.currentPrvSelect.selectedOptions.selected.length === 0) {
-      this.messageService.showGeneralError(this.lang.selectCurrentPrivilege);
-      return;
-    }
-
-    //
-    const selectedCurrentPrivilege: PrivilegeDto[] = this.currentPrvSelect.selectedOptions.selected.map(value => value.value);
-
-    // add selectedCurrentPrivilege to systemPrivilegeList
-    if (!this.allSystemPrivilegeList) {
-      this.allSystemPrivilegeList = [];
-    }
-    selectedCurrentPrivilege.forEach(value => {
-      if (!this.allSystemPrivilegeList.find(v => v.id === value.id)) {
-        this.allSystemPrivilegeList.push(value);
-      }
-    });
-
-    this.currentPrivilegeList = this.currentPrivilegeList.filter(value => !selectedCurrentPrivilege.find(v => v.id === value.id));
-
-
-  }
 
   private loadAllPrivileges() {
     const request: PagingRequest = new PagingRequest();
@@ -223,31 +125,77 @@ export class AddRoleComponent implements OnInit {
 
     this.httpClient.post<PagingResponse<PrivilegeDto>>(Url.PRIVILEGE_FIND_PAGING, request)
       .subscribe(allPrivilegeRes => {
-        if (this.role && this.role.id) {
-          this.httpClient.post<RoleDto>(Url.ROLE_FIND_BY_ID, this.role.id)
-            .subscribe(value => {
-              this.roleForm.patchValue({'roleName': value.roleName, 'roleTitle': value.title});
-              if (value.privilegeDtos) {
-                this.currentPrivilegeList = value.privilegeDtos;
-                this.subtractCurrentPrivilegeIfExist(allPrivilegeRes.data);
-              }
-            });
-        } else {
-          this.allSystemPrivilegeList = allPrivilegeRes.data;
-        }
+        this.privilegeWrapperList = allPrivilegeRes.data.map(prv => {
+          return {privilege: prv, selected: false};
+        });
+        this.checkSelectedPrivileges();
       })
   }
 
-  private subtractCurrentPrivilegeIfExist(loadedPrivilege: PrivilegeDto[]) {
-    if (this.currentPrivilegeList && this.currentPrivilegeList.length > 0) {
-      if (loadedPrivilege) {
-        this.allSystemPrivilegeList = [];
-        loadedPrivilege.forEach((value, index) => {
-          if (!this.currentPrivilegeList.find(v => v.id === value.id)) {
-            this.allSystemPrivilegeList.push(value);
+  private checkSelectedPrivileges() {
+    if (this.isEditMode()) {
+      this.httpClient.post<RoleDto>(Url.ROLE_FIND_BY_ID, this.role.id)
+        .subscribe(selectedRole => {
+          this.roleForm.patchValue({'roleName': selectedRole.roleName, 'roleTitle': selectedRole.title});
+          this.privilegeWrapperList.forEach(prvWrapper => {
+            for (let privilegeDto of selectedRole.privilegeDtos) {
+              if (privilegeDto && privilegeDto.id == prvWrapper.privilege.id) {
+                prvWrapper.selected = true;
+              }
+            }
+          });
+
+          // TODO must refactor
+          this.isIndeterminate = false;
+          const selectedLength = this.privilegeWrapperList.filter(prv => prv.selected).length;
+          const totalLength = this.privilegeWrapperList.length;
+          if (totalLength === selectedLength) {
+            this.selectAll = true;
+            return;
           }
+          if (0 < selectedLength && selectedLength < totalLength) {
+            this.isIndeterminate = true;
+          }
+
         });
-      }
     }
   }
+
+  private isEditMode() {
+    return this.role && this.role.id;
+  }
+
+
+  onPrivilegeSelectChange() {
+    this.isIndeterminate = false;
+    if (this.getSelectedPrivilegeId().length === 0) {
+      this.selectAll = false;
+      return;
+    }
+
+    if (this.getSelectedPrivilegeId().length === this.privilegeWrapperList.length) {
+      this.selectAll = true;
+      return;
+    }
+
+    this.isIndeterminate = true;
+
+  }
+
+  private getSelectedPrivilegeId() {
+    return this.currentPrvSelect._value ;
+  }
+
+  selectAllChange(event:any) {
+    if (event.checked) {
+      this.currentPrvSelect.selectAll();
+    } else {
+      this.currentPrvSelect.selectedOptions.clear();
+    }
+  }
+}
+
+interface PrivilegeDtoWrapper {
+  privilege: PrivilegeDto;
+  selected: boolean;
 }

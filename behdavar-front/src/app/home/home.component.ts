@@ -17,9 +17,8 @@ export class HomeComponent implements OnInit {
 
   linkList: TabLink[] = [
     {title: this.lang.myBasket, iconName: "shopping_basket", routerLink: "my-basket", visible: true},
-    {title: this.lang.search, iconName: "search", routerLink: "search", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_SEARCH_MENU)},
-    //TODO must use right permission
-    {title: this.lang.documentManagement, iconName: "border_color", routerLink: "document-manage", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_USER_MANAGEMENT)},
+    {title: this.lang.search, iconName: "search", routerLink: "search", visible: true},
+    {title: this.lang.documentManagement, iconName: "border_color", routerLink: "document-manage", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_MANAGEMENT)},
     {title: this.lang.reports, iconName: "assignment", routerLink: "reports", visible: true},
     {title: this.lang.utilityTools, iconName: "build_circle", routerLink: "tools", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_UTILITY_TOOLS)},
     {title: this.lang.userManagement, iconName: "account_box", routerLink: "user-manage", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_USER_MANAGEMENT)},

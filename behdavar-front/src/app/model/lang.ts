@@ -124,8 +124,7 @@ export class RoleRegistrationLang extends Lang {
   roleTitle = 'عنوان';
   rolePrivilegesNotBeEmpty = 'لیست دسترسی ها نباید خالی باشد';
   editRole = 'ویرایش نقش';
-  selectSystemPrivilege = 'برای افزودن دسترسی حداقل یک مورد از لیست دسترسی ها موجود انتخاب کنید';
-  selectCurrentPrivilege = 'برای حذف دسترسی حداقل یک مورد از لیست دسترسی ها انتخاب کنید';
+  selectAPrivilege = 'هیج دسترسی انتخاب نشده، حداقل یک دسترسی را از لیست انتخاب کنید';
 
 }
 

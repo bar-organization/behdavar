@@ -18,9 +18,9 @@
             <mat-error *ngIf="isInvalidRoleTitle">{{lang.roleTitleNotValid}}</mat-error>
           </mat-form-field>
           <button mat-raised-button color="primary" *ngIf="!role else edit"
-                  (click)="newRole()">{{lang.insert}}</button>
+                  (click)="saveOrUpdateRole()">{{lang.insert}}</button>
           <ng-template #edit>
-            <button mat-raised-button color="accent" (click)="editRole()">{{lang.edit}}</button>
+            <button mat-raised-button color="accent" (click)="saveOrUpdateRole()">{{lang.edit}}</button>
           </ng-template>
         </div>
       </form>
@@ -28,38 +28,21 @@
       <div fxLayout="row">
 
         <div class="card w-100">
-          <div class="card-header text-right">{{lang.rolePrivileges}}</div>
-          <mat-selection-list #currentPrvSelect  class="overflow-auto" style="max-height: 30rem">
-            <mat-list-option *ngFor="let prv of currentPrivilegeList" [value]="prv" >
+          <div fxLayout="row" fxLayoutAlign="center center" class="card-header text-right">
+            <span class="w-100">{{lang.rolePrivileges}}</span>
+            <div class="justify-content-end p-1">
+              <mat-checkbox [(indeterminate)]="isIndeterminate" [(ngModel)]="selectAll" (change)="selectAllChange($event)"></mat-checkbox>
+            </div>
+          </div>
+          <mat-selection-list #currentPrvSelect class="overflow-auto" (selectionChange)="onPrivilegeSelectChange()" style="max-height: 30rem">
+            <mat-list-option *ngFor="let prv of privilegeWrapperList" [value]="prv.privilege.id" [selected]="prv.selected">
               <div fxLayout="row">
-                <b>{{lang.privilegeName}}</b>:[{{prv.name}}] ,
-                <b>{{lang.privilegeTitle}}</b>:[{{prv.title}}]
+                <b>{{lang.privilegeName}}</b>:[{{prv.privilege.name}}] ,
+                <b>{{lang.privilegeTitle}}</b>:[{{prv.privilege.title}}]
               </div>
             </mat-list-option>
           </mat-selection-list>
         </div>
-
-        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1rem">
-          <button mat-icon-button (click)="addPrivilege()">
-            <mat-icon>thumb_up</mat-icon>
-          </button>
-          <button mat-icon-button (click)="subtractPrivilege()">
-            <mat-icon>thumb_down</mat-icon>
-          </button>
-        </div>
-
-        <div class="card w-100">
-          <div class="card-header text-right">{{lang.remainingPrivileges}}</div>
-          <mat-selection-list  #systemPrvSelect class="overflow-auto" style="max-height: 30rem">
-            <mat-list-option  *ngFor="let prv of allSystemPrivilegeList" [value]="prv" >
-              <div fxLayout="row">
-                <b>{{lang.privilegeName}}</b>:[{{prv.name}}] ,
-                <b>{{lang.privilegeTitle}}</b>:[{{prv.title}}]
-              </div>
-            </mat-list-option>
-          </mat-selection-list>
-        </div>
-
 
       </div>
 

@@ -12,6 +12,8 @@ import {ContractStatusPip} from "../_pip/ContractStatusPip";
 import {AuthService} from "../service/auth/auth.service";
 import {AuthorityConstantEnum} from "../model/enum/AuthorityConstantEnum";
 import {ThousandPip} from "../_pip/ThousandPip";
+import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {ContractStatus} from "../model/enum/ContractStatus";
 
 @Component({
   selector: 'app-document',
@@ -23,12 +25,20 @@ export class DocumentComponent {
   catalogHttpDataSource: HttpDataSource<CartableDto>;
 
   constructor(private httpClient: HttpClient, private router: Router, private authService: AuthService) {
-    this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient);
+    this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [this.getMyBasketFilter()] : null);
   }
 
 
   private getUrl(): string {
-    return this.router && this.router.url.match('my-basket') ? Url.CARTABLE_FIND_PAGING : Url.CARTABLE_FIND_PAGING_ALL;
+    return this.router && this.router.url.match('document-manage') ? Url.CARTABLE_FIND_PAGING_ALL : Url.CARTABLE_FIND_PAGING;
+  }
+
+  private getMyBasketFilter(): SearchCriteria {
+    const myBasketFilter: SearchCriteria = {
+      key: 'contract.contractStatus', value: ContractStatus.AVAILABLE,
+      operation: SearchOperation.EQUAL
+    }
+    return myBasketFilter;
   }
 
   tableColumns: TableColumn[] = [
@@ -49,9 +59,9 @@ export class DocumentComponent {
     {fieldName: 'contract.lending.masterAmount', title: this.documentLang.totalAmount, pipNames: this.getSimplePip()},
     {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: this.getDatePip()},
     {
-      fieldName: 'sender.firstName+sender.lastName',
+      fieldName: 'receiver.firstName+sender.lastName',
       title: this.documentLang.expert,
-      hidden:  !this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY)
+      hidden: !this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY)
     },
 
     // {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
@@ -75,11 +85,16 @@ export class DocumentComponent {
   private getThousandPip() {
     return [{pip: new ThousandPip()}, {pip: new BlankToDashPipe()}];
   }
+
   private getContractStatusPip() {
     return [{pip: new ContractStatusPip()}, {pip: new BlankToDashPipe()}];
   }
 
   onSelectedValueChange(selectedValue: CartableDto) {
     this.contractId = selectedValue?.contract?.id;
+  }
+
+  private isMyBaskUrl(): boolean {
+    return !!this.router.url.match('my-basket');
   }
 }
