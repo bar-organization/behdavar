@@ -4,6 +4,7 @@ import {UserInfoDto} from "../model/model";
 import Url from "../model/url";
 import {JalaliPipe} from "../_pip/jalali.pipe";
 import {AuthService} from "../service/auth/auth.service";
+import {ThousandPip} from "../_pip/ThousandPip";
 
 @Component({
   selector: 'app-user-info',
@@ -27,7 +28,7 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
     ]
   }
 
-  constructor(private httpClient: HttpClient,private authService:AuthService,private jalaliPipe: JalaliPipe) {
+  constructor(private httpClient: HttpClient,private authService:AuthService,private jalaliPipe: JalaliPipe,private thousandPip:ThousandPip) {
   }
 
 
@@ -49,8 +50,8 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
         documentInfoList: [
           {key: 'تعداد پرونده های موجود در سبد', value: value.activeCount ? value.activeCount.toString() : '0'},
           {key: 'حساب کارشناس', value: '-'},
-          {key: 'مبلغ کل پرنده ها', value: `${value?.userAmount?.totalAmount ? value?.userAmount?.totalAmount: '0' } ریال `},
-          {key: 'مبلغ کل وصول شده', value: `${value?.userAmount?.receiveAmount ? value?.userAmount?.receiveAmount: '0'} ریال `},
+          {key: 'مبلغ کل پرنده ها', value: this.thousandPip.transform(value?.userAmount?.totalAmount,'r') as string},
+          {key: 'مبلغ کل وصول شده', value: this.thousandPip.transform(value?.userAmount?.receiveAmount,'r') as string},
         ]
       }
     });

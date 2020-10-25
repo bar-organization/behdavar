@@ -31,7 +31,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "jalali-moment",
-              "moment/locale/fa"
+              "moment/locale/fa",
+              "numeral"
             ]
           },
           "configurations": {

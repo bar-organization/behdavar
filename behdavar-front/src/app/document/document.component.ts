@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 import {ContractStatusPip} from "../_pip/ContractStatusPip";
 import {AuthService} from "../service/auth/auth.service";
 import {AuthorityConstantEnum} from "../model/enum/AuthorityConstantEnum";
+import {ThousandPip} from "../_pip/ThousandPip";
 
 @Component({
   selector: 'app-document',
@@ -38,7 +39,7 @@ export class DocumentComponent {
     {
       fieldName: 'contract.lending.defferedAmount',
       title: this.documentLang.deferredAmount,
-      pipNames: this.getSimplePip()
+      pipNames: this.getThousandPip()
     },
     {
       fieldName: 'contract.lending.defferedCount',
@@ -71,6 +72,9 @@ export class DocumentComponent {
 
   }
 
+  private getThousandPip() {
+    return [{pip: new ThousandPip()}, {pip: new BlankToDashPipe()}];
+  }
   private getContractStatusPip() {
     return [{pip: new ContractStatusPip()}, {pip: new BlankToDashPipe()}];
   }

@@ -18,6 +18,7 @@ export class Lang {
   send = 'ارسال';
   description = 'توضیحات';
   errorOnSearch = 'خطا در جستجو';
+  rial = 'ریال';
 }
 
 export class AuthLang extends Lang {
@@ -154,7 +155,7 @@ export class DocumentLang extends PersonLang {
   facilityNumber = 'شماره تسهیلات';
   status = 'وضعیت پرونده';
   lateFees = 'جریمه دیرکرد';
-  deferredAmount = 'مبلغ معوق';
+  deferredAmount = 'مبلغ معوق (ریال)';
   deferredCount = 'تعداد معوق';
   totalAmount = 'مجموع تسهیلات';
   registrationDate = 'تاریخ ثبت پرونده';

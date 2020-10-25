@@ -65,6 +65,8 @@ import {AutocompleteComponent} from "./_custom-component/autocomplete/autocomple
 import {MatChipsModule} from "@angular/material/chips";
 import {ContractStatusPip} from "./_pip/ContractStatusPip";
 import {PursuitTypePip} from "./_pip/PursuitTypePip";
+import {ThousandPip} from "./_pip/ThousandPip";
+import {CurrencyMaskModule} from "ng2-currency-mask";
 
 @NgModule({
   imports: [
@@ -100,7 +102,8 @@ import {PursuitTypePip} from "./_pip/PursuitTypePip";
     MatAutocompleteModule,
     MatTooltipModule,
     MatRadioModule,
-    MatChipsModule
+    MatChipsModule,
+    CurrencyMaskModule
   ],
   declarations: [
     AppComponent,
@@ -126,6 +129,7 @@ import {PursuitTypePip} from "./_pip/PursuitTypePip";
     ContactToFlatStringPipe,
     ContractStatusPip,
     PursuitTypePip,
+    ThousandPip,
     FinancialStatusComponent,
     UserManagementComponent,
     UserRegistrationComponent,
@@ -142,6 +146,7 @@ import {PursuitTypePip} from "./_pip/PursuitTypePip";
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
     JalaliPipe,
+    ThousandPip,
   ],
   bootstrap: [AppComponent]
 })

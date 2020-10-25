@@ -6,12 +6,10 @@
   </div>
   <div fxLayout="column" fxLayoutGap="0.5rem" class="w-100">
     <div fxLayout="row" fxLayoutGap="0.5rem" fxLayout.xs="column">
-      <!-- TODO must find alternative of  class="flex-fill" in angular flexLayout     -->
       <app-user-info-detail class="flex-fill" *ngFor="let userInfo of userStatistic.userInfoList;" [key]="userInfo.key"
                             [value]="userInfo.value"></app-user-info-detail>
     </div>
     <div fxLayout="row" fxLayoutGap="0.5rem" fxLayout.xs="column">
-      <!-- TODO must find alternative of  class="flex-fill" in angular flexLayout     -->
       <app-user-info-detail class="flex-fill" *ngFor="let docInfo of userStatistic.documentInfoList;" [key]="docInfo.key"
                             [value]="docInfo.value"></app-user-info-detail>
     </div>

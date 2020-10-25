@@ -15,14 +15,14 @@
   <mat-card>
     <nav mat-tab-nav-bar>
       <ng-container *ngFor="let link of linkList">
-        <div mat-tab-link style="font-family: Vazir"
+        <div mat-tab-link
            routerLinkActive
            #rla="routerLinkActive"
            [active]="rla.isActive"
            *ngIf="link.visible"
            [routerLink]="link.routerLink">
           <mat-icon class="ml-2">{{link.iconName}}</mat-icon>
-          {{link.title}}
+          <span>{{link.title}}</span>
         </div>
 
       </ng-container>
