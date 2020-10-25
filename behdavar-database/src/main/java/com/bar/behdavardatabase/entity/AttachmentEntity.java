@@ -43,10 +43,6 @@ public class AttachmentEntity extends BaseAuditorEntity<String, Long> {
     @NotNull
     private String fileName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ATTACHMENT_TYPE_ID", nullable = false, foreignKey = @ForeignKey(name = "ATTACHEMNT_TYPE_FK"))
-    private CatalogDetailEntity attachmentType;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CONTRACT_ID", foreignKey = @ForeignKey(name = "ATTACHMENT_CONTRACT_FK"))

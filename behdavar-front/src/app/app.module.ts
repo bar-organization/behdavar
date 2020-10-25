@@ -67,6 +67,11 @@ import {ContractStatusPip} from "./_pip/ContractStatusPip";
 import {PursuitTypePip} from "./_pip/PursuitTypePip";
 import {ThousandPip} from "./_pip/ThousandPip";
 import {CurrencyMaskModule} from "ng2-currency-mask";
+import {DocumentManageGuardService} from "./service/auth/document-manage-guard.service";
+import {ReportGuardService} from "./service/auth/report-guard.service";
+import {ToolsGuardService} from "./service/auth/tools-guard.service";
+import {UserManageGuardService} from "./service/auth/user-manage-guard.service";
+import {DocumentInputGuardService} from "./service/auth/document-input-guard.service";
 
 @NgModule({
   imports: [
@@ -147,6 +152,11 @@ import {CurrencyMaskModule} from "ng2-currency-mask";
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
     JalaliPipe,
     ThousandPip,
+    DocumentManageGuardService,
+    ReportGuardService,
+    ToolsGuardService,
+    UserManageGuardService,
+    DocumentInputGuardService,
   ],
   bootstrap: [AppComponent]
 })

@@ -145,7 +145,8 @@ export class CustomerComponent implements OnInit, AfterViewInit {
         number: this.contactForm.value.number,
         confirmed: this.contactForm.value.confirmed,
         phoneType: this.contactForm.value.phoneType,
-        description: this.contactForm.value.description
+        description: this.contactForm.value.description,
+        person: this.getPerson(),
       }
       this.contactWrapperList.push(<ContactWrapper>{contact: contact, active: true, isNew: true})
     }
@@ -168,10 +169,17 @@ export class CustomerComponent implements OnInit, AfterViewInit {
           number: this.contactForm.value.number,
           confirmed: this.contactForm.value.confirmed,
           phoneType: this.contactForm.value.phoneType,
-          description: this.contactForm.value.description
+          description: this.contactForm.value.description,
+          person: this.getPerson()
         }
       }
     });
+  }
+
+  private getPerson(): PersonDto {
+    const person = new PersonDto();
+    person.id = this.customerForm?.value?.person?.id;
+    return person;
   }
 }
 

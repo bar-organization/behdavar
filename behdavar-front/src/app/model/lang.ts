@@ -191,6 +191,7 @@ export class GuarantorsLang extends PersonLang {
   guarantorsInformation = 'اطلاعات ضامنین';
   guarantorList = 'لیست ضامنین';
   contactList = 'اطلاعات تماس';
+  selectAGuarantor = 'یک ضامن را از لیست انتخاب کنید';
 }
 
 export class CustomerLang extends PersonLang {

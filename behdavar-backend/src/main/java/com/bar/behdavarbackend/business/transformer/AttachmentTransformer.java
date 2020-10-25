@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class AttachmentTransformer extends BaseAuditorTransformer {
 
     public static AttachmentEntity dtoToEntity(AttachmentDto dto, AttachmentEntity entity) {
-        entity.setAttachmentType(CatalogDetailTransformer.createEntityForRelation(dto.getAttachmentType().getId()));
         entity.setFileName(dto.getFileName());
         entity.setContent(Base64Utils.decodeFromString(dto.getContent()));
         Optional.ofNullable(dto.getContract()).ifPresent(contractDto ->

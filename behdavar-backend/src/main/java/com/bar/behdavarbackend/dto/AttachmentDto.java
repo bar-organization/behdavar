@@ -17,9 +17,6 @@ public class AttachmentDto extends BaseAuditorDto<String, Long> {
     private String fileName;
 
     @NotNull(message = "validation.error.not.null")
-    private CatalogDetailDto attachmentType;
-
-    @NotNull(message = "validation.error.not.null")
     private ContractDto contract;
 
 }

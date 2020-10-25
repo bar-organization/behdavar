@@ -77,10 +77,6 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
     attachmentDto.fileName = this.fileName;
     attachmentDto.content = this.fileToUpload;
     attachmentDto.contract = {id: this.getIdParam()}
-
-    // TODO must fix
-    attachmentDto.attachmentType = {id: 1};
-
     this.httpClient.post(Url.ATTACHMENT_SAVE, attachmentDto)
       .subscribe(value => {
           this.messageService.showGeneralSuccess(this.lang.successSave);

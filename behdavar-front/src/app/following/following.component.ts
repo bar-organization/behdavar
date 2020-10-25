@@ -132,9 +132,6 @@ export class FollowingComponent implements OnInit {
         attachmentDto.fileName = this.fileName;
         attachmentDto.content = this.fileToUpload;
         attachmentDto.contract = model.contract;
-        // TODO must fix
-        attachmentDto.attachmentType = {id: 1};
-
         payment.attachment = attachmentDto;
 
       }

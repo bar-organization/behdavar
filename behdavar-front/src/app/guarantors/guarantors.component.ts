@@ -11,6 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 import {PHONE_TYPE_TITLE, PhoneType} from "../model/enum/PhoneType";
 import {MessageService} from "../service/message.service";
+import {yearsPerRow} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-guarantors',
@@ -73,6 +74,12 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
   ngAfterViewInit(): void{
 
   }
+
+  private getPerson():PersonDto {
+    const person = new PersonDto();
+    person.id = this.guarantorsForm?.value?.person?.id;
+    return person;
+  }
   private updateGuarantorList() {
     this.httpClient.post<GuarantorDto[]>(Url.GUARANTOR_FIND_BY_CONTRACT, this.getIdParam())
       .subscribe(value => this.guarantorDtoList = value);
@@ -100,6 +107,10 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
   }
 
   onSubmit() {
+    if(!this.glSelect._value){
+      this.messageService.showGeneralError(this.lang.selectAGuarantor);
+      return;
+    }
     const newPerson: PersonDto = this.guarantorsForm.value['person'];
     newPerson.contacts = this.contactWrapperList.filter(value => value.active).map(value => value.contact);
     this.removeTraceableField(newPerson);
@@ -151,7 +162,8 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
         number: this.contactForm.value.number,
         confirmed: this.contactForm.value.confirmed,
         phoneType: this.contactForm.value.phoneType,
-        description: this.contactForm.value.description
+        description: this.contactForm.value.description,
+        person:this.getPerson()
       }
       this.contactWrapperList.push(<ContactWrapper>{contact: contact, active: true, isNew: true})
     }
@@ -174,7 +186,8 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
           number: this.contactForm.value.number,
           confirmed: this.contactForm.value.confirmed,
           phoneType: this.contactForm.value.phoneType,
-          description: this.contactForm.value.description
+          description: this.contactForm.value.description,
+          person:this.getPerson()
         }
       }
     });

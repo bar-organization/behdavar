@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
     {title: this.lang.myBasket, iconName: "shopping_basket", routerLink: "my-basket", visible: true},
     {title: this.lang.search, iconName: "search", routerLink: "search", visible: true},
     {title: this.lang.documentManagement, iconName: "border_color", routerLink: "document-manage", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_MANAGEMENT)},
-    {title: this.lang.reports, iconName: "assignment", routerLink: "reports", visible: true},
+    {title: this.lang.reports, iconName: "assignment", routerLink: "reports", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_REPORT)},
     {title: this.lang.utilityTools, iconName: "build_circle", routerLink: "tools", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_UTILITY_TOOLS)},
     {title: this.lang.userManagement, iconName: "account_box", routerLink: "user-manage", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_USER_MANAGEMENT)},
     {title: this.lang.documentInput, iconName: "assignment_returned", routerLink: "document-input", visible: this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY)},

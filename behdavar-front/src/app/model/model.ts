@@ -41,6 +41,7 @@ export class ContactDto extends BaseAuditorDto<string, number> {
   preCode?: string;
   confirmed?: boolean;
   phoneType?: PhoneType;
+  person:PersonDto;
 }
 
 export class GuarantorDto extends BaseAuditorDto<string, number> {
@@ -107,7 +108,6 @@ export class PaymentDto {
 export class AttachmentDto {
   content: string;
   fileName: string;
-  attachmentType: CatalogDetailDto;
   contract: ContractDto;
 }
 
