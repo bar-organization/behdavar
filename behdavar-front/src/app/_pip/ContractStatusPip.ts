@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {CONTRACT_STATUS_TITLE, ContractStatus} from "../model/enum/ContractStatus";
+import {CONTRACT_STATUS_TITLE} from "../model/enum/ContractStatus";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 
 @Pipe({
@@ -13,7 +13,7 @@ export class ContractStatusPip implements PipeTransform {
       return '';
     }
 
-    const titles: EnumValueTitle<ContractStatus>[] = CONTRACT_STATUS_TITLE;
+    const titles: EnumValueTitle<string>[] = CONTRACT_STATUS_TITLE;
     return titles.find(v => v.value === value).title
   }
 

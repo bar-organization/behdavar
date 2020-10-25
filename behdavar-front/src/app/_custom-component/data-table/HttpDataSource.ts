@@ -34,7 +34,9 @@ export default class HttpDataSource<T> implements DataSource<T> {
     this.loadingSubject.next(true);
 
     this.request = request;
-    request.filters = this.filters;
+
+    if (this.filters)
+      request.filters = this.filters;
 
     // call callback method before call
     if (this.beforeCall) {

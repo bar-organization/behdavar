@@ -35,7 +35,7 @@ export class DocumentComponent {
 
   private getMyBasketFilter(): SearchCriteria {
     const myBasketFilter: SearchCriteria = {
-      key: 'contract.contractStatus', value: ContractStatus.AVAILABLE,
+      key: 'contract.contractStatus', value: ContractStatus.AVAILABLE.valueOf(),
       operation: SearchOperation.EQUAL
     }
     return myBasketFilter;
