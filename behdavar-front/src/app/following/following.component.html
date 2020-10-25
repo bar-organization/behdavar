@@ -65,10 +65,12 @@
           <mat-datepicker #picker2 color="primary"></mat-datepicker>
         </mat-form-field>
 
-        <div fxLayout="column">
-          <label for="input-file-id" class="text-right">{{lang.attachedBrowse}}</label>
-          <input id="input-file-id" class="md-button md-raised md-primary" multiple type="file"/>
-        </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+            <label for="file">{{lang.attachedBrowse}}</label>
+            <input type="file" [disabled]="fileUploadDisable"
+                   id="file" #fileInput
+                   (change)="handleFileInput($event.target.files)">
+          </div>
       </div>
 
       </div>

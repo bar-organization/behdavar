@@ -1,16 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FollowingLang} from '../model/lang';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import Url from "../model/url";
-import {ContractDto, PursuitDto} from "../model/model";
+import {AttachmentDto, ContractDto, PaymentDto, PaymentType, PursuitDto} from "../model/model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import {PURSUIT_TYPE_TITLE, PursuitType} from "../model/enum/PursuitType";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 import {RESULT_TYPE_TITLE, ResultType} from "../model/enum/ResultType";
 import * as moment from 'moment';
-import {MatSnackBar} from "@angular/material/snack-bar";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import {JalaliPipe} from "../_pip/jalali.pipe";
@@ -18,11 +17,7 @@ import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {PursuitTypePip} from "../_pip/PursuitTypePip";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MessageService} from "../service/message.service";
-
-interface Food {
-  value: string;
-  viewValue: string;
-}
+import {AuthService} from "../service/auth/auth.service";
 
 @Component({
   selector: 'app-following',
@@ -31,16 +26,20 @@ interface Food {
 })
 export class FollowingComponent implements OnInit {
 
+  @ViewChild("fileInput") fileInput: ElementRef;
 
   lang = new FollowingLang();
   followingForm: FormGroup;
-  depostidAmountDisable: boolean;
-  pursuit: PursuitDto;
+  fileName: string = null;
+  fileToUpload: string = null;
+  fileUploadDisable = true;
+
   pursuitTypeList: EnumValueTitle<PursuitType>[] = PURSUIT_TYPE_TITLE;
   resultTypeList: EnumValueTitle<ResultType>[] = RESULT_TYPE_TITLE;
+
   followingHttpDataSource: HttpDataSource<PursuitDto>;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private router: Router) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private router: Router, private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -49,7 +48,7 @@ export class FollowingComponent implements OnInit {
       coordinateAppointment: [''],
       depositAppointment: [''],
       submitAccordingFinal: [''],
-      nextPursuitDate: [''],
+      nextPursuitDate: [{value: '', disabled: true}],
       customerDeposit: [''],
       pursuitType: [''],
       resultType: [''],
@@ -101,8 +100,19 @@ export class FollowingComponent implements OnInit {
           this.messageService.showGeneralSuccess(this.lang.successSave);
           this.router.navigate(['../']);
         },
-        error => this.messageService.showGeneralError(this.lang.error,error)
+        error => this.messageService.showGeneralError(this.lang.error, error)
       );
+  }
+
+  handleFileInput(files: FileList) {
+    const userFile = files.item(0);
+    this.fileName = userFile.name;
+    const reader = new FileReader();
+    reader.readAsDataURL(userFile);
+    reader.onload = () => {
+      this.fileToUpload = reader.result as string;
+      this.fileToUpload = this.fileToUpload.slice(this.fileToUpload.indexOf('base64') + 7, this.fileToUpload.length);
+    };
   }
 
   completeModel(model: PursuitDto) {
@@ -110,6 +120,27 @@ export class FollowingComponent implements OnInit {
     const contractDto: ContractDto = new ContractDto();
     contractDto.id = this.getIdParam();
     model.contract = contractDto;
+
+    if (!!this.followingForm.value.customerDeposit) {
+      const payment = new PaymentDto();
+      payment.amount = this.followingForm.value.depostidAmount;
+      payment.paymentType = PaymentType.CASH;
+      payment.contract = model.contract;
+
+      if (this.fileName && this.fileToUpload) {
+        const attachmentDto: AttachmentDto = new AttachmentDto();
+        attachmentDto.fileName = this.fileName;
+        attachmentDto.content = this.fileToUpload;
+        attachmentDto.contract = model.contract;
+        // TODO must fix
+        attachmentDto.attachmentType = {id: 1};
+
+        payment.attachment = attachmentDto;
+
+      }
+
+      model.payment = payment;
+    }
 
     if (model.nextPursuitDate)
       model.nextPursuitDate = moment(model.nextPursuitDate).format('yyyy-MM-DD');
@@ -129,9 +160,19 @@ export class FollowingComponent implements OnInit {
   onCustomerDepositChange(event: MatCheckboxChange) {
     if (event.checked) {
       this.followingForm.controls['depostidAmount'].enable();
+      this.followingForm.controls['nextPursuitDate'].enable();
+      this.fileUploadDisable = false;
     } else {
-      this.followingForm.patchValue({depostidAmount: null});
       this.followingForm.controls['depostidAmount'].disable();
+      this.followingForm.patchValue({depostidAmount: null});
+
+      this.followingForm.controls['nextPursuitDate'].disable();
+      this.followingForm.patchValue({nextPursuitDate: ''});
+
+      this.fileUploadDisable = true;
+      this.fileName = '';
+      this.fileToUpload = null;
+      this.fileInput.nativeElement.value = null;
     }
   }
 }

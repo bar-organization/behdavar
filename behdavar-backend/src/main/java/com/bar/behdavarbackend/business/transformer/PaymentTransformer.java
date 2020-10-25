@@ -4,7 +4,9 @@ import com.bar.behdavarbackend.dto.ContractDto;
 import com.bar.behdavarbackend.dto.PaymentDto;
 import com.bar.behdavarbackend.dto.UserDto;
 import com.bar.behdavardatabase.entity.PaymentEntity;
+import com.bar.behdavardatabase.util.SecurityUtil;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -15,9 +17,9 @@ public class PaymentTransformer extends BaseAuditorTransformer {
     public static PaymentEntity dtoToEntity(PaymentDto dto, PaymentEntity entity) {
         entity.setAmount(dto.getAmount());
         entity.setContract(ContractTransformer.createEntityForRelation(dto.getContract().getId()));
-        entity.setPaymentDate(dto.getPaymentDate());
+        entity.setPaymentDate(LocalDate.now());
         entity.setPaymentType(dto.getPaymentType());
-        entity.setUser(UserTransformer.createEntityForRelation(dto.getUser().getId()));
+        entity.setUser(UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId()));
         Optional.ofNullable(dto.getAttachment()).
                 ifPresent(attachmentDto ->
                         entity.setAttachment(AttachmentTransformer.createEntityForRelation(attachmentDto.getId())));
