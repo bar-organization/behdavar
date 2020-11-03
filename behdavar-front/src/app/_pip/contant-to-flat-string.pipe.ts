@@ -12,7 +12,7 @@ export class ContactToFlatStringPipe implements PipeTransform {
   phoneType: EnumValueTitle<PhoneType>[] = PHONE_TYPE_TITLE;
   nullStringSymbol = '-'
   transform(value: ContactDto, ...args: unknown[]): unknown {
-    if (!value || value === '') {
+    if (!value) {
       return '-';
     }
     return `${this.lang.number}: [${value.number? value.number:this.nullStringSymbol}] , ${this.lang.phoneType} : [${this.getPhoneTypeTitle(value)?this.getPhoneTypeTitle(value):this.nullStringSymbol}]
