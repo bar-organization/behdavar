@@ -47,8 +47,9 @@ const routes: Routes = [
           {path: 'find', component: DocumentComponent},
           {path: 'following/:id', component: FollowingComponent},
           {path: 'guarantors/:id', component: GuarantorsComponent},
-          {path: 'attachment/:id', component: DocumentAttachmentComponent},
           {path: 'customers/:id', component: CustomerComponent},
+          {path: 'attachment/:id', component: DocumentAttachmentComponent},
+          {path: 'financialStatus/:id', component: FinancialStatusComponent},
         ]
       },
       {path: 'reports', component: ReportsComponent, canActivate: [ReportGuardService]},

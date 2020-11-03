@@ -1,7 +1,8 @@
 .login {
-  background-image: url("../../assets/image/back-image2.jpg");
-  background-size:100%;
-  background-position: center;
+  /*background-image: url("../../assets/image/back-image2.jpg");*/
+  /*background-size:100%;*/
+  /*background-position: center;*/
+  background-color: #3f51b5;
 }
 .imageBorder {
   border: 0.2rem solid green;

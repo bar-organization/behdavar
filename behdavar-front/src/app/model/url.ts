@@ -44,4 +44,6 @@ export default class Url {
   public static readonly EXCEL_UPLOAD = `${Url.BASE_API}/excel/upload`;
   public static readonly ATTACHMENT_SAVE = `${Url.BASE_API}/attachment/save`;
   public static readonly ATTACHMENT_FIND_PAGING = `${Url.BASE_API}/attachment/find-paging`;
+
+  public static readonly PAYMENT_FIND_PAGING = `${Url.BASE_API}/payment/find-paging`;
 }

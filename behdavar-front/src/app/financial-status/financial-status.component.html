@@ -1,3 +1,11 @@
-<app-document-search></app-document-search>
+<div fxLayout="column" fxLayoutGap="1rem" class="m-2">
+  <div fxLayout="row">
+    <h6>{{financialStatusLang.totalAmount}} : {{0 | thousandPip:'r'}}</h6>
+  </div>
 
-<data-table #table [httpDataSource]="paymentHttpDataSource" [tableColumns]="tableColumns" ></data-table>
+  <div fxLayout="row">
+    <h6>{{financialStatusLang.receiveAmount}} : {{0 | thousandPip:'r'}}</h6>
+  </div>
+</div>
+
+<data-table [httpDataSource]="paymentHttpDataSource" [tableColumns]="tableColumns" [selectable]="false"></data-table>
