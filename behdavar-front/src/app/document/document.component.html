@@ -2,4 +2,4 @@
 
 <app-document-toolbar [id]="contractId" ></app-document-toolbar>
 
-<data-table #table [httpDataSource]="catalogHttpDataSource" (selectedValueChange)="onSelectedValueChange($event)" [tableColumns]="tableColumns"></data-table>
+<data-table #table [title]="documentLang.tableTitle" [httpDataSource]="catalogHttpDataSource" (selectedValueChange)="onSelectedValueChange($event)" [tableColumns]="tableColumns"></data-table>

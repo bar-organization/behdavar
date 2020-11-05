@@ -22,9 +22,6 @@
 
       <button mat-raised-button type="submit" color="primary">{{lang.referToExpert}}</button>
     </form>
-    <div>
-    <h6 class="text-right ">{{lang.changeExpertHistory}}</h6>
-    <data-table [httpDataSource]="catalogHttpDataSource" [tableColumns]="tableColumns" [selectable]="false"></data-table>
-    </div>
+    <data-table [httpDataSource]="catalogHttpDataSource" [title]="lang.changeExpertHistory" [tableColumns]="tableColumns" [selectable]="false" [columnSelectable]="false"></data-table>
   </div>
 </div>

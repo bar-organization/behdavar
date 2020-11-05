@@ -11,10 +11,8 @@
       </div>
       <button mat-raised-button type="button" (click)="attach()" color="primary">{{lang.attachDocument}}</button>
     </div>
-    <div>
-      <h6 class="text-right ">{{lang.attachDocumentHistory}}</h6>
-      <data-table [httpDataSource]="attachmentHttpDataSource" [tableColumns]="tableColumns"
-                  [selectable]="false"></data-table>
-    </div>
+    <data-table [httpDataSource]="attachmentHttpDataSource" [tableColumns]="tableColumns"
+                [title]="lang.attachDocumentHistory"
+                [selectable]="false" [columnSelectable]="false"></data-table>
   </div>
 </div>

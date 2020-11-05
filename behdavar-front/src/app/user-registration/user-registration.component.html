@@ -27,11 +27,9 @@
       </button>
     </form>
 
-    <div class="card">
-      <div class="text-center card-header">{{lang.userList}}</div>
-      <data-table [tableColumns]="userTableColumns" [httpDataSource]="userHttpDatasource"
-                  (selectedValueChange)="onUserSelectChange($event)"></data-table>
-    </div>
+    <data-table [tableColumns]="userTableColumns" [httpDataSource]="userHttpDatasource"
+                (selectedValueChange)="onUserSelectChange($event)"
+                [selectable]="false" [columnSelectable]="false" [title]="lang.userList"></data-table>
   </aside>
 
   <article class="py-5 px-2 w-50 border-right" fxLayout="column" fxLayoutGap="0.5rem">

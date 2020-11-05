@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, PipeTransform, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
-import {MatPaginator, PageEvent} from "@angular/material/paginator";
+import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import HttpDataSource from "./HttpDataSource";
 import {PagingRequest} from "./PaginationModel";
@@ -8,6 +8,7 @@ import {tap} from "rxjs/operators";
 import {BehaviorSubject, Observable} from "rxjs";
 import dot from "dot-object";
 import {SelectionModel} from "@angular/cdk/collections";
+import {MatSelectionListChange} from "@angular/material/list";
 
 @Component({
   selector: 'data-table',
@@ -26,12 +27,15 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input() selectedValue: unknown | unknown[];
   @Output() selectedValueChange = new EventEmitter<unknown | unknown[]>();
   @Input() selectable: boolean = true;
+  @Input() title: string;
+  @Input() columnSelectable = true;
 
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
   private selection: SelectionModel<unknown>;
   rowNoTitle = 'ردیف';
   columnToDisplay: string[];
+  selectableColumns: TableColumn[];
 
   ngOnInit(): void {
     this.configureTableColumns()
@@ -148,8 +152,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
         }
       });
 
-      this.columnToDisplay = this.tableColumns ? this.tableColumns.filter(col => !col.hidden).map(col => col.colName) : [];
-
+      const filteredTableColumns: TableColumn[] = this.tableColumns ? this.tableColumns.filter(col => !col.hidden) : [];
+      this.selectableColumns = filteredTableColumns;
+      this.columnToDisplay = filteredTableColumns.map(col => col.colName);
       this.configureDefaultColumns();
     }
   }
@@ -169,6 +174,17 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   private configureMultiSelectable() {
     this.selection = new SelectionModel<unknown>(this.multiSelectable, []);
     this.selection.changed.subscribe(change => this.multiSelectable ? this.multiToggle(change.added) : this.toggle(change.added[0]))
+  }
+
+  reloadTable() {
+    if (this.httpDataSource) {
+      this.httpDataSource.reload();
+    }
+  }
+
+  onSelectColumnToShow(event: MatSelectionListChange) {
+    this.columnToDisplay = event.option.selectionList._value;
+    this.configureDefaultColumns();
   }
 }
 

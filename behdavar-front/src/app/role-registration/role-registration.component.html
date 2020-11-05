@@ -27,14 +27,12 @@
 
         </div>
       </div>
-      <div class="card">
-        <div class="text-center card-header">{{lang.roleList}}</div>
         <div class="p-2">
           <data-table #roleTable [tableColumns]="roleTableColumns" [httpDataSource]="roleHttpDataSource"
-                      [(selectedValue)]="selectedRole"></data-table>
+                      [(selectedValue)]="selectedRole"
+          [selectable]="false" [columnSelectable]="false" [title]="lang.roleList"></data-table>
 
         </div>
-      </div>
     </section>
 
     <section class="w-50">
@@ -48,13 +46,10 @@
         </mat-form-field>
         <button mat-flat-button type="submit" color="primary">{{lang.search}}</button>
       </form>
-      <div class="card">
-        <div class="text-center card-header">{{lang.privilegeList}}</div>
         <div class="p-2">
           <data-table [tableColumns]="privilegeTableColumns" [httpDataSource]="privilegeHttpDataSource"
-                      [selectable]="false"></data-table>
+                      [selectable]="false" [columnSelectable]="false" [title]="lang.privilegeList"></data-table>
         </div>
-      </div>
     </section>
   </ng-template>
 </div>

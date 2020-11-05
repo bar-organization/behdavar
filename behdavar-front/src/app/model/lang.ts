@@ -167,6 +167,7 @@ export class DocumentLang extends PersonLang {
   expert = 'کارشناس';
   ideaIssueDate = 'تاریخ صدور رای';
   receiveLendingDate = 'تاریخ دریافت تسهیلات'
+  tableTitle = 'لیست پرونده ها';
 }
 
 export class FollowingLang extends Lang {
@@ -184,6 +185,7 @@ export class FollowingLang extends Lang {
   submitAcordingToFinalAction = 'ثبت به عنوان گزارش آخرین اقدام';
   attachedBrowse = 'بارگذاری ضمائم یا فیش واریز';
   nextFollowingDate = 'تاریخ یادآوری پیگیری بعدی';
+  tableTitle = 'لیست پیگیری های قبلی';
 
 }
 
@@ -236,6 +238,7 @@ export class FinancialStatusLang extends Lang {
   expert = 'کارشناس';
   contractStatus = 'وضعیت پرونده';
   paymentDate = 'تاریخ';
+  tableTitle = 'لیست واریزی های مشتری';
 }
 export class DocumentFlowLang extends Lang{
   pageTitle = 'گردش پرونده';
@@ -246,6 +249,7 @@ export class DocumentFlowLang extends Lang{
   referralUnit = 'واحد ارجاع دهنده';
   date = 'تارخ';
   time = 'ساعت';
+  tableTitle = 'لیست گردش پرونده';
 
 }
 export class PursuitTypeLang extends Lang {
