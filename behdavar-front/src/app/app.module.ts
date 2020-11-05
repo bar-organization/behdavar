@@ -73,6 +73,7 @@ import {ToolsGuardService} from "./service/auth/tools-guard.service";
 import {UserManageGuardService} from "./service/auth/user-manage-guard.service";
 import {DocumentInputGuardService} from "./service/auth/document-input-guard.service";
 import {PaymentService} from "./service/payment-service";
+import {DocumentFlowComponent} from "./document-flow/document-flow.component";
 
 @NgModule({
   imports: [
@@ -145,6 +146,7 @@ import {PaymentService} from "./service/payment-service";
     DocumentManagementComponent,
     ChangeExpertComponent,
     AutocompleteComponent,
+    DocumentFlowComponent,
 
   ],
 

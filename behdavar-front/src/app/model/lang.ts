@@ -237,7 +237,17 @@ export class FinancialStatusLang extends Lang {
   contractStatus = 'وضعیت پرونده';
   paymentDate = 'تاریخ';
 }
+export class DocumentFlowLang extends Lang{
+  pageTitle = 'گردش پرونده';
+  contractNumber = 'شماره پرونده';
+  flow = 'گردش';
+  previousExpert = 'کارشناس قبلی';
+  newExpert = 'کارشناس جدید';
+  referralUnit = 'واحد ارجاع دهنده';
+  date = 'تارخ';
+  time = 'ساعت';
 
+}
 export class PursuitTypeLang extends Lang {
   PHONE_CALL = "تماس تلفنی";
   APPOINTMENT = 'قرار ملاقات';

@@ -12,7 +12,7 @@
             [class]="!id ? 'px-4 mx-2': 'px-4 mx-2 bg-deep-purple-500 deep-purple-50'">{{documentToolbarLang.financialSituation}}</button>
     <button mat-stroked-button [disabled]="!id"
             [class]="!id ? 'px-4 mx-2':'px-4 mx-2 bg-purple-500 purple-50'">{{documentToolbarLang.changeStatus}}</button>
-    <button mat-stroked-button [disabled]="!id"
+    <button mat-stroked-button [disabled]="!id" routerLink="../document-flow/{{id}}"
             [class]="!id ? 'px-4 mx-2':'px-4 mx-2 bg-brown-500 brown-50'">{{documentToolbarLang.projectFlow}}</button>
     <button mat-stroked-button [disabled]="!id" routerLink="../change-expert/{{id}}" *ngIf="canShowChangeExpert"
             [class]="!id ? 'px-4 mx-2':'px-4 mx-2 bg-deep-orange-A700 deep-orange-50'">{{documentToolbarLang.changeExpert}}</button>

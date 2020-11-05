@@ -21,6 +21,7 @@ import {DocumentManageGuardService} from "./service/auth/document-manage-guard.s
 import {ToolsGuardService} from "./service/auth/tools-guard.service";
 import {UserManageGuardService} from "./service/auth/user-manage-guard.service";
 import {DocumentInputGuardService} from "./service/auth/document-input-guard.service";
+import {DocumentFlowComponent} from "./document-flow/document-flow.component";
 
 const routes: Routes = [
   // HOME
@@ -38,6 +39,7 @@ const routes: Routes = [
           {path: 'customers/:id', component: CustomerComponent},
           {path: 'attachment/:id', component: DocumentAttachmentComponent},
           {path: 'financialStatus/:id', component: FinancialStatusComponent},
+          {path: 'document-flow/:id', component: DocumentFlowComponent},
         ]
       },
       {
@@ -50,6 +52,7 @@ const routes: Routes = [
           {path: 'customers/:id', component: CustomerComponent},
           {path: 'attachment/:id', component: DocumentAttachmentComponent},
           {path: 'financialStatus/:id', component: FinancialStatusComponent},
+          {path: 'document-flow/:id', component: DocumentFlowComponent},
         ]
       },
       {path: 'reports', component: ReportsComponent, canActivate: [ReportGuardService]},
@@ -67,6 +70,7 @@ const routes: Routes = [
           {path: 'attachment/:id', component: DocumentAttachmentComponent},
           {path: 'financialStatus/:id', component: FinancialStatusComponent},
           {path: 'change-expert/:id', component: ChangeExpertComponent},
+          {path: 'document-flow/:id', component: DocumentFlowComponent},
         ]
       },
     ]
