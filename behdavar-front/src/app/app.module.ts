@@ -72,6 +72,7 @@ import {ReportGuardService} from "./service/auth/report-guard.service";
 import {ToolsGuardService} from "./service/auth/tools-guard.service";
 import {UserManageGuardService} from "./service/auth/user-manage-guard.service";
 import {DocumentInputGuardService} from "./service/auth/document-input-guard.service";
+import {PaymentService} from "./service/payment-service";
 
 @NgModule({
   imports: [
@@ -157,6 +158,7 @@ import {DocumentInputGuardService} from "./service/auth/document-input-guard.ser
     ToolsGuardService,
     UserManageGuardService,
     DocumentInputGuardService,
+    PaymentService,
   ],
   bootstrap: [AppComponent]
 })

@@ -10,7 +10,6 @@ export default class Url {
 
   public static readonly CONTRACT_FIND_BY_ID = `${Url.BASE_API}/contract/find-by-id`;
 
-  public static readonly PAYMENT_FIND_BY_CONTRACT = `${Url.BASE_API}/payment/find-by-contract`;
   public static readonly GUARANTOR_FIND_BY_ID = `${Url.BASE_API}/guarantor/find-by-id`;
   public static readonly GUARANTOR_FIND_BY_CONTRACT = `${Url.BASE_API}/guarantor/find-by-contract`;
 
@@ -46,4 +45,5 @@ export default class Url {
   public static readonly ATTACHMENT_FIND_PAGING = `${Url.BASE_API}/attachment/find-paging`;
 
   public static readonly PAYMENT_FIND_PAGING = `${Url.BASE_API}/payment/find-paging`;
+  public static readonly PAYMENT_FIND_BY_CONTRACT = `${Url.BASE_API}/payment/find-by-contract`;
 }

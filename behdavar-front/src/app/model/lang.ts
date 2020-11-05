@@ -227,6 +227,7 @@ export class AttachmentLang extends Lang {
 }
 
 export class FinancialStatusLang extends Lang {
+  pageTitle = 'وضعیت مالی';
   totalAmount = 'مبلغ کل پرونده';
   receiveAmount = 'مبلغ کل واریز شده';
   paymentList = 'لیست و اطلاعات واریزی های مشتری';

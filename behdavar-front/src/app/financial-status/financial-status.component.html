@@ -1,11 +1,11 @@
 <div fxLayout="column" fxLayoutGap="1rem" class="m-2">
-  <div fxLayout="row">
-    <h6>{{financialStatusLang.totalAmount}} : {{0 | thousandPip:'r'}}</h6>
-  </div>
+  <h4 fxLayout="row" class="border-bottom py-2">{{financialStatusLang.pageTitle}}</h4>
 
-  <div fxLayout="row">
+  <div fxLayout="row" fxLayoutGap="1rem">
+    <h6>{{financialStatusLang.totalAmount}} : {{0 | thousandPip:'r'}}</h6>
     <h6>{{financialStatusLang.receiveAmount}} : {{0 | thousandPip:'r'}}</h6>
   </div>
+
 </div>
 
 <data-table [httpDataSource]="paymentHttpDataSource" [tableColumns]="tableColumns" [selectable]="false"></data-table>

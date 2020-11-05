@@ -9,6 +9,7 @@ import {ContractStatusPip} from "../_pip/ContractStatusPip";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {ActivatedRoute} from "@angular/router";
 import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {PaymentService} from "../service/payment-service";
 
 @Component({
   selector: 'app-financial-status',
@@ -20,7 +21,7 @@ export class FinancialStatusComponent implements OnInit {
   financialStatusLang = new FinancialStatusLang();
 
   paymentHttpDataSource: HttpDataSource<PaymentDto>
-
+  receiveAmount:number;
   tableColumns: TableColumn[] = [
     {fieldName: 'amount', title: this.financialStatusLang.amount},
     {fieldName: 'paymentType', title: this.financialStatusLang.paymentType},
@@ -34,7 +35,7 @@ export class FinancialStatusComponent implements OnInit {
   }
 
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute,) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute,private paymentService:PaymentService) {
   }
 
   private getIdParam(): number {
@@ -51,6 +52,9 @@ export class FinancialStatusComponent implements OnInit {
     const filters: SearchCriteria[] = [];
     filters.push({key: 'contract.id', value: this.getIdParam(), operation: SearchOperation.EQUAL});
     this.paymentHttpDataSource= new HttpDataSource<PaymentDto>(Url.PAYMENT_FIND_PAGING, this.httpClient,filters);
+    this.paymentService.getAllPaymentByContractId(this.getIdParam(),result => {
+      this.receiveAmount = result.map(payment => payment.amount).reduce((pre, cur) => pre + cur );
+    })
   }
 
 }
