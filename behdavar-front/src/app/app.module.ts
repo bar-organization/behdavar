@@ -74,6 +74,8 @@ import {UserManageGuardService} from "./service/auth/user-manage-guard.service";
 import {DocumentInputGuardService} from "./service/auth/document-input-guard.service";
 import {PaymentService} from "./service/payment-service";
 import {DocumentFlowComponent} from "./document-flow/document-flow.component";
+import {DocumentChangeStatusComponent} from "./document-chagne-status/document-change-status.component";
+import {ContractService} from "./service/contract-service";
 
 @NgModule({
   imports: [
@@ -147,6 +149,7 @@ import {DocumentFlowComponent} from "./document-flow/document-flow.component";
     ChangeExpertComponent,
     AutocompleteComponent,
     DocumentFlowComponent,
+    DocumentChangeStatusComponent,
 
   ],
 
@@ -161,6 +164,7 @@ import {DocumentFlowComponent} from "./document-flow/document-flow.component";
     UserManageGuardService,
     DocumentInputGuardService,
     PaymentService,
+    ContractService,
   ],
   bootstrap: [AppComponent]
 })

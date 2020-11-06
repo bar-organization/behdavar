@@ -20,6 +20,8 @@ export class Lang {
   description = 'توضیحات';
   errorOnSearch = 'خطا در جستجو';
   rial = 'ریال';
+  date = 'تاریخ';
+  time = 'زمان';
 }
 
 export class AuthLang extends Lang {
@@ -61,7 +63,8 @@ export class HomeLang extends Lang {
   userManagement = 'مدیریت کاربران';
   documentInput = 'ورود پرونده';
 }
-export class ChangeExpertLang extends Lang{
+
+export class ChangeExpertLang extends Lang {
   title = 'تغییر کارشناس پرونده';
   documentNumber = 'شماره پرونده';
   referToExpert = 'ارجاع به کارشناس';
@@ -76,6 +79,7 @@ export class ChangeExpertLang extends Lang{
 
 
 }
+
 export class DocumentInputLang extends Lang {
   manual = 'دستی';
   auto = 'خودکار';
@@ -137,6 +141,16 @@ export class DocumentToolbarLang extends Lang {
   changeStatus = 'تغییر وضعیت پرونده';
   projectFlow = 'گردش پرونده';
   changeExpert = 'تغییر کارشناس';
+}
+
+export class DocumentChangeStatusLang extends Lang {
+  documentNumber = 'شماره پرونده';
+  applyChange = 'ثبت تغییرات';
+  documentStatusHistory = 'سوابق وضعیت پرونده';
+  status = 'وضعیت';
+  selectDocumentStatus = 'انتخاب وضعیت پرونده';
+  pageTitle = 'تغییر وضعیت پرونده';
+
 }
 
 export class UtilityToolsLang extends Lang {
@@ -240,7 +254,8 @@ export class FinancialStatusLang extends Lang {
   paymentDate = 'تاریخ';
   tableTitle = 'لیست واریزی های مشتری';
 }
-export class DocumentFlowLang extends Lang{
+
+export class DocumentFlowLang extends Lang {
   pageTitle = 'گردش پرونده';
   contractNumber = 'شماره پرونده';
   flow = 'گردش';
@@ -252,6 +267,7 @@ export class DocumentFlowLang extends Lang{
   tableTitle = 'لیست گردش پرونده';
 
 }
+
 export class PursuitTypeLang extends Lang {
   PHONE_CALL = "تماس تلفنی";
   APPOINTMENT = 'قرار ملاقات';

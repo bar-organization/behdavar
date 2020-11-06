@@ -1,0 +1,22 @@
+<div class="card p-2">
+  <h5 class="text-right py-2 mb-4 border-bottom ">{{lang.pageTitle}}</h5>
+  <div fxLayout="column" fxLayoutGap="2rem">
+
+    <form (ngSubmit)="applyChange()" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="2rem">
+      <h6 class="p-0 my-0">{{lang.documentNumber}}: {{documentNumber}}</h6>
+      <mat-form-field appearance="standard">
+        <mat-label>{{lang.selectDocumentStatus}}</mat-label>
+        <mat-select [formControl]="documentStatusFormControl">
+          <mat-option *ngFor="let contractStatus of contractStatusList" [value]="contractStatus.value">
+            {{contractStatus.title}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary">{{lang.applyChange}}</button>
+    </form>
+
+    <data-table [httpDataSource]="documentHistoryHttpDataSource" [tableColumns]="tableColumns"
+                [title]="lang.documentStatusHistory"
+                [selectable]="false" [columnSelectable]="false"></data-table>
+  </div>
+</div>
