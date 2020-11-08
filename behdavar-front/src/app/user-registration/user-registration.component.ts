@@ -182,18 +182,22 @@ export class UserRegistrationComponent implements OnInit {
     const isActive = this.userSearchForm.value.isActive;
 
     const searchCriteriaList: SearchCriteria[] = [
-      {
+      ];
+
+    if (username) {
+      searchCriteriaList.push({
         key: 'username',
         value: username,
         operation: SearchOperation.MATCH
-      }];
+      });
+    }
     if (isActive !== 'none') {
       searchCriteriaList.push(
         {
           key: 'enabled',
           value: isActive === 'true',
           operation: SearchOperation.EQUAL
-        })
+        });
     }
 
     this.userHttpDatasource.reload(searchCriteriaList);
@@ -269,6 +273,7 @@ export class UserRegistrationComponent implements OnInit {
 
   onUserSearchReset() {
     this.userSearchForm.reset({isActive: 'none'});
+    this.onSearchUser();
   }
 }
 

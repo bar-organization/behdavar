@@ -16,13 +16,11 @@
       </mat-form-field>
 
 
-      <button mat-stroked-button type="submit" color="primary">
-        <span class="px-2">{{lang.search}}</span>
+      <button mat-mini-fab [matTooltip]="lang.search" type="submit" color="primary">
         <mat-icon>search</mat-icon>
       </button>
 
-      <button mat-stroked-button type="button" (click)="onUserSearchReset()" color="accent">
-        <span class="px-2">{{lang.reset}}</span>
+      <button mat-mini-fab [matTooltip]="lang.reset" type="button" (click)="onUserSearchReset()" color="accent">
         <mat-icon>undo</mat-icon>
       </button>
     </form>
