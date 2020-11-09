@@ -106,6 +106,15 @@ export class AuthService {
 
   }
 
+  public hasAnyAuthority(authorities: AuthorityConstantEnum[]): boolean {
+    for (let authority of authorities) {
+      if (this.hasAuthority(authority)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   private isUserDoAvailable() {
     return this.authResponseSubject  && this.authResponseSubject.value && this.authResponseSubject.value.userDto;
   }

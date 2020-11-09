@@ -30,7 +30,18 @@ export class DocumentComponent {
 
 
   private getUrl(): string {
-    return this.router && this.router.url.match('document-manage') ? Url.CARTABLE_FIND_PAGING_ALL : Url.CARTABLE_FIND_PAGING;
+    if (!this.router) {
+      return Url.CARTABLE_FIND_PAGING;
+    }
+
+    if (this.router.url.match('document-manage'))
+      return Url.CARTABLE_FIND_PAGING_ALL;
+
+    if (this.router.url.match('search'))
+      return this.authService.hasAuthority(AuthorityConstantEnum.SEARCH_ALL) ? Url.CARTABLE_FIND_PAGING_ALL : Url.CARTABLE_FIND_PAGING;
+
+    return Url.CARTABLE_FIND_PAGING;
+
   }
 
   private getMyBasketFilter(): SearchCriteria {
@@ -64,10 +75,14 @@ export class DocumentComponent {
       hidden: !this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY)
     },
 
-    // {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
-    // {fieldName: 'contract.lending.receiveLendingDate', title: this.documentLang.receiveLendingDate, pipNames: this.getDatePip()},
-    // {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch,pipNames:this.getSimplePip()},
-    // {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank,pipNames:this.getSimplePip()},
+    {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
+    {
+      fieldName: 'contract.lending.receiveLendingDate',
+      title: this.documentLang.receiveLendingDate,
+      pipNames: this.getDatePip()
+    },
+    {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank, pipNames: this.getSimplePip()},
 
     {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber, pipNames: this.getSimplePip()},
     {fieldName: 'contract.product.productName', title: this.documentLang.vehicleType, pipNames: this.getSimplePip()},

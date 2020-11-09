@@ -182,6 +182,7 @@ export class DocumentLang extends PersonLang {
   ideaIssueDate = 'تاریخ صدور رای';
   receiveLendingDate = 'تاریخ دریافت تسهیلات'
   tableTitle = 'لیست پرونده ها';
+  searchPanel = 'پنل جستجو';
 }
 
 export class FollowingLang extends Lang {

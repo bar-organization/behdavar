@@ -23,15 +23,17 @@ import {UserManageGuardService} from "./service/auth/user-manage-guard.service";
 import {DocumentInputGuardService} from "./service/auth/document-input-guard.service";
 import {DocumentFlowComponent} from "./document-flow/document-flow.component";
 import {DocumentChangeStatusComponent} from "./document-chagne-status/document-change-status.component";
+import {MyBasketGuardService} from "./service/auth/my-basket-guard.service";
+import {SearchGuardService} from "./service/auth/search-guard.service";
 
 const routes: Routes = [
   // HOME
   {
     path: '', component: HomeComponent,
     children: [
-      {path: '', redirectTo: 'my-basket', pathMatch: 'full'},
+
       {
-        path: 'my-basket', component: MyBasketComponent,
+        path: 'my-basket', component: MyBasketComponent, canActivate: [MyBasketGuardService],
         children: [
           {path: '', redirectTo: 'find', pathMatch: 'full'},
           {path: 'find', component: DocumentComponent},
@@ -45,7 +47,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'search', component: SearchPanelComponent,
+        path: 'search', component: SearchPanelComponent, canActivate: [SearchGuardService],
         children: [
           {path: '', redirectTo: 'find', pathMatch: 'full'},
           {path: 'find', component: DocumentComponent},

@@ -76,6 +76,8 @@ import {PaymentService} from "./service/payment-service";
 import {DocumentFlowComponent} from "./document-flow/document-flow.component";
 import {DocumentChangeStatusComponent} from "./document-chagne-status/document-change-status.component";
 import {ContractService} from "./service/contract-service";
+import {MyBasketGuardService} from "./service/auth/my-basket-guard.service";
+import {SearchGuardService} from "./service/auth/search-guard.service";
 
 @NgModule({
   imports: [
@@ -158,6 +160,8 @@ import {ContractService} from "./service/contract-service";
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
     JalaliPipe,
     ThousandPip,
+    MyBasketGuardService,
+    SearchGuardService,
     DocumentManageGuardService,
     ReportGuardService,
     ToolsGuardService,

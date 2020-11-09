@@ -1,12 +1,14 @@
-<mat-accordion >
-  <mat-expansion-panel class="my-1 p-0 bg-light-blue-50" (opened)="panelOpenState = true"
+<mat-accordion>
+  <mat-expansion-panel class="my-1 p-0 bg-light-blue-50" [expanded]="true" (opened)="panelOpenState = true"
                        (closed)="panelOpenState = false">
-    <mat-expansion-panel-header >
-      <mat-panel-title>{{documentSearchLang.search}}</mat-panel-title>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <h6 class="m-0">{{documentSearchLang.searchPanel}}</h6>
+      </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-divider></mat-divider>
     <form [formGroup]="parentForm" (ngSubmit)="onSearch()" fxLayout="column" fxLayoutAlign="start start"
-          fxLayoutGap="0.5rem" >
+          fxLayoutGap="0.5rem">
       <!-- Document Search -->
       <div [formGroup]="documentSearchFormGroup" class="card" fxLayout="row">
         <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
@@ -17,13 +19,21 @@
             <mat-label>{{documentSearchLang.facilityNumber}}</mat-label>
             <input matInput formControlName="facilityNumber">
           </mat-form-field>
-          <mat-form-field>
+
+          <mat-form-field appearance="standard">
             <mat-label>{{documentSearchLang.status}}</mat-label>
-            <input matInput formControlName="status">
+            <mat-select formControlName="status">
+              <mat-option *ngFor="let contractStatus of contractStatusList" [value]="contractStatus.value">
+                {{contractStatus.title}}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
-          <mat-form-field>
+
+          <mat-form-field color="accent" appearance="standard">
             <mat-label>{{documentSearchLang.registrationDate}}</mat-label>
-            <input matInput formControlName="registrationDate">
+            <input matInput formControlName="registrationDate" [matDatepicker]="picker2">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
           </mat-form-field>
 
         </div>
@@ -47,16 +57,6 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-label>{{documentSearchLang.birthDate}}</mat-label>
-            <input matInput formControlName="birthDate">
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>{{documentSearchLang.birthPlace}}</mat-label>
-            <input matInput formControlName="birthPlace">
-          </mat-form-field>
-
-          <mat-form-field>
             <mat-label>{{documentSearchLang.nationalNumber}}</mat-label>
             <input matInput formControlName="nationalNumber">
           </mat-form-field>
@@ -65,17 +65,6 @@
             <mat-label>{{documentSearchLang.mobile}}</mat-label>
             <input
               matInput formControlName="mobile">
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>{{documentSearchLang.postalCode}}</mat-label>
-            <input
-              matInput formControlName="postalCode">
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-label>{{documentSearchLang.workPlacePhone}}</mat-label>
-            <input matInput formControlName="workPlacePhone">
           </mat-form-field>
 
         </div>
@@ -117,8 +106,14 @@
       </div>
 
       <div fxLayout="row" fxLayoutAlign="center center" class="w-100" fxLayoutGap="0.5rem">
-        <button type="submit" mat-raised-button color="primary" class="px-5">{{documentSearchLang.search}}</button>
-        <button type="reset" mat-raised-button color="accent" class="px-5">{{documentSearchLang.reset}}</button>
+        <button type="submit" mat-raised-button color="primary" class="px-5">
+          <span class="px-2">{{documentSearchLang.search}}</span>
+          <mat-icon>search</mat-icon>
+        </button>
+        <button type="reset" mat-raised-button color="accent" class="px-5" (click)="onResetForm()">
+          <span class="px-2">{{documentSearchLang.reset}}</span>
+          <mat-icon>undo</mat-icon>
+        </button>
       </div>
     </form>
   </mat-expansion-panel>
