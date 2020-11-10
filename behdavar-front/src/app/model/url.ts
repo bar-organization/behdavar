@@ -1,5 +1,7 @@
+import {environment} from "../../environments/environment";
+
 export default class Url {
-  public static readonly BASE_URL = "http://localhost:8081";
+  public static readonly BASE_URL = environment.APIEndpoint;
   public static readonly BASE_API = Url.BASE_URL + '/api';
   public static readonly LOGIN = `${Url.BASE_URL}/auth/login`;
 
