@@ -8,8 +8,10 @@
         <mat-icon>add_box</mat-icon>
       </button>
       <mat-menu #selectColumnMenu="matMenu">
-        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="1rem" class="p-2" (click)="$event.stopPropagation();" >
-          <mat-selection-list class="overflow-auto" style="max-height: 25rem" (selectionChange)="onSelectColumnToShow($event)">
+        <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="1rem" class="p-2"
+             (click)="$event.stopPropagation();">
+          <mat-selection-list class="overflow-auto" style="max-height: 25rem"
+                              (selectionChange)="onSelectColumnToShow($event)">
             <mat-list-option *ngFor="let column of selectableColumns" [selected]="true" [value]="column.colName">
               {{column.title}}
             </mat-list-option>
@@ -61,8 +63,8 @@
       <tr mat-header-row *matHeaderRowDef="columnToDisplay"></tr>
       <tr mat-row *matRowDef="let row; columns: columnToDisplay;" (click)="selection.toggle(row)"></tr>
     </table>
-    <mat-paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10]" [length]="totalRecord$ | async"
-                   [pageSize]="5"
+    <mat-paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10, 20]" [length]="totalRecord$ | async"
+                   [pageSize]="10"
                    showFirstLastButtons></mat-paginator>
   </div>
 </div>

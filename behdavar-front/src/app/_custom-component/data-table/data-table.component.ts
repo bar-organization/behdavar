@@ -54,7 +54,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       request.max = this.paginator.pageSize;
     } else {
       request.start = 0;
-      request.max = 5;
+      request.max = 10;
     }
 
     return request;

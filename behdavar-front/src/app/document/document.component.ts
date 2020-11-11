@@ -25,7 +25,7 @@ export class DocumentComponent {
   catalogHttpDataSource: HttpDataSource<CartableDto>;
 
   constructor(private httpClient: HttpClient, private router: Router, private authService: AuthService) {
-    this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [this.getMyBasketFilter()] : null);
+    this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
   }
 
 
@@ -44,64 +44,63 @@ export class DocumentComponent {
 
   }
 
-  private getMyBasketFilter(): SearchCriteria {
-    const myBasketFilter: SearchCriteria = {
+  private static getMyBasketFilter(): SearchCriteria {
+    return {
       key: 'contract.contractStatus', value: ContractStatus.AVAILABLE.valueOf(),
       operation: SearchOperation.EQUAL
-    }
-    return myBasketFilter;
+    };
   }
 
   tableColumns: TableColumn[] = [
     {fieldName: "contract.customers[0].person.fullName", title: this.documentLang.customerName},
-    {fieldName: 'contract.contractNumber', title: this.documentLang.facilityNumber, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.contractStatus', title: this.documentLang.status, pipNames: this.getContractStatusPip()},
-    {fieldName: 'contract.lending.lateFees', title: this.documentLang.lateFees, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.contractNumber', title: this.documentLang.facilityNumber, pipNames: DocumentComponent.getSimplePip()},
+    {fieldName: 'contract.contractStatus', title: this.documentLang.status, pipNames: DocumentComponent.getContractStatusPip()},
+    {fieldName: 'contract.lending.lateFees', title: this.documentLang.lateFees, pipNames: DocumentComponent.getSimplePip()},
     {
       fieldName: 'contract.lending.defferedAmount',
       title: this.documentLang.deferredAmount,
-      pipNames: this.getThousandPip()
+      pipNames: DocumentComponent.getThousandPip()
     },
     {
       fieldName: 'contract.lending.defferedCount',
       title: this.documentLang.deferredCount,
-      pipNames: this.getSimplePip()
+      pipNames: DocumentComponent.getSimplePip()
     },
-    {fieldName: 'contract.lending.masterAmount', title: this.documentLang.totalAmount, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: this.getDatePip()},
+    {fieldName: 'contract.lending.masterAmount', title: this.documentLang.totalAmount, pipNames: DocumentComponent.getSimplePip()},
+    {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: DocumentComponent.getDatePip()},
     {
       fieldName: 'receiver.firstName+receiver.lastName',
       title: this.documentLang.expert,
-      hidden: !this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY)
+      hidden: !this.authService.hasAnyAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY, AuthorityConstantEnum.SEARCH_ALL)
     },
 
-    {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: this.getDatePip()},
+    {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: DocumentComponent.getDatePip()},
     {
       fieldName: 'contract.lending.receiveLendingDate',
       title: this.documentLang.receiveLendingDate,
-      pipNames: this.getDatePip()
+      pipNames: DocumentComponent.getDatePip()
     },
-    {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch, pipNames: DocumentComponent.getSimplePip()},
+    {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank, pipNames: DocumentComponent.getSimplePip()},
 
-    {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber, pipNames: this.getSimplePip()},
-    {fieldName: 'contract.product.productName', title: this.documentLang.vehicleType, pipNames: this.getSimplePip()},
+    {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber, pipNames: DocumentComponent.getSimplePip()},
+    {fieldName: 'contract.product.productName', title: this.documentLang.vehicleType, pipNames: DocumentComponent.getSimplePip()},
   ];
 
-  private getDatePip() {
+  private static getDatePip() {
     return [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}];
   }
 
-  private getSimplePip() {
+  private static getSimplePip() {
     return [{pip: new BlankToDashPipe()}];
 
   }
 
-  private getThousandPip() {
+  private static getThousandPip() {
     return [{pip: new ThousandPip()}, {pip: new BlankToDashPipe()}];
   }
 
-  private getContractStatusPip() {
+  private static getContractStatusPip() {
     return [{pip: new ContractStatusPip()}, {pip: new BlankToDashPipe()}];
   }
 

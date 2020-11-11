@@ -15,7 +15,7 @@ const jwtHelper = new JwtHelperService();
   providedIn: 'root'
 })
 export class AuthService {
-  authResponseSubject:BehaviorSubject<AuthenticationResponse>;
+  authResponseSubject: BehaviorSubject<AuthenticationResponse>;
   private static readonly AUTH_RESPONSE = "authResponse";
 
   constructor(private http: HttpClient, private router: Router) {
@@ -39,7 +39,7 @@ export class AuthService {
     const authenticationRequest: AuthenticationRequest = {username, password};
 
     return this.http.post<AuthenticationResponse>(Url.LOGIN, authenticationRequest)
-      .pipe(catchError(this.handelError), tap(resData => {
+      .pipe(catchError(AuthService.handelError), tap(resData => {
         this.authResponseSubject.next(resData);
         sessionStorage.setItem(AuthService.AUTH_RESPONSE, JSON.stringify(resData));
       }));
@@ -61,7 +61,7 @@ export class AuthService {
     this.authResponseSubject.next(authResponseStorage);
   }
 
-  private handelError(errorRes: HttpErrorResponse): Observable<never> {
+  private static handelError(errorRes: HttpErrorResponse): Observable<never> {
 
     if (!errorRes || !errorRes.error || !errorRes.error['message'])
       return throwError(AuthenticationException.OTHER)
@@ -107,7 +107,7 @@ export class AuthService {
 
   }
 
-  public hasAnyAuthority(authorities: AuthorityConstantEnum[]): boolean {
+  public hasAnyAuthority(...authorities: AuthorityConstantEnum[]): boolean {
     for (let authority of authorities) {
       if (this.hasAuthority(authority)) {
         return true;
@@ -117,20 +117,20 @@ export class AuthService {
   }
 
   private isUserDoAvailable() {
-    return this.authResponseSubject  && this.authResponseSubject.value && this.authResponseSubject.value.userDto;
+    return this.authResponseSubject && this.authResponseSubject.value && this.authResponseSubject.value.userDto;
   }
 
-  public getUserInfo():UserDto {
+  public getUserInfo(): UserDto {
     if (!this.isUserDoAvailable()) {
       console.log('No authentication instance')
       return {};
     }
-    return  this.authResponseSubject.value.userDto;
+    return this.authResponseSubject.value.userDto;
   }
 
   public getUserFullName(): string {
     const userDto = this.getUserInfo();
-    return userDto ? `${userDto.firstName} ${userDto.lastName}`:'';
+    return userDto ? `${userDto.firstName} ${userDto.lastName}` : '';
   }
 }
 
