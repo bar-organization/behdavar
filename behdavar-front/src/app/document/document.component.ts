@@ -70,7 +70,7 @@ export class DocumentComponent {
     {fieldName: 'contract.lending.masterAmount', title: this.documentLang.totalAmount, pipNames: this.getSimplePip()},
     {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: this.getDatePip()},
     {
-      fieldName: 'receiver.firstName+sender.lastName',
+      fieldName: 'receiver.firstName+receiver.lastName',
       title: this.documentLang.expert,
       hidden: !this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY)
     },

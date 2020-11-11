@@ -3,7 +3,7 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
     username: behdavar
     password: 123456
-    url: jdbc:oracle:thin:@127.0.0.1:1521/XE
+    url: @database.url@
   jpa:
     hibernate:
       ddl-auto: none

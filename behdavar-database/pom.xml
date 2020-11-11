@@ -43,6 +43,33 @@
         </dependency>
 
     </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <database.url>jdbc:oracle:thin:@10.90.90.3:1521/orcl</database.url>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <properties>
+                <database.url>jdbc:oracle:thin:@127.0.0.1:1521/XE</database.url>
+            </properties>
+        </profile>
+    </profiles>
 
 
 </project>

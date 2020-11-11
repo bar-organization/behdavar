@@ -54,6 +54,7 @@ export class AuthService {
   public autoLogin(): void {
     const authResponseStorage: AuthenticationResponse = JSON.parse(localStorage.getItem(AuthService.AUTH_RESPONSE));
     if (!authResponseStorage) {
+      this.logout();
       return;
     }
     // TODO must check if jwt inside localStorage not expired, then added to subject
