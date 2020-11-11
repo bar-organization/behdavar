@@ -41,23 +41,23 @@ export class AuthService {
     return this.http.post<AuthenticationResponse>(Url.LOGIN, authenticationRequest)
       .pipe(catchError(this.handelError), tap(resData => {
         this.authResponseSubject.next(resData);
-        localStorage.setItem(AuthService.AUTH_RESPONSE, JSON.stringify(resData));
+        sessionStorage.setItem(AuthService.AUTH_RESPONSE, JSON.stringify(resData));
       }));
   }
 
   public logout(): void {
     this.authResponseSubject.next(null);
-    localStorage.removeItem(AuthService.AUTH_RESPONSE);
+    sessionStorage.removeItem(AuthService.AUTH_RESPONSE);
     this.router.navigate(['/login']);
   }
 
   public autoLogin(): void {
-    const authResponseStorage: AuthenticationResponse = JSON.parse(localStorage.getItem(AuthService.AUTH_RESPONSE));
+    const authResponseStorage: AuthenticationResponse = JSON.parse(sessionStorage.getItem(AuthService.AUTH_RESPONSE));
     if (!authResponseStorage) {
       this.logout();
       return;
     }
-    // TODO must check if jwt inside localStorage not expired, then added to subject
+    // TODO must check if jwt inside sessionStorage not expired, then added to subject
     this.authResponseSubject.next(authResponseStorage);
   }
 
