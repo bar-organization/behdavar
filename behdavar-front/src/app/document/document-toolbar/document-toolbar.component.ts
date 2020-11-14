@@ -19,7 +19,7 @@ export class DocumentToolbarComponent implements OnInit {
 
   constructor(public authService: AuthService, private route: Router) {
     // TODO must change to right permission
-    this.canShowChangeExpert = route.url.match('document-manage') && this.authService.hasAuthority(AuthorityConstantEnum.VIEW_USER_MANAGEMENT);
+    this.canShowChangeExpert = route.url.match('document-manage') && this.authService.hasAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_MANAGEMENT);
   }
 
   ngOnInit(): void {

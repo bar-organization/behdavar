@@ -1,3 +1,4 @@
+<app-document-toolbar [id]="contractService.currentIdSubject | async "></app-document-toolbar>
 <div *ngIf="!route.url.match('find') else normal" class="card p-2" fxLayout="row" fxLayoutAlign="start stretch">
   <div fxFlex="90">
     <router-outlet></router-outlet>

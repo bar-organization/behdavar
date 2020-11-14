@@ -1,5 +1,3 @@
 <app-document-search [documentSearchDataTable]="table" ></app-document-search>
 
-<app-document-toolbar [id]="contractId" ></app-document-toolbar>
-
 <data-table #table [title]="documentLang.tableTitle" [httpDataSource]="catalogHttpDataSource" (selectedValueChange)="onSelectedValueChange($event)" [tableColumns]="tableColumns"></data-table>

@@ -3,10 +3,24 @@ import {HttpClient} from "@angular/common/http";
 import {MessageService} from "./message.service";
 import {ContractDto} from "../model/model";
 import Url from "../model/url";
+import {Subject} from "rxjs";
 
 @Injectable()
 export class ContractService {
+  private _currentId: number;
+
   constructor(private httpClient: HttpClient, private messageService: MessageService) {
+    this.currentIdSubject.subscribe(v => this._currentId = v);
+  }
+
+  currentIdSubject: Subject<number> = new Subject<number>();
+
+  get currentId() {
+    return this._currentId;
+  }
+
+  clearCurrentId(): void {
+    this.currentIdSubject.next(null);
   }
 
   getById(contractId: number, onComplete: (result: ContractDto) => void): void {
@@ -16,6 +30,6 @@ export class ContractService {
         if (onComplete) {
           onComplete(value);
         }
-      }, error => this.messageService.showGeneralError(`cant find contract with id: ${contractId}`));
+      }, () => this.messageService.showGeneralError(`cant find contract with id: ${contractId}`));
   }
 }

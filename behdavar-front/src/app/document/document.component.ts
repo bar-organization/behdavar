@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 import {CartableDto} from "../model/model";
 import Url from "../model/url";
@@ -14,20 +14,23 @@ import {AuthorityConstantEnum} from "../model/enum/AuthorityConstantEnum";
 import {ThousandPip} from "../_pip/ThousandPip";
 import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import {ContractStatus} from "../model/enum/ContractStatus";
+import {ContractService} from "../service/contract-service";
 
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html'
 })
-export class DocumentComponent {
-  contractId: number;
+export class DocumentComponent implements OnInit{
   documentLang = new DocumentLang();
   catalogHttpDataSource: HttpDataSource<CartableDto>;
 
-  constructor(private httpClient: HttpClient, private router: Router, private authService: AuthService) {
+  constructor(private httpClient: HttpClient, private router: Router, private authService: AuthService, private contractService: ContractService) {
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
   }
 
+  ngOnInit(): void {
+    this.contractService.clearCurrentId();
+  }
 
   private getUrl(): string {
     if (!this.router) {
@@ -53,9 +56,21 @@ export class DocumentComponent {
 
   tableColumns: TableColumn[] = [
     {fieldName: "contract.customers[0].person.fullName", title: this.documentLang.customerName},
-    {fieldName: 'contract.contractNumber', title: this.documentLang.facilityNumber, pipNames: DocumentComponent.getSimplePip()},
-    {fieldName: 'contract.contractStatus', title: this.documentLang.status, pipNames: DocumentComponent.getContractStatusPip()},
-    {fieldName: 'contract.lending.lateFees', title: this.documentLang.lateFees, pipNames: DocumentComponent.getSimplePip()},
+    {
+      fieldName: 'contract.contractNumber',
+      title: this.documentLang.facilityNumber,
+      pipNames: DocumentComponent.getSimplePip()
+    },
+    {
+      fieldName: 'contract.contractStatus',
+      title: this.documentLang.status,
+      pipNames: DocumentComponent.getContractStatusPip()
+    },
+    {
+      fieldName: 'contract.lending.lateFees',
+      title: this.documentLang.lateFees,
+      pipNames: DocumentComponent.getSimplePip()
+    },
     {
       fieldName: 'contract.lending.defferedAmount',
       title: this.documentLang.deferredAmount,
@@ -66,25 +81,53 @@ export class DocumentComponent {
       title: this.documentLang.deferredCount,
       pipNames: DocumentComponent.getSimplePip()
     },
-    {fieldName: 'contract.lending.masterAmount', title: this.documentLang.totalAmount, pipNames: DocumentComponent.getSimplePip()},
-    {fieldName: 'contract.submitDate', title: this.documentLang.registrationDate, pipNames: DocumentComponent.getDatePip()},
+    {
+      fieldName: 'contract.lending.masterAmount',
+      title: this.documentLang.totalAmount,
+      pipNames: DocumentComponent.getSimplePip()
+    },
+    {
+      fieldName: 'contract.submitDate',
+      title: this.documentLang.registrationDate,
+      pipNames: DocumentComponent.getDatePip()
+    },
     {
       fieldName: 'receiver.firstName+receiver.lastName',
       title: this.documentLang.expert,
       hidden: !this.authService.hasAnyAuthority(AuthorityConstantEnum.VIEW_DOCUMENT_ENTRY, AuthorityConstantEnum.SEARCH_ALL)
     },
 
-    {fieldName: 'contract.lending.ideaIssueDate', title: this.documentLang.ideaIssueDate, pipNames: DocumentComponent.getDatePip()},
+    {
+      fieldName: 'contract.lending.ideaIssueDate',
+      title: this.documentLang.ideaIssueDate,
+      pipNames: DocumentComponent.getDatePip()
+    },
     {
       fieldName: 'contract.lending.receiveLendingDate',
       title: this.documentLang.receiveLendingDate,
       pipNames: DocumentComponent.getDatePip()
     },
-    {fieldName: 'contract.lending.branchBank.code', title: this.documentLang.branch, pipNames: DocumentComponent.getSimplePip()},
-    {fieldName: 'contract.lending.branchBank.name', title: this.documentLang.bank, pipNames: DocumentComponent.getSimplePip()},
+    {
+      fieldName: 'contract.lending.branchBank.code',
+      title: this.documentLang.branch,
+      pipNames: DocumentComponent.getSimplePip()
+    },
+    {
+      fieldName: 'contract.lending.branchBank.name',
+      title: this.documentLang.bank,
+      pipNames: DocumentComponent.getSimplePip()
+    },
 
-    {fieldName: 'contract.product.productPlate', title: this.documentLang.plateNumber, pipNames: DocumentComponent.getSimplePip()},
-    {fieldName: 'contract.product.productName', title: this.documentLang.vehicleType, pipNames: DocumentComponent.getSimplePip()},
+    {
+      fieldName: 'contract.product.productPlate',
+      title: this.documentLang.plateNumber,
+      pipNames: DocumentComponent.getSimplePip()
+    },
+    {
+      fieldName: 'contract.product.productName',
+      title: this.documentLang.vehicleType,
+      pipNames: DocumentComponent.getSimplePip()
+    },
   ];
 
   private static getDatePip() {
@@ -105,7 +148,7 @@ export class DocumentComponent {
   }
 
   onSelectedValueChange(selectedValue: CartableDto) {
-    this.contractId = selectedValue?.contract?.id;
+    this.contractService.currentIdSubject.next(selectedValue?.contract?.id);
   }
 
   private isMyBaskUrl(): boolean {
