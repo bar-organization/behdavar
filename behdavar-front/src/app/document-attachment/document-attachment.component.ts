@@ -2,13 +2,14 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {AttachmentLang} from "../model/lang";
 import {FormGroup} from "@angular/forms";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
-import {AttachmentDto, CartableDto, ContractDto} from "../model/model";
+import {AttachmentDto, ContractDto} from "../model/model";
 import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import Url from "../model/url";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {MessageService} from "../service/message.service";
 import {SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {ContractService} from "../service/contract-service";
 
 @Component({
   selector: 'document-attachment',
@@ -27,16 +28,16 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
   tableColumns: TableColumn[] = [
     {fieldName: 'fileName', title: this.lang.titleDocument},
     // {fieldName: 'content', title: this.lang.fileDocument},
-    {fieldName: 'fileName',colName:'content', title: this.lang.titleDocument},
+    {fieldName: 'fileName', colName: 'content', title: this.lang.titleDocument},
   ];
 
-  constructor(private router: Router ,private route: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {
+  constructor(private router: Router, private contractService: ContractService, private route: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {
   }
 
   ngOnInit(): void {
     const filterByContractId = [{
       key: 'contract.id',
-      value: this.getIdParam(),
+      value: this.contractService.currentId,
       operation: SearchOperation.EQUAL
     }];
     this.attachmentHttpDataSource = new HttpDataSource<AttachmentDto>(Url.ATTACHMENT_FIND_PAGING, this.httpClient, filterByContractId);
@@ -47,7 +48,7 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
   }
 
   private findContractNumber() {
-    this.httpClient.post<ContractDto>(Url.CONTRACT_FIND_BY_ID, this.getIdParam())
+    this.httpClient.post<ContractDto>(Url.CONTRACT_FIND_BY_ID, this.contractService.currentId)
       .subscribe(value => this.documentNumber = value.contractNumber);
   }
 
@@ -62,26 +63,16 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
     };
   }
 
-  private getIdParam(): number {
-    let id = this.route.snapshot.params['id'];
-    try {
-      return Number(id);
-    } catch (e) {
-      return null;
-    }
-
-  }
-
   attach() {
     const attachmentDto: AttachmentDto = new AttachmentDto();
     attachmentDto.fileName = this.fileName;
     attachmentDto.content = this.fileToUpload;
-    attachmentDto.contract = {id: this.getIdParam()}
+    attachmentDto.contract = {id: this.contractService.currentId}
     this.httpClient.post(Url.ATTACHMENT_SAVE, attachmentDto)
-      .subscribe(value => {
+      .subscribe(() => {
           this.messageService.showGeneralSuccess(this.lang.successSave);
           this.router.navigate(['.'], {relativeTo: this.route.parent});
         },
-        error => this.messageService.showGeneralError(this.lang.error));
+        () => this.messageService.showGeneralError(this.lang.error));
   }
 }

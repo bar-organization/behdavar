@@ -12,6 +12,7 @@ import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 import {PHONE_TYPE_TITLE, PhoneType} from "../model/enum/PhoneType";
 import {MatSelectionList} from "@angular/material/list";
 import {MessageService} from "../service/message.service";
+import {ContractService} from "../service/contract-service";
 
 @Component({
   selector: 'app-customer',
@@ -30,7 +31,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   @ViewChild("contactSelect")
   contactSelect: MatSelectionList;
 
-  constructor(public messageService: MessageService, public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar) {
+  constructor(public messageService: MessageService,private contractService:ContractService,public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar) {
   }
 
   submitted = false;
@@ -64,7 +65,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
       confirmed: [false],
       description: [''],
     });
-    this.httpClient.post<CustomerDto>(Url.CUSTOMER_FIND_BY_CONTRACT, this.getIdParam())
+    this.httpClient.post<CustomerDto>(Url.CUSTOMER_FIND_BY_CONTRACT, this.contractService.currentId)
       .subscribe(value => {
         const customerDto: CustomerDto = value[0];
         this.customerForm.patchValue(customerDto);
@@ -87,13 +88,12 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     this.submitted = true;
     const newPerson: PersonDto = this.customerForm.value['person'];
     newPerson.contacts = this.contactWrapperList.filter(value => value.active).map(value => value.contact);
-    this.removeTraceableField(newPerson);
+    CustomerComponent.removeTraceableField(newPerson);
     this.httpClient.post<unknown>(Url.PERSON_UPDATE, newPerson)
-      .subscribe(value => {
+      .subscribe(() => {
           this._snackBar.open(this.lang.successSave, 'X', {
             duration: 5000, panelClass: ['bg-success', 'text-white']
           });
-          this.router.navigate(['../']);
         },
         error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
           duration: 5000, panelClass: ['bg-danger', 'text-white']
@@ -103,7 +103,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
 
   }
 
-  private removeTraceableField(newPerson: PersonDto) {
+  private static removeTraceableField(newPerson: PersonDto) {
     newPerson.createdDate = null;
     newPerson.lastModifiedDate = null;
     if (newPerson.contacts) {
@@ -119,17 +119,6 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     this.contactForm.reset({phoneType: PhoneType.MOBILE});
     this.contactForm.patchValue(contactDto);
   }
-
-  private getIdParam(): number {
-    let id = this.route.snapshot.params['id'];
-    try {
-      return Number(id);
-    } catch (e) {
-      return null;
-    }
-
-  }
-
 
   onContactDelete(contact: ContactWrapper) {
     if (contact.isNew) {

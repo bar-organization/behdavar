@@ -3,7 +3,7 @@ import {ContactLang, GuarantorsLang} from '../model/lang';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import Url from "../model/url";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {ContactDto, GuarantorDto, PersonDto} from "../model/model";
 import {MatSelectionList} from "@angular/material/list";
 import {MyErrorStateMatcher} from "../model/MyErrorStateMatcher";
@@ -11,14 +11,14 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 import {PHONE_TYPE_TITLE, PhoneType} from "../model/enum/PhoneType";
 import {MessageService} from "../service/message.service";
-import {yearsPerRow} from "@angular/material/datepicker";
+import {ContractService} from "../service/contract-service";
 
 @Component({
   selector: 'app-guarantors',
   templateUrl: './guarantors.component.html',
   styleUrls: ['./guarantors.component.css']
 })
-export class GuarantorsComponent implements OnInit,AfterViewInit {
+export class GuarantorsComponent implements OnInit, AfterViewInit {
 
   @ViewChild("GLSelect")
   glSelect: MatSelectionList;
@@ -40,7 +40,7 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
   guarantorDtoList: GuarantorDto[];
 
 
-  constructor(private messageService:MessageService,public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private _snackBar: MatSnackBar, private router: Router) {
+  constructor(private messageService: MessageService, public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private contractService: ContractService, private _snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
@@ -71,31 +71,23 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
     this.updateGuarantorList();
 
   }
-  ngAfterViewInit(): void{
+
+  ngAfterViewInit(): void {
 
   }
 
-  private getPerson():PersonDto {
+  private getPerson(): PersonDto {
     const person = new PersonDto();
     person.id = this.guarantorsForm?.value?.person?.id;
     return person;
   }
+
   private updateGuarantorList() {
-    this.httpClient.post<GuarantorDto[]>(Url.GUARANTOR_FIND_BY_CONTRACT, this.getIdParam())
+    this.httpClient.post<GuarantorDto[]>(Url.GUARANTOR_FIND_BY_CONTRACT, this.contractService.currentId)
       .subscribe(value => this.guarantorDtoList = value);
   }
 
-  private getIdParam(): number {
-    let id = this.route.snapshot.params['id'];
-    try {
-      return Number(id);
-    } catch (e) {
-      return null;
-    }
-
-  }
-
-  private removeTraceableField(newPerson: PersonDto) {
+  private static removeTraceableField(newPerson: PersonDto) {
     newPerson.createdDate = null;
     newPerson.lastModifiedDate = null;
     if (newPerson.contacts) {
@@ -107,20 +99,19 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
   }
 
   onSubmit() {
-    if(!this.glSelect._value){
+    if (!this.glSelect._value) {
       this.messageService.showGeneralError(this.lang.selectAGuarantor);
       return;
     }
     const newPerson: PersonDto = this.guarantorsForm.value['person'];
     newPerson.contacts = this.contactWrapperList.filter(value => value.active).map(value => value.contact);
-    this.removeTraceableField(newPerson);
+    GuarantorsComponent.removeTraceableField(newPerson);
     this.httpClient.post<unknown>(Url.PERSON_UPDATE, newPerson)
-      .subscribe(value => {
+      .subscribe(() => {
           this._snackBar.open(this.lang.successSave, 'X', {
             duration: 5000, panelClass: ['bg-success', 'text-white']
           });
           this.updateGuarantorList();
-          this.router.navigate(['../']);
         },
         error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
           duration: 5000, panelClass: ['bg-danger', 'text-white']
@@ -163,7 +154,7 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
         confirmed: this.contactForm.value.confirmed,
         phoneType: this.contactForm.value.phoneType,
         description: this.contactForm.value.description,
-        person:this.getPerson()
+        person: this.getPerson()
       }
       this.contactWrapperList.push(<ContactWrapper>{contact: contact, active: true, isNew: true})
     }
@@ -182,12 +173,12 @@ export class GuarantorsComponent implements OnInit,AfterViewInit {
       if (value.contact === selectedContact) {
         value.contact = {
           id: value.contact.id,
-          version:value.contact.version,
+          version: value.contact.version,
           number: this.contactForm.value.number,
           confirmed: this.contactForm.value.confirmed,
           phoneType: this.contactForm.value.phoneType,
           description: this.contactForm.value.description,
-          person:this.getPerson()
+          person: this.getPerson()
         }
       }
     });

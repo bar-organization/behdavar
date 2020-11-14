@@ -14,6 +14,7 @@ import {MessageService} from "../service/message.service";
 import {MatAutocomplete} from "@angular/material/autocomplete";
 import {SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import {ContractStatus} from "../model/enum/ContractStatus";
+import {ContractService} from "../service/contract-service";
 
 @Component({
   selector: 'change-expert',
@@ -32,16 +33,16 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
   newExpertAutocompleteControl = new FormControl();
 
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private httpClient: HttpClient, private messageService: MessageService, private router: Router) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private httpClient: HttpClient, private messageService: MessageService, private router: Router, private contractService: ContractService) {
 
   }
 
   catalogHttpDataSource: HttpDataSource<CartableDto>;
 
   tableColumns: TableColumn[] = [
-    {fieldName: 'receiver.firstName', title: this.lang.firstName, pipNames: this.getSimplePip()},
-    {fieldName: 'receiver.lastName', title: this.lang.lastName, pipNames: this.getSimplePip()},
-    {fieldName: 'createdDate', title: this.lang.date, pipNames: this.getDatePip()},
+    {fieldName: 'receiver.firstName', title: this.lang.firstName, pipNames: ChangeExpertComponent.getSimplePip()},
+    {fieldName: 'receiver.lastName', title: this.lang.lastName, pipNames: ChangeExpertComponent.getSimplePip()},
+    {fieldName: 'createdDate', title: this.lang.date, pipNames: ChangeExpertComponent.getDatePip()},
   ];
 
 
@@ -51,7 +52,7 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
     });
     const filterByContractId = [{
       key: 'contract.id',
-      value: this.getIdParam(),
+      value: this.contractService.currentId,
       operation: SearchOperation.EQUAL
     }];
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(Url.CARTABLE_FIND_PAGING_ALL, this.httpClient, filterByContractId);
@@ -71,18 +72,8 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
 
 
   private findContractNumber() {
-    this.httpClient.post<ContractDto>(Url.CONTRACT_FIND_BY_ID, this.getIdParam())
+    this.httpClient.post<ContractDto>(Url.CONTRACT_FIND_BY_ID, this.contractService.currentId)
       .subscribe(value => this.documentNumber = value.contractNumber);
-  }
-
-  private getIdParam(): number {
-    let id = this.route.snapshot.params['id'];
-    try {
-      return Number(id);
-    } catch (e) {
-      return null;
-    }
-
   }
 
   changeExpert() {
@@ -93,15 +84,15 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
 
     const changeExpert: AssignContractDto = {
       assigneeId: this.userDto.id,
-      contractId: this.getIdParam(),
+      contractId: this.contractService.currentId,
       status: ContractStatus.AVAILABLE
     };
 
     this.httpClient.post(Url.CARTABLE_ASSIGN, changeExpert)
-      .subscribe(value => {
+      .subscribe(() => {
         this.messageService.showGeneralSuccess(this.lang.successSave);
         this.router.navigate(['.'], {relativeTo: this.route.parent});
-      }, error => this.messageService.showGeneralError(this.lang.error));
+      }, () => this.messageService.showGeneralError(this.lang.error));
 
   }
 
@@ -118,11 +109,11 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
   }
 
 
-  private getDatePip() {
+  private static getDatePip() {
     return [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}];
   }
 
-  private getSimplePip() {
+  private static getSimplePip() {
     return [{pip: new BlankToDashPipe()}];
 
   }

@@ -17,7 +17,7 @@ import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {PursuitTypePip} from "../_pip/PursuitTypePip";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MessageService} from "../service/message.service";
-import {AuthService} from "../service/auth/auth.service";
+import {ContractService} from "../service/contract-service";
 
 @Component({
   selector: 'app-following',
@@ -39,7 +39,7 @@ export class FollowingComponent implements OnInit {
 
   followingHttpDataSource: HttpDataSource<PursuitDto>;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private router: Router, private authService: AuthService) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private router: Router, private contractService: ContractService) {
   }
 
   ngOnInit(): void {
@@ -55,23 +55,18 @@ export class FollowingComponent implements OnInit {
       depostidAmount: [{value: null, disabled: true}],
     });
 
-    const filter: SearchCriteria[] = [{key: 'contract.id', value: this.getIdParam(), operation: SearchOperation.EQUAL}];
+    const filter: SearchCriteria[] = [{
+      key: 'contract.id',
+      value: this.contractService.currentId,
+      operation: SearchOperation.EQUAL
+    }];
     this.followingHttpDataSource = new HttpDataSource<PursuitDto>(Url.PURSUIT_FIND_PAGING, this.httpClient, filter);
 
   }
 
-  private getIdParam(): number {
-    let id = this.route.snapshot.params['id'];
-    try {
-      return Number(id);
-    } catch (e) {
-      return null;
-    }
-  }
-
   submitted = false;
   followingTableColumn: TableColumn[] = [
-    {fieldName: 'pursuitType', title: this.lang.followingType, pipNames: this.getPursuitTypePip()},
+    {fieldName: 'pursuitType', title: this.lang.followingType, pipNames: FollowingComponent.getPursuitTypePip()},
     {
       fieldName: 'createdDate',
       title: this.lang.date,
@@ -85,7 +80,7 @@ export class FollowingComponent implements OnInit {
     {fieldName: 'user.firstName+user.lastName', title: this.lang.expertName},
   ];
 
-  private getPursuitTypePip() {
+  private static getPursuitTypePip() {
     return [{pip: new PursuitTypePip()}, {pip: new BlankToDashPipe()}];
   }
 
@@ -96,9 +91,8 @@ export class FollowingComponent implements OnInit {
     this.completeModel(saveModel);
 
     this.httpClient.post<PursuitDto>(Url.PURSUIT_SAVE, saveModel)
-      .subscribe(value => {
+      .subscribe(() => {
           this.messageService.showGeneralSuccess(this.lang.successSave);
-          this.router.navigate(['../']);
         },
         error => this.messageService.showGeneralError(this.lang.error, error)
       );
@@ -118,7 +112,7 @@ export class FollowingComponent implements OnInit {
   completeModel(model: PursuitDto) {
 
     const contractDto: ContractDto = new ContractDto();
-    contractDto.id = this.getIdParam();
+    contractDto.id = this.contractService.currentId;
     model.contract = contractDto;
 
     if (!!this.followingForm.value.customerDeposit) {

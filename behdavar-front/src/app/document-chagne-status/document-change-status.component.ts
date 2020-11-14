@@ -36,29 +36,21 @@ export class DocumentChangeStatusComponent implements OnInit {
     //TODO must fix type and url
     this.documentHistoryHttpDataSource = new HttpDataSource<unknown>(null, this.httpClient);
     this.tableColumns = [
-      {fieldName: 'date', title: this.lang.date, pipNames: this.getDatePip()},
-      {fieldName: 'changeStatus', title: this.lang.status, pipNames: this.getContractStatusPip()},
+      {fieldName: 'date', title: this.lang.date, pipNames: DocumentChangeStatusComponent.getDatePip()},
+      {fieldName: 'changeStatus', title: this.lang.status, pipNames: DocumentChangeStatusComponent.getContractStatusPip()},
     ];
 
-    this.contractService.getById(this.getIdParam(), contractDto => {
+    this.contractService.getById(this.contractService.currentId, contractDto => {
       this.documentNumber = contractDto?.contractNumber;
     });
   }
 
-  private getIdParam(): number {
-    let id = this.route.snapshot.params['id'];
-    try {
-      return Number(id);
-    } catch (e) {
-      return null;
-    }
 
-  }
-  private getDatePip() {
+  private static getDatePip() {
     return [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}];
   }
 
-  private getContractStatusPip() {
+  private static getContractStatusPip() {
     return [{pip: new ContractStatusPip()}, {pip: new BlankToDashPipe()}];
   }
 
