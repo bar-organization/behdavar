@@ -18,6 +18,7 @@ import {PursuitTypePip} from "../_pip/PursuitTypePip";
 import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MessageService} from "../service/message.service";
 import {ContractService} from "../service/contract-service";
+import {ResultTypePip} from "../_pip/ResultTypePip";
 
 @Component({
   selector: 'app-following',
@@ -39,7 +40,7 @@ export class FollowingComponent implements OnInit {
 
   followingHttpDataSource: HttpDataSource<PursuitDto>;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private router: Router, private contractService: ContractService) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private pursuitTypePip: PursuitTypePip, private resultTypePip: ResultTypePip, private router: Router, private contractService: ContractService) {
   }
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class FollowingComponent implements OnInit {
       submitAccordingFinal: [''],
       nextPursuitDate: [{value: '', disabled: true}],
       customerDeposit: [''],
-      pursuitType: [''],
+      pursuitType: [PursuitType.PHONE_CALL],
       resultType: [''],
       depostidAmount: [{value: null, disabled: true}],
     });
@@ -93,6 +94,14 @@ export class FollowingComponent implements OnInit {
     this.httpClient.post<PursuitDto>(Url.PURSUIT_SAVE, saveModel)
       .subscribe(() => {
           this.messageService.showGeneralSuccess(this.lang.successSave);
+
+          // TODO must refactor
+          const filter: SearchCriteria[] = [{
+            key: 'contract.id',
+            value: this.contractService.currentId,
+            operation: SearchOperation.EQUAL
+          }];
+          this.followingHttpDataSource.reload(filter);
         },
         error => this.messageService.showGeneralError(this.lang.error, error)
       );
@@ -114,6 +123,8 @@ export class FollowingComponent implements OnInit {
     const contractDto: ContractDto = new ContractDto();
     contractDto.id = this.contractService.currentId;
     model.contract = contractDto;
+    model.pursuitType = this.pursuitTypePip.transform(this.followingForm.value.pursuitType, 'n');
+    model.resultType = this.resultTypePip.transform(this.followingForm.value.resultType, 'n');
 
     if (!!this.followingForm.value.customerDeposit) {
       const payment = new PaymentDto();

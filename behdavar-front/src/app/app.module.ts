@@ -78,6 +78,7 @@ import {DocumentChangeStatusComponent} from "./document-chagne-status/document-c
 import {ContractService} from "./service/contract-service";
 import {MyBasketGuardService} from "./service/auth/my-basket-guard.service";
 import {SearchGuardService} from "./service/auth/search-guard.service";
+import {ResultTypePip} from "./_pip/ResultTypePip";
 
 @NgModule({
   imports: [
@@ -140,6 +141,7 @@ import {SearchGuardService} from "./service/auth/search-guard.service";
     ContactToFlatStringPipe,
     ContractStatusPip,
     PursuitTypePip,
+    ResultTypePip,
     ThousandPip,
     FinancialStatusComponent,
     UserManagementComponent,
@@ -160,6 +162,8 @@ import {SearchGuardService} from "./service/auth/search-guard.service";
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
     JalaliPipe,
     ThousandPip,
+    ResultTypePip,
+    PursuitTypePip,
     MyBasketGuardService,
     SearchGuardService,
     DocumentManageGuardService,

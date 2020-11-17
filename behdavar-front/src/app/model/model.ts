@@ -89,8 +89,8 @@ export class PursuitDto extends BaseAuditorDto<string, number> {
   // TODO use string for because use moment.format() to fix issue of Jackson convert to Java LocalDate. must fix...
   nextPursuitDate: string;
   customerDeposit: boolean;
-  pursuitType: PursuitType;
-  resultType: ResultType;
+  pursuitType: any;
+  resultType: any;
   payment: PaymentDto;
   user: UserDto;
   contract: ContractDto;
