@@ -19,6 +19,10 @@ export class ContractService {
     return this._currentId;
   }
 
+  updateCurrentId(id: number): void {
+    this.currentIdSubject.next(id);
+  }
+
   clearCurrentId(): void {
     this.currentIdSubject.next(null);
   }

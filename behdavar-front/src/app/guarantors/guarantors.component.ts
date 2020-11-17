@@ -43,7 +43,17 @@ export class GuarantorsComponent implements OnInit, AfterViewInit {
   constructor(private messageService: MessageService, public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private contractService: ContractService, private _snackBar: MatSnackBar) {
   }
 
+  private updateContractId() {
+    let id = this.route.snapshot.params['id'];
+    try {
+      this.contractService.updateCurrentId(Number(id));
+    } catch (e) {
+    }
+  }
+
   ngOnInit(): void {
+    this.updateContractId();
+
     this.guarantorsForm = this.fb.group({
       person: this.fb.group({
         id: [''],

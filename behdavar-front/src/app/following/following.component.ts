@@ -44,6 +44,8 @@ export class FollowingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateContractId();
+
     this.followingForm = this.fb.group({
       description: [''],
       coordinateAppointment: [''],
@@ -175,6 +177,14 @@ export class FollowingComponent implements OnInit {
       this.fileName = '';
       this.fileToUpload = null;
       this.fileInput.nativeElement.value = null;
+    }
+  }
+
+  private updateContractId() {
+    let id = this.route.snapshot.params['id'];
+    try {
+      this.contractService.updateCurrentId(Number(id));
+    } catch (e) {
     }
   }
 }

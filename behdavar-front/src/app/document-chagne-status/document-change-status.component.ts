@@ -30,8 +30,16 @@ export class DocumentChangeStatusComponent implements OnInit {
 
   constructor(private httpClient: HttpClient,private route: ActivatedRoute,private contractService:ContractService) {
   }
+  private updateContractId() {
+    let id = this.route.snapshot.params['id'];
+    try {
+      this.contractService.updateCurrentId(Number(id));
+    } catch (e) {
+    }
+  }
 
   ngOnInit(): void {
+    this.updateContractId();
 
     //TODO must fix type and url
     this.documentHistoryHttpDataSource = new HttpDataSource<unknown>(null, this.httpClient);

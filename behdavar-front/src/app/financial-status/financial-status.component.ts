@@ -44,7 +44,16 @@ export class FinancialStatusComponent implements OnInit {
   }
 
 
+  private updateContractId() {
+    let id = this.route.snapshot.params['id'];
+    try {
+      this.contractService.updateCurrentId(Number(id));
+    } catch (e) {
+    }
+  }
   ngOnInit(): void {
+    this.updateContractId();
+
     const filters: SearchCriteria[] = [];
     filters.push({key: 'contract.id', value: this.contractService.currentId, operation: SearchOperation.EQUAL});
     this.paymentHttpDataSource = new HttpDataSource<PaymentDto>(Url.PAYMENT_FIND_PAGING, this.httpClient, filters);

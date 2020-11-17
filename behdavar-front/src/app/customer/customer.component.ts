@@ -38,7 +38,16 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   contactDataSource: MatTableDataSource<ContactDto>;
   phoneTypeList: EnumValueTitle<PhoneType>[] = PHONE_TYPE_TITLE;
 
+  private updateContractId() {
+    let id = this.route.snapshot.params['id'];
+    try {
+      this.contractService.updateCurrentId(Number(id));
+    } catch (e) {
+    }
+  }
+
   ngOnInit(): void {
+    this.updateContractId();
 
     this.customerForm = this.fb.group({
       person: this.fb.group({

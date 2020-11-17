@@ -45,8 +45,15 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
     {fieldName: 'createdDate', title: this.lang.date, pipNames: ChangeExpertComponent.getDatePip()},
   ];
 
-
+  private updateContractId() {
+    let id = this.route.snapshot.params['id'];
+    try {
+      this.contractService.updateCurrentId(Number(id));
+    } catch (e) {
+    }
+  }
   ngOnInit(): void {
+    this.updateContractId();
     this.changeExpertFormGroup = this.fb.group({
       newExpert: [''],
     });

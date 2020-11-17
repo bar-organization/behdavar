@@ -33,8 +33,17 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private contractService: ContractService, private route: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {
   }
+  private updateContractId() {
+    let id = this.route.snapshot.params['id'];
+    try {
+      this.contractService.updateCurrentId(Number(id));
+    } catch (e) {
+    }
+  }
 
   ngOnInit(): void {
+    this.updateContractId();
+
     const filterByContractId = [{
       key: 'contract.id',
       value: this.contractService.currentId,
