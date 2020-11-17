@@ -42,16 +42,9 @@
 
           </div>
 
-          <div fxLayout="row">
-            <mat-form-field appearance="outline" class="flex-fill">
-              <mat-label>{{lang.followingResultDescription}}</mat-label>
-              <textarea matInput formControlName="description"></textarea>
-            </mat-form-field>
-          </div>
-
         </div>
 
-        <div fxLayout="column" fxLayoutAlign="space-between none" class="card p-2 w-25">
+        <div fxLayout="column" fxLayoutAlign="space-between none" class="card p-2 w-50">
           <mat-form-field appearance="standard">
             <mat-label>{{lang.depostidAmount}}</mat-label>
             <input matInput currencyMask [options]="{ prefix: '', thousands: ',', decimal: '', precision: 0 }"
@@ -76,6 +69,12 @@
         </div>
 
       </div>
+        <div fxLayout="row">
+          <mat-form-field appearance="outline" class="flex-fill" style="min-height: 6rem">
+            <mat-label>{{lang.followingResultDescription}}</mat-label>
+            <textarea matInput formControlName="description" style="min-height: 6rem"></textarea>
+          </mat-form-field>
+        </div>
       <div fxLayout="row" fxLayoutAlign="end center">
         <button mat-raised-button color="primary" class="px-5">{{lang.save}}</button>
       </div>
