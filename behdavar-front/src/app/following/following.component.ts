@@ -53,7 +53,7 @@ export class FollowingComponent implements OnInit {
       submitAccordingFinal: [''],
       nextPursuitDate: [{value: '', disabled: true}],
       customerDeposit: [''],
-      pursuitType: [PursuitType.PHONE_CALL],
+      pursuitType: [PursuitType.PHONE_CALL.toString()],
       resultType: [''],
       depostidAmount: [{value: null, disabled: true}],
     });
@@ -151,11 +151,11 @@ export class FollowingComponent implements OnInit {
     else
       model.nextPursuitDate = null;
 
-    if (!model.pursuitType) {
+    if (model.pursuitType === '') {
       model.pursuitType = null;
     }
 
-    if (!model.resultType) {
+    if (model.resultType === '') {
       model.resultType = null
     }
 
