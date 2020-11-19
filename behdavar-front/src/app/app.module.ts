@@ -28,8 +28,7 @@ import {GuarantorsComponent} from './guarantors/guarantors.component';
 import {CustomerComponent} from './customer/customer.component';
 import {FollowingComponent} from './following/following.component';
 import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatNativeDateModule} from '@angular/material/core';
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {DocumentAttachmentComponent} from './document-attachment/document-attachment.component';
 import {MyBasketComponent} from './navigation-tab/my-basket/my-basket.component';
 import {SearchPanelComponent} from './navigation-tab/search-panel/search-panel.component';
@@ -79,9 +78,13 @@ import {ContractService} from "./service/contract-service";
 import {MyBasketGuardService} from "./service/auth/my-basket-guard.service";
 import {SearchGuardService} from "./service/auth/search-guard.service";
 import {ResultTypePip} from "./_pip/ResultTypePip";
+import { MatDatepickerModule} from '@angular/material/datepicker';
+import {JALALI_DATE_FORMATS, JalaliDateAdapter} from "./service/jalali-date/jalali-date-adapter";
+import {Platform, PlatformModule} from '@angular/cdk/platform';
 
 @NgModule({
   imports: [
+    PlatformModule,
     MatSnackBarModule,
     AppRoutingModule,
     BrowserModule,
@@ -160,6 +163,9 @@ import {ResultTypePip} from "./_pip/ResultTypePip";
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
+    { provide: MAT_DATE_LOCALE, useValue: 'fa-IR' },
+    { provide: DateAdapter, useClass: JalaliDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: JALALI_DATE_FORMATS },
     JalaliPipe,
     ThousandPip,
     ResultTypePip,

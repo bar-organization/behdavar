@@ -2,9 +2,10 @@
   <button mat-icon-button>
     <mat-icon>menu</mat-icon>
   </button>
-  <h6>{{lang.appTitle}}</h6>
+  <span style="font-size: 1.5rem">{{lang.appTitle}}</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button (click)="onLogout()">
+  <button mat-button (click)="onLogout()">
+    <span>{{lang.exit}} </span>
     <mat-icon>exit_to_app</mat-icon>
   </button>
 
@@ -16,11 +17,11 @@
     <nav mat-tab-nav-bar>
       <ng-container *ngFor="let link of linkList">
         <div mat-tab-link
-           routerLinkActive
-           #rla="routerLinkActive"
-           [active]="rla.isActive"
-           *ngIf="link.visible"
-           [routerLink]="link.routerLink">
+             routerLinkActive
+             #rla="routerLinkActive"
+             [active]="rla.isActive"
+             *ngIf="link.visible"
+             [routerLink]="link.routerLink">
           <mat-icon class="ml-2">{{link.iconName}}</mat-icon>
           <span>{{link.title}}</span>
         </div>

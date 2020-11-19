@@ -22,6 +22,7 @@ export class Lang {
   rial = 'ریال';
   date = 'تاریخ';
   time = 'زمان';
+  exit = 'خروج';
 }
 
 export class AuthLang extends Lang {
@@ -273,7 +274,7 @@ export class PursuitTypeLang extends Lang {
   PHONE_CALL = "تماس تلفنی";
   SEND_SMS = "ارسال پیامک";
   SEND_NOTICE = 'ارسال اخطاریه کتبی';
-  }
+}
 
 export class ResultTypeLang extends Lang {
   REQUEST_TIME = 'درخواست زمان';
