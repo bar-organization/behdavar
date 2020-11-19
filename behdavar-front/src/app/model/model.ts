@@ -1,7 +1,6 @@
-import {PursuitType} from "./enum/PursuitType";
-import {ResultType} from "./enum/ResultType";
 import {PhoneType} from "./enum/PhoneType";
 import {ContractStatus} from "./enum/ContractStatus";
+import {PaymentType} from "./enum/PaymentType";
 
 class BaseModel<T> {
   id: T;
@@ -41,7 +40,7 @@ export class ContactDto extends BaseAuditorDto<string, number> {
   preCode?: string;
   confirmed?: boolean;
   phoneType?: PhoneType;
-  person:PersonDto;
+  person: PersonDto;
 }
 
 export class GuarantorDto extends BaseAuditorDto<string, number> {
@@ -255,11 +254,3 @@ export enum RelationType {
 
 }
 
-export enum PaymentType {
-  CHECK = "CHECK",
-  CASH = "CASH",
-  NOTEBOOK = "NOTEBOOK",
-  OTHER = "OTHER",
-  INSTALLMENT_LOCATION_CASH = "INSTALLMENT_LOCATION_CASH",
-  INSTALLMENTS = "INSTALLMENTS"
-}

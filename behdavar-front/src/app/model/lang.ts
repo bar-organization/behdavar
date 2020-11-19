@@ -292,6 +292,15 @@ export class ContractStatusLang extends Lang {
   RETURN = 'برگشت داده شده';
 }
 
+export class PaymentTypeLang extends Lang {
+  CHECK = 'چک';
+  CASH = 'نقدی';
+  NOTEBOOK = 'دفترچه';
+  OTHER = 'سایر';
+  INSTALLMENT_LOCATION_CASH = 'پرداخت در محل';
+  INSTALLMENTS = 'قسطی';
+}
+
 export class ReportsLang extends Lang {
   reportTitle = 'گزارش گیری';
   fromDate = 'از تاریخ';

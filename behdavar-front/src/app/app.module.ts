@@ -78,9 +78,10 @@ import {ContractService} from "./service/contract-service";
 import {MyBasketGuardService} from "./service/auth/my-basket-guard.service";
 import {SearchGuardService} from "./service/auth/search-guard.service";
 import {ResultTypePip} from "./_pip/ResultTypePip";
-import { MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {JALALI_DATE_FORMATS, JalaliDateAdapter} from "./service/jalali-date/jalali-date-adapter";
-import {Platform, PlatformModule} from '@angular/cdk/platform';
+import {PlatformModule} from '@angular/cdk/platform';
+import {PaymentTypePip} from "./_pip/PaymentTypePip";
 
 @NgModule({
   imports: [
@@ -145,6 +146,8 @@ import {Platform, PlatformModule} from '@angular/cdk/platform';
     ContractStatusPip,
     PursuitTypePip,
     ResultTypePip,
+    PaymentTypePip,
+
     ThousandPip,
     FinancialStatusComponent,
     UserManagementComponent,
@@ -163,10 +166,11 @@ import {Platform, PlatformModule} from '@angular/cdk/platform';
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
-    { provide: MAT_DATE_LOCALE, useValue: 'fa-IR' },
-    { provide: DateAdapter, useClass: JalaliDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: JALALI_DATE_FORMATS },
+    {provide: MAT_DATE_LOCALE, useValue: 'fa-IR'},
+    {provide: DateAdapter, useClass: JalaliDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: JALALI_DATE_FORMATS},
     JalaliPipe,
+    PaymentTypePip,
     ThousandPip,
     ResultTypePip,
     PursuitTypePip,

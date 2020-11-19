@@ -11,6 +11,9 @@ import {ActivatedRoute} from "@angular/router";
 import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import {PaymentService} from "../service/payment-service";
 import {ContractService} from "../service/contract-service";
+import {ThousandPip} from "../_pip/ThousandPip";
+import {PaymentTypePip} from "../_pip/PaymentTypePip";
+import {JalaliPipe} from "../_pip/jalali.pipe";
 
 @Component({
   selector: 'app-financial-status',
@@ -24,21 +27,39 @@ export class FinancialStatusComponent implements OnInit {
   paymentHttpDataSource: HttpDataSource<PaymentDto>
   receiveAmount: number;
   tableColumns: TableColumn[] = [
-    {fieldName: 'amount', title: this.financialStatusLang.amount},
-    {fieldName: 'paymentType', title: this.financialStatusLang.paymentType},
+    {fieldName: 'amount', title: this.financialStatusLang.amount, pipNames: FinancialStatusComponent.getThousandPip()},
+    {
+      fieldName: 'paymentType', title: this.financialStatusLang.paymentType,
+      pipNames: FinancialStatusComponent.getPaymentTypePip()
+    },
     {fieldName: 'user.firstName+user.lastName', title: this.financialStatusLang.expert},
     {
       fieldName: 'contract.contractStatus',
       title: this.financialStatusLang.contractStatus,
       pipNames: FinancialStatusComponent.getContractStatusPip()
     },
-    {fieldName: 'paymentDate', title: this.financialStatusLang.paymentDate},
+    {
+      fieldName: 'paymentDate',
+      title: this.financialStatusLang.paymentDate,
+      pipNames: FinancialStatusComponent.getDatePip()
+    },
   ];
 
   private static getContractStatusPip() {
     return [{pip: new ContractStatusPip()}, {pip: new BlankToDashPipe()}];
   }
 
+  private static getPaymentTypePip() {
+    return [{pip: new PaymentTypePip()}, {pip: new BlankToDashPipe()}];
+  }
+
+  private static getThousandPip() {
+    return [{pip: new ThousandPip()}, {pip: new BlankToDashPipe()}];
+  }
+
+  private static getDatePip() {
+    return [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}];
+  }
 
   constructor(private httpClient: HttpClient, private route: ActivatedRoute, private paymentService: PaymentService, private contractService: ContractService) {
   }
@@ -51,6 +72,7 @@ export class FinancialStatusComponent implements OnInit {
     } catch (e) {
     }
   }
+
   ngOnInit(): void {
     this.updateContractId();
 
