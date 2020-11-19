@@ -249,7 +249,7 @@ export class FinancialStatusLang extends Lang {
   totalAmount = 'مبلغ کل پرونده';
   receiveAmount = 'مبلغ کل واریز شده';
   paymentList = 'لیست و اطلاعات واریزی های مشتری';
-  amount = 'مبلغ';
+  amount = 'مبلغ (ریال)';
   paymentType = 'نوع دریافت';
   expert = 'کارشناس';
   contractStatus = 'وضعیت پرونده';

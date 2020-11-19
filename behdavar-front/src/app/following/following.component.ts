@@ -3,7 +3,7 @@ import {FollowingLang} from '../model/lang';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {HttpClient} from "@angular/common/http";
 import Url from "../model/url";
-import {AttachmentDto, ContractDto, PaymentDto, PaymentType, PursuitDto} from "../model/model";
+import {AttachmentDto, ContractDto, PaymentDto, PursuitDto} from "../model/model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {TableColumn} from "../_custom-component/data-table/data-table.component";
 import {PURSUIT_TYPE_TITLE, PursuitType} from "../model/enum/PursuitType";
@@ -19,6 +19,7 @@ import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MessageService} from "../service/message.service";
 import {ContractService} from "../service/contract-service";
 import {ResultTypePip} from "../_pip/ResultTypePip";
+import {PaymentType} from "../model/enum/PaymentType";
 
 @Component({
   selector: 'app-following',
