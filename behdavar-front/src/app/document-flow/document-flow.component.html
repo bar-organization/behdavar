@@ -1,5 +1,5 @@
 <div fxLayout="column" fxLayoutGap="1rem">
-  <h4 fxLayout="row" class="border-bottom py-2">{{lang.pageTitle}}</h4>
+  <h5 class="text-right py-2 mb-4 border-bottom ">{{lang.pageTitle}}</h5>
   <h6 fxLayout="row">{{lang.contractNumber}} : {{contractNumber}}</h6>
   <data-table [httpDataSource]="documentFlowHttpDataSource" [title]="lang.tableTitle" [tableColumns]="tableColumns" [selectable]="false" [columnSelectable]="false"></data-table>
 </div>

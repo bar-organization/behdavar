@@ -31,11 +31,10 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   @ViewChild("contactSelect")
   contactSelect: MatSelectionList;
 
-  constructor(public messageService: MessageService,private contractService:ContractService,public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private router: Router, private _snackBar: MatSnackBar) {
+  constructor(public messageService: MessageService,private contractService:ContractService,public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute) {
   }
 
   submitted = false;
-  contactDataSource: MatTableDataSource<ContactDto>;
   phoneTypeList: EnumValueTitle<PhoneType>[] = PHONE_TYPE_TITLE;
 
   private updateContractId() {
@@ -99,14 +98,8 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     newPerson.contacts = this.contactWrapperList.filter(value => value.active).map(value => value.contact);
     CustomerComponent.removeTraceableField(newPerson);
     this.httpClient.post<unknown>(Url.PERSON_UPDATE, newPerson)
-      .subscribe(() => {
-          this._snackBar.open(this.lang.successSave, 'X', {
-            duration: 5000, panelClass: ['bg-success', 'text-white']
-          });
-        },
-        error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
-          duration: 5000, panelClass: ['bg-danger', 'text-white']
-        })
+      .subscribe(() => this.messageService.showGeneralSuccess(this.lang.successSave),
+        error => this.messageService.showGeneralError(this.lang.error, error)
       );
 
 

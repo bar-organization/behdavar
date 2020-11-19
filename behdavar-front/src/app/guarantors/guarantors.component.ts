@@ -7,7 +7,6 @@ import {ActivatedRoute} from "@angular/router";
 import {ContactDto, GuarantorDto, PersonDto} from "../model/model";
 import {MatSelectionList} from "@angular/material/list";
 import {MyErrorStateMatcher} from "../model/MyErrorStateMatcher";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 import {PHONE_TYPE_TITLE, PhoneType} from "../model/enum/PhoneType";
 import {MessageService} from "../service/message.service";
@@ -40,7 +39,7 @@ export class GuarantorsComponent implements OnInit, AfterViewInit {
   guarantorDtoList: GuarantorDto[];
 
 
-  constructor(private messageService: MessageService, public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private contractService: ContractService, private _snackBar: MatSnackBar) {
+  constructor(private messageService: MessageService, public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute, private contractService: ContractService) {
   }
 
   private updateContractId() {
@@ -118,14 +117,10 @@ export class GuarantorsComponent implements OnInit, AfterViewInit {
     GuarantorsComponent.removeTraceableField(newPerson);
     this.httpClient.post<unknown>(Url.PERSON_UPDATE, newPerson)
       .subscribe(() => {
-          this._snackBar.open(this.lang.successSave, 'X', {
-            duration: 5000, panelClass: ['bg-success', 'text-white']
-          });
+          this.messageService.showGeneralSuccess(this.lang.successSave)
           this.updateGuarantorList();
         },
-        error => this._snackBar.open(`${this.lang.error} [${error}] `, 'X', {
-          duration: 5000, panelClass: ['bg-danger', 'text-white']
-        })
+        error => this.messageService.showGeneralError(this.lang.error, error)
       );
   }
 

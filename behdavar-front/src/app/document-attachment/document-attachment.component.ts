@@ -33,6 +33,7 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
 
   constructor(private router: Router, private contractService: ContractService, private route: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {
   }
+
   private updateContractId() {
     let id = this.route.snapshot.params['id'];
     try {
@@ -80,7 +81,13 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
     this.httpClient.post(Url.ATTACHMENT_SAVE, attachmentDto)
       .subscribe(() => {
           this.messageService.showGeneralSuccess(this.lang.successSave);
-          this.router.navigate(['.'], {relativeTo: this.route.parent});
+
+          const filterByContractId = [{
+            key: 'contract.id',
+            value: this.contractService.currentId,
+            operation: SearchOperation.EQUAL
+          }];
+          this.attachmentHttpDataSource.reload(filterByContractId);
         },
         () => this.messageService.showGeneralError(this.lang.error));
   }

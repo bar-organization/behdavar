@@ -1,8 +1,6 @@
 <div fxLayout="column" fxLayoutAlign="center none">
   <mat-card fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">
-    <mat-card-header>
-      <h4>{{lang.projectFollowing}}</h4>
-    </mat-card-header>
+    <h5 class="text-right py-2 mb-4 border-bottom ">{{lang.projectFollowing}}</h5>
     <form [formGroup]="followingForm" (ngSubmit)="onSubmit()" fxLayout="column"
           class="w-100">
       <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">
