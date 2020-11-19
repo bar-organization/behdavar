@@ -52,7 +52,7 @@
 
       <ng-container matColumnDef="rowNo">
         <th mat-header-cell style="min-width: 5rem" *matHeaderCellDef mat-sort-header> {{rowNoTitle}}</th>
-        <td mat-cell style="min-width: 5rem" *matCellDef="let element; let i = index;"> {{i + 1 }} </td>
+        <td mat-cell style="min-width: 5rem" *matCellDef="let element; let i = index;"> {{i + 1 + (paginator.pageSize * paginator.pageIndex)}} </td>
       </ng-container>
 
       <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col.colName">
@@ -63,7 +63,7 @@
       <tr mat-header-row *matHeaderRowDef="columnToDisplay"></tr>
       <tr mat-row *matRowDef="let row; columns: columnToDisplay;" (click)="selection.toggle(row)"></tr>
     </table>
-    <mat-paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10, 20]" [length]="totalRecord$ | async"
+    <mat-paginator #paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10, 20]" [length]="totalRecord$ | async"
                    [pageSize]="10"
                    showFirstLastButtons></mat-paginator>
   </div>
