@@ -1,16 +1,11 @@
 ﻿<div fxLayout="row" fxLayoutAlign="center center" fxFill class="login">
-  <mat-card class="w-50 pt-3 pb-5" style="border-radius: 2rem" fxLayout="column">
-    <h2 class="text-center border-bottom pb-2" style="color: #ff1744">{{loginLang.loginTitle}}</h2>
-
-    <div class="px-5 py-4" fxLayout="row" fxLayoutAlign="center stretch" fxLayout.xs="column" fxLayoutGap="2rem" >
-      <div fxLayout="column" fxLayoutAlign="center center" class="imageBorder">
-        <img src="../../assets/image/icon.jpg" alt="logo" class="w-75" >
-      </div>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center stretch"
-            fxLayoutGap="1.5rem"
-            class="w-50">
-        <h3 class="text-center">{{loginLang.loginMessage}}</h3>
-
+  <div class="back-panel" fxLayout="column" fxLayoutGap="4rem"
+       fxLayoutAlign="start center">
+    <img src="../../assets/image/logo.jpg" alt="logo" class="img-logo rounded-circle"/>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center stretch"
+          class="form-panel">
+      <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="1rem">
+        <h4 class="text-center" style="color: #757575">{{loginLang.loginMessage}}</h4>
         <mat-form-field appearance="outline">
           <mat-label>{{loginLang.usernameMessage}}</mat-label>
           <input matInput formControlName="username">
@@ -28,14 +23,11 @@
           </button>
           <mat-error *ngIf="isInvalidPassword">{{passwordErrorMessage}}</mat-error>
         </mat-form-field>
+      </div>
 
-        <button mat-raised-button type="submit" color="primary">{{loginLang.enterMessage}}</button>
-      </form>
-
-    </div>
-
-
-  </mat-card>
+      <button mat-button type="submit" class="login-button">{{loginLang.enterMessage}}</button>
+    </form>
+  </div>
 
 </div>
 
