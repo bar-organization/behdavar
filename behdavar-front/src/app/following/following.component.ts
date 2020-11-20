@@ -52,7 +52,7 @@ export class FollowingComponent implements OnInit {
       coordinateAppointment: [''],
       depositAppointment: [''],
       submitAccordingFinal: [''],
-      nextPursuitDate: [{value: '', disabled: true}],
+      nextPursuitDate: [''],
       customerDeposit: [''],
       pursuitType: [PursuitType.PHONE_CALL.toString()],
       resultType: [''],
@@ -165,14 +165,10 @@ export class FollowingComponent implements OnInit {
   onCustomerDepositChange(event: MatCheckboxChange) {
     if (event.checked) {
       this.followingForm.controls['depostidAmount'].enable();
-      this.followingForm.controls['nextPursuitDate'].enable();
       this.fileUploadDisable = false;
     } else {
       this.followingForm.controls['depostidAmount'].disable();
       this.followingForm.patchValue({depostidAmount: null});
-
-      this.followingForm.controls['nextPursuitDate'].disable();
-      this.followingForm.patchValue({nextPursuitDate: ''});
 
       this.fileUploadDisable = true;
       this.fileName = '';
