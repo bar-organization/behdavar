@@ -61,9 +61,9 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columnToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnToDisplay;" (click)="selection.toggle(row)"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnToDisplay;"></tr>
     </table>
-    <mat-paginator #paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10, 20]" [length]="totalRecord$ | async"
+    <mat-paginator #paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10, 20, 50]" [length]="totalRecord$ | async"
                    [pageSize]="10"
                    showFirstLastButtons></mat-paginator>
   </div>

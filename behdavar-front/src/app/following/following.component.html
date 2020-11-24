@@ -1,6 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="center none">
   <mat-card fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">
     <h5 class="text-right py-2 mb-4 border-bottom ">{{lang.projectFollowing}}</h5>
+    <div fxLayout="row" fxLayoutGap="2rem">
+      <h6>{{this.lang.contractNumber}} : {{this.contractDto?.contractNumber}}</h6>
+      <h6>{{this.lang.customerName}} : {{this.contractDto?.customers[0]?.person?.fullName}}</h6>
+    </div>
     <form [formGroup]="followingForm" (ngSubmit)="onSubmit()" fxLayout="column"
           class="w-100">
       <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">

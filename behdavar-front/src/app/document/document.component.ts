@@ -7,7 +7,7 @@ import {DocumentLang} from "../model/lang";
 import {HttpClient} from "@angular/common/http";
 import {JalaliPipe} from "../_pip/jalali.pipe";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ContractStatusPip} from "../_pip/ContractStatusPip";
 import {AuthService} from "../service/auth/auth.service";
 import {AuthorityConstantEnum} from "../model/enum/AuthorityConstantEnum";
@@ -24,7 +24,7 @@ export class DocumentComponent implements OnInit{
   documentLang = new DocumentLang();
   catalogHttpDataSource: HttpDataSource<CartableDto>;
 
-  constructor(private httpClient: HttpClient, private router: Router, private authService: AuthService, private contractService: ContractService) {
+  constructor(private httpClient: HttpClient, private router: Router,private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService) {
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
   }
 
@@ -149,6 +149,7 @@ export class DocumentComponent implements OnInit{
 
   onSelectedValueChange(selectedValue: CartableDto) {
     this.contractService.currentIdSubject.next(selectedValue?.contract?.id);
+    this.router.navigate(['../following',this.contractService.currentId],{relativeTo: this.route});
   }
 
   private isMyBaskUrl(): boolean {

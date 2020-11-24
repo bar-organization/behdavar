@@ -20,6 +20,8 @@ import {MessageService} from "../service/message.service";
 import {ContractService} from "../service/contract-service";
 import {ResultTypePip} from "../_pip/ResultTypePip";
 import {PaymentType} from "../model/enum/PaymentType";
+import {ThousandPip} from "../_pip/ThousandPip";
+import {YesNoPipe} from "../_pip/yes-no.pipe";
 
 @Component({
   selector: 'app-following',
@@ -35,6 +37,7 @@ export class FollowingComponent implements OnInit {
   fileName: string = null;
   fileToUpload: string = null;
   fileUploadDisable = true;
+  contractDto: ContractDto;
 
   pursuitTypeList: EnumValueTitle<PursuitType>[] = PURSUIT_TYPE_TITLE;
   resultTypeList: EnumValueTitle<ResultType>[] = RESULT_TYPE_TITLE;
@@ -46,6 +49,7 @@ export class FollowingComponent implements OnInit {
 
   ngOnInit(): void {
     this.updateContractId();
+    this.contractService.getById(this.contractService.currentId, result => this.contractDto = result);
 
     this.followingForm = this.fb.group({
       description: [''],
@@ -82,10 +86,42 @@ export class FollowingComponent implements OnInit {
       pipNames: [{pip: new JalaliPipe(), args: ['HH:mm']}, {pip: new BlankToDashPipe()}]
     },
     {fieldName: 'user.firstName+user.lastName', title: this.lang.expertName},
+    {fieldName: 'nextPursuitDate', title: this.lang.nextFollowingDate, pipNames: FollowingComponent.getDatePip()},
+    {
+      fieldName: 'payment.amount',
+      title: this.lang.depostidAmount + ' (ریال)',
+      pipNames: FollowingComponent.getThousandPip()
+    },
+    {
+      fieldName: 'coordinateAppointment',
+      title: this.lang.coordinateAppointment,
+      pipNames: FollowingComponent.getYesNoPip()
+    },
+    {fieldName: 'customerDeposit', title: this.lang.customerDepositAmount, pipNames: FollowingComponent.getYesNoPip()},
+    {fieldName: 'depositAppointment', title: this.lang.depositAppointment, pipNames: FollowingComponent.getYesNoPip()},
+    {
+      fieldName: 'submitAccordingFinal',
+      title: this.lang.submitAcordingToFinalAction,
+      pipNames: FollowingComponent.getYesNoPip()
+    },
+
+    {fieldName: 'description', title: this.lang.description},
   ];
 
   private static getPursuitTypePip() {
     return [{pip: new PursuitTypePip()}, {pip: new BlankToDashPipe()}];
+  }
+
+  private static getThousandPip() {
+    return [{pip: new ThousandPip()}, {pip: new BlankToDashPipe()}];
+  }
+
+  private static getYesNoPip() {
+    return [{pip: new YesNoPipe()}, {pip: new BlankToDashPipe()}];
+  }
+
+  private static getDatePip() {
+    return [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}];
   }
 
   onSubmit() {

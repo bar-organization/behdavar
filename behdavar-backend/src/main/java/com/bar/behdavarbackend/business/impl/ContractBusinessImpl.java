@@ -30,7 +30,7 @@ public class ContractBusinessImpl implements ContractBusiness {
     @Override
     public ContractDto findById(Long id) {
         ContractEntity contractEntity = contractRepository.findById(id).orElseThrow(() -> new BusinessException("error.Contract.not.found", id));
-        return ContractTransformer.entityToDto(contractEntity, new ContractDto());
+        return ContractTransformer.entityToDto(contractEntity, new ContractDto(), ContractEntity.CUSTOMERS, CustomerEntity.PERSON);
     }
 
 

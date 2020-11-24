@@ -202,6 +202,9 @@ export class FollowingLang extends Lang {
   attachedBrowse = 'بارگذاری ضمائم یا فیش واریز';
   nextFollowingDate = 'تاریخ یادآوری پیگیری بعدی';
   tableTitle = 'لیست پیگیری های قبلی';
+  contractNumber = 'شماره پرنده';
+  customerName = 'نام مشتری';
+
 
 }
 

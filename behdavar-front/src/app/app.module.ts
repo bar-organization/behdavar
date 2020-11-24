@@ -82,6 +82,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {JALALI_DATE_FORMATS, JalaliDateAdapter} from "./service/jalali-date/jalali-date-adapter";
 import {PlatformModule} from '@angular/cdk/platform';
 import {PaymentTypePip} from "./_pip/PaymentTypePip";
+import {YesNoPipe} from "./_pip/yes-no.pipe";
 
 @NgModule({
   imports: [
@@ -147,7 +148,7 @@ import {PaymentTypePip} from "./_pip/PaymentTypePip";
     PursuitTypePip,
     ResultTypePip,
     PaymentTypePip,
-
+    YesNoPipe,
     ThousandPip,
     FinancialStatusComponent,
     UserManagementComponent,
@@ -172,6 +173,7 @@ import {PaymentTypePip} from "./_pip/PaymentTypePip";
     JalaliPipe,
     PaymentTypePip,
     ThousandPip,
+    YesNoPipe,
     ResultTypePip,
     PursuitTypePip,
     MyBasketGuardService,
