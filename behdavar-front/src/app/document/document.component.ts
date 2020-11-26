@@ -65,11 +65,15 @@ export class DocumentComponent implements OnInit {
     },
     {
       fieldName: 'contract.contractStatus',
+      colName: 'contract.contractStatus',
+      sortable: true,
       title: this.documentLang.status,
       pipNames: DocumentComponent.getContractStatusPip()
     },
     {
       fieldName: 'contract.lending.lateFees',
+      colName: 'contract.lending.lateFees',
+      sortable: true,
       title: this.documentLang.lateFees,
       pipNames: DocumentComponent.getSimplePip()
     },
@@ -82,11 +86,15 @@ export class DocumentComponent implements OnInit {
     },
     {
       fieldName: 'contract.lending.defferedCount',
+      colName: 'contract.lending.defferedCount',
+      sortable: true,
       title: this.documentLang.deferredCount,
       pipNames: DocumentComponent.getSimplePip()
     },
     {
       fieldName: 'contract.lending.masterAmount',
+      colName: 'contract.lending.masterAmount',
+      sortable: true,
       title: this.documentLang.totalAmount,
       pipNames: DocumentComponent.getSimplePip()
     },
@@ -105,32 +113,44 @@ export class DocumentComponent implements OnInit {
 
     {
       fieldName: 'contract.lending.ideaIssueDate',
+      colName: 'contract.lending.ideaIssueDate',
+      sortable: true,
       title: this.documentLang.ideaIssueDate,
       pipNames: DocumentComponent.getDatePip()
     },
     {
       fieldName: 'contract.lending.receiveLendingDate',
+      colName: 'contract.lending.receiveLendingDate',
+      sortable: true,
       title: this.documentLang.receiveLendingDate,
       pipNames: DocumentComponent.getDatePip()
     },
     {
       fieldName: 'contract.lending.branchBank.code',
+      colName: 'contract.lending.branchBank.code',
+      sortable: true,
       title: this.documentLang.branch,
       pipNames: DocumentComponent.getSimplePip()
     },
     {
       fieldName: 'contract.lending.branchBank.name',
+      colName: 'contract.lending.branchBank.name',
+      sortable: true,
       title: this.documentLang.bank,
       pipNames: DocumentComponent.getSimplePip()
     },
 
     {
       fieldName: 'contract.product.productPlate',
+      colName: 'contract.product.productPlate',
+      sortable: false,
       title: this.documentLang.plateNumber,
       pipNames: DocumentComponent.getSimplePip()
     },
     {
       fieldName: 'contract.product.productName',
+      colName: 'contract.product.productName',
+      sortable: true,
       title: this.documentLang.vehicleType,
       pipNames: DocumentComponent.getSimplePip()
     },
