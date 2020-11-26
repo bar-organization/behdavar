@@ -20,11 +20,11 @@ import {ContractService} from "../service/contract-service";
   selector: 'app-document',
   templateUrl: './document.component.html'
 })
-export class DocumentComponent implements OnInit{
+export class DocumentComponent implements OnInit {
   documentLang = new DocumentLang();
   catalogHttpDataSource: HttpDataSource<CartableDto>;
 
-  constructor(private httpClient: HttpClient, private router: Router,private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService) {
+  constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService) {
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
   }
 
@@ -58,6 +58,8 @@ export class DocumentComponent implements OnInit{
     {fieldName: "contract.customers[0].person.fullName", title: this.documentLang.customerName},
     {
       fieldName: 'contract.contractNumber',
+      colName: 'contract.contractNumber',
+      sortable: true,
       title: this.documentLang.facilityNumber,
       pipNames: DocumentComponent.getSimplePip()
     },
@@ -73,6 +75,8 @@ export class DocumentComponent implements OnInit{
     },
     {
       fieldName: 'contract.lending.defferedAmount',
+      colName: 'contract.lending.defferedAmount',
+      sortable: true,
       title: this.documentLang.deferredAmount,
       pipNames: DocumentComponent.getThousandPip()
     },
@@ -88,6 +92,8 @@ export class DocumentComponent implements OnInit{
     },
     {
       fieldName: 'contract.submitDate',
+      colName: 'contract.submitDate',
+      sortable: true,
       title: this.documentLang.registrationDate,
       pipNames: DocumentComponent.getDatePip()
     },
@@ -149,7 +155,7 @@ export class DocumentComponent implements OnInit{
 
   onSelectedValueChange(selectedValue: CartableDto) {
     this.contractService.currentIdSubject.next(selectedValue?.contract?.id);
-    this.router.navigate(['../following',this.contractService.currentId],{relativeTo: this.route});
+    this.router.navigate(['../following', this.contractService.currentId], {relativeTo: this.route});
   }
 
   private isMyBaskUrl(): boolean {

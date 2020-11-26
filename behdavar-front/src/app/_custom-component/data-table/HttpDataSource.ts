@@ -1,7 +1,7 @@
 import {CollectionViewer, DataSource} from "@angular/cdk/collections";
 import {BehaviorSubject, Observable, of} from "rxjs";
 import {catchError, finalize, map} from "rxjs/operators";
-import {PagingRequest, PagingResponse, SearchCriteria} from "./PaginationModel";
+import {PagingRequest, PagingResponse, SearchCriteria, SortOperation} from "./PaginationModel";
 import {HttpClient} from "@angular/common/http";
 
 export default class HttpDataSource<T> implements DataSource<T> {
@@ -13,12 +13,14 @@ export default class HttpDataSource<T> implements DataSource<T> {
   private url: string;
   private httpClient: HttpClient;
   private filters: SearchCriteria[];
+  private _sortOperation: SortOperation;
   private request: PagingRequest;
 
-  constructor(url: string, httpClient: HttpClient, filters?: SearchCriteria[]) {
+  constructor(url: string, httpClient: HttpClient, filters?: SearchCriteria[], sortOperation?: SortOperation) {
     this.url = url;
     this.httpClient = httpClient;
     this.filters = filters;
+    this._sortOperation = sortOperation;
   }
 
   connect(collectionViewer: CollectionViewer): Observable<T[]> {
@@ -38,6 +40,8 @@ export default class HttpDataSource<T> implements DataSource<T> {
     if (this.filters)
       request.filters = this.filters;
 
+      request.sort = this.sortOperation === null ? null : this.sortOperation;
+
     // call callback method before call
     if (this.beforeCall) {
       this.beforeCall(request);
@@ -49,12 +53,24 @@ export default class HttpDataSource<T> implements DataSource<T> {
       .subscribe(value => this._subject.next(value));
   }
 
-  public reload(filters?: SearchCriteria[]) {
+  public reload(filters?: SearchCriteria[],sortOperation?: SortOperation) {
     if (this.request) {
       if (filters)
         this.filters = filters;
+      if(sortOperation)
+        this.sortOperation = sortOperation;
+
       this.find(this.request);
     }
+  }
+
+
+  get sortOperation(): SortOperation {
+    return this._sortOperation;
+  }
+
+  set sortOperation(value: SortOperation) {
+    this._sortOperation = value;
   }
 
   private stopLoading() {

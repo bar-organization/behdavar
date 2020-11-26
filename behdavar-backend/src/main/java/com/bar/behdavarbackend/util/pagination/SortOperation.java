@@ -1,19 +1,16 @@
 package com.bar.behdavarbackend.util.pagination;
 
-import com.bar.behdavarcommon.enumeration.AbstractEnum;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.data.domain.Sort;
 
-public enum SortOperation implements AbstractEnum<String> {
-    ASC("asc"),
-    DSC("dsc");
-
-    private String value;
-
-    SortOperation(String value) {
-        this.value = value;
-    }
-
-    @Override
-    public String getValue() {
-        return this.value;
-    }
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class SortOperation {
+    Sort.Direction direction;
+    String sortBy;
 }

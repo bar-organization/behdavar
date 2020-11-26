@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, PipeTransform, ViewChild} from '@angular/core';
-import {MatSort} from "@angular/material/sort";
+import {MatSort, Sort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import HttpDataSource from "./HttpDataSource";
-import {PagingRequest} from "./PaginationModel";
+import {PagingRequest, SortDirectionEnum, SortOperation} from "./PaginationModel";
 import {tap} from "rxjs/operators";
 import {BehaviorSubject, Observable} from "rxjs";
 import dot from "dot-object";
@@ -186,6 +186,28 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.columnToDisplay = event.option.selectionList._value;
     this.configureDefaultColumns();
   }
+
+  onSortChange(sort: Sort) {
+    if (!this.httpDataSource || !this.isSortableColumn(sort.active)) {
+      return;
+    }
+
+    const sortOperation: SortOperation = new SortOperation();
+    sortOperation.sortBy = sort.active;
+    if (!sort.direction) {
+      this.httpDataSource.sortOperation = null;
+    } else {
+      sortOperation.direction = sort.direction === "asc" ? SortDirectionEnum.ASC : SortDirectionEnum.DESC;
+      this.httpDataSource.sortOperation = sortOperation;
+    }
+
+    this.reloadTable();
+  }
+
+  isSortableColumn(columnName: string) : boolean{
+    const sortedColumn = this.tableColumns.find(col => col.colName === columnName);
+    return sortedColumn && sortedColumn.sortable;
+  }
 }
 
 export interface TableColumn {
@@ -193,6 +215,7 @@ export interface TableColumn {
   colName?: string;
   title: string;
   hidden?: boolean;
+  sortable?: boolean;
   pipNames?: PipeWrapper[];
 }
 

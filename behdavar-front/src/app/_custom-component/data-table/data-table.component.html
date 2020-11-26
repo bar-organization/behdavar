@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="card-body p-0">
-    <table mat-table [dataSource]="httpDataSource" matSort class="w-100">
+    <table mat-table [dataSource]="httpDataSource" matSort (matSortChange)="onSortChange($event)" class="w-100">
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select">
         <th mat-header-cell style="min-width: 5rem" *matHeaderCellDef>

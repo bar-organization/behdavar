@@ -18,9 +18,14 @@ export class SearchCriteria {
   operation: SearchOperation;
 }
 
-export enum SortOperation {
-  ASC = "ASC",
-  DSC = "DSC"
+export enum SortDirectionEnum {
+  ASC = 'ASC',
+  DESC = 'DESC',
+}
+
+export class SortOperation {
+  direction: SortDirectionEnum;
+  sortBy: string;
 }
 
 export enum SearchOperation {
