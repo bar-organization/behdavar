@@ -197,7 +197,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     Long personId = personBusiness.save(personEntity);
                     personEntity.setId(personId);
 
-                    if (byInputExcelIdAndContractNumber.getMobile1() != null) {
+                    if (byInputExcelIdAndContractNumber.getMobile1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile1()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(byInputExcelIdAndContractNumber.getMobile1());
                         contactEntity.setPhoneType(PhoneType.MOBILE);
@@ -205,7 +205,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (byInputExcelIdAndContractNumber.getMobile2() != null) {
+                    if (byInputExcelIdAndContractNumber.getMobile2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile2()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(byInputExcelIdAndContractNumber.getMobile2());
                         contactEntity.setPhoneType(PhoneType.MOBILE);
@@ -213,7 +213,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (byInputExcelIdAndContractNumber.getTel1() != null) {
+                    if (byInputExcelIdAndContractNumber.getTel1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel1()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(byInputExcelIdAndContractNumber.getTel1());
                         contactEntity.setPhoneType(PhoneType.PHONE);
@@ -221,7 +221,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (byInputExcelIdAndContractNumber.getTel2() != null) {
+                    if (byInputExcelIdAndContractNumber.getTel2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel2()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(byInputExcelIdAndContractNumber.getTel2());
                         contactEntity.setPhoneType(PhoneType.PHONE);
@@ -229,7 +229,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (byInputExcelIdAndContractNumber.getAddress() != null) {
+                    if (byInputExcelIdAndContractNumber.getAddress() != null && !(("-").equals(byInputExcelIdAndContractNumber.getAddress()))) {
                         AddressEntity addressEntity = new AddressEntity();
                         addressEntity.setPerson(personEntity);
                         addressEntity.setDescription(byInputExcelIdAndContractNumber.getAddress());
@@ -241,7 +241,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     contractRepository.save(contractEntity);
                     guarantorRepository.save(guarantorEntity);
 
-                    if (excelLendingEntity.getExpertCode() != null) {
+                    if (excelLendingEntity.getExpertCode() != null && !(("-").equals(excelLendingEntity.getExpert()))) {
                         UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
                         if (userExpertEntity != null) {
                             CartableEntity cartableEntity = new CartableEntity();
@@ -272,7 +272,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 // end of grantor
                 //debtors
                 InputExcelDebtorEntity debtorEntities = inputExcelDebtorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
-                if (debtorEntities != null) {
+                if (debtorEntities != null ) {
                     PersonEntity personEntity = new PersonEntity();
                     personEntity.setFullName(debtorEntities.getLastName());
                     personEntity.setFatherName(debtorEntities.getFatherName());
@@ -280,7 +280,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     personEntity.setId(personBusiness.save(personEntity));
                     personBusiness.save(personEntity);
 
-                    if (debtorEntities.getMobile1() != null) {
+                    if (debtorEntities.getMobile1() != null && !(("-").equals(debtorEntities.getMobile1()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(debtorEntities.getMobile1());
                         contactEntity.setPhoneType(PhoneType.MOBILE);
@@ -288,7 +288,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (debtorEntities.getMobile2() != null) {
+                    if (debtorEntities.getMobile2() != null && !(("-").equals(debtorEntities.getMobile2()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(debtorEntities.getMobile2());
                         contactEntity.setPhoneType(PhoneType.MOBILE);
@@ -296,7 +296,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (debtorEntities.getTel1() != null) {
+                    if (debtorEntities.getTel1() != null && !(("-").equals(debtorEntities.getTel1()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(debtorEntities.getTel1());
                         contactEntity.setPhoneType(PhoneType.PHONE);
@@ -304,7 +304,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (debtorEntities.getTel2() != null) {
+                    if (debtorEntities.getTel2() != null && !(("-").equals(debtorEntities.getTel2()))) {
                         ContactEntity contactEntity = new ContactEntity();
                         contactEntity.setNumber(debtorEntities.getTel2());
                         contactEntity.setPhoneType(PhoneType.PHONE);
@@ -312,7 +312,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                         contactRepository.save(contactEntity);
                     }
 
-                    if (debtorEntities.getAddress() != null) {
+                    if (debtorEntities.getAddress() != null && !(("-").equals(debtorEntities.getAddress()))) {
                         AddressEntity addressEntity = new AddressEntity();
                         addressEntity.setPerson(personEntity);
                         addressEntity.setDescription(debtorEntities.getAddress());
