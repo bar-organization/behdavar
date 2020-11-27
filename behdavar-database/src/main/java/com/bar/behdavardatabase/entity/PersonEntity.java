@@ -24,6 +24,9 @@ public class PersonEntity extends BaseAuditorEntity<String, Long> {
 
     public static final String SEQ_NAME = "PERSON" + BaseConstant.SEQUENCE;
     public static final String CONTACTS = "contacts";
+    public static final String FIRST_NAME = "firstName";
+    public static final String LAST_NAME = "lastName";
+    public static final String FULL_NAME = "fullName";
 
     @Id
     @Column(name = "ID")

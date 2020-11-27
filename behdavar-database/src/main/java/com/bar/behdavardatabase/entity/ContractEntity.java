@@ -67,6 +67,9 @@ public class ContractEntity extends BaseAuditorEntity<String, Long> {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract")
     private Set<CustomerEntity> customers = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contract")
+    private Set<GuarantorEntity> guarantors = new HashSet<>();
+
     private ContractEntity(Long id) {
         this.id = id;
     }

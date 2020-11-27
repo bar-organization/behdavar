@@ -70,18 +70,38 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
                 } else {
                     Join<Object, Object> join = null;
                     for (int i = 0; i < (items.size() - 1); i++) {
-                        join = root.join(items.get(i));
+                        if(i==0) {
+                            join = root.join(items.get(i));
+                        } else {
+                            join = join.join(items.get(i));
+                        }
                     }
                     if (join != null) {
                         predicates.add(builder.equal(
                                 join.get(items.get(items.size() - 1))
-                                , criteria.getValue()));
+                                ,  criteria.getValue().toString().toLowerCase()));
                     }
                 }
             } else if (criteria.getOperation().equals(SearchOperation.MATCH)) {
-                predicates.add(builder.like(
-                        builder.lower(root.get(criteria.getKey())),
-                        "%" + criteria.getValue().toString().toLowerCase() + "%"));
+                if (items.size() == 1) {
+                    predicates.add(builder.like(
+                            !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                            , "%" + criteria.getValue().toString().toLowerCase() + "%"));
+                } else {
+                    Join<Object, Object> join = null;
+                    for (int i = 0; i < (items.size() - 1); i++) {
+                        if(i==0) {
+                            join = root.join(items.get(i));
+                        } else {
+                            join = join.join(items.get(i));
+                        }
+                    }
+                    if (join != null) {
+                        predicates.add(builder.like(
+                                join.get(items.get(items.size() - 1))
+                                , "%" + criteria.getValue().toString().toLowerCase() + "%"));
+                    }
+                }
             } else if (criteria.getOperation().equals(SearchOperation.MATCH_END)) {
                 predicates.add(builder.like(
                         builder.lower(root.get(criteria.getKey())),
