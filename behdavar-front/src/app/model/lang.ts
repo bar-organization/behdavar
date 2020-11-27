@@ -166,6 +166,7 @@ export class DocumentLang extends PersonLang {
   bankMachine = 'بانک/ماشین';
   document = 'پرونده';
   customer = 'مشتری';
+  guarantor = 'ضامن';
   customerName = 'نام مشتری';
   facilityNumber = 'شماره تسهیلات';
   status = 'وضعیت پرونده';

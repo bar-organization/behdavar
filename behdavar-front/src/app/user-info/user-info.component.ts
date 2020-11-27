@@ -50,8 +50,11 @@ export class UserInfoComponent implements OnInit,AfterViewInit {
         documentInfoList: [
           {key: 'تعداد پرونده های موجود در سبد', value: value.activeCount ? value.activeCount.toString() : '0'},
           {key: 'حساب کارشناس', value: '-'},
-          {key: 'مبلغ کل پرنده ها', value: this.thousandPip.transform(value?.userAmount?.totalAmount,'r') as string},
-          {key: 'مبلغ کل وصول شده', value: this.thousandPip.transform(value?.userAmount?.receiveAmount,'r') as string},
+          // {key: 'مبلغ کل پرنده ها', value: this.thousandPip.transform(value?.userAmount?.totalAmount,'r') as string},
+          // {key: 'مبلغ کل وصول شده', value: this.thousandPip.transform(value?.userAmount?.receiveAmount,'r') as string},
+          // TODO temporary change value to --
+          {key: 'مبلغ کل پرنده ها', value: '--'},
+          {key: 'مبلغ کل وصول شده', value: '--'},
         ]
       }
     });

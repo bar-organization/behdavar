@@ -75,8 +75,11 @@ export class FollowingComponent implements OnInit {
   submitted = false;
   followingTableColumn: TableColumn[] = [
     {fieldName: 'pursuitType', title: this.lang.followingType, pipNames: FollowingComponent.getPursuitTypePip()},
+    {fieldName: 'resultType', title: this.lang.followingResult, pipNames: FollowingComponent.getResultTypePip()},
     {
       fieldName: 'createdDate',
+      colName: 'createdDate',
+      sortable: true,
       title: this.lang.date,
       pipNames: [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}]
     },
@@ -86,25 +89,13 @@ export class FollowingComponent implements OnInit {
       pipNames: [{pip: new JalaliPipe(), args: ['HH:mm']}, {pip: new BlankToDashPipe()}]
     },
     {fieldName: 'user.firstName+user.lastName', title: this.lang.expertName},
-    {fieldName: 'nextPursuitDate', title: this.lang.nextFollowingDate, pipNames: FollowingComponent.getDatePip()},
     {
       fieldName: 'payment.amount',
+      colName: 'payment.amount',
+      sortable: true,
       title: this.lang.depostidAmount + ' (ریال)',
       pipNames: FollowingComponent.getThousandPip()
     },
-    {
-      fieldName: 'coordinateAppointment',
-      title: this.lang.coordinateAppointment,
-      pipNames: FollowingComponent.getYesNoPip()
-    },
-    {fieldName: 'customerDeposit', title: this.lang.customerDepositAmount, pipNames: FollowingComponent.getYesNoPip()},
-    {fieldName: 'depositAppointment', title: this.lang.depositAppointment, pipNames: FollowingComponent.getYesNoPip()},
-    {
-      fieldName: 'submitAccordingFinal',
-      title: this.lang.submitAcordingToFinalAction,
-      pipNames: FollowingComponent.getYesNoPip()
-    },
-
     {fieldName: 'description', title: this.lang.description},
   ];
 
@@ -112,16 +103,12 @@ export class FollowingComponent implements OnInit {
     return [{pip: new PursuitTypePip()}, {pip: new BlankToDashPipe()}];
   }
 
+  private static getResultTypePip() {
+    return [{pip: new ResultTypePip()}, {pip: new BlankToDashPipe()}];
+  }
+
   private static getThousandPip() {
     return [{pip: new ThousandPip()}, {pip: new BlankToDashPipe()}];
-  }
-
-  private static getYesNoPip() {
-    return [{pip: new YesNoPipe()}, {pip: new BlankToDashPipe()}];
-  }
-
-  private static getDatePip() {
-    return [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}];
   }
 
   onSubmit() {

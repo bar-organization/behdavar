@@ -12,7 +12,7 @@
       <!-- Document Search -->
       <div [formGroup]="documentSearchFormGroup" class="card" fxLayout="row">
         <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
-          <h6>{{documentSearchLang.document}}</h6>
+          <h6 class="header-title">{{documentSearchLang.document}}</h6>
         </div>
         <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
           <mat-form-field>
@@ -43,7 +43,7 @@
       <!-- Customer Search  -->
       <div [formGroup]="customerSearchFormGroup" class="card" fxLayout="row">
         <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
-          <h6>{{documentSearchLang.customer}}</h6>
+          <h6 class="header-title">{{documentSearchLang.customer}}</h6>
         </div>
         <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
           <mat-form-field>
@@ -61,11 +61,41 @@
             <input matInput formControlName="nationalNumber">
           </mat-form-field>
 
+<!--          <mat-form-field>-->
+<!--            <mat-label>{{documentSearchLang.mobile}}</mat-label>-->
+<!--            <input-->
+<!--              matInput formControlName="mobile">-->
+<!--          </mat-form-field>-->
+
+        </div>
+
+      </div>
+      <!-- guarantor search     -->
+      <div [formGroup]="guarantorSearchFormGroup" class="card" fxLayout="row">
+        <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
+          <h6 class="header-title">{{documentSearchLang.guarantor}}</h6>
+        </div>
+        <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
           <mat-form-field>
-            <mat-label>{{documentSearchLang.mobile}}</mat-label>
-            <input
-              matInput formControlName="mobile">
+            <mat-label>{{documentSearchLang.name}}</mat-label>
+            <input matInput formControlName="name">
           </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.fatherName}}</mat-label>
+            <input matInput formControlName="fatherName">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>{{documentSearchLang.nationalNumber}}</mat-label>
+            <input matInput formControlName="nationalNumber">
+          </mat-form-field>
+
+<!--          <mat-form-field>-->
+<!--            <mat-label>{{documentSearchLang.mobile}}</mat-label>-->
+<!--            <input-->
+<!--              matInput formControlName="mobile">-->
+<!--          </mat-form-field>-->
 
         </div>
 
@@ -74,7 +104,7 @@
       <!--Bank/Machine Search  -->
       <div [formGroup]="bankMachineSearchFormGroup" class="card" fxLayout="row">
         <div class="card-header" fxLayout="row" fxLayoutAlign="center center">
-          <h6>{{documentSearchLang.bankMachine}}</h6>
+          <h6 class="header-title">{{documentSearchLang.bankMachine}}</h6>
         </div>
         <div class="px-2" fxLayoutGap="0.5rem" fxLayout="row" fxLayoutAlign="center center">
           <mat-form-field>

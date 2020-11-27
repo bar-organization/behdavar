@@ -30,6 +30,7 @@ export class DocumentSearchComponent implements OnInit {
   parentForm: FormGroup;
   bankMachineSearchFormGroup: FormGroup;
   customerSearchFormGroup: FormGroup;
+  guarantorSearchFormGroup: FormGroup;
   documentSearchFormGroup: FormGroup;
 
   documentSearchLang: DocumentLang = new DocumentLang();
@@ -55,12 +56,25 @@ export class DocumentSearchComponent implements OnInit {
       workPlacePhone: [''],
     });
 
+    this.guarantorSearchFormGroup = this.fb.group({
+      name: [''],
+      fatherName: [''],
+      birthDate: [''],
+      nationalNumber: [''],
+      postalCode: [''],
+      mobile: [''],
+      telephone: [''],
+      birthPlace: [''],
+      workPlacePhone: [''],
+    });
+
     this.documentSearchFormGroup = fb.group({facilityNumber: [''], status: [null], registrationDate: [null]});
 
     this.parentForm = fb.group({
       bankMachineSearchFormGroup: this.bankMachineSearchFormGroup,
       documentSearchFormGroup: this.documentSearchFormGroup,
       customerSearchFormGroup: this.customerSearchFormGroup,
+      guarantorSearchFormGroup: this.guarantorSearchFormGroup,
     });
 
   }
@@ -73,6 +87,15 @@ export class DocumentSearchComponent implements OnInit {
 
     const filter: SearchCriteria[] = [];
 
+    const cFullName = this.parentForm.value?.customerSearchFormGroup?.name;
+    const gFullName = this.parentForm.value?.guarantorSearchFormGroup?.name;
+
+    const cFatherName = this.parentForm.value?.customerSearchFormGroup?.fatherName;
+    const gFatherName = this.parentForm.value?.guarantorSearchFormGroup?.fatherName;
+
+    const cNationalNumber = this.parentForm.value?.customerSearchFormGroup?.nationalNumber;
+    const gNationalNumber = this.parentForm.value?.guarantorSearchFormGroup?.nationalNumber;
+
     const facilityNumber = this.parentForm.value?.documentSearchFormGroup?.facilityNumber;
     //const registrationDate = this.parentForm.value?.documentSearchFormGroup?.registrationDate;
     const status: ContractStatus = this.parentForm.value?.documentSearchFormGroup?.status;
@@ -80,6 +103,15 @@ export class DocumentSearchComponent implements OnInit {
 
     if (facilityNumber)
       filter.push({key: 'contract.contractNumber', value: facilityNumber, operation: SearchOperation.EQUAL})
+
+    DocumentSearchComponent.applyNameFilter(filter, cFullName, SearchType.CUSTOMER);
+    DocumentSearchComponent.applyNameFilter(filter, gFullName, SearchType.GUARANTOR);
+
+    DocumentSearchComponent.applyFatherNameFilter(filter, cFatherName,SearchType.CUSTOMER);
+    DocumentSearchComponent.applyFatherNameFilter(filter, gFatherName,SearchType.GUARANTOR);
+
+    DocumentSearchComponent.applyNationalNumberFilter(filter, cNationalNumber, SearchType.CUSTOMER);
+    DocumentSearchComponent.applyNationalNumberFilter(filter, gNationalNumber, SearchType.GUARANTOR);
 
     if (status) {
       filter.push({
@@ -104,11 +136,51 @@ export class DocumentSearchComponent implements OnInit {
     this.documentSearchDataTable.httpDataSource.reload(filter);
   }
 
+  private static applyNameFilter(filter: SearchCriteria[], name: string, type: SearchType) {
+    if (!name)
+      return;
+
+    const key = type === SearchType.CUSTOMER ? "contract.customers.person.fullName" : "contract.guarantors.person.fullName";
+    filter.push({
+      key: key,
+      value: name,
+      operation: SearchOperation.MATCH
+    });
+
+  }
+
+  private static applyFatherNameFilter(filter: SearchCriteria[], fatherName: string, type: SearchType) {
+    if (!fatherName)
+      return;
+
+    const key = type === SearchType.CUSTOMER ? "contract.customers.person.fatherName" : "contract.guarantors.person.fatherName";
+    filter.push({
+      key: key,
+      value: fatherName,
+      operation: SearchOperation.MATCH
+    });
+  }
+
+  private static applyNationalNumberFilter(filter: SearchCriteria[], nationalNumber: string, type: SearchType) {
+    if (!nationalNumber)
+      return;
+
+    const key = type === SearchType.CUSTOMER ? "contract.customers.person.nationalCode" : "contract.guarantors.person.nationalCode";
+    filter.push({
+      key: key,
+      value: nationalNumber,
+      operation: SearchOperation.MATCH
+    });
+  }
 
   onResetForm() {
     this.parentForm.reset();
     this.onSearch();
   }
+}
+
+enum SearchType {
+  CUSTOMER, GUARANTOR
 }
 
 
