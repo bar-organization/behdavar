@@ -1,8 +1,8 @@
-import {Component, OnInit} from "@angular/core";
+import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 import {CartableDto} from "../model/model";
 import Url from "../model/url";
-import {TableColumn} from "../_custom-component/data-table/data-table.component";
+import {DataTableComponent, TableColumn} from "../_custom-component/data-table/data-table.component";
 import {DocumentLang} from "../model/lang";
 import {HttpClient} from "@angular/common/http";
 import {JalaliPipe} from "../_pip/jalali.pipe";
@@ -15,21 +15,36 @@ import {ThousandPip} from "../_pip/ThousandPip";
 import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import {ContractStatus} from "../model/enum/ContractStatus";
 import {ContractService} from "../service/contract-service";
+import {DocumentCacheService} from "../service/document-cache.service";
 
 @Component({
   selector: 'app-document',
   templateUrl: './document.component.html'
 })
-export class DocumentComponent implements OnInit {
+export class DocumentComponent implements OnInit, AfterViewInit {
   documentLang = new DocumentLang();
   catalogHttpDataSource: HttpDataSource<CartableDto>;
+  @ViewChild("table") documentTable: DataTableComponent;
 
-  constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService) {
+  constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService, private documentCacheService: DocumentCacheService) {
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
   }
 
   ngOnInit(): void {
     this.contractService.clearCurrentId();
+  }
+
+  ngAfterViewInit(): void {
+    this.documentCacheService.initCache({columnToDisplay: this.documentTable.columnToDisplay});
+
+    this.documentCacheService.applyCache(value => {
+      this.documentTable.columnToDisplay = value.columnToDisplay;
+      this.documentTable.refreshSelectableColumns();
+    })
+  }
+
+  onColumnDisplayChange(columnToDisplay: string[]) {
+    this.documentCacheService.updateCache({columnToDisplay: columnToDisplay})
   }
 
   private getUrl(): string {

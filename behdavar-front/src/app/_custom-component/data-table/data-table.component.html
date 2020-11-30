@@ -12,7 +12,7 @@
              (click)="$event.stopPropagation();">
           <mat-selection-list class="overflow-auto" style="max-height: 25rem"
                               (selectionChange)="onSelectColumnToShow($event)">
-            <mat-list-option *ngFor="let column of selectableColumns" [selected]="true" [value]="column.colName">
+            <mat-list-option *ngFor="let column of selectableColumns" [selected]="column.isSelected" [value]="column.colName">
               {{column.title}}
             </mat-list-option>
           </mat-selection-list>

@@ -83,6 +83,7 @@ import {JALALI_DATE_FORMATS, JalaliDateAdapter} from "./service/jalali-date/jala
 import {PlatformModule} from '@angular/cdk/platform';
 import {PaymentTypePip} from "./_pip/PaymentTypePip";
 import {YesNoPipe} from "./_pip/yes-no.pipe";
+import {DocumentCacheService} from "./service/document-cache.service";
 
 @NgModule({
   imports: [
@@ -185,6 +186,7 @@ import {YesNoPipe} from "./_pip/yes-no.pipe";
     DocumentInputGuardService,
     PaymentService,
     ContractService,
+    DocumentCacheService,
   ],
   bootstrap: [AppComponent]
 })

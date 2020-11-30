@@ -29,13 +29,15 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input() selectable: boolean = true;
   @Input() title: string;
   @Input() columnSelectable = true;
+  @Output() columnToDisplayChange = new EventEmitter<string[]>();
 
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
   private selection: SelectionModel<unknown>;
   rowNoTitle = 'ردیف';
+
+  selectableColumns: SelectedColumn[];
   columnToDisplay: string[];
-  selectableColumns: TableColumn[];
 
   ngOnInit(): void {
     this.configureTableColumns()
@@ -153,10 +155,25 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       });
 
       const filteredTableColumns: TableColumn[] = this.tableColumns ? this.tableColumns.filter(col => !col.hidden) : [];
-      this.selectableColumns = filteredTableColumns;
+      this.selectableColumns = filteredTableColumns.map(value => <SelectedColumn>{
+        colName: value.colName,
+        isSelected: true,
+        title: value.title
+      });
+
       this.columnToDisplay = filteredTableColumns.map(col => col.colName);
       this.configureDefaultColumns();
     }
+  }
+
+  public refreshSelectableColumns() {
+    this.selectableColumns.forEach(s =>{
+      if (this.columnToDisplay.indexOf(s.colName) >= 0) {
+        s.isSelected = true;
+      } else {
+        s.isSelected = false;
+      }
+    })
   }
 
   private configureDefaultColumns() {
@@ -185,6 +202,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   onSelectColumnToShow(event: MatSelectionListChange) {
     this.columnToDisplay = event.option.selectionList._value;
     this.configureDefaultColumns();
+    this.columnToDisplayChange.emit(this.columnToDisplay);
   }
 
   onSortChange(sort: Sort) {
@@ -204,10 +222,16 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.reloadTable();
   }
 
-  isSortableColumn(columnName: string) : boolean{
+  isSortableColumn(columnName: string): boolean {
     const sortedColumn = this.tableColumns.find(col => col.colName === columnName);
     return sortedColumn && sortedColumn.sortable;
   }
+}
+
+export interface SelectedColumn {
+  colName: string;
+  title: string;
+  isSelected: boolean;
 }
 
 export interface TableColumn {
