@@ -21,7 +21,7 @@ export class DocumentCacheService {
   }
 
   private getDocumentSearchInfo(): DocumentSearchInfo {
-    const currentRootUrl = this.currentUrl.split('/')[1];
+    const currentRootUrl = this.getCurrentRootUrl();
 
     if (currentRootUrl === 'my-basket') {
       return this.myBasketDocumentSearchInfo;
@@ -35,8 +35,21 @@ export class DocumentCacheService {
     return null;
   }
 
+  private getCurrentRootUrl() {
+    if (this.currentUrl.indexOf('/my-basket') >= 0)
+      return 'my-basket';
+
+    if (this.currentUrl.indexOf('/search') >= 0)
+      return 'search';
+
+    if (this.currentUrl.indexOf('/document-manage') >= 0)
+      return 'document-manage';
+
+    return '';
+  }
+
   private setDocumentSearchInfo(documentSearchInfo: DocumentSearchInfo) {
-    const currentRootUrl = this.currentUrl.split('/')[1];
+    const currentRootUrl = this.getCurrentRootUrl();
 
     if (currentRootUrl === 'my-basket') {
       this.myBasketDocumentSearchInfo = documentSearchInfo;
