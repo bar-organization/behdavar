@@ -169,7 +169,7 @@ export class LendingDto extends BaseAuditorDto<string, number> {
   lendingNumber: string;
   defferedCount: number;
   lateFees: number;
-
+  remainDebtAmount: number;
 }
 
 export class ProductDto extends BaseAuditorDto<string, number> {

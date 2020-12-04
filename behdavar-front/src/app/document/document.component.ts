@@ -93,8 +93,8 @@ export class DocumentComponent implements OnInit, AfterViewInit {
       pipNames: DocumentComponent.getSimplePip()
     },
     {
-      fieldName: 'contract.lending.defferedAmount',
-      colName: 'contract.lending.defferedAmount',
+      fieldName: 'contract.lending.remainDebtAmount',
+      colName: 'contract.lending.remainDebtAmount',
       sortable: true,
       title: this.documentLang.deferredAmount,
       pipNames: DocumentComponent.getThousandPip()
