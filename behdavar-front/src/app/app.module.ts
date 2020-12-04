@@ -2,7 +2,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
@@ -18,6 +17,7 @@ import {UserInfoComponent} from './user-info/user-info.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {FlexModule} from '@angular/flex-layout';
 import {UserInfoDetailComponent} from './user-info/user-info-detail/user-info-detail.component';
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatMenuModule} from '@angular/material/menu';
 import {DocumentSearchComponent} from './document/document-search/document-search.component';
@@ -79,11 +79,12 @@ import {MyBasketGuardService} from "./service/auth/my-basket-guard.service";
 import {SearchGuardService} from "./service/auth/search-guard.service";
 import {ResultTypePip} from "./_pip/ResultTypePip";
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {JALALI_DATE_FORMATS, JalaliDateAdapter} from "./service/jalali-date/jalali-date-adapter";
 import {PlatformModule} from '@angular/cdk/platform';
 import {PaymentTypePip} from "./_pip/PaymentTypePip";
 import {YesNoPipe} from "./_pip/yes-no.pipe";
 import {DocumentCacheService} from "./service/document-cache.service";
+import {JalaliMomentDateAdapter} from "./service/jalali-date/jalali-moment-date-adapter";
+import {JALALI_MOMENT_FORMATS, MOMENT_FORMATS} from "./service/jalali-date/jalali_moment_formats";
 
 @NgModule({
   imports: [
@@ -168,9 +169,27 @@ import {DocumentCacheService} from "./service/document-cache.service";
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: SpinnerHttpInterceptor, multi: true},
-    {provide: MAT_DATE_LOCALE, useValue: 'fa-IR'},
-    {provide: DateAdapter, useClass: JalaliDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: JALALI_DATE_FORMATS},
+
+    {
+      provide: DateAdapter,
+      useClass: JalaliMomentDateAdapter,
+      deps: [MAT_DATE_LOCALE]
+    },
+    { provide: MAT_DATE_LOCALE, useValue: "fa" }, // en-GB  fr
+    {
+      provide: MAT_DATE_FORMATS,
+      useFactory: locale => {
+        if (locale === "fa") {
+          return JALALI_MOMENT_FORMATS;
+        } else {
+          return MOMENT_FORMATS;
+        }
+      },
+      deps: [MAT_DATE_LOCALE]
+      // useValue: JALALI_MOMENT_FORMATS
+    },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+
     JalaliPipe,
     PaymentTypePip,
     ThousandPip,

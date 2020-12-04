@@ -228,7 +228,10 @@ export class FollowingComponent implements OnInit {
       this.followingForm.patchValue({nextPursuitDate: moment(selectedValue.nextPursuitDate).format('yyyy-MM-DD')});
 
     if (selectedValue.customerDeposit) {
-      this.followingForm.patchValue({depostidAmount: [{value: selectedValue?.payment?.amount, disabled: true}]});
+      this.followingForm.patchValue({depostidAmount: [{value: selectedValue?.payment?.amount, disabled: false}]});
+      this.fileUploadDisable = false;
+    } else {
+      this.fileUploadDisable = true;
     }
   }
 }
