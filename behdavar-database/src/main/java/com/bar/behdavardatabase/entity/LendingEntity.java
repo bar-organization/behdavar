@@ -59,7 +59,7 @@ public class LendingEntity extends BaseAuditorEntity<String, Long> {
     private Long installmentCount;
 
     @Column(name = "REMAIN_DEBT_AMOUNT")
-    private Long remainDebtAmount;
+    private BigDecimal remainDebtAmount;
 
     @Column(name = "DIFFERED_INSTALLMENT_COUNT")
     private Long differedInstallmentCount;
