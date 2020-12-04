@@ -100,7 +100,7 @@ export class DocumentSearchComponent implements OnInit {
     const plateNumber: string = this.parentForm.value?.bankMachineSearchFormGroup?.plateNumber;
 
     if (facilityNumber)
-      filter.push({key: 'contract.contractNumber', value: facilityNumber, operation: SearchOperation.EQUAL})
+      filter.push({key: 'contract.contractNumber', value: facilityNumber, operation: SearchOperation.MATCH})
 
     DocumentSearchComponent.applyNameFilter(filter, cFullName, SearchType.CUSTOMER);
     DocumentSearchComponent.applyNameFilter(filter, gFullName, SearchType.GUARANTOR);
