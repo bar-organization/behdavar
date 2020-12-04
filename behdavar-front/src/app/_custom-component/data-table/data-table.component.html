@@ -69,7 +69,19 @@
 
       <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col.colName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{col.title}}</th>
-        <td mat-cell *matCellDef="let element"> {{getColumnValue(element, col) }} </td>
+        <td mat-cell *matCellDef="let element">
+          <div *ngIf="col.downloadable;else flat_string">
+            <button mat-icon-button (click)="onFileDownloadClick(getBase64(element,col.fieldName),getFileName(element,col.fieldName))">
+              <mat-icon>file_download</mat-icon>
+              <span>{{getFileName(element,col.fieldName)}}</span>
+            </button>
+          </div>
+
+          <ng-template #flat_string>
+          {{getColumnValue(element, col) }}
+          </ng-template>
+
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columnToDisplay"></tr>

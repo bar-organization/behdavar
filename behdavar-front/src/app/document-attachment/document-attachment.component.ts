@@ -27,8 +27,7 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
   attachmentHttpDataSource: HttpDataSource<AttachmentDto>;
   tableColumns: TableColumn[] = [
     {fieldName: 'fileName', title: this.lang.titleDocument},
-    // {fieldName: 'content', title: this.lang.fileDocument},
-    {fieldName: 'fileName', colName: 'content', title: this.lang.titleDocument},
+    {fieldName: 'fileName+content', title: this.lang.fileDocument,downloadable:true},
   ];
 
   constructor(private router: Router, private contractService: ContractService, private route: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {

@@ -247,6 +247,57 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     colorHints.push(new ColorHint("gray-back"));
     return colorHints;
   }
+
+
+  private convertBase64ToBlobData(base64Data: string, sliceSize=512) {
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays);
+  }
+
+  private getFileName(element:any,fieldName:string){
+    if (!element || !fieldName || !fieldName.includes("+")) {
+      return '';
+    }
+    return dot.pick(fieldName.split('+')[0], element);
+  }
+
+  private getBase64(element:any,fieldName:string){
+    if (!element || !fieldName || !fieldName.includes("+")) {
+      return '';
+    }
+    return dot.pick(fieldName.split('+')[1], element);
+  }
+
+  onFileDownloadClick(base64Content:string,filename:string){
+    const blobData = this.convertBase64ToBlobData(base64Content);
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+      window.navigator.msSaveOrOpenBlob(blobData, filename);
+    } else { // chrome
+      const blob = new Blob([blobData]);
+      const url = window.URL.createObjectURL(blob);
+      // window.open(url);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      link.click();
+    }
+
+  }
 }
 
 export interface SelectedColumn {
@@ -261,6 +312,7 @@ export interface TableColumn {
   title: string;
   hidden?: boolean;
   sortable?: boolean;
+  downloadable?:boolean;
   pipNames?: PipeWrapper[];
 }
 
