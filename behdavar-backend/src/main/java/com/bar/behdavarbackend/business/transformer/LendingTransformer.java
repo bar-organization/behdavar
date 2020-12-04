@@ -14,7 +14,7 @@ public class LendingTransformer extends BaseAuditorTransformer {
         entity.setMasterAmount(dto.getMasterAmount());
         entity.setDefferedAmount(dto.getDefferedAmount());
         entity.setDefferedCount(dto.getDefferedCount());
-        entity.setLateFees(dto.getLateFees());
+        entity.setRemainDebtAmount(dto.getRemainDebtAmount());
         entity.setLendingNumber(dto.getLendingNumber());
         entity.setLateFees(dto.getLateFees());
         entity.setReceiveLendingDate(dto.getReceiveLendingDate());
@@ -28,10 +28,10 @@ public class LendingTransformer extends BaseAuditorTransformer {
         dto.setMasterAmount(entity.getMasterAmount());
         dto.setDefferedAmount(entity.getDefferedAmount());
         dto.setDefferedCount(entity.getDefferedCount());
-        dto.setLateFees(entity.getLateFees());
         dto.setLendingNumber(entity.getLendingNumber());
         dto.setLateFees(entity.getLateFees());
         dto.setReceiveLendingDate(entity.getReceiveLendingDate());
+        dto.setRemainDebtAmount(entity.getRemainDebtAmount());
         return dto;
     }
 
