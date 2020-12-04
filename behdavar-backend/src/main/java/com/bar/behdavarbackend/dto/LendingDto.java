@@ -22,4 +22,5 @@ public class LendingDto extends BaseAuditorDto<String, Long> {
     private String lendingNumber;
     private Long defferedCount;
     private BigDecimal lateFees;
+    private BigDecimal remainDebtAmount;
 }
