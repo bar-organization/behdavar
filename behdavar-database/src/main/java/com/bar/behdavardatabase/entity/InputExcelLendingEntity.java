@@ -64,7 +64,7 @@ public class InputExcelLendingEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "INSTALLMENT_COUNT")
     private Long installmentCount;
     @Column(name = "REMAIN_DEBT_AMOUNT")
-    private Long remainDebtAmount;
+    private BigDecimal remainDebtAmount;
     @Column(name = "DEBT_AMOUNT")
     private BigDecimal debtAmount;
     @Column(name = "LATE_FEES")
