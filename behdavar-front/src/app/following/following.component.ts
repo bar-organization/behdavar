@@ -21,7 +21,6 @@ import {ContractService} from "../service/contract-service";
 import {ResultTypePip} from "../_pip/ResultTypePip";
 import {PaymentType} from "../model/enum/PaymentType";
 import {ThousandPip} from "../_pip/ThousandPip";
-import {YesNoPipe} from "../_pip/yes-no.pipe";
 
 @Component({
   selector: 'app-following',
@@ -205,6 +204,31 @@ export class FollowingComponent implements OnInit {
     try {
       this.contractService.updateCurrentId(Number(id));
     } catch (e) {
+    }
+  }
+
+  onSelectedValueChange(selectedValue: PursuitDto) {
+    console.log(selectedValue);
+
+    if (!this.followingForm) {
+      return;
+    }
+    this.followingForm.reset({
+      description: selectedValue.description,
+      coordinateAppointment: selectedValue.coordinateAppointment,
+      depositAppointment: selectedValue.depositAppointment,
+      submitAccordingFinal: selectedValue.submitAccordingFinal,
+      nextPursuitDate: [''],
+      customerDeposit: selectedValue.customerDeposit,
+      pursuitType: selectedValue?.pursuitType?.toString(),
+      resultType: selectedValue?.resultType?.toString(),
+      depostidAmount: [{value: null, disabled: true}]
+    });
+    if (selectedValue.nextPursuitDate)
+      this.followingForm.patchValue({nextPursuitDate: moment(selectedValue.nextPursuitDate).format('yyyy-MM-DD')});
+
+    if (selectedValue.customerDeposit) {
+      this.followingForm.patchValue({depostidAmount: [{value: selectedValue?.payment?.amount, disabled: true}]});
     }
   }
 }

@@ -83,8 +83,6 @@ export class DocumentSearchComponent implements OnInit {
   }
 
   onSearch() {
-    console.log(this.parentForm.value);
-
     const filter: SearchCriteria[] = [];
 
     const cFullName = this.parentForm.value?.customerSearchFormGroup?.name;

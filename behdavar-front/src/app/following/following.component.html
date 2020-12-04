@@ -72,17 +72,17 @@
 
       </div>
         <div fxLayout="row">
-          <mat-form-field appearance="outline" class="flex-fill" style="min-height: 6rem">
+          <mat-form-field appearance="outline" class="flex-fill" style="min-height: 12rem">
             <mat-label>{{lang.followingResultDescription}}</mat-label>
-            <textarea matInput formControlName="description" style="min-height: 6rem"></textarea>
+            <textarea matInput formControlName="description" style="min-height: 12rem"></textarea>
           </mat-form-field>
         </div>
       <div fxLayout="row" fxLayoutAlign="end center">
         <button mat-raised-button color="primary" class="px-5">{{lang.save}}</button>
       </div>
     </form>
-    <data-table [httpDataSource]="followingHttpDataSource" [title]="lang.tableTitle" [selectable]="false"
-                [columnSelectable]="false" [tableColumns]="followingTableColumn"></data-table>
+    <data-table [httpDataSource]="followingHttpDataSource" [title]="lang.tableTitle" [selectable]="true"
+                [columnSelectable]="false" (selectedValueChange)="onSelectedValueChange($event)" [tableColumns]="followingTableColumn"></data-table>
   </mat-card>
 
 

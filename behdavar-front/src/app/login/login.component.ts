@@ -94,8 +94,4 @@ export class LoginComponent implements OnInit {
       });
   }
 
-  s(event: any) {
-    console.log(event)
-    event.preventDefault()
-  }
 }
