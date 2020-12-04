@@ -9,6 +9,8 @@ import {BehaviorSubject, Observable} from "rxjs";
 import dot from "dot-object";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatSelectionListChange} from "@angular/material/list";
+import {CONTRACT_STATUS_NUMBER} from "../../model/enum/ContractStatus";
+import {ContractStatusPip} from "../../_pip/ContractStatusPip";
 
 @Component({
   selector: 'data-table',
@@ -30,6 +32,8 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Input() title: string;
   @Input() columnSelectable = true;
   @Output() columnToDisplayChange = new EventEmitter<string[]>();
+  @Input() getRowClassName: (row: any) => RowClassName;
+  @Input() showColorHint: boolean;
 
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
@@ -167,7 +171,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   public refreshSelectableColumns() {
-    this.selectableColumns.forEach(s =>{
+    this.selectableColumns.forEach(s => {
       if (this.columnToDisplay.indexOf(s.colName) >= 0) {
         s.isSelected = true;
       } else {
@@ -226,6 +230,23 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     const sortedColumn = this.tableColumns.find(col => col.colName === columnName);
     return sortedColumn && sortedColumn.sortable;
   }
+
+  getCustomClass(row: any): string {
+    if (!this.getRowClassName)
+      return '';
+    return this.getRowClassName(row);
+  }
+
+  getColorHints(): ColorHint[] {
+    const colorHints: ColorHint[] = [];
+    colorHints.push(new ColorHint("green-back"));
+    colorHints.push(new ColorHint("blue-back"));
+    colorHints.push(new ColorHint("orange-back"));
+    colorHints.push(new ColorHint("purple-back"));
+    colorHints.push(new ColorHint("yellow-back"));
+    colorHints.push(new ColorHint("gray-back"));
+    return colorHints;
+  }
 }
 
 export interface SelectedColumn {
@@ -249,3 +270,33 @@ export interface PipeWrapper {
 }
 
 export declare type DataSourceType = 'array' | 'http' | undefined;
+
+export declare type RowClassName =
+  'yellow-back'
+  | 'orange-back'
+  | 'green-back'
+  | 'blue-back'
+  | 'purple-back'
+  | 'gray-back'
+  | undefined;
+
+class ColorHint {
+  title: string;
+  className: RowClassName;
+
+  constructor(className: RowClassName) {
+    this.className = className;
+    this.title = this.getTitle();
+  }
+
+  private getTitle(): string {
+    for (let status of CONTRACT_STATUS_NUMBER) {
+      const contractStatusPip = new ContractStatusPip();
+      const className = contractStatusPip.transform(status.stringValue, 'cn');
+      if (className === this.className) {
+        return contractStatusPip.transform(status.stringValue) as string;
+      }
+    }
+    return "";
+  }
+}

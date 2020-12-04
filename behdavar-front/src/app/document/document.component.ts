@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 import {CartableDto} from "../model/model";
 import Url from "../model/url";
-import {DataTableComponent, TableColumn} from "../_custom-component/data-table/data-table.component";
+import {DataTableComponent, RowClassName, TableColumn} from "../_custom-component/data-table/data-table.component";
 import {DocumentLang} from "../model/lang";
 import {HttpClient} from "@angular/common/http";
 import {JalaliPipe} from "../_pip/jalali.pipe";
@@ -170,6 +170,15 @@ export class DocumentComponent implements OnInit, AfterViewInit {
       pipNames: DocumentComponent.getSimplePip()
     },
   ];
+
+  getClassNameByContractStatus(row: any): RowClassName {
+    const rowModel: CartableDto = row as CartableDto;
+    if (!rowModel || !rowModel?.contract?.contractStatus) {
+      return undefined;
+    }
+    return new ContractStatusPip().transform(rowModel.contract.contractStatus, 'cn') as RowClassName;
+  }
+
 
   private static getDatePip() {
     return [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}];

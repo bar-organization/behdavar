@@ -9,6 +9,7 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
   min-width: 8rem;
   width: 100%;
 }
+
 .example-loading-shade {
   position: absolute;
   top: 0;
@@ -26,4 +27,41 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
   color: #980000;
   max-width: 360px;
   text-align: center;
+}
+
+.color-hint {
+  border-radius: 50%;
+  width: 1rem;
+  height: 1rem;
+
+}
+
+.yellow-back {
+  background-color: #ffff00;
+  background-clip: padding-box;
+}
+
+.orange-back {
+  background-color: #ffab40;
+  background-clip: padding-box;
+}
+
+.green-back {
+  background-color: #00e676;
+  background-clip: padding-box;
+}
+
+.blue-back {
+  background-color: #64b5f6;
+  background-clip: padding-box;
+}
+
+.purple-back {
+  background-color: #ea80fc;
+  background-clip: padding-box;
+}
+
+.gray-back {
+  background-color: #9e9e9e;
+  background-clip: padding-box;
 }

@@ -2,6 +2,16 @@
   <div fxLayout="row" fxLayoutAlign="space-between center" class="card-header py-0 m-0">
     <h6 class="m-0 p-0">{{title}}</h6>
     <div>
+      <button *ngIf="showColorHint" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="راهنمای رنگ" aria-label="Example icon-button with a menu">
+        <mat-icon>lightbulb_outline</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div *ngFor="let cHint of getColorHints()" mat-menu-item fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
+            <div [ngClass]="cHint.className" class="color-hint"></div>
+            <span>{{cHint.title}}</span>
+        </div>
+      </mat-menu>
+
       <button color="" *ngIf="columnSelectable" mat-icon-button [matMenuTriggerFor]="selectColumnMenu"
               matTooltip="انتخاب ستون ها"
               matTooltipPosition="below">
@@ -12,7 +22,8 @@
              (click)="$event.stopPropagation();">
           <mat-selection-list class="overflow-auto" style="max-height: 25rem"
                               (selectionChange)="onSelectColumnToShow($event)">
-            <mat-list-option *ngFor="let column of selectableColumns" [selected]="column.isSelected" [value]="column.colName">
+            <mat-list-option *ngFor="let column of selectableColumns" [selected]="column.isSelected"
+                             [value]="column.colName">
               {{column.title}}
             </mat-list-option>
           </mat-selection-list>
@@ -52,7 +63,8 @@
 
       <ng-container matColumnDef="rowNo">
         <th mat-header-cell style="min-width: 5rem" *matHeaderCellDef mat-sort-header> {{rowNoTitle}}</th>
-        <td mat-cell style="min-width: 5rem" *matCellDef="let element; let i = index;"> {{i + 1 + (paginator.pageSize * paginator.pageIndex)}} </td>
+        <td mat-cell style="min-width: 5rem"
+            *matCellDef="let element; let i = index;"> {{i + 1 + (paginator.pageSize * paginator.pageIndex)}} </td>
       </ng-container>
 
       <ng-container *ngFor="let col of tableColumns" [matColumnDef]="col.colName">
@@ -61,9 +73,10 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="columnToDisplay"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnToDisplay;"></tr>
+      <tr mat-row [ngClass]="getCustomClass(row)" *matRowDef="let row; columns: columnToDisplay;"></tr>
     </table>
-    <mat-paginator #paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10, 20, 50]" [length]="totalRecord$ | async"
+    <mat-paginator #paginator (page)="onPageChange()" [pageSizeOptions]="[5, 10, 20, 50]"
+                   [length]="totalRecord$ | async"
                    [pageSize]="10"
                    showFirstLastButtons></mat-paginator>
   </div>
