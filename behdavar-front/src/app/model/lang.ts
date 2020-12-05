@@ -182,6 +182,7 @@ export class DocumentLang extends PersonLang {
   vehicleType = 'نوع خودرو';
   expert = 'کارشناس';
   ideaIssueDate = 'تاریخ صدور رای';
+  color = 'رنگ  وضعیت';
   receiveLendingDate = 'تاریخ دریافت تسهیلات'
   tableTitle = 'لیست پرونده ها';
   searchPanel = 'پنل جستجو';

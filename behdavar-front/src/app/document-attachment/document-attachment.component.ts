@@ -3,7 +3,7 @@ import {AttachmentLang} from "../model/lang";
 import {FormGroup} from "@angular/forms";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 import {AttachmentDto, ContractDto} from "../model/model";
-import {TableColumn} from "../_custom-component/data-table/data-table.component";
+import {ColumnType, TableColumn} from "../_custom-component/data-table/data-table.component";
 import Url from "../model/url";
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
@@ -27,7 +27,7 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
   attachmentHttpDataSource: HttpDataSource<AttachmentDto>;
   tableColumns: TableColumn[] = [
     {fieldName: 'fileName', title: this.lang.titleDocument},
-    {fieldName: 'fileName+content', title: this.lang.fileDocument,downloadable:true},
+    {fieldName: 'fileName+content', title: this.lang.fileDocument,type:ColumnType.DOWNLOADABLE},
   ];
 
   constructor(private router: Router, private contractService: ContractService, private route: ActivatedRoute, private httpClient: HttpClient, private messageService: MessageService) {

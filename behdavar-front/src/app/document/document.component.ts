@@ -1,8 +1,13 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from "@angular/core";
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
-import {CartableDto} from "../model/model";
+import {CartableDto, ContractColor} from "../model/model";
 import Url from "../model/url";
-import {DataTableComponent, RowClassName, TableColumn} from "../_custom-component/data-table/data-table.component";
+import {
+  ColumnType,
+  DataTableComponent,
+  RowClassName,
+  TableColumn
+} from "../_custom-component/data-table/data-table.component";
 import {DocumentLang} from "../model/lang";
 import {HttpClient} from "@angular/common/http";
 import {JalaliPipe} from "../_pip/jalali.pipe";
@@ -68,8 +73,35 @@ export class DocumentComponent implements OnInit, AfterViewInit {
       operation: SearchOperation.EQUAL
     };
   }
+  getCustomColorName = (row:CartableDto):RowClassName =>{
+    const color:ContractColor = row?.contract?.contractColor;
+    if(!color)
+      return undefined;
 
+    switch (color) {
+      case ContractColor.BLACK:
+        return 'black-back';
+      case ContractColor.RED:
+        return  'red-back';
+      case ContractColor.GREEN:
+        return 'green-back';
+      case ContractColor.BLUE:
+        return 'blue-back';
+      case ContractColor.GRAY:
+        return 'gray-back';
+      case ContractColor.PURPLE:
+        return 'purple-back';
+      default:
+        return undefined;
+    }
+  }
   tableColumns: TableColumn[] = [
+    {
+      fieldName: 'contract.contractColor',
+      title: this.documentLang.color,
+      type: ColumnType.COLOR,
+      customValue:this.getCustomColorName,
+    },
     {fieldName: "contract.customers[0].person.fullName", title: this.documentLang.customerName},
     {
       fieldName: 'contract.contractNumber',

@@ -1,6 +1,8 @@
 package com.bar.behdavarbackend.business.transformer;
 
 import com.bar.behdavarbackend.dto.*;
+import com.bar.behdavarcommon.enumeration.ContractColor;
+import com.bar.behdavarcommon.enumeration.ContractStatus;
 import com.bar.behdavardatabase.entity.ContractEntity;
 import com.bar.behdavardatabase.entity.CustomerEntity;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +29,7 @@ public class ContractTransformer extends BaseAuditorTransformer {
         transformAuditingFields(entity, dto);
         dto.setContractType(entity.getContractType());
         dto.setContractStatus(entity.getContractStatus());
+        dto.setContractColor(getContractColorByStatus(entity.getContractStatus()));
         dto.setSubmitDate(entity.getSubmitDate());
         dto.setContractNumber(entity.getContractNumber());
         Optional.ofNullable(entity.getCorporation()).ifPresent(catalogDetail -> dto.setCorporation(CatalogDetailTransformer.entityToDto(catalogDetail, new CatalogDetailDto())));
@@ -44,6 +47,28 @@ public class ContractTransformer extends BaseAuditorTransformer {
         }
 
         return dto;
+    }
+
+    private static ContractColor getContractColorByStatus(ContractStatus contractStatus) {
+        if (Objects.isNull(contractStatus)) {
+            return null;
+        }
+        switch (contractStatus) {
+            case AVAILABLE:
+                return ContractColor.GREEN;
+            case CLEARING:
+                return ContractColor.BLUE;
+            case RAW:
+                return ContractColor.PURPLE;
+            case LEGAL:
+                return ContractColor.GRAY;
+            case PARKING:
+                return ContractColor.BLACK;
+            case RETURN:
+                return ContractColor.RED;
+            default:
+                return null;
+        }
     }
 
     public static ContractEntity createEntityForRelation(Long id) {

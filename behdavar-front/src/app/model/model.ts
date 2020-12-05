@@ -137,6 +137,7 @@ export class ContractDto extends BaseAuditorDto<string, number> {
   product?: ProductDto;
   corporation?: CatalogDetailDto;
   contractStatus?: ContractStatus;
+  contractColor?: ContractColor;
   contractType?: ContractType;
   customers?: CustomerDto[];
 }
@@ -253,4 +254,14 @@ export enum RelationType {
   S2 = "S2"
 
 }
+
+export enum ContractColor {
+  BLACK = "BLACK",
+  RED = "RED",
+  GREEN = "GREEN",
+  BLUE = "BLUE",
+  GRAY = "GRAY",
+  PURPLE = 'PURPLE',
+}
+
 

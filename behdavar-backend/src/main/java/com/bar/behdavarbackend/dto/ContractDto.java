@@ -1,6 +1,7 @@
 package com.bar.behdavarbackend.dto;
 
 import com.bar.behdavarbackend.dto.common.BaseAuditorDto;
+import com.bar.behdavarcommon.enumeration.ContractColor;
 import com.bar.behdavarcommon.enumeration.ContractStatus;
 import com.bar.behdavarcommon.enumeration.ContractType;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,5 +24,6 @@ public class ContractDto extends BaseAuditorDto<String, Long> {
     private CatalogDetailDto corporation;
     private ContractStatus contractStatus;
     private ContractType contractType;
+    private ContractColor contractColor;
     private Set<CustomerDto> customers = new HashSet<>();
 }

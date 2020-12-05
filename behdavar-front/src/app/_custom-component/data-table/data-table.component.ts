@@ -110,6 +110,9 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
   getColumnValue(element: any, col: TableColumn) {
+    if(col.customValue)
+      return col.customValue(element);
+
     const fieldValue = this.handelDot(element, col.fieldName);
     return this.applyPip(fieldValue, col.pipNames);
   }
@@ -231,10 +234,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     return sortedColumn && sortedColumn.sortable;
   }
 
-  getCustomClass(row: any): string {
-    if (!this.getRowClassName)
-      return '';
-    return this.getRowClassName(row);
+  getCustomClass(row: any,col:TableColumn): string {
+   if(!row || !col.customValue){
+     return ;
+   }
+   return  col.customValue(row);
   }
 
   getColorHints(): ColorHint[] {
@@ -283,7 +287,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     return dot.pick(fieldName.split('+')[1], element);
   }
 
-  onFileDownloadClick(base64Content:string,filename:string){
+  onFileDownloadClick(base64Content: string, filename: string) {
     const blobData = this.convertBase64ToBlobData(base64Content);
     if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
       window.navigator.msSaveOrOpenBlob(blobData, filename);
@@ -309,11 +313,16 @@ export interface SelectedColumn {
 export interface TableColumn {
   fieldName: string;
   colName?: string;
+  type?: ColumnType;
+  customValue?: (row: any) => any;
   title: string;
   hidden?: boolean;
   sortable?: boolean;
-  downloadable?:boolean;
   pipNames?: PipeWrapper[];
+}
+
+export enum ColumnType {
+  SIMPLE = 'SIMPLE', DOWNLOADABLE = 'DOWNLOADABLE', COLOR = 'COLOR'
 }
 
 export interface PipeWrapper {

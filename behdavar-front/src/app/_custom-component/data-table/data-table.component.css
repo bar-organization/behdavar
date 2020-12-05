@@ -40,6 +40,7 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
   background-color: #424242;
   background-clip: padding-box;
 }
+
 .black-back * {
   color: whitesmoke;
 }
@@ -48,6 +49,7 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
   background-color: #d50000;
   background-clip: padding-box;
 }
+
 .red-back * {
   color: whitesmoke;
 }
@@ -61,6 +63,7 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
   background-color: #2962ff;
   background-clip: padding-box;
 }
+
 .blue-back * {
   color: whitesmoke;
 }
@@ -69,6 +72,7 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
   background-color: #aa00ff;
   background-clip: padding-box;
 }
+
 .purple-back * {
   color: whitesmoke;
 }
