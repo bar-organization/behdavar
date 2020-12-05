@@ -125,7 +125,7 @@ export class FollowingComponent implements OnInit {
     this.httpClient.post<PursuitDto>(Url.PURSUIT_SAVE, saveModel)
       .subscribe(() => {
           this.messageService.showGeneralSuccess(this.lang.successSave);
-
+          this.resetForm();
           // TODO must refactor
           const filter: SearchCriteria[] = [{
             key: 'contract.id',
@@ -239,5 +239,19 @@ export class FollowingComponent implements OnInit {
     } else {
       this.fileUploadDisable = true;
     }
+  }
+
+  private resetForm() {
+    this.followingForm.reset({
+      description: '',
+      coordinateAppointment: false,
+      depositAppointment: false,
+      submitAccordingFinal: false,
+      nextPursuitDate: undefined,
+      customerDeposit: false,
+      pursuitType: PursuitType.PHONE_CALL.toString(),
+      resultType: null,
+      depostidAmount: {value: null, disabled: true},
+    });
   }
 }
