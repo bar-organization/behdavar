@@ -28,17 +28,17 @@ export class ContractStatusPip implements PipeTransform {
     const status = CONTRACT_STATUS_NUMBER.find(v => v.stringValue == value).value
     switch (status) {
       case ContractStatus.AVAILABLE:
-        return 'yellow-back';
+        return 'green-back';
       case ContractStatus.CLEARING:
-        return "green-back";
-      case ContractStatus.RAW:
-        return "gray-back";
-      case ContractStatus.LEGAL:
         return "blue-back";
+      case ContractStatus.RAW:
+        return "purple-back";
+      case ContractStatus.LEGAL:
+        return "gray-back";
       case ContractStatus.PARKING:
-        return 'purple-back';
+        return 'black-back';
       case ContractStatus.RETURN:
-        return 'orange-back';
+        return 'red-back';
       default:
         return undefined;
     }

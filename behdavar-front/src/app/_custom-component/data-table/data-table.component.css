@@ -36,32 +36,44 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
 
 }
 
-.yellow-back {
-  background-color: #ffff00;
+.black-back {
+  background-color: #424242;
   background-clip: padding-box;
 }
+.black-back * {
+  color: whitesmoke;
+}
 
-.orange-back {
-  background-color: #ffab40;
+.red-back {
+  background-color: #d50000;
   background-clip: padding-box;
+}
+.red-back * {
+  color: whitesmoke;
 }
 
 .green-back {
-  background-color: #00e676;
+  background-color: #00c853;
   background-clip: padding-box;
 }
 
 .blue-back {
-  background-color: #64b5f6;
+  background-color: #2962ff;
   background-clip: padding-box;
+}
+.blue-back * {
+  color: whitesmoke;
 }
 
 .purple-back {
-  background-color: #ea80fc;
+  background-color: #aa00ff;
   background-clip: padding-box;
+}
+.purple-back * {
+  color: whitesmoke;
 }
 
 .gray-back {
-  background-color: #9e9e9e;
+  background-color: #bdbdbd;
   background-clip: padding-box;
 }

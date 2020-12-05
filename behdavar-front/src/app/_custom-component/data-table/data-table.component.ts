@@ -239,11 +239,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
 
   getColorHints(): ColorHint[] {
     const colorHints: ColorHint[] = [];
+    colorHints.push(new ColorHint("black-back"));
+    colorHints.push(new ColorHint("red-back"));
     colorHints.push(new ColorHint("green-back"));
     colorHints.push(new ColorHint("blue-back"));
-    colorHints.push(new ColorHint("orange-back"));
     colorHints.push(new ColorHint("purple-back"));
-    colorHints.push(new ColorHint("yellow-back"));
     colorHints.push(new ColorHint("gray-back"));
     return colorHints;
   }
@@ -324,8 +324,8 @@ export interface PipeWrapper {
 export declare type DataSourceType = 'array' | 'http' | undefined;
 
 export declare type RowClassName =
-  'yellow-back'
-  | 'orange-back'
+  'black-back'
+  | 'red-back'
   | 'green-back'
   | 'blue-back'
   | 'purple-back'
