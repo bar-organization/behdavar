@@ -11,7 +11,12 @@ import {EnumValueTitle} from "../model/enum/EnumValueTitle";
 import {RESULT_TYPE_TITLE, ResultType} from "../model/enum/ResultType";
 import * as moment from 'moment';
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
-import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {
+  SearchCriteria,
+  SearchOperation,
+  SortDirectionEnum,
+  SortOperation
+} from "../_custom-component/data-table/PaginationModel";
 import {JalaliPipe} from "../_pip/jalali.pipe";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {PursuitTypePip} from "../_pip/PursuitTypePip";
@@ -67,7 +72,8 @@ export class FollowingComponent implements OnInit {
       value: this.contractService.currentId,
       operation: SearchOperation.EQUAL
     }];
-    this.followingHttpDataSource = new HttpDataSource<PursuitDto>(Url.PURSUIT_FIND_PAGING, this.httpClient, filter);
+    const sort: SortOperation = {sortBy: 'createdDate', direction: SortDirectionEnum.DESC}
+    this.followingHttpDataSource = new HttpDataSource<PursuitDto>(Url.PURSUIT_FIND_PAGING, this.httpClient, filter, sort);
 
   }
 
