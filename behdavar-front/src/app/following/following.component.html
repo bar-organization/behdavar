@@ -23,7 +23,7 @@
 
             <mat-checkbox formControlName="coordinateAppointment"
                           class="example-margin">{{this.lang.coordinateAppointment}}</mat-checkbox>
-            <mat-checkbox (change)="onCustomerDepositChange($event)" formControlName="customerDeposit"
+            <mat-checkbox formControlName="customerDeposit"
                           class="example-margin">{{this.lang.customerDepositAmount}}</mat-checkbox>
 
           </div>
@@ -64,7 +64,7 @@
 
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
             <label for="file">{{lang.attachedBrowse}}</label>
-            <input type="file" [disabled]="fileUploadDisable"
+            <input type="file"
                    id="file" #fileInput
                    (change)="handleFileInput($event.target.files)">
           </div>

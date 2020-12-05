@@ -20,7 +20,6 @@ import {
 import {JalaliPipe} from "../_pip/jalali.pipe";
 import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 import {PursuitTypePip} from "../_pip/PursuitTypePip";
-import {MatCheckboxChange} from "@angular/material/checkbox";
 import {MessageService} from "../service/message.service";
 import {ContractService} from "../service/contract-service";
 import {ResultTypePip} from "../_pip/ResultTypePip";
@@ -40,7 +39,6 @@ export class FollowingComponent implements OnInit {
   followingForm: FormGroup;
   fileName: string = null;
   fileToUpload: string = null;
-  fileUploadDisable = true;
   contractDto: ContractDto;
 
   pursuitTypeList: EnumValueTitle<PursuitType>[] = PURSUIT_TYPE_TITLE;
@@ -64,7 +62,7 @@ export class FollowingComponent implements OnInit {
       customerDeposit: [''],
       pursuitType: [PursuitType.PHONE_CALL.toString()],
       resultType: [''],
-      depostidAmount: [{value: null, disabled: true}],
+      depostidAmount: [''],
     });
 
     const filter: SearchCriteria[] = [{
@@ -156,10 +154,11 @@ export class FollowingComponent implements OnInit {
     model.contract = contractDto;
     model.pursuitType = this.pursuitTypePip.transform(this.followingForm.value.pursuitType, 'n');
     model.resultType = this.resultTypePip.transform(this.followingForm.value.resultType, 'n');
+    const paymentAmount = this.followingForm?.value?.depostidAmount;
 
-    if (!!this.followingForm.value.customerDeposit) {
+    if (paymentAmount) {
       const payment = new PaymentDto();
-      payment.amount = this.followingForm.value.depostidAmount;
+      payment.amount = paymentAmount;
       payment.paymentType = PaymentType.CASH;
       payment.contract = model.contract;
 
@@ -169,7 +168,6 @@ export class FollowingComponent implements OnInit {
         attachmentDto.content = this.fileToUpload;
         attachmentDto.contract = model.contract;
         payment.attachment = attachmentDto;
-
       }
 
       model.payment = payment;
@@ -190,21 +188,6 @@ export class FollowingComponent implements OnInit {
 
   }
 
-  onCustomerDepositChange(event: MatCheckboxChange) {
-    if (event.checked) {
-      this.followingForm.controls['depostidAmount'].enable();
-      this.fileUploadDisable = false;
-    } else {
-      this.followingForm.controls['depostidAmount'].disable();
-      this.followingForm.patchValue({depostidAmount: null});
-
-      this.fileUploadDisable = true;
-      this.fileName = '';
-      this.fileToUpload = null;
-      this.fileInput.nativeElement.value = null;
-    }
-  }
-
   private updateContractId() {
     let id = this.route.snapshot.params['id'];
     try {
@@ -214,8 +197,6 @@ export class FollowingComponent implements OnInit {
   }
 
   onSelectedValueChange(selectedValue: PursuitDto) {
-    console.log(selectedValue);
-
     if (!this.followingForm) {
       return;
     }
@@ -233,12 +214,6 @@ export class FollowingComponent implements OnInit {
     if (selectedValue.nextPursuitDate)
       this.followingForm.patchValue({nextPursuitDate: moment(selectedValue.nextPursuitDate).format('yyyy-MM-DD')});
 
-    if (selectedValue.customerDeposit) {
-      this.followingForm.patchValue({depostidAmount: [{value: selectedValue?.payment?.amount, disabled: false}]});
-      this.fileUploadDisable = false;
-    } else {
-      this.fileUploadDisable = true;
-    }
   }
 
   private resetForm() {
@@ -251,7 +226,7 @@ export class FollowingComponent implements OnInit {
       customerDeposit: false,
       pursuitType: PursuitType.PHONE_CALL.toString(),
       resultType: null,
-      depostidAmount: {value: null, disabled: true},
+      depostidAmount: 0,
     });
   }
 }
