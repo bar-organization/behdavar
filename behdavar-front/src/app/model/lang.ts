@@ -11,6 +11,7 @@ export class Lang {
   row = 'ردیف';
   back = 'بازگشت';
   successSave = 'عملیات با موفقیت انجام شد';
+  successDelete = 'حذف با موفقیت انجام شد';
   error = 'خطا در انجام عملیات';
   delete = 'حذف';
   active = 'فعال';
@@ -206,6 +207,8 @@ export class FollowingLang extends Lang {
   tableTitle = 'لیست پیگیری های قبلی';
   contractNumber = 'شماره پرنده';
   customerName = 'نام مشتری';
+  selectOneRowForDelete = 'یک سطر را برای حذف انتخاب کنید';
+  selectOneRowForEdit = 'یک سطر را برای ویرایش انتخاب کنید';
 
 
 }

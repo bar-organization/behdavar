@@ -22,6 +22,8 @@ export default class Url {
   public static readonly PURSUIT_FIND_PAGING = `${Url.BASE_API}/pursuit/find-paging`;
 
   public static readonly PURSUIT_SAVE = `${Url.BASE_API}/pursuit/save`;
+  public static readonly PURSUIT_EDIT = `${Url.BASE_API}/pursuit/update`;
+  public static readonly PURSUIT_DELETE = `${Url.BASE_API}/pursuit/delete`;
 
   public static readonly PERSON_UPDATE = `${Url.BASE_API}/person/update`;
   public static readonly PERSON_FIND_SUGGESTION = `${Url.BASE_API}/person/find-suggestion`;

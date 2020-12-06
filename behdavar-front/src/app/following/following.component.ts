@@ -25,6 +25,7 @@ import {ContractService} from "../service/contract-service";
 import {ResultTypePip} from "../_pip/ResultTypePip";
 import {PaymentType} from "../model/enum/PaymentType";
 import {ThousandPip} from "../_pip/ThousandPip";
+import {PursuitService} from "../service/pursuit-service";
 
 @Component({
   selector: 'app-following',
@@ -40,13 +41,14 @@ export class FollowingComponent implements OnInit {
   fileName: string = null;
   fileToUpload: string = null;
   contractDto: ContractDto;
+  selectedValue:PursuitDto;
 
   pursuitTypeList: EnumValueTitle<PursuitType>[] = PURSUIT_TYPE_TITLE;
   resultTypeList: EnumValueTitle<ResultType>[] = RESULT_TYPE_TITLE;
 
   followingHttpDataSource: HttpDataSource<PursuitDto>;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private messageService: MessageService, private pursuitTypePip: PursuitTypePip, private resultTypePip: ResultTypePip, private router: Router, private contractService: ContractService) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder,private pursuitService:PursuitService,private messageService: MessageService, private pursuitTypePip: PursuitTypePip, private resultTypePip: ResultTypePip, private router: Router, private contractService: ContractService) {
   }
 
   ngOnInit(): void {
@@ -58,11 +60,11 @@ export class FollowingComponent implements OnInit {
       coordinateAppointment: [''],
       depositAppointment: [''],
       submitAccordingFinal: [''],
-      nextPursuitDate: [''],
+      nextPursuitDate: [undefined],
       customerDeposit: [''],
       pursuitType: [PursuitType.PHONE_CALL.toString()],
       resultType: [''],
-      depostidAmount: [''],
+      depostidAmount: [0],
     });
 
     const filter: SearchCriteria[] = [{
@@ -114,7 +116,7 @@ export class FollowingComponent implements OnInit {
     return [{pip: new ThousandPip()}, {pip: new BlankToDashPipe()}];
   }
 
-  onSubmit() {
+  onSave() {
     this.submitted = true;
     const saveModel: PursuitDto = this.followingForm.value;
 
@@ -152,8 +154,8 @@ export class FollowingComponent implements OnInit {
     const contractDto: ContractDto = new ContractDto();
     contractDto.id = this.contractService.currentId;
     model.contract = contractDto;
-    model.pursuitType = this.pursuitTypePip.transform(this.followingForm.value.pursuitType, 'n');
-    model.resultType = this.resultTypePip.transform(this.followingForm.value.resultType, 'n');
+    model.pursuitType = this.pursuitTypePip.transform(this?.followingForm?.value?.pursuitType, 'n');
+    model.resultType = this.resultTypePip.transform(this?.followingForm?.value?.resultType, 'n');
     const paymentAmount = this.followingForm?.value?.depostidAmount;
 
     if (paymentAmount) {
@@ -197,7 +199,8 @@ export class FollowingComponent implements OnInit {
   }
 
   onSelectedValueChange(selectedValue: PursuitDto) {
-    if (!this.followingForm) {
+    this.selectedValue = selectedValue;
+    if (!this.followingForm || !selectedValue) {
       return;
     }
     this.followingForm.reset({
@@ -205,11 +208,11 @@ export class FollowingComponent implements OnInit {
       coordinateAppointment: selectedValue.coordinateAppointment,
       depositAppointment: selectedValue.depositAppointment,
       submitAccordingFinal: selectedValue.submitAccordingFinal,
-      nextPursuitDate: [''],
+      nextPursuitDate: undefined,
       customerDeposit: selectedValue.customerDeposit,
       pursuitType: selectedValue?.pursuitType?.toString(),
       resultType: selectedValue?.resultType?.toString(),
-      depostidAmount: [{value: null, disabled: true}]
+      depostidAmount: 0
     });
     if (selectedValue.nextPursuitDate)
       this.followingForm.patchValue({nextPursuitDate: moment(selectedValue.nextPursuitDate).format('yyyy-MM-DD')});
@@ -227,6 +230,42 @@ export class FollowingComponent implements OnInit {
       pursuitType: PursuitType.PHONE_CALL.toString(),
       resultType: null,
       depostidAmount: 0,
+    });
+  }
+
+  onDelete() {
+    if (!this.selectedValue) {
+      this.messageService.showGeneralError(this.lang.selectOneRowForDelete);
+      return;
+    }
+
+    this.pursuitService.deleteById(this.selectedValue.id, deletedId => {
+      this.messageService.showGeneralSuccess(this.lang.successDelete);
+      this.followingHttpDataSource.reload();
+    });
+
+  }
+
+  onEdit() {
+    if (!this.selectedValue) {
+      this.messageService.showGeneralError(this.lang.selectOneRowForEdit);
+      return;
+    }
+    const editPursuit: PursuitDto = this.followingForm.value;
+    editPursuit.id = this.selectedValue.id;
+
+    this.completeModel(editPursuit);
+
+    this.pursuitService.editPursuit(editPursuit,pursuitDto => {
+      this.messageService.showGeneralSuccess(this.lang.successSave);
+      this.resetForm();
+      // TODO must refactor
+      const filter: SearchCriteria[] = [{
+        key: 'contract.id',
+        value: this.contractService.currentId,
+        operation: SearchOperation.EQUAL
+      }];
+      this.followingHttpDataSource.reload(filter);
     });
   }
 }

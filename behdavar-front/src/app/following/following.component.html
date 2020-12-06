@@ -5,7 +5,7 @@
       <h6>{{this.lang.contractNumber}} : {{this.contractDto?.contractNumber}}</h6>
       <h6>{{this.lang.customerName}} : {{this.contractDto?.customers[0]?.person?.fullName}}</h6>
     </div>
-    <form [formGroup]="followingForm" (ngSubmit)="onSubmit()" fxLayout="column"
+    <form [formGroup]="followingForm" fxLayout="column"
           class="w-100">
       <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">
 
@@ -77,11 +77,22 @@
             <textarea matInput formControlName="description" style="min-height: 16rem"></textarea>
           </mat-form-field>
         </div>
-      <div fxLayout="row" fxLayoutAlign="end center">
-        <button mat-raised-button color="primary" class="px-5">{{lang.save}}</button>
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
+        <button mat-raised-button color="warn" class="px-5" [disabled]="!(table.selectedValueChange | async)" (click)="onDelete()">
+          <span class="px-2">{{lang.delete}}</span>
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-raised-button color="accent" class="px-5" [disabled]="!(table.selectedValueChange | async)" (click)="onEdit()">
+          <span class="px-2">{{lang.edit}}</span>
+          <mat-icon>mode_edit</mat-icon>
+        </button>
+        <button mat-raised-button color="primary" class="px-5" (click)="onSave()">
+          <span class="px-2">{{lang.save}}</span>
+          <mat-icon>save</mat-icon>
+        </button>
       </div>
     </form>
-    <data-table [httpDataSource]="followingHttpDataSource" [title]="lang.tableTitle" [selectable]="true"
+    <data-table #table [httpDataSource]="followingHttpDataSource" [title]="lang.tableTitle" [selectable]="true"
                 [columnSelectable]="false" (selectedValueChange)="onSelectedValueChange($event)" [tableColumns]="followingTableColumn"></data-table>
   </mat-card>
 

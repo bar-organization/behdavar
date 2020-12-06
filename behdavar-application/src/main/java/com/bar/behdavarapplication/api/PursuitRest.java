@@ -54,7 +54,7 @@ public class PursuitRest {
     @PreAuthorize("hasAuthority('" + AuthorityConstant.PURSUIT_DELETE + "')")
     @PostMapping("/delete")
     public ResponseEntity<Void> delete(@RequestBody Long id) {
-        pursuitBusiness.findById(id);
+        pursuitBusiness.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

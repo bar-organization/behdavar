@@ -85,6 +85,7 @@ import {YesNoPipe} from "./_pip/yes-no.pipe";
 import {DocumentCacheService} from "./service/document-cache.service";
 import {JalaliMomentDateAdapter} from "./service/jalali-date/jalali-moment-date-adapter";
 import {JALALI_MOMENT_FORMATS, MOMENT_FORMATS} from "./service/jalali-date/jalali_moment_formats";
+import {PursuitService} from "./service/pursuit-service";
 
 @NgModule({
   imports: [
@@ -205,6 +206,7 @@ import {JALALI_MOMENT_FORMATS, MOMENT_FORMATS} from "./service/jalali-date/jalal
     DocumentInputGuardService,
     PaymentService,
     ContractService,
+    PursuitService,
     DocumentCacheService,
   ],
   bootstrap: [AppComponent]
