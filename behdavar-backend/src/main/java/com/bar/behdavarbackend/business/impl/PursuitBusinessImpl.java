@@ -70,9 +70,30 @@ public class PursuitBusinessImpl implements PursuitBusiness {
     @Override
     @Transactional
     public void update(PursuitDto dto) {
-        PursuitEntity pursuitEntity = PursuitTransformer.dtoToEntity(dto, pursuitRepository.findById(dto.getId())
-                .orElseThrow(() -> new BusinessException("error.Pursuit.not.found", dto.getId())));
-        pursuitRepository.save(pursuitEntity);
+        Long paymentId = null;
+        Long attachmentId = null;
+        if (dto.getPayment() != null) {
+            if (dto.getPayment().getAttachment() != null) {
+                dto.getPayment().getAttachment().setContract(null);
+                attachmentId = attachmentBusiness.save(dto.getPayment().getAttachment());
+            }
+
+            Optional.ofNullable(attachmentId).ifPresent(id ->
+                    dto.getPayment().setAttachment(AttachmentTransformer.createDtoForRelation(id)));
+            if(dto.getPayment().getId() == null) {
+                paymentId = paymentBusiness.save(dto.getPayment());
+            } else {
+                paymentBusiness.update(dto.getPayment());
+                paymentId = dto.getPayment().getId();
+            }
+            userAmountBusiness.increaseReceiveAmount(dto.getPayment().getAmount());
+        }
+        Optional.ofNullable(paymentId).ifPresent(id ->
+                dto.setPayment(PaymentTransformer.createDtoForRelation(id)));
+
+        PursuitEntity pursuitEntity = PursuitTransformer.dtoToEntity(dto, pursuitRepository.findById(dto.getId()).orElseThrow(
+                () -> new BusinessException("error.Pursuit.not.found", dto.getId())));
+        pursuitEntity.setId(pursuitRepository.save(pursuitEntity).getId());
     }
 
     @Override
