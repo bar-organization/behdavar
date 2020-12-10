@@ -34,7 +34,7 @@ public class PursuitEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = PursuitEntity.SEQ_NAME, sequenceName = PursuitEntity.SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
-    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(800)", length = 800)
+    @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(3000)", length = 3000)
     private String description;
 
     @Column(name = "COORDINATE_APPOINTMENT")
