@@ -17,5 +17,11 @@ public interface PersonRepository extends AbstractRepository<PersonEntity, Long>
 
     PersonEntity findByNationalCode(String nationalCode);
 
+    @Query(value = "update BST_PERSON  p " +
+            " set p.FULL_NAME = REPLACE(p.FULL_NAME , 'ي' , 'ی'), " +
+            " p.LAST_NAME = REPLACE(p.LAST_NAME , 'ي' , 'ی'), " +
+            " p.FIRST_NAME = REPLACE(p.FIRST_NAME , 'ي' , 'ی')" , nativeQuery = true)
+    void convertArabicLetters();
+
 
 }
