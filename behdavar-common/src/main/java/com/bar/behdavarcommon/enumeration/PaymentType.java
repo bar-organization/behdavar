@@ -11,7 +11,7 @@ public enum PaymentType implements AbstractEnum<Integer> {
     private Integer value;
 
     PaymentType(Integer s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override

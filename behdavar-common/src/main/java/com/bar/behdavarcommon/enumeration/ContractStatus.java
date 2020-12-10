@@ -11,12 +11,21 @@ public enum ContractStatus implements AbstractEnum<Integer> {
     private Integer value;
 
     ContractStatus(Integer s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override
     public Integer getValue() {
         return this.value;
+    }
+
+    public static ContractStatus getByName(String value){
+        for(ContractStatus v : values()){
+            if( v.name().equals(value)){
+                return v;
+            }
+        }
+        return null;
     }
 
 }

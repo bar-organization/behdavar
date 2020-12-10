@@ -9,7 +9,7 @@ public enum GeoDivisionType implements AbstractEnum<String> {
     ;
 
     GeoDivisionType(String s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override
@@ -17,9 +17,9 @@ public enum GeoDivisionType implements AbstractEnum<String> {
         return this.value;
     }
 
-    public static class GeoDivisionTypeConverter extends AbstractEnumConverter<GeoDivisionType, String> {
-        public GeoDivisionTypeConverter(Class<GeoDivisionType> clazz) {
-            super(clazz);
-        }
-    }
+//    public static class GeoDivisionTypeConverter extends AbstractEnumConverter<GeoDivisionType, String> {
+//        public GeoDivisionTypeConverter(Class<GeoDivisionType> clazz) {
+//            super(clazz);
+//        }
+//    }
 }

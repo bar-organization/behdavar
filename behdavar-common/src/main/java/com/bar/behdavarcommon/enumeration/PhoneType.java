@@ -9,7 +9,7 @@ public enum PhoneType implements AbstractEnum<String> {
     ;
 
     PhoneType(String s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override
@@ -17,9 +17,9 @@ public enum PhoneType implements AbstractEnum<String> {
         return this.value;
     }
 
-    public static class PhoneTypeConverter extends AbstractEnumConverter<PhoneType, String> {
-        public PhoneTypeConverter(Class<PhoneType> clazz) {
-            super(clazz);
-        }
-    }
+//    public static class PhoneTypeConverter extends AbstractEnumConverter<PhoneType, String> {
+//        public PhoneTypeConverter(Class<PhoneType> clazz) {
+//            super(clazz);
+//        }
+//    }
 }

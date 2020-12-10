@@ -10,6 +10,7 @@ import com.bar.behdavarbackend.dto.StatusLogDto;
 import com.bar.behdavarbackend.dto.UserInfoDto;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.*;
+import com.bar.behdavarcommon.enumeration.ContractStatus;
 import com.bar.behdavardatabase.entity.CartableEntity;
 import com.bar.behdavardatabase.entity.ContractEntity;
 import com.bar.behdavardatabase.entity.CustomerEntity;
@@ -79,12 +80,21 @@ public class CartableBusinessImpl implements CartableBusiness {
 
     @Override
     public PagingResponse findPagingAll(PagingRequest pagingRequest) {
+        pagingRequest.getFilters().stream()
+                .filter(searchCriteria -> searchCriteria.getKey().equals("contract.contractStatus"))
+                .findFirst()
+                .ifPresent(searchCriteria ->
+                        searchCriteria.setValue(ContractStatus.getByName(searchCriteria.getValue().toString())));
         return getPagingResponse(pagingRequest);
     }
 
     private PagingResponse getPagingResponse(PagingRequest pagingRequest) {
+        pagingRequest.getFilters().stream()
+                .filter(searchCriteria -> searchCriteria.getKey().equals("contract.contractStatus"))
+                .findFirst()
+                .ifPresent(searchCriteria ->
+                        searchCriteria.setValue(ContractStatus.getByName(searchCriteria.getValue().toString())));
         PagingExecutor<CartableEntity, Long> executor = new PagingExecutor<>(cartableRepository, pagingRequest);
-
         PagingResponse pagingResponse = executor.execute();
         if (pagingResponse.getData() != null) {
             List<CartableEntity> data = (List<CartableEntity>) pagingResponse.getData();

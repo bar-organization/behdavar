@@ -1,6 +1,7 @@
 package com.bar.behdavarbackend.util.pagination;
 
 import com.bar.behdavarcommon.enumeration.AbstractEnum;
+import com.bar.behdavarcommon.enumeration.ContractStatus;
 
 public enum SearchOperation implements AbstractEnum<String> {
     GREATER_THAN("ge"),

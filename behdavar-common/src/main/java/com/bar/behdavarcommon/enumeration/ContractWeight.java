@@ -9,7 +9,7 @@ public enum ContractWeight implements AbstractEnum<Integer> {
     private Integer value;
 
     ContractWeight(Integer s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override

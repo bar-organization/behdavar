@@ -7,7 +7,7 @@ public enum ContractType implements AbstractEnum<Integer> {
     private Integer value;
 
     ContractType(Integer s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override

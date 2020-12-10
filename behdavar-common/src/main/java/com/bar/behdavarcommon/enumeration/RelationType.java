@@ -8,7 +8,7 @@ public enum RelationType implements AbstractEnum<Integer> {
     private Integer value;
 
     RelationType(Integer s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override
@@ -16,9 +16,9 @@ public enum RelationType implements AbstractEnum<Integer> {
         return this.value;
     }
 
-    public static class CityTypeTypeConverter extends AbstractEnumConverter<RelationType, Integer> {
-        public CityTypeTypeConverter(Class<RelationType> clazz) {
-            super(clazz);
-        }
-    }
+//    public static class CityTypeTypeConverter extends AbstractEnumConverter<RelationType, Integer> {
+//        public CityTypeTypeConverter(Class<RelationType> clazz) {
+//            super(clazz);
+//        }
+//    }
 }

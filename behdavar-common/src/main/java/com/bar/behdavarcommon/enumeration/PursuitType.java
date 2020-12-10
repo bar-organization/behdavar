@@ -8,7 +8,7 @@ public enum PursuitType implements AbstractEnum<Integer> {
     private Integer value;
 
     PursuitType(Integer s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override

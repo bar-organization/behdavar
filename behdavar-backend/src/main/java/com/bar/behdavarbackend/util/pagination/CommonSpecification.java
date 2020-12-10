@@ -79,7 +79,7 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
                     if (join != null) {
                         predicates.add(builder.equal(
                                 join.get(items.get(items.size() - 1))
-                                ,  criteria.getValue().toString().toLowerCase()));
+                                ,  criteria.getValue()));
                     }
                 }
             } else if (criteria.getOperation().equals(SearchOperation.MATCH)) {

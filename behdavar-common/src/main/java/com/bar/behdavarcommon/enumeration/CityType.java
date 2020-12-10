@@ -10,17 +10,17 @@ public enum CityType implements AbstractEnum<String> {
     private String value;
 
     CityType(String s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override
     public String getValue() {
-        return this.value;
+        return this.getValue();
     }
 
-    public static class CityTypeTypeConverter extends AbstractEnumConverter<CityType, String> {
-        public CityTypeTypeConverter(Class<CityType> clazz) {
-            super(clazz);
-        }
-    }
+//    public static class CityTypeTypeConverter extends AbstractEnumConverter<CityType, String> {
+//        public CityTypeTypeConverter(Class<CityType> clazz) {
+//            super(clazz);
+//        }
+//    }
 }

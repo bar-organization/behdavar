@@ -9,7 +9,7 @@ public enum ResultType implements AbstractEnum<Integer> {
     private Integer value;
 
     ResultType(Integer s) {
-        this.value = getValue();
+        this.value = s;
     }
 
     @Override
