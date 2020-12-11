@@ -26,7 +26,7 @@ export class DocumentSearchComponent implements OnInit {
 
   @Input()
   documentSearchDataTable: DataTableComponent;
-
+  @Input() onFormUpdate: (parentFormValue:any) => void;
   parentForm: FormGroup;
   bankMachineSearchFormGroup: FormGroup;
   customerSearchFormGroup: FormGroup;
@@ -83,6 +83,9 @@ export class DocumentSearchComponent implements OnInit {
   }
 
   onSearch() {
+    if(this.onFormUpdate){
+      this.onFormUpdate(this?.parentForm?.value);
+    }
     const filter: SearchCriteria[] = [];
 
     const cFullName = this.parentForm.value?.customerSearchFormGroup?.name;
@@ -114,7 +117,7 @@ export class DocumentSearchComponent implements OnInit {
     if (status) {
       filter.push({
         key: 'contract.contractStatus',
-        value: new ContractStatusPip().transform(status, 'n'),
+        value: status,
         operation: SearchOperation.EQUAL
       })
     }
@@ -174,6 +177,16 @@ export class DocumentSearchComponent implements OnInit {
   onResetForm() {
     this.parentForm.reset();
     this.onSearch();
+  }
+
+  public getParentFormValue():any{
+    return this?.parentForm?.value;
+  }
+
+  public setParentFormValue(formValue:any){
+    if(!this.parentForm)
+      return ;
+      this.parentForm.setValue(formValue);
   }
 }
 

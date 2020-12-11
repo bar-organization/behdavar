@@ -3,6 +3,8 @@ export class Lang {
   insert = 'افزودن';
   new = 'جدید';
   edit = 'ویرایش';
+  yes = 'بله';
+  no = 'خیر';
   search = 'جستجو';
   view = 'مشاهده';
   reset = 'بازنشانی'
@@ -41,6 +43,10 @@ export class LoginLang extends Lang {
   passwordRequired = 'رمز عبور اجباری است';
   loginTitle = 'نرم افزار جامع پیگیری وصول مطالبات';
 
+}
+
+export class ConfirmDialogLang extends Lang {
+  dialogTitle = 'آیا از حذف مطمئن هستید؟'
 }
 
 export class PersonLang extends Lang {
@@ -200,8 +206,6 @@ export class FollowingLang extends Lang {
   depostidAmount = 'مبلغ واریز شده مشتری';
   coordinateAppointment = 'قرار ملاقات هماهنگ شد';
   customerDepositAmount = 'مشتری واریز داشته است';
-  depositAppointment = 'قرار واریز هماهنگ شد';
-  submitAcordingToFinalAction = 'ثبت به عنوان گزارش آخرین اقدام';
   attachedBrowse = 'بارگذاری ضمائم یا فیش واریز';
   nextFollowingDate = 'تاریخ یادآوری پیگیری بعدی';
   tableTitle = 'لیست پیگیری های قبلی';

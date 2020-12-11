@@ -21,6 +21,7 @@ import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/P
 import {ContractStatus} from "../model/enum/ContractStatus";
 import {ContractService} from "../service/contract-service";
 import {DocumentCacheService} from "../service/document-cache.service";
+import {DocumentSearchComponent} from "./document-search/document-search.component";
 
 @Component({
   selector: 'app-document',
@@ -30,6 +31,7 @@ export class DocumentComponent implements OnInit, AfterViewInit {
   documentLang = new DocumentLang();
   catalogHttpDataSource: HttpDataSource<CartableDto>;
   @ViewChild("table") documentTable: DataTableComponent;
+  @ViewChild("documentSearchComponent") documentSearchComponent: DocumentSearchComponent;
 
   constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService, private documentCacheService: DocumentCacheService) {
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
@@ -40,11 +42,19 @@ export class DocumentComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.documentCacheService.initCache({columnToDisplay: this.documentTable.columnToDisplay});
+    this.catalogHttpDataSource.beforeCall = pageRequest => {
+      this.documentCacheService.updateCache({columnToDisplay: this.documentTable.columnToDisplay,pagingRequest:this.catalogHttpDataSource.request});
+    };
+    this.documentSearchComponent.onFormUpdate = parentFormValue => {
+      this.documentCacheService.updateCache({documentSearchFormValue:parentFormValue});
+    }
+    this.documentCacheService.initCache({columnToDisplay: this.documentTable.columnToDisplay,pagingRequest:this.catalogHttpDataSource.request,documentSearchFormValue:this.documentSearchComponent.getParentFormValue()});
 
     this.documentCacheService.applyCache(value => {
       this.documentTable.columnToDisplay = value.columnToDisplay;
       this.documentTable.refreshSelectableColumns();
+      this.documentTable.reloadTable(value.pagingRequest);
+      this.documentSearchComponent.setParentFormValue(value.documentSearchFormValue);
     })
   }
 
@@ -69,7 +79,7 @@ export class DocumentComponent implements OnInit, AfterViewInit {
 
   private static getMyBasketFilter(): SearchCriteria {
     return {
-      key: 'contract.contractStatus', value: ContractStatus.AVAILABLE.valueOf(),
+      key: 'contract.contractStatus', value:ContractStatus[ContractStatus.AVAILABLE.valueOf()],
       operation: SearchOperation.EQUAL
     };
   }

@@ -83,8 +83,6 @@ export class UserDto extends BaseAuditorDto<string, number> {
 export class PursuitDto extends BaseAuditorDto<string, number> {
   description: string;
   coordinateAppointment: boolean;
-  depositAppointment: boolean;
-  submitAccordingFinal: boolean;
   // TODO use string for because use moment.format() to fix issue of Jackson convert to Java LocalDate. must fix...
   nextPursuitDate: string;
   customerDeposit: boolean;
@@ -95,7 +93,7 @@ export class PursuitDto extends BaseAuditorDto<string, number> {
   contract: ContractDto;
 }
 
-export class PaymentDto {
+export class PaymentDto extends BaseAuditorDto<string, number> {
   amount: number;
   paymentDate: Date;
   paymentType: PaymentType;
@@ -104,7 +102,7 @@ export class PaymentDto {
   attachment: AttachmentDto;
 }
 
-export class AttachmentDto {
+export class AttachmentDto extends BaseAuditorDto<string, number> {
   content: string;
   fileName: string;
   contract: ContractDto;

@@ -101,16 +101,16 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  private configureHttpDataSource() {
+  private configureHttpDataSource(pagingRequest?: PagingRequest) {
     if (this.httpDataSource) {
-      this.httpDataSource.find(this.getPageRequest())
+      this.httpDataSource.find(!!pagingRequest ? pagingRequest : this.getPageRequest())
       this.loading$ = this.httpDataSource.loadingSubject.asObservable();
       this.totalRecord$ = this.httpDataSource.totalRecordSubject.asObservable();
     }
   }
 
   getColumnValue(element: any, col: TableColumn) {
-    if(col.customValue)
+    if (col.customValue)
       return col.customValue(element);
 
     const fieldValue = this.handelDot(element, col.fieldName);
@@ -200,9 +200,15 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     this.selection.changed.subscribe(change => this.multiSelectable ? this.multiToggle(change.added) : this.toggle(change.added[0]))
   }
 
-  reloadTable() {
+  reloadTable(pagingRequest?: PagingRequest) {
     if (this.httpDataSource) {
-      this.httpDataSource.reload();
+      if (pagingRequest) {
+        this.paginator.pageIndex = pagingRequest.start;
+        this.paginator.pageSize = pagingRequest.max;
+        this.httpDataSource.find(pagingRequest);
+      } else {
+        this.httpDataSource.reload();
+      }
     }
   }
 
@@ -234,11 +240,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     return sortedColumn && sortedColumn.sortable;
   }
 
-  getCustomClass(row: any,col:TableColumn): string {
-   if(!row || !col.customValue){
-     return ;
-   }
-   return  col.customValue(row);
+  getCustomClass(row: any, col: TableColumn): string {
+    if (!row || !col.customValue) {
+      return;
+    }
+    return col.customValue(row);
   }
 
   getColorHints(): ColorHint[] {
@@ -253,7 +259,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   }
 
 
-  private convertBase64ToBlobData(base64Data: string, sliceSize=512) {
+  private convertBase64ToBlobData(base64Data: string, sliceSize = 512) {
     const byteCharacters = atob(base64Data);
     const byteArrays = [];
 
@@ -273,14 +279,14 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     return new Blob(byteArrays);
   }
 
-  private getFileName(element:any,fieldName:string){
+  private getFileName(element: any, fieldName: string) {
     if (!element || !fieldName || !fieldName.includes("+")) {
       return '';
     }
     return dot.pick(fieldName.split('+')[0], element);
   }
 
-  private getBase64(element:any,fieldName:string){
+  private getBase64(element: any, fieldName: string) {
     if (!element || !fieldName || !fieldName.includes("+")) {
       return '';
     }

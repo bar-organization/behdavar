@@ -49,13 +49,11 @@ public class PursuitLogTransformer extends BaseAuditorTransformer {
         entity.setContract(ContractTransformer.createEntityForRelation(pursuitEntity.getContract().getId()));
         entity.setCoordinateAppointment(pursuitEntity.getCoordinateAppointment());
         entity.setCustomerDeposit(pursuitEntity.getCustomerDeposit());
-        entity.setDepositAppointment(pursuitEntity.getDepositAppointment());
         entity.setDescription(pursuitEntity.getDescription());
         entity.setNextPursuitDate(pursuitEntity.getNextPursuitDate());
         Optional.ofNullable(pursuitEntity.getPayment()).ifPresent(paymentDto -> PaymentTransformer.createEntityForRelation(paymentDto.getId()));
         entity.setPursuitType(pursuitEntity.getPursuitType());
         entity.setResultType(pursuitEntity.getResultType());
-        entity.setSubmitAccordingFinal(pursuitEntity.getSubmitAccordingFinal());
         entity.setUser(UserTransformer.createEntityForRelation(pursuitEntity.getUser().getId()));
         entity.setPursuit(PursuitTransformer.createEntityForRelation(pursuitEntity.getId()));
         return entity;

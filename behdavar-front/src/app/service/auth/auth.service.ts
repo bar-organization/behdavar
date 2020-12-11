@@ -8,6 +8,7 @@ import {BehaviorSubject, Observable, throwError} from "rxjs";
 import {catchError, tap} from "rxjs/operators";
 import {AuthorityConstantEnum} from "../../model/enum/AuthorityConstantEnum";
 import {UserDto} from "../../model/model";
+import {DocumentCacheService} from "../document-cache.service";
 
 const jwtHelper = new JwtHelperService();
 
@@ -18,7 +19,7 @@ export class AuthService {
   authResponseSubject: BehaviorSubject<AuthenticationResponse>;
   private static readonly AUTH_RESPONSE = "authResponse";
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router,private documentCacheService:DocumentCacheService) {
     if (!this.authResponseSubject) {
       this.authResponseSubject = new BehaviorSubject<AuthenticationResponse>(null);
     }
@@ -48,6 +49,7 @@ export class AuthService {
   public logout(): void {
     this.authResponseSubject.next(null);
     sessionStorage.removeItem(AuthService.AUTH_RESPONSE);
+    this.documentCacheService.clearSessionOfDocumentCache();
     this.router.navigate(['/login']);
   }
 

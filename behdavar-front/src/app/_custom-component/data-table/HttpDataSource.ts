@@ -14,7 +14,7 @@ export default class HttpDataSource<T> implements DataSource<T> {
   private httpClient: HttpClient;
   private filters: SearchCriteria[];
   private _sortOperation: SortOperation;
-  private request: PagingRequest;
+  private _request: PagingRequest;
 
   constructor(url: string, httpClient: HttpClient, filters?: SearchCriteria[], sortOperation?: SortOperation) {
     this.url = url;
@@ -35,7 +35,7 @@ export default class HttpDataSource<T> implements DataSource<T> {
     // start active loading
     this.loadingSubject.next(true);
 
-    this.request = request;
+    this._request = request;
 
     if (this.filters)
       request.filters = this.filters;
@@ -54,13 +54,13 @@ export default class HttpDataSource<T> implements DataSource<T> {
   }
 
   public reload(filters?: SearchCriteria[],sortOperation?: SortOperation) {
-    if (this.request) {
+    if (this._request) {
       if (filters)
         this.filters = filters;
       if(sortOperation)
         this.sortOperation = sortOperation;
 
-      this.find(this.request);
+      this.find(this._request);
     }
   }
 
@@ -95,6 +95,10 @@ export default class HttpDataSource<T> implements DataSource<T> {
     };
   }
 
+
+  get request(): PagingRequest {
+    return this._request;
+  }
 
   get subject(): BehaviorSubject<T[]> {
     return this._subject;

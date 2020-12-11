@@ -86,6 +86,8 @@ import {DocumentCacheService} from "./service/document-cache.service";
 import {JalaliMomentDateAdapter} from "./service/jalali-date/jalali-moment-date-adapter";
 import {JALALI_MOMENT_FORMATS, MOMENT_FORMATS} from "./service/jalali-date/jalali_moment_formats";
 import {PursuitService} from "./service/pursuit-service";
+import {ConfirmDialogComponent} from "./_custom-component/confirm-dialog/confirm-dialog.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   imports: [
@@ -123,7 +125,8 @@ import {PursuitService} from "./service/pursuit-service";
     MatTooltipModule,
     MatRadioModule,
     MatChipsModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    MatDialogModule
   ],
   declarations: [
     AppComponent,
@@ -164,6 +167,7 @@ import {PursuitService} from "./service/pursuit-service";
     AutocompleteComponent,
     DocumentFlowComponent,
     DocumentChangeStatusComponent,
+    ConfirmDialogComponent,
 
   ],
 

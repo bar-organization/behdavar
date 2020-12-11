@@ -14,12 +14,10 @@ public class PursuitTransformer extends BaseAuditorTransformer {
         entity.setContract(ContractTransformer.createEntityForRelation(dto.getContract().getId()));
         entity.setCoordinateAppointment(dto.getCoordinateAppointment());
         entity.setCustomerDeposit(dto.getCustomerDeposit());
-        entity.setDepositAppointment(dto.getDepositAppointment());
         entity.setDescription(dto.getDescription());
         entity.setNextPursuitDate(dto.getNextPursuitDate());
         entity.setPursuitType(dto.getPursuitType());
         entity.setResultType(dto.getResultType());
-        entity.setSubmitAccordingFinal(dto.getSubmitAccordingFinal());
         entity.setUser(UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId()));
         Optional.ofNullable(dto.getPayment()).ifPresent(paymentDto -> entity.setPayment(PaymentTransformer.createEntityForRelation(paymentDto.getId())));
         return entity;
@@ -29,12 +27,10 @@ public class PursuitTransformer extends BaseAuditorTransformer {
         transformAuditingFields(entity, dto);
         dto.setCoordinateAppointment(entity.getCoordinateAppointment());
         dto.setCustomerDeposit(entity.getCustomerDeposit());
-        dto.setDepositAppointment(entity.getDepositAppointment());
         dto.setDescription(entity.getDescription());
         dto.setNextPursuitDate(entity.getNextPursuitDate());
         dto.setPursuitType(entity.getPursuitType());
         dto.setResultType(entity.getResultType());
-        dto.setSubmitAccordingFinal(entity.getSubmitAccordingFinal());
         Optional.ofNullable(entity.getPayment()).ifPresent(e -> dto.setPayment(PaymentTransformer.entityToDto(e, new PaymentDto())));
         dto.setContract(ContractTransformer.createDtoForRelation(entity.getContract().getId()));
         dto.setUser(UserTransformer.entityToDto(entity.getUser(), new UserDto()));

@@ -10,8 +10,8 @@
       <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="0.5rem">
 
 
-        <div fxLayout="column" fxLayoutAlign="center none" class="card p-2 w-50">
-          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem" class="card p-2 w-50">
+          <div fxLayout="column" fxLayoutAlign="stat start" fxLayoutGap="1rem" class="w-25">
             <mat-form-field appearance="standard">
               <mat-label>{{lang.followingType}}</mat-label>
               <mat-select formControlName="pursuitType">
@@ -21,14 +21,11 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-checkbox formControlName="coordinateAppointment"
-                          class="example-margin">{{this.lang.coordinateAppointment}}</mat-checkbox>
-            <mat-checkbox formControlName="customerDeposit"
-                          class="example-margin">{{this.lang.customerDepositAmount}}</mat-checkbox>
+            <mat-checkbox formControlName="coordinateAppointment">{{this.lang.coordinateAppointment}}</mat-checkbox>
 
           </div>
 
-          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem">
+          <div fxLayout="column" fxLayoutAlign="stat start" fxLayoutGap="1rem">
             <mat-form-field appearance="standard">
               <mat-label>{{lang.followingResult}}</mat-label>
               <mat-select formControlName="resultType">
@@ -38,10 +35,7 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-checkbox formControlName="depositAppointment">{{lang.depositAppointment}}</mat-checkbox>
-
-            <mat-checkbox formControlName="submitAccordingFinal">{{lang.submitAcordingToFinalAction}}</mat-checkbox>
-
+            <mat-checkbox formControlName="customerDeposit">{{this.lang.customerDepositAmount}}</mat-checkbox>
           </div>
 
         </div>
@@ -78,11 +72,11 @@
           </mat-form-field>
         </div>
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1rem">
-        <button mat-raised-button color="warn" class="px-5" [disabled]="!(table.selectedValueChange | async)" (click)="onDelete()">
+        <button mat-raised-button color="warn" class="px-5" [disabled]="deleteDisabled" (click)="onDelete()">
           <span class="px-2">{{lang.delete}}</span>
           <mat-icon>delete</mat-icon>
         </button>
-        <button mat-raised-button color="accent" class="px-5" [disabled]="!(table.selectedValueChange | async)" (click)="onEdit()">
+        <button mat-raised-button color="accent" class="px-5" [disabled]="editDisabled" (click)="onEdit()">
           <span class="px-2">{{lang.edit}}</span>
           <mat-icon>mode_edit</mat-icon>
         </button>

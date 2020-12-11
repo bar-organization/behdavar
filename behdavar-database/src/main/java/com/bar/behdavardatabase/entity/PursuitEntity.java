@@ -40,11 +40,6 @@ public class PursuitEntity extends BaseAuditorEntity<String, Long> {
     @Column(name = "COORDINATE_APPOINTMENT")
     private Boolean coordinateAppointment;
 
-    @Column(name = "DEPOSIT_APPOINTMENT")
-    private Boolean depositAppointment;
-
-    @Column(name = "SUBMIT_ACCORDING_FINAL")
-    private Boolean submitAccordingFinal;
 
     @Column(name = "NEXT_PURSUIT_DATE")
     private LocalDate nextPursuitDate;

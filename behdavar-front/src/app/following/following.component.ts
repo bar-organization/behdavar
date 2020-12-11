@@ -26,6 +26,8 @@ import {ResultTypePip} from "../_pip/ResultTypePip";
 import {PaymentType} from "../model/enum/PaymentType";
 import {ThousandPip} from "../_pip/ThousandPip";
 import {PursuitService} from "../service/pursuit-service";
+import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent} from "../_custom-component/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-following',
@@ -41,25 +43,25 @@ export class FollowingComponent implements OnInit {
   fileName: string = null;
   fileToUpload: string = null;
   contractDto: ContractDto;
-  selectedValue:PursuitDto;
+  selectedValue: PursuitDto;
 
   pursuitTypeList: EnumValueTitle<PursuitType>[] = PURSUIT_TYPE_TITLE;
   resultTypeList: EnumValueTitle<ResultType>[] = RESULT_TYPE_TITLE;
 
   followingHttpDataSource: HttpDataSource<PursuitDto>;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder,private pursuitService:PursuitService,private messageService: MessageService, private pursuitTypePip: PursuitTypePip, private resultTypePip: ResultTypePip, private router: Router, private contractService: ContractService) {
+  constructor(public dialog: MatDialog, private httpClient: HttpClient, private route: ActivatedRoute, private fb: FormBuilder, private pursuitService: PursuitService, private messageService: MessageService, private pursuitTypePip: PursuitTypePip, private resultTypePip: ResultTypePip, private router: Router, private contractService: ContractService) {
   }
 
   ngOnInit(): void {
+    this.deleteDisabled = true;
+    this.editDisabled = true;
     this.updateContractId();
     this.contractService.getById(this.contractService.currentId, result => this.contractDto = result);
 
     this.followingForm = this.fb.group({
       description: [''],
       coordinateAppointment: [''],
-      depositAppointment: [''],
-      submitAccordingFinal: [''],
       nextPursuitDate: [undefined],
       customerDeposit: [''],
       pursuitType: [PursuitType.PHONE_CALL.toString()],
@@ -103,6 +105,8 @@ export class FollowingComponent implements OnInit {
     },
     {fieldName: 'description', title: this.lang.description},
   ];
+  deleteDisabled: boolean;
+  editDisabled: boolean;
 
   private static getPursuitTypePip() {
     return [{pip: new PursuitTypePip()}, {pip: new BlankToDashPipe()}];
@@ -123,19 +127,8 @@ export class FollowingComponent implements OnInit {
     this.completeModel(saveModel);
 
     this.httpClient.post<PursuitDto>(Url.PURSUIT_SAVE, saveModel)
-      .subscribe(() => {
-          this.messageService.showGeneralSuccess(this.lang.successSave);
-          this.resetForm();
-          // TODO must refactor
-          const filter: SearchCriteria[] = [{
-            key: 'contract.id',
-            value: this.contractService.currentId,
-            operation: SearchOperation.EQUAL
-          }];
-          this.followingHttpDataSource.reload(filter);
-        },
-        error => this.messageService.showGeneralError(this.lang.error, error)
-      );
+      .subscribe(() => this.onSuccess(this.lang.successSave),
+        error => this.messageService.showGeneralError(this.lang.error, error));
   }
 
   handleFileInput(files: FileList) {
@@ -158,8 +151,9 @@ export class FollowingComponent implements OnInit {
     model.resultType = this.resultTypePip.transform(this?.followingForm?.value?.resultType, 'n');
     const paymentAmount = this.followingForm?.value?.depostidAmount;
 
-    if (paymentAmount) {
+    if (paymentAmount !== undefined) {
       const payment = new PaymentDto();
+      payment.id = model?.payment?.id;
       payment.amount = paymentAmount;
       payment.paymentType = PaymentType.CASH;
       payment.contract = model.contract;
@@ -170,9 +164,13 @@ export class FollowingComponent implements OnInit {
         attachmentDto.content = this.fileToUpload;
         attachmentDto.contract = model.contract;
         payment.attachment = attachmentDto;
+        payment.attachment.createdDate = null;
+        payment.attachment.lastModifiedDate = null;
       }
 
       model.payment = payment;
+      model.payment.createdDate = null;
+      model.payment.lastModifiedDate = null;
     }
 
     if (model.nextPursuitDate)
@@ -200,19 +198,19 @@ export class FollowingComponent implements OnInit {
 
   onSelectedValueChange(selectedValue: PursuitDto) {
     this.selectedValue = selectedValue;
+    this.deleteDisabled = !selectedValue;
+    this.editDisabled = !selectedValue;
     if (!this.followingForm || !selectedValue) {
       return;
     }
     this.followingForm.reset({
       description: selectedValue.description,
       coordinateAppointment: selectedValue.coordinateAppointment,
-      depositAppointment: selectedValue.depositAppointment,
-      submitAccordingFinal: selectedValue.submitAccordingFinal,
       nextPursuitDate: undefined,
       customerDeposit: selectedValue.customerDeposit,
       pursuitType: selectedValue?.pursuitType?.toString(),
       resultType: selectedValue?.resultType?.toString(),
-      depostidAmount: 0
+      depostidAmount: selectedValue?.payment?.amount
     });
     if (selectedValue.nextPursuitDate)
       this.followingForm.patchValue({nextPursuitDate: moment(selectedValue.nextPursuitDate).format('yyyy-MM-DD')});
@@ -223,8 +221,6 @@ export class FollowingComponent implements OnInit {
     this.followingForm.reset({
       description: '',
       coordinateAppointment: false,
-      depositAppointment: false,
-      submitAccordingFinal: false,
       nextPursuitDate: undefined,
       customerDeposit: false,
       pursuitType: PursuitType.PHONE_CALL.toString(),
@@ -239,9 +235,15 @@ export class FollowingComponent implements OnInit {
       return;
     }
 
-    this.pursuitService.deleteById(this.selectedValue.id, deletedId => {
-      this.messageService.showGeneralSuccess(this.lang.successDelete);
-      this.followingHttpDataSource.reload();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result)
+        return;
+
+      this.pursuitService.deleteById(this.selectedValue.id, deletedId => {
+        this.onSuccess(this.lang.successDelete);
+      });
     });
 
   }
@@ -253,19 +255,26 @@ export class FollowingComponent implements OnInit {
     }
     const editPursuit: PursuitDto = this.followingForm.value;
     editPursuit.id = this.selectedValue.id;
+    editPursuit.payment = this.selectedValue.payment;
 
     this.completeModel(editPursuit);
 
-    this.pursuitService.editPursuit(editPursuit,pursuitDto => {
-      this.messageService.showGeneralSuccess(this.lang.successSave);
-      this.resetForm();
-      // TODO must refactor
-      const filter: SearchCriteria[] = [{
-        key: 'contract.id',
-        value: this.contractService.currentId,
-        operation: SearchOperation.EQUAL
-      }];
-      this.followingHttpDataSource.reload(filter);
+    this.pursuitService.editPursuit(editPursuit, pursuitDto => {
+      this.onSuccess(this.lang.successSave);
     });
+  }
+
+  private onSuccess(message: string) {
+    this.messageService.showGeneralSuccess(message);
+    this.resetForm();
+    this.editDisabled = true;
+    this.deleteDisabled = true;
+    // TODO must refactor
+    const filter: SearchCriteria[] = [{
+      key: 'contract.id',
+      value: this.contractService.currentId,
+      operation: SearchOperation.EQUAL
+    }];
+    this.followingHttpDataSource.reload(filter);
   }
 }

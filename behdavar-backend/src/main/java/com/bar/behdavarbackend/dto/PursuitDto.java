@@ -15,8 +15,6 @@ public class PursuitDto extends BaseAuditorDto<String, Long> {
 
     private String description;
     private Boolean coordinateAppointment;
-    private Boolean depositAppointment;
-    private Boolean submitAccordingFinal;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate nextPursuitDate;
     private Boolean customerDeposit;
