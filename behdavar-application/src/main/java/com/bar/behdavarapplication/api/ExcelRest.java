@@ -4,6 +4,7 @@ import com.bar.behdavarbackend.business.api.ExcelReaderBusiness;
 import com.bar.behdavarbackend.dto.CartableDto;
 import com.bar.behdavarbackend.dto.InputExcelDto;
 import com.bar.behdavarcommon.AuthorityConstant;
+import com.bar.behdavardatabase.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,14 @@ public class ExcelRest {
     @Autowired
     ExcelReaderBusiness excelReaderBusiness;
 
+    @Autowired
+    PersonRepository personRepository;
+
     @PreAuthorize("hasAuthority('" + AuthorityConstant.UPLOAD_EXCEL + "')")
     @PostMapping("/upload")
     public ResponseEntity<CartableDto> findById(@RequestBody @Valid InputExcelDto dto) {
         excelReaderBusiness.readAndSave(dto);
+        personRepository.convertArabicLetters();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
