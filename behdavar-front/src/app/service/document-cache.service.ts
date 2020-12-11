@@ -29,19 +29,13 @@ export class DocumentCacheService {
     const currentRootUrl = this.getCurrentRootUrl();
 
     if (currentRootUrl === 'my-basket') {
-      return !!DocumentCacheService.getFromSession(DocumentCacheService.MY_BASKET_CACHE) ?
-        DocumentCacheService.getFromSession(DocumentCacheService.MY_BASKET_CACHE) :
-        this.myBasketDocumentSearchInfo;
+      return DocumentCacheService.getFromSession(DocumentCacheService.MY_BASKET_CACHE);
     }
     if (currentRootUrl === 'search') {
-      return !!DocumentCacheService.getFromSession(DocumentCacheService.SEARCH_CACHE) ?
-        DocumentCacheService.getFromSession(DocumentCacheService.SEARCH_CACHE) :
-        this.searchDocumentSearchInfo;
+      return DocumentCacheService.getFromSession(DocumentCacheService.SEARCH_CACHE)
     }
     if (currentRootUrl === 'document-manage') {
-      return !!DocumentCacheService.getFromSession(DocumentCacheService.DOC_MANAGE_CACHE) ?
-        DocumentCacheService.getFromSession(DocumentCacheService.DOC_MANAGE_CACHE) :
-        this.docManagementDocumentSearchInfo;
+      return DocumentCacheService.getFromSession(DocumentCacheService.DOC_MANAGE_CACHE);
     }
     return null;
   }
