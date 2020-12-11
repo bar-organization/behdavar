@@ -13,6 +13,9 @@ import org.hibernate.envers.Audited;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
 @Setter
@@ -25,6 +28,7 @@ public class MessageEntity  extends BaseAuditorEntity<String,Long>{
 
     public static final String TABLE_NAME = BASE_TABLE_PREFIX + "MESSAGE";
     public static final String SEQ_NAME = "MESSAGE" + BaseConstant.SEQUENCE;
+    public static final String ATTACHMENTS = "attachments";
 
     @Column(name = "ID")
     @Id
@@ -44,12 +48,18 @@ public class MessageEntity  extends BaseAuditorEntity<String,Long>{
     @Column(name = "IS_SENT")
     private Boolean isSent;
 
-    @Column(name = "ACTIVE")
-    private Boolean active;
+    @Column(name = "DELETED" , columnDefinition = " NUMBER(1) DEFAULT 0")
+    private Boolean deleted;
 
     @OneToOne
-    @JoinColumn(name = "SENDER_ID", foreignKey = @ForeignKey(name = "MESSAGE_SENDER_FK"))
+    @JoinColumn(name = "SENDER_ID", foreignKey = @ForeignKey(name = "MESSAGE_SENDER_FK") , nullable = false)
     @NotNull
     private UserEntity sender;
+
+    @OneToMany(fetch = FetchType.LAZY , cascade = CascadeType.ALL ,orphanRemoval = true)
+    private Set<MessageReceiverEntity> receivers = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY , mappedBy = "message", cascade = CascadeType.ALL ,orphanRemoval = true)
+    private Set<MessageAttachmentEntity> attachments = new HashSet<>();
 
 }

@@ -13,6 +13,8 @@ import org.hibernate.envers.Audited;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.util.Objects;
+
 import static com.bar.behdavardatabase.constant.common.BaseConstant.BASE_TABLE_PREFIX;
 
 @Setter
@@ -35,15 +37,35 @@ public class MessageReceiverEntity  extends BaseAuditorEntity<String,Long> {
     @Column(name = "IS_CC")
     private Boolean isCC;
 
-    @Column(name = "ACTIVE")
-    private Boolean active;
+    @Column(name = "DELETED" , columnDefinition = " NUMBER(1) DEFAULT 0")
+    private Boolean deleted;
+
+    @Column(name = "IS_READ" , columnDefinition = " NUMBER(1) DEFAULT 0")
+    private Boolean isRead;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "RECEIVER_ID", foreignKey = @ForeignKey(name = "MESSAGE_RECEIVER_FK"))
     private UserEntity receiver;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "MESSAGE_ID", foreignKey = @ForeignKey(name = "MESSAGE_MESSAGE_FK"))
+    @JoinColumn(name = "MESSAGE_ID", foreignKey = @ForeignKey(name = "MESSAGE_MESSAGE_FK") , nullable = false)
+    @NotNull
     private MessageEntity message;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        MessageReceiverEntity that = (MessageReceiverEntity) o;
+        return id.equals(that.id) &&
+                isCC.equals(that.isCC) &&
+                receiver.equals(that.receiver) &&
+                message.equals(that.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), id, isCC, receiver, message);
+    }
 }
