@@ -12,7 +12,7 @@ export class JalaliPipe implements PipeTransform {
     }
     let momentDate: moment.Moment;
     if (format && format[0]) {
-      momentDate = moment(value, format[0]);
+      momentDate = moment(value, 'YYYY/MM/DD HH:mm');
       return momentDate.locale('fa').format(format[0]);
     } else {
       momentDate = moment(value, 'YYYY/MM/DD');
