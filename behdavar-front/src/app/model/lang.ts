@@ -297,11 +297,11 @@ export class ResultTypeLang extends Lang {
 
 export class ContractStatusLang extends Lang {
   AVAILABLE = 'در دسترس';
-  CLEARING = 'پاک شده';
+  CLEARING = 'تسویه شده';
   RAW = 'خام';
-  LEGAL = 'مجاز';
-  PARKING = 'توقیف وسیله';
-  RETURN = 'برگشت داده شده';
+  LEGAL = 'ارجاع به حقوقی';
+  PARKING = 'توقیف شده';
+  RETURN = 'عدم دسترسی';
 }
 
 export class PaymentTypeLang extends Lang {
