@@ -36,6 +36,13 @@ th.mat-header-cell:last-child, td.mat-cell:last-child {
 
 }
 
+.color-column {
+  border-radius: 50%;
+  width: 1.3rem;
+  height: 1.3rem;
+
+}
+
 .black-back {
   background-color: #424242;
   background-clip: padding-box;

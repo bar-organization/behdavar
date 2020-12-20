@@ -3,6 +3,7 @@ export class Lang {
   insert = 'افزودن';
   new = 'جدید';
   edit = 'ویرایش';
+  ok = 'تایید';
   yes = 'بله';
   no = 'خیر';
   search = 'جستجو';
@@ -26,6 +27,7 @@ export class Lang {
   date = 'تاریخ';
   time = 'زمان';
   exit = 'خروج';
+  cancel = 'انصراف';
 }
 
 export class AuthLang extends Lang {
@@ -47,6 +49,11 @@ export class LoginLang extends Lang {
 
 export class ConfirmDialogLang extends Lang {
   dialogTitle = 'آیا از حذف مطمئن هستید؟'
+}
+
+export class ChangeStatusDialogLang extends Lang {
+  dialogTitle = 'تغییر وضعیت پرونده';
+  selectNewStatus = 'انتخاب وضعیت جدید';
 }
 
 export class PersonLang extends Lang {

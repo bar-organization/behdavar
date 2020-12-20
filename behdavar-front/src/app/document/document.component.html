@@ -1,3 +1,3 @@
 <app-document-search #documentSearchComponent [documentSearchDataTable]="table" ></app-document-search>
 
-<data-table #table [getRowClassName]="getClassNameByContractStatus" [showColorHint]="true" [title]="documentLang.tableTitle" [httpDataSource]="catalogHttpDataSource" (selectedValueChange)="onSelectedValueChange($event)" (columnToDisplayChange)="onColumnDisplayChange($event)" [tableColumns]="tableColumns"></data-table>
+<data-table #table [getRowClassName]="getClassNameByContractStatus" [showColorHint]="true" [title]="documentLang.tableTitle" [httpDataSource]="catalogHttpDataSource" (selectedValueChange)="onSelectedValueChange($event)" (onColorCellClick)="onDocumentColorClick($event)" (columnToDisplayChange)="onColumnDisplayChange($event)" [tableColumns]="tableColumns"></data-table>

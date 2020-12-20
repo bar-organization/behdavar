@@ -2,13 +2,15 @@
   <div fxLayout="row" fxLayoutAlign="space-between center" class="card-header py-0 m-0">
     <h6 class="m-0 p-0">{{title}}</h6>
     <div>
-      <button *ngIf="showColorHint" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="راهنمای رنگ" aria-label="Example icon-button with a menu">
+      <button *ngIf="showColorHint" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="راهنمای رنگ"
+              aria-label="Example icon-button with a menu">
         <mat-icon>lightbulb_outline</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <div *ngFor="let cHint of getColorHints()" mat-menu-item fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem">
-            <div [ngClass]="cHint.className" class="color-hint"></div>
-            <span>{{cHint.title}}</span>
+        <div *ngFor="let cHint of getColorHints()" mat-menu-item fxLayout="row" fxLayoutAlign="start center"
+             fxLayoutGap="0.5rem">
+          <div [ngClass]="cHint.className" class="color-hint"></div>
+          <span>{{cHint.title}}</span>
         </div>
       </mat-menu>
 
@@ -72,15 +74,22 @@
         <td mat-cell *matCellDef="let element">
 
           <div [ngSwitch]="col.type">
-            <button *ngSwitchCase="'DOWNLOADABLE'" mat-icon-button (click)="onFileDownloadClick(getBase64(element,col.fieldName),getFileName(element,col.fieldName))">
+            <button *ngSwitchCase="'DOWNLOADABLE'" mat-icon-button
+                    (click)="onFileDownloadClick(getBase64(element,col.fieldName),getFileName(element,col.fieldName))">
               <mat-icon>file_download</mat-icon>
-              <span>{{getFileName(element,col.fieldName)}}</span>
+              <span>{{getFileName(element, col.fieldName)}}</span>
             </button>
 
-            <div [ngClass]="getCustomClass(element,col)" class="color-hint" *ngSwitchCase="'COLOR'"></div>
-          <div *ngSwitchDefault>
-          {{getColumnValue(element, col) }}
-          </div>
+            <button mat-stroked-button *ngSwitchCase="'COLOR'" class="mx-2" (click)="onColorClick(element)">
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="0.5rem" style="width: 8rem">
+                <span [ngClass]="getCustomClass(element,col)" class="color-column"></span>
+                <span>{{getColorColumnTitle(element, col)}}</span>
+              </div>
+            </button>
+
+            <div *ngSwitchDefault>
+              {{getColumnValue(element, col) }}
+            </div>
 
           </div>
 

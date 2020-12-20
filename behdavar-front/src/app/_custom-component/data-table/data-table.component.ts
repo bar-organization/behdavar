@@ -34,6 +34,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @Output() columnToDisplayChange = new EventEmitter<string[]>();
   @Input() getRowClassName: (row: any) => RowClassName;
   @Input() showColorHint: boolean;
+  @Output() onColorCellClick = new EventEmitter<any>();
 
   public loading$: Observable<boolean> = new BehaviorSubject<boolean>(false);
   public totalRecord$: Observable<number> = new BehaviorSubject<number>(0);
@@ -244,7 +245,13 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     if (!row || !col.customValue) {
       return;
     }
-    return col.customValue(row);
+    return col.customValue(row)['className'];
+  }
+  getColorColumnTitle(row:any,col:TableColumn):string {
+    if (!row || !col.customValue) {
+      return;
+    }
+    return col.customValue(row)['title'];
   }
 
   getColorHints(): ColorHint[] {
@@ -307,6 +314,12 @@ export class DataTableComponent implements OnInit, AfterViewInit {
       link.click();
     }
 
+  }
+
+  private onColorClick(element: any) {
+    if (this.onColorCellClick) {
+      this.onColorCellClick.emit(element);
+    }
   }
 }
 

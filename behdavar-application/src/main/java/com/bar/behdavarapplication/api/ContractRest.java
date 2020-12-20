@@ -3,6 +3,8 @@ package com.bar.behdavarapplication.api;
 import com.bar.behdavarbackend.business.api.ContractBusiness;
 import com.bar.behdavarbackend.dto.ContractDto;
 import com.bar.behdavarcommon.AuthorityConstant;
+import com.bar.behdavarcommon.enumeration.ContractStatus;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,4 +33,19 @@ public class ContractRest {
         return new ResponseEntity<>(contractBusiness.findById(id), HttpStatus.OK);
     }
 
+
+    @PreAuthorize("hasAuthority('" + AuthorityConstant.CATALOG_UPDATE + "')")
+    @PostMapping("/update-status")
+    public ResponseEntity<Void> updateStatus(@RequestBody UpdateStatusWrapper w) {
+        contractBusiness.updateStatus(w.getContractId(), w.getNewStatus());
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Data
+    private static class UpdateStatusWrapper {
+        private Long contractId;
+        private ContractStatus newStatus;
+
+    }
 }
+

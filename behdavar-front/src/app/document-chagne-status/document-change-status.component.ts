@@ -11,6 +11,7 @@ import {ActivatedRoute} from "@angular/router";
 import {FormControl} from "@angular/forms";
 import {CONTRACT_STATUS_TITLE} from "../model/enum/ContractStatus";
 import {EnumValueTitle} from "../model/enum/EnumValueTitle";
+import {MessageService} from "../service/message.service";
 
 @Component({
   selector: 'document-change-status',
@@ -24,12 +25,12 @@ export class DocumentChangeStatusComponent implements OnInit {
 
   documentHistoryHttpDataSource: HttpDataSource<unknown>;
   tableColumns: TableColumn[];
-  contractStatusList: EnumValueTitle<string>[] =   CONTRACT_STATUS_TITLE;
+  contractStatusList: EnumValueTitle<string>[] = CONTRACT_STATUS_TITLE;
 
 
-
-  constructor(private httpClient: HttpClient,private route: ActivatedRoute,private contractService:ContractService) {
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private contractService: ContractService, private messageService: MessageService) {
   }
+
   private updateContractId() {
     let id = this.route.snapshot.params['id'];
     try {
@@ -45,11 +46,16 @@ export class DocumentChangeStatusComponent implements OnInit {
     this.documentHistoryHttpDataSource = new HttpDataSource<unknown>(null, this.httpClient);
     this.tableColumns = [
       {fieldName: 'date', title: this.lang.date, pipNames: DocumentChangeStatusComponent.getDatePip()},
-      {fieldName: 'changeStatus', title: this.lang.status, pipNames: DocumentChangeStatusComponent.getContractStatusPip()},
+      {
+        fieldName: 'changeStatus',
+        title: this.lang.status,
+        pipNames: DocumentChangeStatusComponent.getContractStatusPip()
+      },
     ];
 
     this.contractService.getById(this.contractService.currentId, contractDto => {
       this.documentNumber = contractDto?.contractNumber;
+      this.documentStatusFormControl.setValue(contractDto?.contractStatus);
     });
   }
 
@@ -63,7 +69,8 @@ export class DocumentChangeStatusComponent implements OnInit {
   }
 
   applyChange() {
-    // TODO must call right service
-    console.log(this.documentStatusFormControl.value);
+    this.contractService.updateStatus(this.contractService.currentId, this.documentStatusFormControl.value, () => {
+      this.messageService.showGeneralSuccess(this.lang.successSave);
+    })
   }
 }

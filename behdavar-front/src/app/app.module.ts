@@ -88,6 +88,7 @@ import {JALALI_MOMENT_FORMATS, MOMENT_FORMATS} from "./service/jalali-date/jalal
 import {PursuitService} from "./service/pursuit-service";
 import {ConfirmDialogComponent} from "./_custom-component/confirm-dialog/confirm-dialog.component";
 import {MatDialogModule} from "@angular/material/dialog";
+import {ChangeStatusDialogComponent} from "./_custom-component/change-status-dialog/change-status-dialog.component";
 
 @NgModule({
   imports: [
@@ -168,6 +169,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     DocumentFlowComponent,
     DocumentChangeStatusComponent,
     ConfirmDialogComponent,
+    ChangeStatusDialogComponent,
 
   ],
 

@@ -1,0 +1,25 @@
+<div fxLayout="column" fxLayoutAlign="start center"  fxLayoutGap="1rem">
+  <div mat-dialog-title><h4>{{lang.dialogTitle}}</h4></div>
+  <div mat-dialog-content>
+    <mat-form-field appearance="standard">
+      <mat-label>{{lang.selectNewStatus}}</mat-label>
+      <mat-select [(ngModel)]="selectedStatus">
+        <mat-option *ngFor="let contractStatus of contractStatusList" [value]="contractStatus.value">
+          {{contractStatus.title}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button color="accent" (click)="onNoClick()" cdkFocusInitial>
+      <span class="px-2">{{lang.cancel}}</span>
+      <mat-icon>cancel</mat-icon>
+    </button>
+
+    <button mat-flat-button color="primary" [mat-dialog-close]="selectedStatus">
+      <span class="px-2">{{lang.ok}}</span>
+      <mat-icon>check_circle</mat-icon>
+    </button>
+  </div>
+</div>
+

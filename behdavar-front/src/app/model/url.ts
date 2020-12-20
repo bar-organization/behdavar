@@ -11,6 +11,7 @@ export default class Url {
   public static readonly CARTABLE_GET_USER_INFO = `${Url.BASE_API}/cartable/get-user-info`;
 
   public static readonly CONTRACT_FIND_BY_ID = `${Url.BASE_API}/contract/find-by-id`;
+  public static readonly CONTRACT_UPDATE_STATUS = `${Url.BASE_API}/contract/update-status`;
 
   public static readonly GUARANTOR_FIND_BY_ID = `${Url.BASE_API}/guarantor/find-by-id`;
   public static readonly GUARANTOR_FIND_BY_CONTRACT = `${Url.BASE_API}/guarantor/find-by-contract`;

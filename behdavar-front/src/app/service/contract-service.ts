@@ -4,6 +4,7 @@ import {MessageService} from "./message.service";
 import {ContractDto} from "../model/model";
 import Url from "../model/url";
 import {Subject} from "rxjs";
+import {ContractStatus} from "../model/enum/ContractStatus";
 
 @Injectable()
 export class ContractService {
@@ -33,6 +34,16 @@ export class ContractService {
       .subscribe(value => {
         if (onComplete) {
           onComplete(value);
+        }
+      }, () => this.messageService.showGeneralError(`cant find contract with id: ${contractId}`));
+  }
+
+  updateStatus(contractId: number, newStatus: ContractStatus, onComplete: () => void): void {
+    this.httpClient
+      .post<void>(Url.CONTRACT_UPDATE_STATUS, {contractId, newStatus})
+      .subscribe(value => {
+        if (onComplete) {
+          onComplete();
         }
       }, () => this.messageService.showGeneralError(`cant find contract with id: ${contractId}`));
   }

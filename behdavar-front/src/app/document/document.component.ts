@@ -22,6 +22,9 @@ import {ContractStatus} from "../model/enum/ContractStatus";
 import {ContractService} from "../service/contract-service";
 import {DocumentCacheService} from "../service/document-cache.service";
 import {DocumentSearchComponent} from "./document-search/document-search.component";
+import {ChangeStatusDialogComponent} from "../_custom-component/change-status-dialog/change-status-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MessageService} from "../service/message.service";
 
 @Component({
   selector: 'app-document',
@@ -33,7 +36,7 @@ export class DocumentComponent implements OnInit, AfterViewInit {
   @ViewChild("table") documentTable: DataTableComponent;
   @ViewChild("documentSearchComponent") documentSearchComponent: DocumentSearchComponent;
 
-  constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService, private documentCacheService: DocumentCacheService) {
+  constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService, private documentCacheService: DocumentCacheService, public dialog: MatDialog, private messageService: MessageService) {
     this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
   }
 
@@ -43,12 +46,19 @@ export class DocumentComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.catalogHttpDataSource.beforeCall = pageRequest => {
-      this.documentCacheService.updateCache({columnToDisplay: this.documentTable.columnToDisplay,pagingRequest:this.catalogHttpDataSource.request});
+      this.documentCacheService.updateCache({
+        columnToDisplay: this.documentTable.columnToDisplay,
+        pagingRequest: this.catalogHttpDataSource.request
+      });
     };
     this.documentSearchComponent.onFormUpdate = parentFormValue => {
-      this.documentCacheService.updateCache({documentSearchFormValue:parentFormValue});
+      this.documentCacheService.updateCache({documentSearchFormValue: parentFormValue});
     }
-    this.documentCacheService.initCache({columnToDisplay: this.documentTable.columnToDisplay,pagingRequest:this.catalogHttpDataSource.request,documentSearchFormValue:this.documentSearchComponent.getParentFormValue()});
+    this.documentCacheService.initCache({
+      columnToDisplay: this.documentTable.columnToDisplay,
+      pagingRequest: this.catalogHttpDataSource.request,
+      documentSearchFormValue: this.documentSearchComponent.getParentFormValue()
+    });
 
     this.documentCacheService.applyCache(value => {
       this.documentTable.columnToDisplay = value.columnToDisplay;
@@ -79,38 +89,47 @@ export class DocumentComponent implements OnInit, AfterViewInit {
 
   private static getMyBasketFilter(): SearchCriteria {
     return {
-      key: 'contract.contractStatus', value:ContractStatus[ContractStatus.AVAILABLE.valueOf()],
+      key: 'contract.contractStatus', value: ContractStatus[ContractStatus.AVAILABLE.valueOf()],
       operation: SearchOperation.EQUAL
     };
   }
-  getCustomColorName = (row:CartableDto):RowClassName =>{
-    const color:ContractColor = row?.contract?.contractColor;
-    if(!color)
+
+  getCustomColorName = (row: CartableDto): any => {
+    const color: ContractColor = row?.contract?.contractColor;
+    if (!color)
       return undefined;
 
+    let colorClassName: RowClassName = null;
     switch (color) {
       case ContractColor.BLACK:
-        return 'black-back';
+        colorClassName = 'black-back';
+        break;
       case ContractColor.RED:
-        return  'red-back';
+        colorClassName = 'red-back';
+        break;
       case ContractColor.GREEN:
-        return 'green-back';
+        colorClassName = 'green-back';
+        break;
       case ContractColor.BLUE:
-        return 'blue-back';
+        colorClassName = 'blue-back';
+        break;
       case ContractColor.GRAY:
-        return 'gray-back';
+        colorClassName = 'gray-back';
+        break
       case ContractColor.PURPLE:
-        return 'purple-back';
+        colorClassName = 'purple-back';
+        break
       default:
-        return undefined;
+        colorClassName = undefined;
     }
+    return {className: colorClassName, title: new ContractStatusPip().transform(row?.contract?.contractStatus)}
   }
   tableColumns: TableColumn[] = [
     {
       fieldName: 'contract.contractColor',
       title: this.documentLang.color,
       type: ColumnType.COLOR,
-      customValue:this.getCustomColorName,
+      customValue: this.getCustomColorName,
     },
     {fieldName: "contract.customers[0].person.fullName", title: this.documentLang.customerName},
     {
@@ -246,5 +265,24 @@ export class DocumentComponent implements OnInit, AfterViewInit {
 
   private isMyBaskUrl(): boolean {
     return !!this.router.url.match('my-basket');
+  }
+
+  onDocumentColorClick(row: CartableDto) {
+    const dialogRef = this.dialog.open(ChangeStatusDialogComponent, {
+      width: '20rem',
+      data: row?.contract?.contractStatus
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result)
+        return;
+
+      this.contractService.updateStatus(row?.contract?.id, result, () => {
+        this.messageService.showGeneralSuccess(this.documentLang.successSave);
+        this.documentTable.reloadTable();
+      })
+
+    });
+
   }
 }
