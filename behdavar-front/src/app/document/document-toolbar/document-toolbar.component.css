@@ -1,0 +1,10 @@
+.active-button {
+  box-shadow: 0 0 0.2rem 0.3rem #ffd740 ;
+
+}
+.normal {
+  padding-right: 1.5rem !important;
+  padding-left: 1.5rem !important;
+  margin-left: .5rem !important;
+  margin-right: .5rem !important;
+}

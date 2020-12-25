@@ -1,21 +1,30 @@
 <mat-toolbar fxLayout="row" fxLayoutAlign="space-between center" class="my-1">
   <div>
-    <button mat-stroked-button [disabled]="!id" routerLink="./following/{{id}}"
-            [class]="!id ? 'px-4 mx-2':'px-4 mx-2 bg-deep-orange-500 deep-orange-50'">{{documentToolbarLang.followUp}}</button>
-    <button mat-stroked-button [disabled]="!id" routerLink="./guarantors/{{id}}"
-            [class]="!id ? 'px-4 mx-2': 'px-4 mx-2 bg-indigo-500 indigo-50' ">{{documentToolbarLang.guarantorInfo}}</button>
-    <button mat-stroked-button [disabled]="!id" routerLink="./customers/{{id}}"
-            [class]="!id ? 'px-4 mx-2' :'px-4 mx-2 bg-light-blue-500 light-blue-50'">{{documentToolbarLang.customerInfo}}</button>
-    <button mat-stroked-button [disabled]="!id" routerLink="./attachment/{{id}}"
-            [class]="!id ? 'px-4 mx-2' : 'px-4 mx-2 bg-green-500 green-50'">{{documentToolbarLang.contents}}</button>
-    <button mat-stroked-button [disabled]="!id" routerLink="./financialStatus/{{id}}"
-            [class]="!id ? 'px-4 mx-2': 'px-4 mx-2 bg-deep-purple-500 deep-purple-50'">{{documentToolbarLang.financialSituation}}</button>
+    <button mat-stroked-button [disabled]="!id" routerLink="./following/{{id}}" class="normal"
+            routerLinkActive="active-button"
+            [class]="!!id ? 'bg-deep-orange-500 deep-orange-50':''">{{documentToolbarLang.followUp}}</button>
+    <button mat-stroked-button [disabled]="!id" routerLink="./guarantors/{{id}}" class="normal"
+            routerLinkActive="active-button"
+            [class]="!!id ?  'px-4 mx-2 bg-indigo-500 indigo-50':'' ">{{documentToolbarLang.guarantorInfo}}</button>
+    <button mat-stroked-button [disabled]="!id" routerLink="./customers/{{id}}" class="normal"
+            routerLinkActive="active-button"
+            [class]="!!id ? 'px-4 mx-2 bg-light-blue-500 light-blue-50':''">{{documentToolbarLang.customerInfo}}</button>
+    <button mat-stroked-button [disabled]="!id" routerLink="./attachment/{{id}}" class="normal"
+            routerLinkActive="active-button"
+            [class]="!!id ? 'px-4 mx-2 bg-green-500 green-50':''">{{documentToolbarLang.contents}}</button>
+    <button mat-stroked-button [disabled]="!id" routerLink="./financialStatus/{{id}}" class="normal"
+            routerLinkActive="active-button"
+            [class]="!!id ?  'px-4 mx-2 bg-deep-purple-500 deep-purple-50':''">{{documentToolbarLang.financialSituation}}</button>
     <button mat-stroked-button [disabled]="!id" routerLink="./document-change-status/{{id}}"
-            [class]="!id ? 'px-4 mx-2':'px-4 mx-2 bg-purple-500 purple-50'">{{documentToolbarLang.changeStatus}}</button>
-    <button mat-stroked-button [disabled]="!id" routerLink="./document-flow/{{id}}"
-            [class]="!id ? 'px-4 mx-2':'px-4 mx-2 bg-brown-500 brown-50'">{{documentToolbarLang.projectFlow}}</button>
-    <button mat-stroked-button [disabled]="!id" routerLink="./change-expert/{{id}}" *ngIf="canShowChangeExpert"
-            [class]="!id ? 'px-4 mx-2':'px-4 mx-2 bg-deep-orange-A700 deep-orange-50'">{{documentToolbarLang.changeExpert}}</button>
+            class="normal" routerLinkActive="active-button"
+            [class]="!!id ? 'px-4 mx-2 bg-purple-500 purple-50':''">{{documentToolbarLang.changeStatus}}</button>
+    <button mat-stroked-button [disabled]="!id" routerLink="./document-flow/{{id}}" class="normal"
+            routerLinkActive="active-button"
+            [class]="!!id ? 'px-4 mx-2 bg-brown-500 brown-50':''">{{documentToolbarLang.projectFlow}}</button>
+    <button mat-stroked-button [disabled]="!id" routerLink="./change-expert/{{id}}" class="normal"
+            routerLinkActive="active-button"
+            *ngIf="canShowChangeExpert"
+            [class]="!!id ? 'px-4 mx-2 bg-deep-orange-A700 deep-orange-50':''">{{documentToolbarLang.changeExpert}}</button>
   </div>
 
 </mat-toolbar>
