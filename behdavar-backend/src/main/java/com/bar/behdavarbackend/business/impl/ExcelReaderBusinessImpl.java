@@ -160,7 +160,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 // grantors
                 contractEntity = new ContractEntity();
                 contractEntity.setContractNumber(excelLendingEntity.getContractNumber());
-                contractEntity.setContractStatus(ContractStatus.AVAILABLE);
+                contractEntity.setContractStatus(ContractStatus.RAW);
                 if (excelLendingEntity.getMachine() != null){
                     contractEntity.setContractType(ContractType.CARS);
                     ProductEntity productEntity = new ProductEntity();
