@@ -18,4 +18,6 @@ public interface PaymentBusiness {
     PagingResponse findPaging(PagingRequest pagingRequest);
 
     List<PaymentDto> findByContractId(Long id);
+
+    Long getTotalDepositAmount(Long contractId);
 }

@@ -7,7 +7,7 @@ import {SearchCriteria, SearchOperation} from "../../_custom-component/data-tabl
 import {EnumValueTitle} from "../../model/enum/EnumValueTitle";
 import {CONTRACT_STATUS_TITLE, ContractStatus} from "../../model/enum/ContractStatus";
 import {Router} from "@angular/router";
-import {ContractStatusPip} from "../../_pip/ContractStatusPip";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-document-search',
@@ -69,7 +69,11 @@ export class DocumentSearchComponent implements OnInit {
       workPlacePhone: [''],
     });
 
-    this.documentSearchFormGroup = fb.group({facilityNumber: [''], status: [this.isMyBaskUrl() ? 'RAW' : null], registrationDate: [null]});
+    this.documentSearchFormGroup = fb.group({
+      facilityNumber: [''],
+      status: [this.isMyBaskUrl() ? 'RAW' : null],
+      registrationDate: [null]
+    });
 
     this.parentForm = fb.group({
       bankMachineSearchFormGroup: this.bankMachineSearchFormGroup,
@@ -103,7 +107,7 @@ export class DocumentSearchComponent implements OnInit {
     const gNationalNumber = this.parentForm.value?.guarantorSearchFormGroup?.nationalNumber;
 
     const facilityNumber = this.parentForm.value?.documentSearchFormGroup?.facilityNumber;
-    //const registrationDate = this.parentForm.value?.documentSearchFormGroup?.registrationDate;
+    const registrationDate = this.parentForm.value?.documentSearchFormGroup?.registrationDate;
     const status: ContractStatus = this.parentForm.value?.documentSearchFormGroup?.status;
     const plateNumber: string = this.parentForm.value?.bankMachineSearchFormGroup?.plateNumber;
 
@@ -136,8 +140,12 @@ export class DocumentSearchComponent implements OnInit {
     }
 
 
-    //if (registrationDate)
-    //  filter.push({key: 'contract.submitDate', value: moment(registrationDate).format('yyyy-MM-DD'), operation: SearchOperation.EQUAL});
+    if (registrationDate)
+      filter.push({
+        key: 'contract.submitDate',
+        value: moment(registrationDate).format('yyyy-MM-DD'),
+        operation: SearchOperation.EQUAL
+      });
 
     this.documentSearchDataTable.httpDataSource.reload(filter);
   }

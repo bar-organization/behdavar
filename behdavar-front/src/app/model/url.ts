@@ -51,4 +51,5 @@ export default class Url {
 
   public static readonly PAYMENT_FIND_PAGING = `${Url.BASE_API}/payment/find-paging`;
   public static readonly PAYMENT_FIND_BY_CONTRACT = `${Url.BASE_API}/payment/find-by-contract`;
+  public static readonly PAYMENT_TOTAL_DEPOSIT = `${Url.BASE_API}/payment/total-deposit`;
 }

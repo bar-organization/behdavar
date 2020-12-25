@@ -9,9 +9,9 @@ export class PaymentService {
   constructor(private httpClient: HttpClient, private messageService: MessageService) {
   }
 
-  getAllPaymentByContractId(contractId: number, onComplete: (result: PaymentDto[]) => void): void {
+  getTotalDepositAmount(contractId: number, onComplete: (result: number) => void): void {
     this.httpClient
-      .post<PaymentDto[]>(Url.PAYMENT_FIND_BY_CONTRACT, contractId)
+      .post<number>(Url.PAYMENT_TOTAL_DEPOSIT, contractId)
       .subscribe(value => {
         if (onComplete) {
           onComplete(value);

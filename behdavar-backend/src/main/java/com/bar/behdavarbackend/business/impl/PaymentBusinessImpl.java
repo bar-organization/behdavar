@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class PaymentBusinessImpl implements PaymentBusiness {
         if (pagingResponse.getData() != null) {
             List<PaymentEntity> data = (List<PaymentEntity>) pagingResponse.getData();
             List<PaymentDto> output = new ArrayList<>();
-            data.forEach(e -> output.add(PaymentTransformer.entityToDto(e, new PaymentDto())));
+            data.forEach(e -> output.add(PaymentTransformer.entityToDto(e, new PaymentDto(), PaymentEntity.CONTRACT, PaymentEntity.USER)));
             pagingResponse.setData(output);
         }
         return pagingResponse;
@@ -75,5 +76,10 @@ public class PaymentBusinessImpl implements PaymentBusiness {
         }
 
         return paymentDtos;
+    }
+
+    @Override
+    public Long getTotalDepositAmount(Long contractId) {
+        return paymentRepository.findByContractId(contractId).stream().map(PaymentEntity::getAmount).mapToLong(BigDecimal::longValue).sum();
     }
 }

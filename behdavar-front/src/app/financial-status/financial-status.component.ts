@@ -25,6 +25,7 @@ export class FinancialStatusComponent implements OnInit {
   financialStatusLang = new FinancialStatusLang();
 
   paymentHttpDataSource: HttpDataSource<PaymentDto>
+  totalAmount: number;
   receiveAmount: number;
   tableColumns: TableColumn[] = [
     {fieldName: 'amount', title: this.financialStatusLang.amount, pipNames: FinancialStatusComponent.getThousandPip()},
@@ -76,12 +77,18 @@ export class FinancialStatusComponent implements OnInit {
   ngOnInit(): void {
     this.updateContractId();
 
+    this.contractService.getById(this.contractService.currentId, contractDto => {
+      this.totalAmount = contractDto?.lending?.masterAmount;
+    });
+
+    this.paymentService.getTotalDepositAmount(this.contractService.currentId, totalDepositAmount => {
+      this.receiveAmount = totalDepositAmount
+    });
+
     const filters: SearchCriteria[] = [];
     filters.push({key: 'contract.id', value: this.contractService.currentId, operation: SearchOperation.EQUAL});
     this.paymentHttpDataSource = new HttpDataSource<PaymentDto>(Url.PAYMENT_FIND_PAGING, this.httpClient, filters);
-    this.paymentService.getAllPaymentByContractId(this.contractService.currentId, result => {
-      this.receiveAmount = result.map(payment => payment.amount).reduce((pre, cur) => pre + cur);
-    })
+
   }
 
 }

@@ -57,4 +57,10 @@ public class PaymentRest {
     public ResponseEntity<PagingResponse> findById(@RequestBody PagingRequest pageRequest) {
         return new ResponseEntity<>(paymentBusiness.findPaging(pageRequest), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAuthority('" + AuthorityConstant.PAYMENT_SEARCH + "')")
+    @PostMapping("/total-deposit")
+    public ResponseEntity<Long> getTotalDepositAmount(@RequestBody Long contractId) {
+        return new ResponseEntity<>(paymentBusiness.getTotalDepositAmount(contractId), HttpStatus.OK);
+    }
 }
