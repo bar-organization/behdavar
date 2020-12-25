@@ -17,7 +17,7 @@ import {ContractStatusPip} from "../_pip/ContractStatusPip";
 import {AuthService} from "../service/auth/auth.service";
 import {AuthorityConstantEnum} from "../model/enum/AuthorityConstantEnum";
 import {ThousandPip} from "../_pip/ThousandPip";
-import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {PagingRequest, SearchOperation} from "../_custom-component/data-table/PaginationModel";
 import {ContractStatus} from "../model/enum/ContractStatus";
 import {ContractService} from "../service/contract-service";
 import {DocumentCacheService} from "../service/document-cache.service";
@@ -37,7 +37,7 @@ export class DocumentComponent implements OnInit, AfterViewInit {
   @ViewChild("documentSearchComponent") documentSearchComponent: DocumentSearchComponent;
 
   constructor(private httpClient: HttpClient, private router: Router, private route: ActivatedRoute, private authService: AuthService, private contractService: ContractService, private documentCacheService: DocumentCacheService, public dialog: MatDialog, private messageService: MessageService) {
-    this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, this.isMyBaskUrl() ? [DocumentComponent.getMyBasketFilter()] : null);
+    this.catalogHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient);
   }
 
   ngOnInit(): void {
@@ -63,9 +63,15 @@ export class DocumentComponent implements OnInit, AfterViewInit {
     this.documentCacheService.applyCache(value => {
       this.documentTable.columnToDisplay = value.columnToDisplay;
       this.documentTable.refreshSelectableColumns();
-      this.documentTable.reloadTable(value.pagingRequest);
+
+      if (this.isMyBaskUrl()) {
+        this.documentTable.reloadTable(this.getMyBasketFilter(value.pagingRequest));
+      } else {
+        this.documentTable.reloadTable(value.pagingRequest);
+      }
       this.documentSearchComponent.setParentFormValue(value.documentSearchFormValue);
-    })
+
+    });
   }
 
   onColumnDisplayChange(columnToDisplay: string[]) {
@@ -87,11 +93,19 @@ export class DocumentComponent implements OnInit, AfterViewInit {
 
   }
 
-  private static getMyBasketFilter(): SearchCriteria {
-    return {
-      key: 'contract.contractStatus', value: ContractStatus[ContractStatus.AVAILABLE.valueOf()],
+  private getMyBasketFilter(pagingRequest: PagingRequest): PagingRequest {
+    if (pagingRequest && pagingRequest.filters)
+      return pagingRequest;
+
+    const myBasketDefaultRequest: PagingRequest = new PagingRequest();
+    myBasketDefaultRequest.start = pagingRequest?.start;
+    myBasketDefaultRequest.max = pagingRequest?.max;
+    myBasketDefaultRequest.sort = pagingRequest?.sort;
+    myBasketDefaultRequest.filters = [{
+      key: 'contract.contractStatus', value: ContractStatus[ContractStatus.RAW.valueOf()],
       operation: SearchOperation.EQUAL
-    };
+    }];
+    return myBasketDefaultRequest;
   }
 
   getCustomColorName = (row: CartableDto): any => {
@@ -127,6 +141,8 @@ export class DocumentComponent implements OnInit, AfterViewInit {
   tableColumns: TableColumn[] = [
     {
       fieldName: 'contract.contractColor',
+      sortable: true,
+      sortBy: 'contract.contractStatus',
       title: this.documentLang.color,
       type: ColumnType.COLOR,
       customValue: this.getCustomColorName,

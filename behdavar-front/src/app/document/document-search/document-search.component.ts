@@ -6,6 +6,7 @@ import {DataTableComponent} from "../../_custom-component/data-table/data-table.
 import {SearchCriteria, SearchOperation} from "../../_custom-component/data-table/PaginationModel";
 import {EnumValueTitle} from "../../model/enum/EnumValueTitle";
 import {CONTRACT_STATUS_TITLE, ContractStatus} from "../../model/enum/ContractStatus";
+import {Router} from "@angular/router";
 import {ContractStatusPip} from "../../_pip/ContractStatusPip";
 
 @Component({
@@ -26,7 +27,7 @@ export class DocumentSearchComponent implements OnInit {
 
   @Input()
   documentSearchDataTable: DataTableComponent;
-  @Input() onFormUpdate: (parentFormValue:any) => void;
+  @Input() onFormUpdate: (parentFormValue: any) => void;
   parentForm: FormGroup;
   bankMachineSearchFormGroup: FormGroup;
   customerSearchFormGroup: FormGroup;
@@ -35,7 +36,7 @@ export class DocumentSearchComponent implements OnInit {
 
   documentSearchLang: DocumentLang = new DocumentLang();
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.bankMachineSearchFormGroup = fb.group({
       bank: [''],
       branch: [''],
@@ -68,7 +69,7 @@ export class DocumentSearchComponent implements OnInit {
       workPlacePhone: [''],
     });
 
-    this.documentSearchFormGroup = fb.group({facilityNumber: [''], status: [null], registrationDate: [null]});
+    this.documentSearchFormGroup = fb.group({facilityNumber: [''], status: [this.isMyBaskUrl() ? 'RAW' : null], registrationDate: [null]});
 
     this.parentForm = fb.group({
       bankMachineSearchFormGroup: this.bankMachineSearchFormGroup,
@@ -82,8 +83,12 @@ export class DocumentSearchComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  private isMyBaskUrl(): boolean {
+    return !!this.router.url.match('my-basket');
+  }
+
   onSearch() {
-    if(this.onFormUpdate){
+    if (this.onFormUpdate) {
       this.onFormUpdate(this?.parentForm?.value);
     }
     const filter: SearchCriteria[] = [];
@@ -108,8 +113,8 @@ export class DocumentSearchComponent implements OnInit {
     DocumentSearchComponent.applyNameFilter(filter, cFullName, SearchType.CUSTOMER);
     DocumentSearchComponent.applyNameFilter(filter, gFullName, SearchType.GUARANTOR);
 
-    DocumentSearchComponent.applyFatherNameFilter(filter, cFatherName,SearchType.CUSTOMER);
-    DocumentSearchComponent.applyFatherNameFilter(filter, gFatherName,SearchType.GUARANTOR);
+    DocumentSearchComponent.applyFatherNameFilter(filter, cFatherName, SearchType.CUSTOMER);
+    DocumentSearchComponent.applyFatherNameFilter(filter, gFatherName, SearchType.GUARANTOR);
 
     DocumentSearchComponent.applyNationalNumberFilter(filter, cNationalNumber, SearchType.CUSTOMER);
     DocumentSearchComponent.applyNationalNumberFilter(filter, gNationalNumber, SearchType.GUARANTOR);
@@ -179,14 +184,14 @@ export class DocumentSearchComponent implements OnInit {
     this.onSearch();
   }
 
-  public getParentFormValue():any{
+  public getParentFormValue(): any {
     return this?.parentForm?.value;
   }
 
-  public setParentFormValue(formValue:any){
-    if(!this.parentForm)
-      return ;
-      this.parentForm.setValue(formValue);
+  public setParentFormValue(formValue: any) {
+    if (!this.parentForm)
+      return;
+    this.parentForm.setValue(formValue);
   }
 }
 

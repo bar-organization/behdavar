@@ -225,7 +225,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
 
     const sortOperation: SortOperation = new SortOperation();
-    sortOperation.sortBy = sort.active;
+    sortOperation.sortBy = this.getSortBy(sort.active);
     if (!sort.direction) {
       this.httpDataSource.sortOperation = null;
     } else {
@@ -234,6 +234,11 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
 
     this.reloadTable();
+  }
+
+  private getSortBy(columnName: string) {
+    const sortedColumn = this.tableColumns.find(col => col.colName === columnName);
+    return sortedColumn.sortBy ? sortedColumn.sortBy : columnName;
   }
 
   isSortableColumn(columnName: string): boolean {
@@ -337,6 +342,7 @@ export interface TableColumn {
   title: string;
   hidden?: boolean;
   sortable?: boolean;
+  sortBy?: string;
   pipNames?: PipeWrapper[];
 }
 
