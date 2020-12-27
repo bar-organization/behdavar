@@ -189,6 +189,9 @@ export class DocumentLang extends PersonLang {
   deferredCount = 'تعداد معوق';
   totalAmount = 'مجموع تسهیلات';
   registrationDate = 'تاریخ ثبت پرونده';
+  nextPursuitDate = 'تاریخ پیگیری بعدی';
+  nextPursuitDateFrom = 'تاریخ پیگیری بعدی از';
+  nextPursuitDateTo = 'تاریخ پیگیری بعدی تا';
   bank = 'بانک';
   branch = 'شعبه';
   facilityReceivingDate = 'تاریخ دریافت تسهیلات';

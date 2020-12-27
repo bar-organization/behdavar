@@ -72,7 +72,9 @@ export class DocumentSearchComponent implements OnInit {
     this.documentSearchFormGroup = fb.group({
       facilityNumber: [''],
       status: [this.isMyBaskUrl() ? 'RAW' : null],
-      registrationDate: [null]
+      registrationDate: [null],
+      nextPursuitDateFrom: [null],
+      nextPursuitDateTo: [null],
     });
 
     this.parentForm = fb.group({
@@ -108,6 +110,8 @@ export class DocumentSearchComponent implements OnInit {
 
     const facilityNumber = this.parentForm.value?.documentSearchFormGroup?.facilityNumber;
     const registrationDate = this.parentForm.value?.documentSearchFormGroup?.registrationDate;
+    const nextPursuitDateFrom = this.parentForm.value?.documentSearchFormGroup?.nextPursuitDateFrom;
+    const nextPursuitDateTo = this.parentForm.value?.documentSearchFormGroup?.nextPursuitDateTo;
     const status: ContractStatus = this.parentForm.value?.documentSearchFormGroup?.status;
     const plateNumber: string = this.parentForm.value?.bankMachineSearchFormGroup?.plateNumber;
 
@@ -146,6 +150,20 @@ export class DocumentSearchComponent implements OnInit {
         value: moment(registrationDate).format('yyyy-MM-DD'),
         operation: SearchOperation.EQUAL
       });
+
+    if (nextPursuitDateFrom)
+      filter.push({
+        key: 'contract.pursuits.nextPursuitDate',
+        value: moment(nextPursuitDateFrom).format('yyyy-MM-DD'),
+        operation: SearchOperation.EQUAL
+      });
+
+    // if (nextPursuitDateTo)
+    //   filter.push({
+    //     key: 'contract.pursuits.nextPursuitDate',
+    //     value: moment(nextPursuitDateTo).format('yyyy-MM-DD'),
+    //     operation: SearchOperation.LESS_THAN_EQUAL
+    //   });
 
     this.documentSearchDataTable.httpDataSource.reload(filter);
   }

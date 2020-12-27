@@ -36,6 +36,20 @@
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
           </mat-form-field>
 
+          <mat-form-field color="accent" appearance="standard">
+            <mat-label>{{documentSearchLang.nextPursuitDate}}</mat-label>
+            <input matInput formControlName="nextPursuitDateFrom" [matDatepicker]="picker3">
+            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+            <mat-datepicker #picker3 color="primary"></mat-datepicker>
+          </mat-form-field>
+
+<!--          <mat-form-field color="accent" appearance="standard">-->
+<!--            <mat-label>{{documentSearchLang.nextPursuitDateTo}}</mat-label>-->
+<!--            <input matInput formControlName="nextPursuitDateTo" [matDatepicker]="picker4">-->
+<!--            <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>-->
+<!--            <mat-datepicker #picker4 color="primary"></mat-datepicker>-->
+<!--          </mat-form-field>-->
+
         </div>
 
       </div>
@@ -61,11 +75,11 @@
             <input matInput formControlName="nationalNumber">
           </mat-form-field>
 
-<!--          <mat-form-field>-->
-<!--            <mat-label>{{documentSearchLang.mobile}}</mat-label>-->
-<!--            <input-->
-<!--              matInput formControlName="mobile">-->
-<!--          </mat-form-field>-->
+          <!--          <mat-form-field>-->
+          <!--            <mat-label>{{documentSearchLang.mobile}}</mat-label>-->
+          <!--            <input-->
+          <!--              matInput formControlName="mobile">-->
+          <!--          </mat-form-field>-->
 
         </div>
 
@@ -91,11 +105,11 @@
             <input matInput formControlName="nationalNumber">
           </mat-form-field>
 
-<!--          <mat-form-field>-->
-<!--            <mat-label>{{documentSearchLang.mobile}}</mat-label>-->
-<!--            <input-->
-<!--              matInput formControlName="mobile">-->
-<!--          </mat-form-field>-->
+          <!--          <mat-form-field>-->
+          <!--            <mat-label>{{documentSearchLang.mobile}}</mat-label>-->
+          <!--            <input-->
+          <!--              matInput formControlName="mobile">-->
+          <!--          </mat-form-field>-->
 
         </div>
 
