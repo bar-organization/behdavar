@@ -143,25 +143,63 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         if (!inputExcelLendingEntities.isEmpty()) {
             inputExcelLendingEntities.forEach(excelLendingEntity -> {
                 ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
-
+                UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
                 if (contractEntity != null) {
                     if (contractEntity.getLending() != null) {
-                        LendingEntity lendingEntity = lendingRepository.findById(contractEntity.getLending().getId()).get();
-                        lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
-                        lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
-                        lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
-                        lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
-                        lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
-                        lendingRepository.save(lendingEntity);
-                        return;
+                        LendingEntity lendingEntity = lendingRepository.findById(contractEntity.getLending().getId()).orElse(null);
+                        if (lendingEntity != null ){
+                            lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
+                            lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
+                            lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
+                            lendingEntity.setRemainDebtAmount(excelLendingEntity.getRemainDebtAmount());
+                            lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
+                            lendingRepository.save(lendingEntity);
+                        }
                     }
+                    CartableEntity cartableEntity = cartableRepository.findByContractIdAndActive(contractEntity.getId(), true).orElse(null);
+                    if (cartableEntity != null) {
+                        if (!cartableEntity.getReceiver().getCode().equals(excelLendingEntity.getExpertCode())) {
+                            cartableEntity.setActive(false);
+                            UserAmountEntity oldUserAmount = userAmountRepository.findByUserId(cartableEntity.getReceiver().getId()).orElse(null);
+                            oldUserAmount.setTotalAmount(oldUserAmount.getTotalAmount().min(excelLendingEntity.getRemainDebtAmount()));
+                            userAmountRepository.save(oldUserAmount);
+                            UserEntity newReceiver = userRepository.findByCode(excelLendingEntity.getExpertCode());
+                            if (newReceiver == null) {
+                                throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
+                            }
+                            UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(newReceiver.getId()).orElse(null);
+                            if (userAmountEntity == null) {
+                                userAmountEntity = new UserAmountEntity();
+                            }
+                            userAmountEntity.setTotalAmount(userAmountEntity.getTotalAmount().add(excelLendingEntity.getRemainDebtAmount()));
+                            contractEntity.setContractStatus(ContractStatus.RAW);
+                            contractRepository.save(contractEntity);
+                            cartableRepository.save(cartableEntity);
+                            CartableEntity newCartableEntity = new CartableEntity();
+                            newCartableEntity.setActive(true);
+                            newCartableEntity.setContract(contractEntity);
+                            newCartableEntity.setReceiver(userExpertEntity);
+                            UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
+                            newCartableEntity.setSender(sender);
+                            cartableRepository.save(newCartableEntity);
+                        }
+                    } else {
+                        cartableEntity = new CartableEntity();
+                        cartableEntity.setActive(true);
+                        cartableEntity.setContract(contractEntity);
+                        cartableEntity.setReceiver(userExpertEntity);
+                        UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
+                        cartableEntity.setSender(sender);
+                        cartableRepository.save(cartableEntity);
+                    }
+                    return;
                 }
 
                 // grantors
                 contractEntity = new ContractEntity();
                 contractEntity.setContractNumber(excelLendingEntity.getContractNumber());
                 contractEntity.setContractStatus(ContractStatus.RAW);
-                if (excelLendingEntity.getMachine() != null){
+                if (excelLendingEntity.getMachine() != null) {
                     contractEntity.setContractType(ContractType.CARS);
                     ProductEntity productEntity = new ProductEntity();
                     productEntity.setProductName(excelLendingEntity.getMachine());
@@ -240,7 +278,6 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     guarantorRepository.save(guarantorEntity);
 
                     if (excelLendingEntity.getExpertCode() != null && !(("-").equals(excelLendingEntity.getExpert()))) {
-                        UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
                         if (userExpertEntity != null) {
                             CartableEntity cartableEntity = new CartableEntity();
                             cartableEntity.setActive(true);
@@ -270,7 +307,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 // end of grantor
                 //debtors
                 InputExcelDebtorEntity debtorEntities = inputExcelDebtorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
-                if (debtorEntities != null ) {
+                if (debtorEntities != null) {
                     PersonEntity personEntity = new PersonEntity();
                     personEntity.setFullName(debtorEntities.getLastName());
                     personEntity.setFatherName(debtorEntities.getFatherName());
