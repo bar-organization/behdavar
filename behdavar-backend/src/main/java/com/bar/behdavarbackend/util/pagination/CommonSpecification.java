@@ -70,20 +70,107 @@ public class CommonSpecification<E extends BaseEntity> implements Specification<
             }
 
             if (criteria.getOperation().equals(SearchOperation.GREATER_THAN)) {
-                predicates.add(builder.greaterThan(
-                        root.get(criteria.getKey()), criteria.getValue().toString()));
+                if (items.size() == 1) {
+                    predicates.add(builder.greaterThan(
+                            !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                            , criteria.getValue().toString()));
+                } else {
+                    Join<Object, Object> join = null;
+                    for (int i = 0; i < (items.size() - 1); i++) {
+                        if (i == 0) {
+                            join = root.join(items.get(i));
+                        } else {
+                            join = join.join(items.get(i));
+                        }
+                    }
+                    if (join != null) {
+                        predicates.add(builder.greaterThan(
+                                join.get(items.get(items.size() - 1))
+                                ,  criteria.getValue().toString()));
+                    }
+                }
+
+
             } else if (criteria.getOperation().equals(SearchOperation.LESS_THAN)) {
-                predicates.add(builder.lessThan(
-                        root.get(criteria.getKey()), criteria.getValue().toString()));
+                if (items.size() == 1) {
+                    predicates.add(builder.lessThan(
+                            !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                            , criteria.getValue().toString()));
+                } else {
+                    Join<Object, Object> join = null;
+                    for (int i = 0; i < (items.size() - 1); i++) {
+                        if (i == 0) {
+                            join = root.join(items.get(i));
+                        } else {
+                            join = join.join(items.get(i));
+                        }
+                    }
+                    if (join != null) {
+                        predicates.add(builder.lessThan(
+                                join.get(items.get(items.size() - 1))
+                                ,  criteria.getValue().toString()));
+                    }
+                }
             } else if (criteria.getOperation().equals(SearchOperation.GREATER_THAN_EQUAL)) {
-                predicates.add(builder.greaterThanOrEqualTo(
-                        root.get(criteria.getKey()), criteria.getValue().toString()));
+                if (items.size() == 1) {
+                    predicates.add(builder.greaterThanOrEqualTo(
+                            !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                            , criteria.getValue().toString()));
+                } else {
+                    Join<Object, Object> join = null;
+                    for (int i = 0; i < (items.size() - 1); i++) {
+                        if (i == 0) {
+                            join = root.join(items.get(i));
+                        } else {
+                            join = join.join(items.get(i));
+                        }
+                    }
+                    if (join != null) {
+                        predicates.add(builder.greaterThanOrEqualTo(
+                                join.get(items.get(items.size() - 1))
+                                ,  criteria.getValue().toString()));
+                    }
+                }
             } else if (criteria.getOperation().equals(SearchOperation.LESS_THAN_EQUAL)) {
-                predicates.add(builder.lessThanOrEqualTo(
-                        root.get(criteria.getKey()), criteria.getValue().toString()));
+                if (items.size() == 1) {
+                    predicates.add(builder.lessThanOrEqualTo(
+                            !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                            , criteria.getValue().toString()));
+                } else {
+                    Join<Object, Object> join = null;
+                    for (int i = 0; i < (items.size() - 1); i++) {
+                        if (i == 0) {
+                            join = root.join(items.get(i));
+                        } else {
+                            join = join.join(items.get(i));
+                        }
+                    }
+                    if (join != null) {
+                        predicates.add(builder.lessThanOrEqualTo(
+                                join.get(items.get(items.size() - 1))
+                                ,  criteria.getValue().toString()));
+                    }
+                }
             } else if (criteria.getOperation().equals(SearchOperation.NOT_EQUAL)) {
-                predicates.add(builder.notEqual(
-                        root.get(criteria.getKey()), criteria.getValue()));
+                if (items.size() == 1) {
+                    predicates.add(builder.notEqual(
+                            !isEntity ? root.get(criteria.getKey()) : root.join(criteria.getKey()).get("id")
+                            , criteria.getValue().toString()));
+                } else {
+                    Join<Object, Object> join = null;
+                    for (int i = 0; i < (items.size() - 1); i++) {
+                        if (i == 0) {
+                            join = root.join(items.get(i));
+                        } else {
+                            join = join.join(items.get(i));
+                        }
+                    }
+                    if (join != null) {
+                        predicates.add(builder.notEqual(
+                                join.get(items.get(items.size() - 1))
+                                ,  criteria.getValue().toString()));
+                    }
+                }
             } else if (criteria.getOperation().equals(SearchOperation.EQUAL)) {
                 if (items.size() == 1) {
                     predicates.add(builder.equal(
