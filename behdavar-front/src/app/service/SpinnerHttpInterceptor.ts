@@ -33,6 +33,8 @@ export class SpinnerHttpInterceptor implements HttpInterceptor {
             this.messageService.showGeneralError("خطا در احراز هویت.");
           } else if (error.status === 500) {
             this.messageService.showGeneralError('خطا در سرور.', error?.error?.message);
+          } else if (error.status === 0) {
+            this.messageService.showGeneralError('خطا در ارتباط با سرور.', error?.error?.message);
           }
           return throwError(error);
         })
