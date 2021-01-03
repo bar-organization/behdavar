@@ -35,7 +35,7 @@ export class ContractService {
         if (onComplete) {
           onComplete(value);
         }
-      }, () => this.messageService.showGeneralError(`cant find contract with id: ${contractId}`));
+      });
   }
 
   updateStatus(contractId: number, newStatus: ContractStatus, onComplete: () => void): void {
@@ -45,6 +45,6 @@ export class ContractService {
         if (onComplete) {
           onComplete();
         }
-      }, () => this.messageService.showGeneralError(`cant find contract with id: ${contractId}`));
+      });
   }
 }

@@ -99,7 +99,7 @@ export class ChangeExpertComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
         this.messageService.showGeneralSuccess(this.lang.successSave);
         this.router.navigate(['.'], {relativeTo: this.route.parent});
-      }, () => this.messageService.showGeneralError(this.lang.error));
+      });
 
   }
 

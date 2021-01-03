@@ -119,8 +119,7 @@ export class GuarantorsComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
           this.messageService.showGeneralSuccess(this.lang.successSave)
           this.updateGuarantorList();
-        },
-        error => this.messageService.showGeneralError(this.lang.error, error)
+        }
       );
   }
 

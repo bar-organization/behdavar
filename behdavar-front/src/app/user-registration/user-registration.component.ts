@@ -101,8 +101,7 @@ export class UserRegistrationComponent implements OnInit {
     this.selectedUser.roles.forEach(value => {
         this.httpClient
           .post<RoleDto>(Url.ROLE_FIND_BY_ID, value.id)
-          .subscribe(value => this.selectedRoles.push(value),
-            e => this.messageService.showGeneralError(this.lang.errorOnSearchUser, e)
+          .subscribe(value => this.selectedRoles.push(value)
           );
       }
     );
@@ -172,8 +171,7 @@ export class UserRegistrationComponent implements OnInit {
           this.newUserFormGroup.reset({isActive:true});
           this.selectedPerson = [];
           this.selectedRoles = [];
-        },
-        e => this.messageService.showGeneralError(this.lang.error, e))
+        })
 
   }
 
@@ -267,8 +265,7 @@ export class UserRegistrationComponent implements OnInit {
           this.newUserFormGroup.reset({isActive:true});
           this.selectedPerson = []
           this.selectedRoles = [];
-        },
-        e => this.messageService.showGeneralError(this.lang.error, e))
+        })
   }
 
   onUserSearchReset() {

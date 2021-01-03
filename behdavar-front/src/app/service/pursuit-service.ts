@@ -18,7 +18,7 @@ export class PursuitService {
         if (onComplete) {
           onComplete(pursuitId);
         }
-      }, (e) => this.messageService.showGeneralError(`can't delete pursuit with id: ${pursuitId}`, e.message));
+      });
   }
 
   editPursuit(pursuitDto: PursuitDto, onComplete: (pursuitDto: PursuitDto) => void): void {
@@ -29,7 +29,7 @@ export class PursuitService {
         if (onComplete) {
           onComplete(pursuitDto);
         }
-      }, (e) => this.messageService.showGeneralError(`can't edit pursuit with id: ${pursuitDto?.id}`, e.message));
+      });
   }
 
   private clearAuditFields(pursuitDto: PursuitDto) {

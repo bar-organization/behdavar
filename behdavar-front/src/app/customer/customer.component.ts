@@ -31,7 +31,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
   @ViewChild("contactSelect")
   contactSelect: MatSelectionList;
 
-  constructor(public messageService: MessageService,private contractService:ContractService,public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute) {
+  constructor(public messageService: MessageService, private contractService: ContractService, public fb: FormBuilder, private httpClient: HttpClient, private route: ActivatedRoute) {
   }
 
   submitted = false;
@@ -73,6 +73,11 @@ export class CustomerComponent implements OnInit, AfterViewInit {
       confirmed: [false],
       description: [''],
     });
+    this.findCustomerByContract();
+
+  }
+
+  private findCustomerByContract() {
     this.httpClient.post<CustomerDto>(Url.CUSTOMER_FIND_BY_CONTRACT, this.contractService.currentId)
       .subscribe(value => {
         const customerDto: CustomerDto = value[0];
@@ -86,7 +91,6 @@ export class CustomerComponent implements OnInit, AfterViewInit {
           });
         }
       });
-
   }
 
   ngAfterViewInit(): void {
@@ -98,8 +102,10 @@ export class CustomerComponent implements OnInit, AfterViewInit {
     newPerson.contacts = this.contactWrapperList.filter(value => value.active).map(value => value.contact);
     CustomerComponent.removeTraceableField(newPerson);
     this.httpClient.post<unknown>(Url.PERSON_UPDATE, newPerson)
-      .subscribe(() => this.messageService.showGeneralSuccess(this.lang.successSave),
-        error => this.messageService.showGeneralError(this.lang.error, error)
+      .subscribe(() => {
+          this.messageService.showGeneralSuccess(this.lang.successSave);
+          this.findCustomerByContract();
+        }
       );
 
 
@@ -156,7 +162,7 @@ export class CustomerComponent implements OnInit, AfterViewInit {
       if (value.contact === selectedContact) {
         value.contact = {
           id: value.contact.id,
-          version:value.contact.version,
+          version: value.contact.version,
           number: this.contactForm.value.number,
           confirmed: this.contactForm.value.confirmed,
           phoneType: this.contactForm.value.phoneType,

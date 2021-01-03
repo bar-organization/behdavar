@@ -87,7 +87,6 @@ export class DocumentAttachmentComponent implements OnInit, AfterViewInit {
             operation: SearchOperation.EQUAL
           }];
           this.attachmentHttpDataSource.reload(filterByContractId);
-        },
-        () => this.messageService.showGeneralError(this.lang.error));
+        });
   }
 }

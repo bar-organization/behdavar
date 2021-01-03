@@ -44,7 +44,6 @@ export class DocumentInputComponent implements OnInit {
     fileModel.content = this.fileToUpload;
     fileModel.fileName = this.fileName;
     this.httpClient.post(Url.EXCEL_UPLOAD, fileModel)
-      .subscribe(value => this.messageService.showGeneralSuccess(this.lang.successSave),
-        error => this.messageService.showGeneralError(this.lang.error));
+      .subscribe(value => this.messageService.showGeneralSuccess(this.lang.successSave));
   }
 }

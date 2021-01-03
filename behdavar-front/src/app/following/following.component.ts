@@ -127,8 +127,7 @@ export class FollowingComponent implements OnInit {
     this.completeModel(saveModel);
 
     this.httpClient.post<PursuitDto>(Url.PURSUIT_SAVE, saveModel)
-      .subscribe(() => this.onSuccess(this.lang.successSave),
-        error => this.messageService.showGeneralError(this.lang.error, error));
+      .subscribe(() => this.onSuccess(this.lang.successSave));
   }
 
   handleFileInput(files: FileList) {

@@ -16,6 +16,6 @@ export class PaymentService {
         if (onComplete) {
           onComplete(value);
         }
-      }, error => this.messageService.showGeneralError(`cant find Payment by contract id: ${contractId}`));
+      });
   }
 }

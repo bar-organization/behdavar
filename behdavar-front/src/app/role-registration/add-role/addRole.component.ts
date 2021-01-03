@@ -93,8 +93,7 @@ export class AddRoleComponent implements OnInit,AfterViewInit {
       .subscribe(value => {
           this.messageService.showGeneralSuccess(this.lang.successSave);
           this.back();
-        },
-        e => this.messageService.showGeneralError(e, this.lang.error));
+        });
 
   }
 
