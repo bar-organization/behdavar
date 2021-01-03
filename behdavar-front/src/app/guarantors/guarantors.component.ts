@@ -108,7 +108,7 @@ export class GuarantorsComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    if (!this.glSelect._value) {
+    if (this.glSelect.selectedOptions.isEmpty()) {
       this.messageService.showGeneralError(this.lang.selectAGuarantor);
       return;
     }
@@ -119,6 +119,10 @@ export class GuarantorsComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
           this.messageService.showGeneralSuccess(this.lang.successSave)
           this.updateGuarantorList();
+          this.guarantorsForm.reset();
+          this.contactForm.reset({phoneType: PhoneType.MOBILE, confirmed: false});
+          this.contactWrapperList = [];
+          this.glSelect.deselectAll();
         }
       );
   }
