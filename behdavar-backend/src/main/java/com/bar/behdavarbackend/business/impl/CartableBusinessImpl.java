@@ -75,6 +75,7 @@ public class CartableBusinessImpl implements CartableBusiness {
     @Override
     public PagingResponse findPaging(PagingRequest pagingRequest) {
         pagingRequest.getFilters().add(new SearchCriteria(CartableEntity.RECEIVER, SecurityUtil.getCurrentUserId(), SearchOperation.EQUAL));
+        pagingRequest.getFilters().add(new SearchCriteria(CartableEntity.ACTIVE, true, SearchOperation.EQUAL));
         return getPagingResponse(pagingRequest);
     }
 
