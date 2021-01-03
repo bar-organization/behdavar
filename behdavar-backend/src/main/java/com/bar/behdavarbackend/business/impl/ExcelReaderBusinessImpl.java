@@ -145,60 +145,15 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
                 UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
                 if (contractEntity != null) {
-                    if (contractEntity.getLending() != null) {
-                        LendingEntity lendingEntity = lendingRepository.findById(contractEntity.getLending().getId()).orElse(null);
-                        if (lendingEntity != null ){
-                            lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
-                            lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
-                            lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
-                            lendingEntity.setRemainDebtAmount(excelLendingEntity.getRemainDebtAmount());
-                            lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
-                            lendingRepository.save(lendingEntity);
-                        }
-                    }
-                    CartableEntity cartableEntity = cartableRepository.findByContractIdAndActive(contractEntity.getId(), true).orElse(null);
-                    if (cartableEntity != null) {
-                        if (!cartableEntity.getReceiver().getCode().equals(excelLendingEntity.getExpertCode())) {
-                            cartableEntity.setActive(false);
-                            UserAmountEntity oldUserAmount = userAmountRepository.findByUserId(cartableEntity.getReceiver().getId()).orElse(null);
-                            oldUserAmount.setTotalAmount(oldUserAmount.getTotalAmount().min(excelLendingEntity.getRemainDebtAmount()));
-                            userAmountRepository.save(oldUserAmount);
-                            UserEntity newReceiver = userRepository.findByCode(excelLendingEntity.getExpertCode());
-                            if (newReceiver == null) {
-                                throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
-                            }
-                            UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(newReceiver.getId()).orElse(null);
-                            if (userAmountEntity == null) {
-                                userAmountEntity = new UserAmountEntity();
-                            }
-                            userAmountEntity.setTotalAmount(userAmountEntity.getTotalAmount().add(excelLendingEntity.getRemainDebtAmount()));
-                            contractEntity.setContractStatus(ContractStatus.RAW);
-                            contractRepository.save(contractEntity);
-                            cartableRepository.save(cartableEntity);
-                            CartableEntity newCartableEntity = new CartableEntity();
-                            newCartableEntity.setActive(true);
-                            newCartableEntity.setContract(contractEntity);
-                            newCartableEntity.setReceiver(userExpertEntity);
-                            UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
-                            newCartableEntity.setSender(sender);
-                            cartableRepository.save(newCartableEntity);
-                        }
-                    } else {
-                        cartableEntity = new CartableEntity();
-                        cartableEntity.setActive(true);
-                        cartableEntity.setContract(contractEntity);
-                        cartableEntity.setReceiver(userExpertEntity);
-                        UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
-                        cartableEntity.setSender(sender);
-                        cartableRepository.save(cartableEntity);
-                    }
+                    contractRepeated(excelLendingEntity, contractEntity, userExpertEntity);
                     return;
                 }
 
-                // grantors
+                // contract
                 contractEntity = new ContractEntity();
                 contractEntity.setContractNumber(excelLendingEntity.getContractNumber());
                 contractEntity.setContractStatus(ContractStatus.RAW);
+                //product
                 if (excelLendingEntity.getMachine() != null) {
                     contractEntity.setContractType(ContractType.CARS);
                     ProductEntity productEntity = new ProductEntity();
@@ -212,64 +167,37 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 }
 
                 LendingEntity lendingEntity = new LendingEntity();
-                lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
-                lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
-                lendingEntity.setRemainDebtAmount(excelLendingEntity.getRemainDebtAmount());
-                lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
-                lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
-                lendingRepository.save(lendingEntity);
+                setAndSaveLending(excelLendingEntity,lendingEntity);
+
                 contractEntity.setLending(lendingEntity);
                 contractEntity.setContractWeight(ContractWeight.LEVEL1);
-                //condition for contractWeight
-            /*    if (excelLendingEntity.getAmount() != null) {
 
-                }*/
                 InputExcelGuarantorEntity byInputExcelIdAndContractNumber = inputExcelGuarantorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
+
+                // guarantor
                 if (byInputExcelIdAndContractNumber != null) {
                     PersonEntity personEntity = new PersonEntity();
-                    personEntity.setFullName(byInputExcelIdAndContractNumber.getLastName());
-                    personEntity.setFatherName(byInputExcelIdAndContractNumber.getFatherName());
-                    personEntity.setNationalCode(byInputExcelIdAndContractNumber.getNationalCode());
-                    Long personId = personBusiness.save(personEntity);
+                    Long personId = setAndSavePerson(byInputExcelIdAndContractNumber, personEntity);
                     personEntity.setId(personId);
 
                     if (byInputExcelIdAndContractNumber.getMobile1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile1()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(byInputExcelIdAndContractNumber.getMobile1());
-                        contactEntity.setPhoneType(PhoneType.MOBILE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getMobile1(), PhoneType.MOBILE);
                     }
 
                     if (byInputExcelIdAndContractNumber.getMobile2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile2()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(byInputExcelIdAndContractNumber.getMobile2());
-                        contactEntity.setPhoneType(PhoneType.MOBILE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getMobile2(), PhoneType.MOBILE);
                     }
 
                     if (byInputExcelIdAndContractNumber.getTel1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel1()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(byInputExcelIdAndContractNumber.getTel1());
-                        contactEntity.setPhoneType(PhoneType.PHONE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getTel1(), PhoneType.PHONE);
                     }
 
                     if (byInputExcelIdAndContractNumber.getTel2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel2()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(byInputExcelIdAndContractNumber.getTel2());
-                        contactEntity.setPhoneType(PhoneType.PHONE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getTel2(), PhoneType.PHONE);
                     }
 
                     if (byInputExcelIdAndContractNumber.getAddress() != null && !(("-").equals(byInputExcelIdAndContractNumber.getAddress()))) {
-                        AddressEntity addressEntity = new AddressEntity();
-                        addressEntity.setPerson(personEntity);
-                        addressEntity.setDescription(byInputExcelIdAndContractNumber.getAddress());
-                        addressRepository.save(addressEntity);
+                        setAndSaveAddress(personEntity, byInputExcelIdAndContractNumber.getAddress());
                     }
                     GuarantorEntity guarantorEntity = new GuarantorEntity();
                     guarantorEntity.setContract(contractEntity);
@@ -279,19 +207,10 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
 
                     if (excelLendingEntity.getExpertCode() != null && !(("-").equals(excelLendingEntity.getExpert()))) {
                         if (userExpertEntity != null) {
-                            CartableEntity cartableEntity = new CartableEntity();
-                            cartableEntity.setActive(true);
-                            cartableEntity.setContract(contractEntity);
-                            cartableEntity.setReceiver(userExpertEntity);
-                            UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
-                            cartableEntity.setSender(sender);
-                            cartableRepository.save(cartableEntity);
+                            setAndSaveCartableWhenForFirst(contractEntity,userExpertEntity);
                             UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(userExpertEntity.getId()).orElse(null);
                             if (userAmountEntity == null) {
-                                userAmountEntity = new UserAmountEntity();
-                                userAmountEntity.setTotalAmount(new BigDecimal("0"));
-                                userAmountEntity.setReceiveAmount(new BigDecimal("0"));
-                                userAmountEntity.setUser(userExpertEntity);
+                                userAmountEntity = setFirstUserAmount(userExpertEntity);
                             }
                             userAmountEntity.setTotalAmount(userAmountEntity.getTotalAmount().add(excelLendingEntity.getRemainDebtAmount()));
                             userAmountRepository.save(userAmountEntity);
@@ -304,7 +223,8 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
 
 
                 }
-                // end of grantor
+                // end of guarantor
+
                 //debtors
                 InputExcelDebtorEntity debtorEntities = inputExcelDebtorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
                 if (debtorEntities != null) {
@@ -316,42 +236,23 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                     personBusiness.save(personEntity);
 
                     if (debtorEntities.getMobile1() != null && !(("-").equals(debtorEntities.getMobile1()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(debtorEntities.getMobile1());
-                        contactEntity.setPhoneType(PhoneType.MOBILE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, debtorEntities.getMobile1(), PhoneType.MOBILE);
                     }
 
                     if (debtorEntities.getMobile2() != null && !(("-").equals(debtorEntities.getMobile2()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(debtorEntities.getMobile2());
-                        contactEntity.setPhoneType(PhoneType.MOBILE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, debtorEntities.getMobile2(), PhoneType.MOBILE);
                     }
 
                     if (debtorEntities.getTel1() != null && !(("-").equals(debtorEntities.getTel1()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(debtorEntities.getTel1());
-                        contactEntity.setPhoneType(PhoneType.PHONE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, debtorEntities.getTel1(), PhoneType.PHONE);
                     }
 
                     if (debtorEntities.getTel2() != null && !(("-").equals(debtorEntities.getTel2()))) {
-                        ContactEntity contactEntity = new ContactEntity();
-                        contactEntity.setNumber(debtorEntities.getTel2());
-                        contactEntity.setPhoneType(PhoneType.PHONE);
-                        contactEntity.setPerson(personEntity);
-                        contactRepository.save(contactEntity);
+                        saveMobileContact(personEntity, debtorEntities.getTel2(), PhoneType.PHONE);
                     }
 
                     if (debtorEntities.getAddress() != null && !(("-").equals(debtorEntities.getAddress()))) {
-                        AddressEntity addressEntity = new AddressEntity();
-                        addressEntity.setPerson(personEntity);
-                        addressEntity.setDescription(debtorEntities.getAddress());
-                        addressRepository.save(addressEntity);
+                        setAndSaveAddress(personEntity, debtorEntities.getAddress());
                     }
                     CustomerEntity customerEntity = new CustomerEntity();
                     customerEntity.setContract(contractEntity);
@@ -361,5 +262,98 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
                 }
             });
         }
+    }
+
+    private void setAndSaveAddress(PersonEntity personEntity, String address) {
+        AddressEntity addressEntity = new AddressEntity();
+        addressEntity.setPerson(personEntity);
+        addressEntity.setDescription(address);
+        addressRepository.save(addressEntity);
+    }
+
+    private UserAmountEntity setFirstUserAmount(UserEntity userExpertEntity) {
+        UserAmountEntity userAmountEntity;
+        userAmountEntity = new UserAmountEntity();
+        userAmountEntity.setTotalAmount(new BigDecimal("0"));
+        userAmountEntity.setReceiveAmount(new BigDecimal("0"));
+        userAmountEntity.setUser(userExpertEntity);
+        return userAmountEntity;
+    }
+
+    private Long setAndSavePerson(InputExcelGuarantorEntity byInputExcelIdAndContractNumber, PersonEntity personEntity) {
+        personEntity.setFullName(byInputExcelIdAndContractNumber.getLastName());
+        personEntity.setFatherName(byInputExcelIdAndContractNumber.getFatherName());
+        personEntity.setNationalCode(byInputExcelIdAndContractNumber.getNationalCode());
+        return personBusiness.save(personEntity);
+    }
+
+    private void saveMobileContact(PersonEntity personEntity, String tel2, PhoneType phone) {
+        ContactEntity contactEntity = new ContactEntity();
+        contactEntity.setNumber(tel2);
+        contactEntity.setPhoneType(phone);
+        contactEntity.setPerson(personEntity);
+        contactRepository.save(contactEntity);
+    }
+
+    private void contractRepeated(InputExcelLendingEntity excelLendingEntity, ContractEntity contractEntity, UserEntity userExpertEntity) {
+        CartableEntity cartableEntity = cartableRepository.findByContractIdAndActive(contractEntity.getId(), true).orElse(null);
+        if (cartableEntity != null) {
+            if (!cartableEntity.getReceiver().getCode().equals(excelLendingEntity.getExpertCode())) {
+                setAndSaveCartableWhenExpertChange(excelLendingEntity, contractEntity, userExpertEntity, cartableEntity);
+            }
+        } else {
+            setAndSaveCartableWhenForFirst(contractEntity, userExpertEntity);
+        }
+        if (contractEntity.getLending() != null) {
+            LendingEntity lendingEntity = lendingRepository.findById(contractEntity.getLending().getId()).orElse(null);
+            if (lendingEntity != null ){
+                setAndSaveLending(excelLendingEntity, lendingEntity);
+            }
+        }
+    }
+
+    private void setAndSaveCartableWhenForFirst(ContractEntity contractEntity, UserEntity userExpertEntity) {
+        CartableEntity cartableEntity = new CartableEntity();
+        cartableEntity.setActive(true);
+        cartableEntity.setContract(contractEntity);
+        cartableEntity.setReceiver(userExpertEntity);
+        UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
+        cartableEntity.setSender(sender);
+        cartableRepository.save(cartableEntity);
+    }
+
+    private void setAndSaveCartableWhenExpertChange(InputExcelLendingEntity excelLendingEntity, ContractEntity contractEntity, UserEntity userExpertEntity, CartableEntity cartableEntity) {
+        cartableEntity.setActive(false);
+        UserAmountEntity oldUserAmount = userAmountRepository.findByUserId(cartableEntity.getReceiver().getId()).orElse(null);
+        oldUserAmount.setTotalAmount(oldUserAmount.getTotalAmount().min(contractEntity.getLending().getRemainDebtAmount()));
+        userAmountRepository.save(oldUserAmount);
+        UserEntity newReceiver = userRepository.findByCode(excelLendingEntity.getExpertCode());
+        if (newReceiver == null) {
+            throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
+        }
+        UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(newReceiver.getId()).orElse(null);
+        if (userAmountEntity == null) {
+            setFirstUserAmount(userExpertEntity);
+        }
+        userAmountEntity.setTotalAmount(userAmountEntity.getTotalAmount().add(excelLendingEntity.getRemainDebtAmount()));
+        contractEntity.setContractStatus(ContractStatus.RAW);
+        contractRepository.save(contractEntity);
+        cartableRepository.save(cartableEntity);
+        CartableEntity newCartableEntity = new CartableEntity();
+        newCartableEntity.setActive(true);
+        newCartableEntity.setContract(contractEntity);
+        newCartableEntity.setReceiver(userExpertEntity);
+        UserEntity sender = UserTransformer.createEntityForRelation(SecurityUtil.getCurrentUserId());
+        newCartableEntity.setSender(sender);
+        cartableRepository.save(newCartableEntity);
+    }
+
+    private void setAndSaveLending(InputExcelLendingEntity excelLendingEntity, LendingEntity lendingEntity) {
+        lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
+        lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
+        lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
+        lendingEntity.setRemainDebtAmount(excelLendingEntity.getRemainDebtAmount());
+        lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
+        lendingRepository.save(lendingEntity);
     }
 }
