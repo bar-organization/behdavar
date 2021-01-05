@@ -4,10 +4,7 @@ import com.bar.behdavarbackend.business.api.*;
 import com.bar.behdavarbackend.business.transformer.CartableTransformer;
 import com.bar.behdavarbackend.business.transformer.ContractTransformer;
 import com.bar.behdavarbackend.business.transformer.UserTransformer;
-import com.bar.behdavarbackend.dto.AssignContractDto;
-import com.bar.behdavarbackend.dto.CartableDto;
-import com.bar.behdavarbackend.dto.StatusLogDto;
-import com.bar.behdavarbackend.dto.UserInfoDto;
+import com.bar.behdavarbackend.dto.*;
 import com.bar.behdavarbackend.exception.BusinessException;
 import com.bar.behdavarbackend.util.pagination.*;
 import com.bar.behdavarcommon.enumeration.ContractStatus;
@@ -17,10 +14,12 @@ import com.bar.behdavardatabase.entity.CustomerEntity;
 import com.bar.behdavardatabase.repository.CartableRepository;
 import com.bar.behdavardatabase.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Service(CartableBusinessImpl.BEAN_NAME)
@@ -87,6 +86,35 @@ public class CartableBusinessImpl implements CartableBusiness {
                 .ifPresent(searchCriteria ->
                         searchCriteria.setValue(ContractStatus.getByName(searchCriteria.getValue().toString())));
         return getPagingResponse(pagingRequest);
+    }
+
+    @Override
+    public PagingResponse findPagingDocumentFlow(PagingRequest pagingRequest) {
+        if (pagingRequest == null) {
+            pagingRequest = new PagingRequest();
+        }
+
+        List<DocumentFlowDto> resultList = new ArrayList<>();
+        // the only sort by cartable creation date
+        pagingRequest.setSort(new SortOperation(Sort.Direction.ASC, "createdDate"));
+
+        PagingResponse pagingAll = this.findPagingAll(pagingRequest);
+        List<CartableDto> cartableDtoPage = (List<CartableDto>) pagingAll.getData();
+        Iterator<CartableDto> iterator = cartableDtoPage.iterator();
+
+        while (iterator.hasNext()) {
+            CartableDto current = iterator.next();
+            CartableDto next = iterator.hasNext() ? iterator.next() : current;
+
+            DocumentFlowDto flowDto = new DocumentFlowDto();
+            flowDto.setPreviousReceiver(current.getReceiver());
+            flowDto.setNewReceiver(current.equals(next) ? null : next.getReceiver());
+            flowDto.setSender(next.getSender());
+            flowDto.setCreatedDate(next.getCreatedDate());
+            resultList.add(flowDto);
+        }
+        pagingAll.setData(resultList);
+        return pagingAll;
     }
 
     private PagingResponse getPagingResponse(PagingRequest pagingRequest) {

@@ -9,6 +9,7 @@ export default class Url {
   public static readonly CARTABLE_FIND_PAGING_ALL = `${Url.BASE_API}/cartable/find-paging-all`;
   public static readonly CARTABLE_ASSIGN = `${Url.BASE_API}/cartable/assign`;
   public static readonly CARTABLE_GET_USER_INFO = `${Url.BASE_API}/cartable/get-user-info`;
+  public static readonly CARTABLE_FIND_PAGING_DOC_FLOW = `${Url.BASE_API}/cartable/find-paging-doc-flow`;
 
   public static readonly CONTRACT_FIND_BY_ID = `${Url.BASE_API}/contract/find-by-id`;
   public static readonly CONTRACT_UPDATE_STATUS = `${Url.BASE_API}/contract/update-status`;

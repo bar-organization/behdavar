@@ -125,7 +125,7 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     if (fieldName.includes("+")) {
       let result = '';
       fieldName.split('+').forEach(v => {
-        result += dot.pick(v, element) + ' '
+        result += !!dot.pick(v, element) ? (dot.pick(v, element) + ' ') : '';
       });
       return result;
     }
@@ -252,7 +252,8 @@ export class DataTableComponent implements OnInit, AfterViewInit {
     }
     return col.customValue(row)['className'];
   }
-  getColorColumnTitle(row:any,col:TableColumn):string {
+
+  getColorColumnTitle(row: any, col: TableColumn): string {
     if (!row || !col.customValue) {
       return;
     }

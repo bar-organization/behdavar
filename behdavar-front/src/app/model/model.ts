@@ -43,6 +43,12 @@ export class ContactDto extends BaseAuditorDto<string, number> {
   person: PersonDto;
 }
 
+export class DocumentFlowDto extends BaseAuditorDto<string, number> {
+  previousReceiver?: UserDto;
+  newReceiver?: UserDto;
+  sender?: UserDto;
+}
+
 export class GuarantorDto extends BaseAuditorDto<string, number> {
   relationType: RelationType;
   contract: ContractDto;

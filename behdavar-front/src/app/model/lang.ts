@@ -286,7 +286,7 @@ export class DocumentFlowLang extends Lang {
   previousExpert = 'کارشناس قبلی';
   newExpert = 'کارشناس جدید';
   referralUnit = 'واحد ارجاع دهنده';
-  date = 'تارخ';
+  date = 'تاریخ';
   time = 'ساعت';
   tableTitle = 'لیست گردش پرونده';
 

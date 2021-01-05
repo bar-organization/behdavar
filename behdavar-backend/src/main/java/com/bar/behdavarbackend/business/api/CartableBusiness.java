@@ -19,6 +19,8 @@ public interface CartableBusiness {
 
     PagingResponse findPagingAll(PagingRequest pagingRequest);
 
+    PagingResponse findPagingDocumentFlow(PagingRequest pagingRequest);
+
     void assignContract(AssignContractDto dto);
 
     UserInfoDto getUserInfo();

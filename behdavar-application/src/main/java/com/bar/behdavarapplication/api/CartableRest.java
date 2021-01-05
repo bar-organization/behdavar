@@ -78,4 +78,10 @@ public class CartableRest {
     public ResponseEntity<PagingResponse> findPagingAll(@RequestBody PagingRequest pageRequest) {
         return new ResponseEntity<>(CartableBusiness.findPagingAll(pageRequest), HttpStatus.OK);
     }
+
+    @PreAuthorize("hasAnyAuthority('" + AuthorityConstant.VIEW_DOCUMENT_MANAGEMENT + "','" + AuthorityConstant.SEARCH_ALL +"','" + AuthorityConstant.CARTABLE_SEARCH +"')")
+    @PostMapping("/find-paging-doc-flow")
+    public ResponseEntity<PagingResponse> findPagingDocumentFlow(@RequestBody PagingRequest pageRequest) {
+        return new ResponseEntity<>(CartableBusiness.findPagingDocumentFlow(pageRequest), HttpStatus.OK);
+    }
 }

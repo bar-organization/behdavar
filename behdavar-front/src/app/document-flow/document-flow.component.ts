@@ -4,12 +4,13 @@ import {TableColumn} from "../_custom-component/data-table/data-table.component"
 import HttpDataSource from "../_custom-component/data-table/HttpDataSource";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ContractService} from "../service/contract-service";
-import {CartableDto} from "../model/model";
+import {CartableDto, DocumentFlowDto} from "../model/model";
 import Url from "../model/url";
-import {AuthorityConstantEnum} from "../model/enum/AuthorityConstantEnum";
 import {AuthService} from "../service/auth/auth.service";
 import {HttpClient} from "@angular/common/http";
 import {SearchCriteria, SearchOperation} from "../_custom-component/data-table/PaginationModel";
+import {JalaliPipe} from "../_pip/jalali.pipe";
+import {BlankToDashPipe} from "../_pip/blank-to-dash.pipe";
 
 @Component({
   selector: 'document-flow',
@@ -20,7 +21,7 @@ export class DocumentFlowComponent implements OnInit {
   lang: DocumentFlowLang = new DocumentFlowLang();
   contractNumber: string;
   tableColumns: TableColumn[];
-  documentFlowHttpDataSource: HttpDataSource<CartableDto>;
+  documentFlowHttpDataSource: HttpDataSource<DocumentFlowDto>;
 
   constructor(private route: ActivatedRoute, private httpClient: HttpClient, private authService: AuthService, private router: Router, private contractService: ContractService) {
   }
@@ -31,21 +32,6 @@ export class DocumentFlowComponent implements OnInit {
       this.contractService.updateCurrentId(Number(id));
     } catch (e) {
     }
-  }
-
-  private getUrl(): string {
-    if (!this.router) {
-      return Url.CARTABLE_FIND_PAGING;
-    }
-
-    if (this.router.url.match('document-manage'))
-      return Url.CARTABLE_FIND_PAGING_ALL;
-
-    if (this.router.url.match('search'))
-      return this.authService.hasAuthority(AuthorityConstantEnum.SEARCH_ALL) ? Url.CARTABLE_FIND_PAGING_ALL : Url.CARTABLE_FIND_PAGING;
-
-    return Url.CARTABLE_FIND_PAGING;
-
   }
 
   ngOnInit(): void {
@@ -59,14 +45,35 @@ export class DocumentFlowComponent implements OnInit {
       operation: SearchOperation.EQUAL,
       value: this.contractService.currentId
     };
-    this.documentFlowHttpDataSource = new HttpDataSource<CartableDto>(this.getUrl(), this.httpClient, [defaultFilter]);
+    this.documentFlowHttpDataSource = new HttpDataSource<CartableDto>(Url.CARTABLE_FIND_PAGING_DOC_FLOW, this.httpClient, [defaultFilter]);
 
     this.tableColumns = [
-      {fieldName: 'previousExpert', title: this.lang.previousExpert},
-      {fieldName: 'newExpert', title: this.lang.newExpert},
-      {fieldName: 'referralUnit', title: this.lang.referralUnit},
-      {fieldName: 'date', title: this.lang.date},
-      {fieldName: 'time', title: this.lang.time}
+      {
+        fieldName: 'previousReceiver.firstName+previousReceiver.lastName',
+        title: this.lang.previousExpert,
+        pipNames: [{pip: new BlankToDashPipe()}]
+      },
+      {
+        fieldName: 'newReceiver.firstName+newReceiver.lastName',
+        title: this.lang.newExpert,
+        pipNames: [{pip: new BlankToDashPipe()}]
+      },
+      {
+        fieldName: 'sender.firstName+sender.lastName',
+        title: this.lang.referralUnit,
+        pipNames: [{pip: new BlankToDashPipe()}]
+      },
+      {
+        fieldName: 'createdDate',
+        colName: 'createdDate',
+        title: this.lang.date,
+        pipNames: [{pip: new JalaliPipe()}, {pip: new BlankToDashPipe()}]
+      },
+      {
+        fieldName: 'createdDate',
+        title: this.lang.time,
+        pipNames: [{pip: new JalaliPipe(), args: ['HH:mm']}, {pip: new BlankToDashPipe()}]
+      }
     ]
   }
 

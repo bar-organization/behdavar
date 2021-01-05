@@ -4,7 +4,7 @@
     <form fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1rem" [formGroup]="changeExpertFormGroup"
           (ngSubmit)="changeExpert()">
 
-      <span>{{lang.documentNumber}}: {{documentNumber}}</span>
+      <h6 class="p-0 my-0">{{lang.documentNumber}}: {{documentNumber}}</h6>
       <mat-form-field fxFlex="25">
         <input type="text"
                [placeholder]="lang.newExpert"

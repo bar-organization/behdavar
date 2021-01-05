@@ -67,7 +67,7 @@ export class DocumentComponent implements OnInit, AfterViewInit {
       if (this.isMyBaskUrl()) {
         this.documentTable.reloadTable(this.getMyBasketFilter(value.pagingRequest));
       } else {
-        this.documentTable.reloadTable(value.pagingRequest);
+        this.documentTable.reloadTable(this.applyActiveFilter(value.pagingRequest));
       }
       this.documentSearchComponent.setParentFormValue(value.documentSearchFormValue);
 
@@ -105,6 +105,27 @@ export class DocumentComponent implements OnInit, AfterViewInit {
       key: 'contract.contractStatus', value: ContractStatus[ContractStatus.RAW.valueOf()],
       operation: SearchOperation.EQUAL
     }];
+    return myBasketDefaultRequest;
+  }
+
+  private applyActiveFilter(pagingRequest: PagingRequest): PagingRequest {
+    if (!pagingRequest)
+      return pagingRequest;
+
+    const myBasketDefaultRequest: PagingRequest = new PagingRequest();
+    myBasketDefaultRequest.start = pagingRequest?.start;
+    myBasketDefaultRequest.max = pagingRequest?.max;
+    myBasketDefaultRequest.sort = pagingRequest?.sort;
+    myBasketDefaultRequest.filters = pagingRequest.filters;
+    if(!myBasketDefaultRequest.filters)
+      myBasketDefaultRequest.filters = [];
+
+    myBasketDefaultRequest.filters.push({
+      key: 'active', value: true,
+      operation: SearchOperation.EQUAL
+    });
+
+
     return myBasketDefaultRequest;
   }
 

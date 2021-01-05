@@ -99,6 +99,8 @@ export class DocumentSearchComponent implements OnInit {
     }
     const filter: SearchCriteria[] = [];
 
+    this.applyDefaultFilter(filter);
+
     const cFullName = this.parentForm.value?.customerSearchFormGroup?.name;
     const gFullName = this.parentForm.value?.guarantorSearchFormGroup?.name;
 
@@ -218,6 +220,13 @@ export class DocumentSearchComponent implements OnInit {
     if (!this.parentForm)
       return;
     this.parentForm.setValue(formValue);
+  }
+
+  private applyDefaultFilter(filter: SearchCriteria[]) {
+    filter.push({
+      key: 'active', value: true,
+      operation: SearchOperation.EQUAL
+    });
   }
 }
 
