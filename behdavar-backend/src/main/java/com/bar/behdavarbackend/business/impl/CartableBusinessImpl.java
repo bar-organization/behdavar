@@ -85,6 +85,7 @@ public class CartableBusinessImpl implements CartableBusiness {
                 .findFirst()
                 .ifPresent(searchCriteria ->
                         searchCriteria.setValue(ContractStatus.getByName(searchCriteria.getValue().toString())));
+        pagingRequest.getFilters().add(new SearchCriteria(CartableEntity.ACTIVE, true, SearchOperation.EQUAL));
         return getPagingResponse(pagingRequest);
     }
 

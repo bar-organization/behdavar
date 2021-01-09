@@ -67,7 +67,7 @@ export class DocumentComponent implements OnInit, AfterViewInit {
       if (this.isMyBaskUrl()) {
         this.documentTable.reloadTable(this.getMyBasketFilter(value.pagingRequest));
       } else {
-        this.documentTable.reloadTable(this.applyActiveFilter(value.pagingRequest));
+        this.documentTable.reloadTable(value.pagingRequest);
       }
       this.documentSearchComponent.setParentFormValue(value.documentSearchFormValue);
 
