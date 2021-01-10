@@ -353,6 +353,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
         lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
         lendingEntity.setRemainDebtAmount(excelLendingEntity.getRemainDebtAmount());
+        lendingEntity.setLateFees(excelLendingEntity.getLateFees());
         lendingEntity.setDifferedInstallmentCount(excelLendingEntity.getDifferedInstallmentCount());
         lendingRepository.save(lendingEntity);
     }

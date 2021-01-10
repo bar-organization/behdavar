@@ -46,7 +46,7 @@ public class InputExcelLendingDto extends BaseAuditorDto<String, Long> {
     @ExcelCell(15)
     private BigDecimal debtAmount;
     @ExcelCell(16)
-    private Long lateFees;
+    private BigDecimal lateFees;
     @ExcelCell(17)
     private Long differedInstallmentCount;
     @ExcelCell(18)
