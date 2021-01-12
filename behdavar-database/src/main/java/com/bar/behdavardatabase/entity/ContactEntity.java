@@ -27,7 +27,7 @@ public class ContactEntity extends BaseAuditorEntity<String, Long> {
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = ALLOCATION_SIZE)
     private Long id;
 
-    @Column(name = "PHONE_NUMBER", nullable = false, length = 15)
+    @Column(name = "PHONE_NUMBER", nullable = false, length = 25)
     private String number;
 
     @Column(name = "DESCRIPTION", columnDefinition = "VARCHAR(100)")
