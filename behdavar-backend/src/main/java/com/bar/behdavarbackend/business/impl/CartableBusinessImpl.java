@@ -99,7 +99,7 @@ public class CartableBusinessImpl implements CartableBusiness {
         // the only sort by cartable creation date
         pagingRequest.setSort(new SortOperation(Sort.Direction.ASC, "createdDate"));
 
-        PagingResponse pagingAll = this.findPagingAll(pagingRequest);
+        PagingResponse pagingAll = this.getPagingResponse(pagingRequest);
         List<CartableDto> cartableDtoPage = (List<CartableDto>) pagingAll.getData();
         Iterator<CartableDto> iterator = cartableDtoPage.iterator();
 
