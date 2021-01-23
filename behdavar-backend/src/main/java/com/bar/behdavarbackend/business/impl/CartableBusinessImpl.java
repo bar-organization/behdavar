@@ -96,7 +96,6 @@ public class CartableBusinessImpl implements CartableBusiness {
         }
 
         List<DocumentFlowDto> resultList = new ArrayList<>();
-        // the only sort by cartable creation date
         pagingRequest.setSort(new SortOperation(Sort.Direction.ASC, "createdDate"));
 
         PagingResponse pagingAll = this.getPagingResponse(pagingRequest);
@@ -105,13 +104,11 @@ public class CartableBusinessImpl implements CartableBusiness {
 
         while (iterator.hasNext()) {
             CartableDto current = iterator.next();
-            CartableDto next = iterator.hasNext() ? iterator.next() : current;
 
             DocumentFlowDto flowDto = new DocumentFlowDto();
             flowDto.setPreviousReceiver(current.getReceiver());
-            flowDto.setNewReceiver(current.equals(next) ? null : next.getReceiver());
-            flowDto.setSender(next.getSender());
-            flowDto.setCreatedDate(next.getCreatedDate());
+            flowDto.setSender(current.getSender());
+            flowDto.setCreatedDate(current.getCreatedDate());
             resultList.add(flowDto);
         }
         pagingAll.setData(resultList);

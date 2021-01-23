@@ -32,7 +32,7 @@ public class ExcelRest {
     @PostMapping("/upload")
     public ResponseEntity<CartableDto> findById(@RequestBody @Valid InputExcelDto dto) {
         excelReaderBusiness.readAndSave(dto);
-        personRepository.convertArabicLetters();
+//        personRepository.convertArabicLetters();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }

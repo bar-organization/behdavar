@@ -283,8 +283,7 @@ export class DocumentFlowLang extends Lang {
   pageTitle = 'گردش پرونده';
   contractNumber = 'شماره پرونده';
   flow = 'گردش';
-  previousExpert = 'کارشناس قبلی';
-  newExpert = 'کارشناس جدید';
+  previousExpert = 'کارشناس';
   referralUnit = 'واحد ارجاع دهنده';
   date = 'تاریخ';
   time = 'ساعت';
