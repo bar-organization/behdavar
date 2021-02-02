@@ -142,123 +142,127 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         List<InputExcelLendingEntity> inputExcelLendingEntities = inputExcelLendingRepository.findByInputExcelId(inputExcelId);
         if (!inputExcelLendingEntities.isEmpty()) {
             inputExcelLendingEntities.forEach(excelLendingEntity -> {
-                ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
-                UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
-                if (contractEntity != null) {
-                    contractRepeated(excelLendingEntity, contractEntity, userExpertEntity);
-                    return;
-                }
-
-                // contract
-                contractEntity = new ContractEntity();
-                contractEntity.setContractNumber(excelLendingEntity.getContractNumber());
-                contractEntity.setContractStatus(ContractStatus.RAW);
-                //product
-                if (excelLendingEntity.getMachine() != null) {
-                    contractEntity.setContractType(ContractType.CARS);
-                    ProductEntity productEntity = new ProductEntity();
-                    productEntity.setProductName(excelLendingEntity.getMachine());
-                    productEntity.setProductPlate(excelLendingEntity.getPlaqueNumber());
-                    productEntity.setProductShasiNumber(excelLendingEntity.getShasiNumber());
-                    productRepository.save(productEntity);
-                    contractEntity.setProduct(productEntity);
-                } else {
-                    contractEntity.setContractType(ContractType.BANKS);
-                }
-
-                LendingEntity lendingEntity = new LendingEntity();
-                setAndSaveLending(excelLendingEntity,lendingEntity);
-
-                contractEntity.setLending(lendingEntity);
-                contractEntity.setContractWeight(ContractWeight.LEVEL1);
-
-                InputExcelGuarantorEntity byInputExcelIdAndContractNumber = inputExcelGuarantorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
-
-                // guarantor
-                if (byInputExcelIdAndContractNumber != null) {
-                    PersonEntity personEntity = new PersonEntity();
-                    Long personId = setAndSavePerson(byInputExcelIdAndContractNumber, personEntity);
-                    personEntity.setId(personId);
-
-                    if (byInputExcelIdAndContractNumber.getMobile1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile1()))) {
-                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getMobile1(), PhoneType.MOBILE);
+                try {
+                    ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
+                    UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
+                    if (contractEntity != null) {
+                        contractRepeated(excelLendingEntity, contractEntity, userExpertEntity);
+                        return;
                     }
 
-                    if (byInputExcelIdAndContractNumber.getMobile2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile2()))) {
-                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getMobile2(), PhoneType.MOBILE);
-                    }
-
-                    if (byInputExcelIdAndContractNumber.getTel1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel1()))) {
-                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getTel1(), PhoneType.PHONE);
-                    }
-
-                    if (byInputExcelIdAndContractNumber.getTel2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel2()))) {
-                        saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getTel2(), PhoneType.PHONE);
-                    }
-
-                    if (byInputExcelIdAndContractNumber.getAddress() != null && !(("-").equals(byInputExcelIdAndContractNumber.getAddress()))) {
-                        setAndSaveAddress(personEntity, byInputExcelIdAndContractNumber.getAddress());
-                    }
-                    GuarantorEntity guarantorEntity = new GuarantorEntity();
-                    guarantorEntity.setContract(contractEntity);
-                    guarantorEntity.setPerson(personEntity);
-                    contractRepository.save(contractEntity);
-                    guarantorRepository.save(guarantorEntity);
-
-                    if (excelLendingEntity.getExpertCode() != null && !(("-").equals(excelLendingEntity.getExpert()))) {
-                        if (userExpertEntity != null) {
-                            setAndSaveCartableWhenForFirst(contractEntity,userExpertEntity);
-                            UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(userExpertEntity.getId()).orElse(null);
-                            if (userAmountEntity == null) {
-                                userAmountEntity = setFirstUserAmount(userExpertEntity);
-                            }
-                            userAmountEntity.setTotalAmount(userAmountEntity.getTotalAmount().add(excelLendingEntity.getRemainDebtAmount()));
-                            userAmountRepository.save(userAmountEntity);
-                        } else {
-                            throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
-                        }
+                    // contract
+                    contractEntity = new ContractEntity();
+                    contractEntity.setContractNumber(excelLendingEntity.getContractNumber());
+                    contractEntity.setContractStatus(ContractStatus.RAW);
+                    //product
+                    if (excelLendingEntity.getMachine() != null) {
+                        contractEntity.setContractType(ContractType.CARS);
+                        ProductEntity productEntity = new ProductEntity();
+                        productEntity.setProductName(excelLendingEntity.getMachine());
+                        productEntity.setProductPlate(excelLendingEntity.getPlaqueNumber());
+                        productEntity.setProductShasiNumber(excelLendingEntity.getShasiNumber());
+                        productRepository.save(productEntity);
+                        contractEntity.setProduct(productEntity);
                     } else {
-                        throw new BusinessException("contract.with.contractNumber.not.have.expertCode", excelLendingEntity.getContractNumber());
+                        contractEntity.setContractType(ContractType.BANKS);
                     }
 
+                    LendingEntity lendingEntity = new LendingEntity();
+                    setAndSaveLending(excelLendingEntity, lendingEntity);
 
-                }
-                // end of guarantor
+                    contractEntity.setLending(lendingEntity);
+                    contractEntity.setContractWeight(ContractWeight.LEVEL1);
 
-                //debtors
-                InputExcelDebtorEntity debtorEntities = inputExcelDebtorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
-                if (debtorEntities != null) {
-                    PersonEntity personEntity = new PersonEntity();
-                    personEntity.setFullName(debtorEntities.getLastName());
-                    personEntity.setFatherName(debtorEntities.getFatherName());
-                    personEntity.setNationalCode(debtorEntities.getNationalCode());
-                    personEntity.setId(personBusiness.save(personEntity));
-                    personBusiness.save(personEntity);
+                    InputExcelGuarantorEntity byInputExcelIdAndContractNumber = inputExcelGuarantorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
 
-                    if (debtorEntities.getMobile1() != null && !(("-").equals(debtorEntities.getMobile1()))) {
-                        saveMobileContact(personEntity, debtorEntities.getMobile1(), PhoneType.MOBILE);
+                    // guarantor
+                    if (byInputExcelIdAndContractNumber != null) {
+                        PersonEntity personEntity = new PersonEntity();
+                        Long personId = setAndSavePerson(byInputExcelIdAndContractNumber, personEntity);
+                        personEntity.setId(personId);
+
+                        if (byInputExcelIdAndContractNumber.getMobile1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile1()))) {
+                            saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getMobile1(), PhoneType.MOBILE);
+                        }
+
+                        if (byInputExcelIdAndContractNumber.getMobile2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getMobile2()))) {
+                            saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getMobile2(), PhoneType.MOBILE);
+                        }
+
+                        if (byInputExcelIdAndContractNumber.getTel1() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel1()))) {
+                            saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getTel1(), PhoneType.PHONE);
+                        }
+
+                        if (byInputExcelIdAndContractNumber.getTel2() != null && !(("-").equals(byInputExcelIdAndContractNumber.getTel2()))) {
+                            saveMobileContact(personEntity, byInputExcelIdAndContractNumber.getTel2(), PhoneType.PHONE);
+                        }
+
+                        if (byInputExcelIdAndContractNumber.getAddress() != null && !(("-").equals(byInputExcelIdAndContractNumber.getAddress()))) {
+                            setAndSaveAddress(personEntity, byInputExcelIdAndContractNumber.getAddress());
+                        }
+                        GuarantorEntity guarantorEntity = new GuarantorEntity();
+                        guarantorEntity.setContract(contractEntity);
+                        guarantorEntity.setPerson(personEntity);
+                        contractRepository.save(contractEntity);
+                        guarantorRepository.save(guarantorEntity);
+
+                        if (excelLendingEntity.getExpertCode() != null && !(("-").equals(excelLendingEntity.getExpert()))) {
+                            if (userExpertEntity != null) {
+                                setAndSaveCartableWhenForFirst(contractEntity, userExpertEntity);
+                                UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(userExpertEntity.getId()).orElse(null);
+                                if (userAmountEntity == null) {
+                                    userAmountEntity = setFirstUserAmount(userExpertEntity);
+                                }
+                                userAmountEntity.setTotalAmount(userAmountEntity.getTotalAmount().add(excelLendingEntity.getRemainDebtAmount()));
+                                userAmountRepository.save(userAmountEntity);
+                            } else {
+                                throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
+                            }
+                        } else {
+                            throw new BusinessException("contract.with.contractNumber.not.have.expertCode", excelLendingEntity.getContractNumber());
+                        }
+
+
                     }
+                    // end of guarantor
 
-                    if (debtorEntities.getMobile2() != null && !(("-").equals(debtorEntities.getMobile2()))) {
-                        saveMobileContact(personEntity, debtorEntities.getMobile2(), PhoneType.MOBILE);
-                    }
+                    //debtors
+                    InputExcelDebtorEntity debtorEntities = inputExcelDebtorRepository.findByInputExcelIdAndContractNumber(inputExcelId, excelLendingEntity.getContractNumber());
+                    if (debtorEntities != null) {
+                        PersonEntity personEntity = new PersonEntity();
+                        personEntity.setFullName(debtorEntities.getLastName());
+                        personEntity.setFatherName(debtorEntities.getFatherName());
+                        personEntity.setNationalCode(debtorEntities.getNationalCode());
+                        personEntity.setId(personBusiness.save(personEntity));
+                        personBusiness.save(personEntity);
 
-                    if (debtorEntities.getTel1() != null && !(("-").equals(debtorEntities.getTel1()))) {
-                        saveMobileContact(personEntity, debtorEntities.getTel1(), PhoneType.PHONE);
-                    }
+                        if (debtorEntities.getMobile1() != null && !(("-").equals(debtorEntities.getMobile1()))) {
+                            saveMobileContact(personEntity, debtorEntities.getMobile1(), PhoneType.MOBILE);
+                        }
 
-                    if (debtorEntities.getTel2() != null && !(("-").equals(debtorEntities.getTel2()))) {
-                        saveMobileContact(personEntity, debtorEntities.getTel2(), PhoneType.PHONE);
-                    }
+                        if (debtorEntities.getMobile2() != null && !(("-").equals(debtorEntities.getMobile2()))) {
+                            saveMobileContact(personEntity, debtorEntities.getMobile2(), PhoneType.MOBILE);
+                        }
 
-                    if (debtorEntities.getAddress() != null && !(("-").equals(debtorEntities.getAddress()))) {
-                        setAndSaveAddress(personEntity, debtorEntities.getAddress());
+                        if (debtorEntities.getTel1() != null && !(("-").equals(debtorEntities.getTel1()))) {
+                            saveMobileContact(personEntity, debtorEntities.getTel1(), PhoneType.PHONE);
+                        }
+
+                        if (debtorEntities.getTel2() != null && !(("-").equals(debtorEntities.getTel2()))) {
+                            saveMobileContact(personEntity, debtorEntities.getTel2(), PhoneType.PHONE);
+                        }
+
+                        if (debtorEntities.getAddress() != null && !(("-").equals(debtorEntities.getAddress()))) {
+                            setAndSaveAddress(personEntity, debtorEntities.getAddress());
+                        }
+                        CustomerEntity customerEntity = new CustomerEntity();
+                        customerEntity.setContract(contractEntity);
+                        customerEntity.setPerson(personEntity);
+                        customerRepository.save(customerEntity);
+                        //end of debtor
                     }
-                    CustomerEntity customerEntity = new CustomerEntity();
-                    customerEntity.setContract(contractEntity);
-                    customerEntity.setPerson(personEntity);
-                    customerRepository.save(customerEntity);
-                    //end of debtor
+                } catch (Exception e) {
+                    throw new BusinessException("error in excel with record : " + excelLendingEntity.getContractNumber() );
                 }
             });
         }
@@ -280,7 +284,8 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         return userAmountEntity;
     }
 
-    private Long setAndSavePerson(InputExcelGuarantorEntity byInputExcelIdAndContractNumber, PersonEntity personEntity) {
+    private Long setAndSavePerson(InputExcelGuarantorEntity byInputExcelIdAndContractNumber, PersonEntity
+            personEntity) {
         personEntity.setFullName(byInputExcelIdAndContractNumber.getLastName());
         personEntity.setFatherName(byInputExcelIdAndContractNumber.getFatherName());
         personEntity.setNationalCode(byInputExcelIdAndContractNumber.getNationalCode());
@@ -295,7 +300,8 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         contactRepository.save(contactEntity);
     }
 
-    private void contractRepeated(InputExcelLendingEntity excelLendingEntity, ContractEntity contractEntity, UserEntity userExpertEntity) {
+    private void contractRepeated(InputExcelLendingEntity excelLendingEntity, ContractEntity
+            contractEntity, UserEntity userExpertEntity) {
         CartableEntity cartableEntity = cartableRepository.findByContractIdAndActive(contractEntity.getId(), true).orElse(null);
         if (cartableEntity != null) {
             if (!cartableEntity.getReceiver().getCode().equals(excelLendingEntity.getExpertCode())) {
@@ -306,7 +312,7 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         }
         if (contractEntity.getLending() != null) {
             LendingEntity lendingEntity = lendingRepository.findById(contractEntity.getLending().getId()).orElse(null);
-            if (lendingEntity != null ){
+            if (lendingEntity != null) {
                 setAndSaveLending(excelLendingEntity, lendingEntity);
             }
         }
@@ -322,7 +328,8 @@ public class ExcelReaderBusinessImpl implements ExcelReaderBusiness {
         cartableRepository.save(cartableEntity);
     }
 
-    private void setAndSaveCartableWhenExpertChange(InputExcelLendingEntity excelLendingEntity, ContractEntity contractEntity, UserEntity userExpertEntity, CartableEntity cartableEntity) {
+    private void setAndSaveCartableWhenExpertChange(InputExcelLendingEntity excelLendingEntity, ContractEntity
+            contractEntity, UserEntity userExpertEntity, CartableEntity cartableEntity) {
         cartableEntity.setActive(false);
         UserAmountEntity oldUserAmount = userAmountRepository.findByUserId(cartableEntity.getReceiver().getId()).orElse(null);
         oldUserAmount.setTotalAmount(oldUserAmount.getTotalAmount().min(contractEntity.getLending().getRemainDebtAmount()));
