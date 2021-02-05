@@ -362,14 +362,13 @@ public class ExcelRest {
     private void setAndSaveCartableWhenExpertChange(InputExcelLendingEntity excelLendingEntity, ContractEntity
             contractEntity, UserEntity userExpertEntity, CartableEntity cartableEntity) {
         System.out.println("setAndSaveCartableWhenExpertChange           @@@@@@@@@@@     " + contractEntity.getContractNumber()  +  "       @@@@@@@@    "  +  userExpertEntity.getCode()  +   "   @@@@@@@   "  + cartableEntity.getId());
-        if (cartableEntity == null) {
-            System.out.println("hamin ja   &&&&&&    ");
-        }
         cartableEntity.setActive(false);
         UserAmountEntity oldUserAmount = userAmountRepository.findByUserId(cartableEntity.getReceiver().getId()).orElse(null);
+        System.out.println("oldUserAmount           @@@@@@@@@@@     " + oldUserAmount);
         oldUserAmount.setTotalAmount(oldUserAmount.getTotalAmount().min(contractEntity.getLending().getRemainDebtAmount()));
         userAmountRepository.save(oldUserAmount);
         UserEntity newReceiver = userRepository.findByCode(excelLendingEntity.getExpertCode());
+        System.out.println("newReceiver           @@@@@@@@@@@     " + newReceiver);
         if (newReceiver == null) {
             throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
         }
