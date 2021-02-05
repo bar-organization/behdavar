@@ -166,6 +166,7 @@ public class ExcelRest {
                 System.out.println("excelLendingEntity           &&&&&&&&&&     " + excelLendingEntity.getContractNumber());
                 try {
                     ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
+                    System.out.println("contractEntity           &&&&&&&&&&     " + contractEntity.getContractNumber());
                     UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
                     if (contractEntity != null) {
                         contractRepeated(excelLendingEntity, contractEntity, userExpertEntity);
