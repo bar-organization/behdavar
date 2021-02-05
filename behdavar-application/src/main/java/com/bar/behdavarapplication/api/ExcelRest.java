@@ -163,12 +163,9 @@ public class ExcelRest {
         List<InputExcelLendingEntity> inputExcelLendingEntities = inputExcelLendingRepository.findByInputExcelId(inputExcelId);
         if (!inputExcelLendingEntities.isEmpty()) {
             inputExcelLendingEntities.forEach(excelLendingEntity -> {
-                System.out.println("excelLendingEntity           &&&&&&&&&&     " + excelLendingEntity.getContractNumber());
                 try {
                     ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
-                    System.out.println("contractEntity           &&&&&&&&&&     " + contractEntity.getContractNumber());
                     UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
-                    System.out.println("userExpertEntity           @@@@@@@@@@@     " + userExpertEntity.getCode()  +  "@@@@@@@@"  +  userExpertEntity.getUsername());
                     if (contractEntity != null) {
                         contractRepeated(excelLendingEntity, contractEntity, userExpertEntity);
                         return;
@@ -371,7 +368,6 @@ public class ExcelRest {
         UserEntity newReceiver = userRepository.findByCode(excelLendingEntity.getExpertCode());
         System.out.println("newReceiver           @@@@@@@@@@@     " + newReceiver.getId());
         if (newReceiver == null) {
-            System.out.println("  hamin ja   ");
             throw new BusinessException("user.with.code.not.found", excelLendingEntity.getExpertCode());
         }
         UserAmountEntity userAmountEntity = userAmountRepository.findByUserId(newReceiver.getId()).orElse(null);
