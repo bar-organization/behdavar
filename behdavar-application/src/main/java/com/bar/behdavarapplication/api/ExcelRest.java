@@ -331,6 +331,7 @@ public class ExcelRest {
 
     private void contractRepeated(InputExcelLendingEntity excelLendingEntity, ContractEntity
             contractEntity, UserEntity userExpertEntity) {
+        System.out.println("contractRepeated           @@@@@@@@@@@     " + excelLendingEntity.getContractNumber()  +  "       @@@@@@@@    "  +  contractEntity.getContractNumber() + " @@@@@@@@@ "  + userExpertEntity.getUsername());
         CartableEntity cartableEntity = cartableRepository.findByContractIdAndActive(contractEntity.getId(), true).orElse(null);
         if (cartableEntity != null) {
             if (!cartableEntity.getReceiver().getCode().equals(excelLendingEntity.getExpertCode())) {
