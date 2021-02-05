@@ -113,8 +113,10 @@ public class ExcelRest {
 
         List<InputExcelLendingDto> inputExcelLendingDtos = Poiji.fromExcel(new ByteArrayInputStream(bytes), PoijiExcelType.XLSX, InputExcelLendingDto.class);
         if (!CollectionUtils.isEmpty(inputExcelLendingDtos)) {
+            System.out.println("inputExcelLendingDtos" + inputExcelLendingDtos);
             List<InputExcelLendingEntity> inputExcelLendingEntities = new ArrayList<>();
             inputExcelLendingDtos.forEach(inputExcelLendingDto -> {
+                System.out.println("inputExcelLendingDto" + inputExcelLendingDto);
                 InputExcelLendingEntity entity = InputExcelLendingTransformer.dtoToEntity(inputExcelLendingDto, new InputExcelLendingEntity());
                 entity.setInputExcel(finalInputExcelEntity);
                 inputExcelLendingEntities.add(entity);
@@ -126,6 +128,7 @@ public class ExcelRest {
 
         List<InputExcelGuarantorDto> inputExcelGuarantorDtos = Poiji.fromExcel(new ByteArrayInputStream(bytes), PoijiExcelType.XLSX, InputExcelGuarantorDto.class);
         if (!CollectionUtils.isEmpty(inputExcelGuarantorDtos)) {
+            System.out.println("inputExcelGuarantorDtos" + inputExcelGuarantorDtos);
             List<InputExcelGuarantorEntity> inputExcelGuarantorEntities = new ArrayList<>();
             inputExcelGuarantorDtos.forEach(excelGuarantorDto -> {
                 InputExcelGuarantorEntity entity = (InputExcelGuarantorEntity) InputExcelPersonTransformer.dtoToEntity(excelGuarantorDto, new InputExcelGuarantorEntity());
@@ -139,6 +142,7 @@ public class ExcelRest {
 
         List<InputExcelDebtorDto> inputExcelDebtorDtos = Poiji.fromExcel(new ByteArrayInputStream(bytes), PoijiExcelType.XLSX, InputExcelDebtorDto.class);
         if (!CollectionUtils.isEmpty(inputExcelDebtorDtos)) {
+            System.out.println("inputExcelDebtorDtos" + inputExcelDebtorDtos);
             List<InputExcelDebtorEntity> inputExcelDebtorEntities = new ArrayList<>();
             inputExcelDebtorDtos.forEach(inputExcelDebtorDto -> {
                 InputExcelDebtorEntity entity = (InputExcelDebtorEntity) InputExcelPersonTransformer.dtoToEntity(inputExcelDebtorDto, new InputExcelDebtorEntity());
@@ -159,6 +163,7 @@ public class ExcelRest {
         List<InputExcelLendingEntity> inputExcelLendingEntities = inputExcelLendingRepository.findByInputExcelId(inputExcelId);
         if (!inputExcelLendingEntities.isEmpty()) {
             inputExcelLendingEntities.forEach(excelLendingEntity -> {
+                System.out.println("excelLendingEntity" + excelLendingEntity);
                 try {
                     ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
                     UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
@@ -194,6 +199,7 @@ public class ExcelRest {
 
                     // guarantor
                     if (byInputExcelIdAndContractNumber != null) {
+                        System.out.println("byInputExcelIdAndContractNumber" + byInputExcelIdAndContractNumber);
                         PersonEntity personEntity = new PersonEntity();
                         Long personId = setAndSavePerson(byInputExcelIdAndContractNumber, personEntity);
                         personEntity.setId(personId);
@@ -286,6 +292,7 @@ public class ExcelRest {
     }
 
     private void setAndSaveAddress(PersonEntity personEntity, String address) {
+        System.out.println("setAndSaveAddress   " + personEntity + address);
         AddressEntity addressEntity = new AddressEntity();
         addressEntity.setPerson(personEntity);
         addressEntity.setDescription(address);
@@ -293,6 +300,7 @@ public class ExcelRest {
     }
 
     private UserAmountEntity setFirstUserAmount(UserEntity userExpertEntity) {
+        System.out.println("setFirstUserAmount" + userExpertEntity);
         UserAmountEntity userAmountEntity;
         userAmountEntity = new UserAmountEntity();
         userAmountEntity.setTotalAmount(new BigDecimal("0"));
@@ -303,6 +311,7 @@ public class ExcelRest {
 
     private Long setAndSavePerson(InputExcelGuarantorEntity byInputExcelIdAndContractNumber, PersonEntity
             personEntity) {
+        System.out.println("setAndSavePerson   " + byInputExcelIdAndContractNumber + personEntity);
         personEntity.setFullName(byInputExcelIdAndContractNumber.getLastName());
         personEntity.setFatherName(byInputExcelIdAndContractNumber.getFatherName());
         personEntity.setNationalCode(byInputExcelIdAndContractNumber.getNationalCode());
@@ -310,6 +319,7 @@ public class ExcelRest {
     }
 
     private void saveMobileContact(PersonEntity personEntity, String tel2, PhoneType phone) {
+        System.out.println("saveMobileContact   " + personEntity + tel2 + phone);
         ContactEntity contactEntity = new ContactEntity();
         contactEntity.setNumber(tel2);
         contactEntity.setPhoneType(phone);
