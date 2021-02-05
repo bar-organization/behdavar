@@ -364,7 +364,8 @@ public class ExcelRest {
         System.out.println("setAndSaveCartableWhenExpertChange           @@@@@@@@@@@     " + contractEntity.getContractNumber()  +  "       @@@@@@@@    "  +  userExpertEntity.getCode()  +   "   @@@@@@@   "  + cartableEntity.getId());
         cartableEntity.setActive(false);
         UserAmountEntity oldUserAmount = userAmountRepository.findByUserId(cartableEntity.getReceiver().getId()).orElse(null);
-        System.out.println("oldUserAmount           @@@@@@@@@@@     " + oldUserAmount.getId());
+        System.out.println("oldUserAmount           @@@@@@@@@@@     " + oldUserAmount.getTotalAmount());
+        System.out.println("oldUserAmount           @@@@@@@@@@@     " + contractEntity.getLending().getRemainDebtAmount());
         oldUserAmount.setTotalAmount(oldUserAmount.getTotalAmount().min(contractEntity.getLending().getRemainDebtAmount()));
         userAmountRepository.save(oldUserAmount);
         UserEntity newReceiver = userRepository.findByCode(excelLendingEntity.getExpertCode());
