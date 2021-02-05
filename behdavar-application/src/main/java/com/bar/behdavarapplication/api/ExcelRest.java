@@ -349,6 +349,7 @@ public class ExcelRest {
     }
 
     private void setAndSaveCartableWhenForFirst(ContractEntity contractEntity, UserEntity userExpertEntity) {
+        System.out.println("setAndSaveCartableWhenForFirst           @@@@@@@@@@@     " + contractEntity.getContractNumber()  +  "       @@@@@@@@    "  +  userExpertEntity.getCode());
         CartableEntity cartableEntity = new CartableEntity();
         cartableEntity.setActive(true);
         cartableEntity.setContract(contractEntity);
@@ -360,6 +361,7 @@ public class ExcelRest {
 
     private void setAndSaveCartableWhenExpertChange(InputExcelLendingEntity excelLendingEntity, ContractEntity
             contractEntity, UserEntity userExpertEntity, CartableEntity cartableEntity) {
+        System.out.println("setAndSaveCartableWhenExpertChange           @@@@@@@@@@@     " + contractEntity.getContractNumber()  +  "       @@@@@@@@    "  +  userExpertEntity.getCode()  +   "   @@@@@@@   "  + cartableEntity.getReceiver());
         cartableEntity.setActive(false);
         UserAmountEntity oldUserAmount = userAmountRepository.findByUserId(cartableEntity.getReceiver().getId()).orElse(null);
         oldUserAmount.setTotalAmount(oldUserAmount.getTotalAmount().min(contractEntity.getLending().getRemainDebtAmount()));
@@ -386,6 +388,7 @@ public class ExcelRest {
     }
 
     private void setAndSaveLending(InputExcelLendingEntity excelLendingEntity, LendingEntity lendingEntity) {
+        System.out.println("setAndSaveLending           @@@@@@@@@@@     " + excelLendingEntity.getContractNumber()  +  "       @@@@@@@@    "  +  lendingEntity.getLendingNumber());
         lendingEntity.setMasterAmount(excelLendingEntity.getDebtAmount());
         lendingEntity.setDefferedAmount(excelLendingEntity.getInstallmentAmount());
         lendingEntity.setDefferedCount(excelLendingEntity.getInstallmentCount());
