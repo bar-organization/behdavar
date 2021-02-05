@@ -163,7 +163,7 @@ public class ExcelRest {
         List<InputExcelLendingEntity> inputExcelLendingEntities = inputExcelLendingRepository.findByInputExcelId(inputExcelId);
         if (!inputExcelLendingEntities.isEmpty()) {
             inputExcelLendingEntities.forEach(excelLendingEntity -> {
-                System.out.println("excelLendingEntity" + excelLendingEntity);
+                System.out.println("excelLendingEntity           &&&&&&&&&&     " + excelLendingEntity.getContractNumber());
                 try {
                     ContractEntity contractEntity = contractRepository.findByContractNumber(excelLendingEntity.getContractNumber());
                     UserEntity userExpertEntity = userRepository.findByCode(excelLendingEntity.getExpertCode());
