@@ -1,0 +1,13 @@
+version: '3'
+
+services: 
+    oracle-12c:
+        image: quay.io/maksymbilenko/oracle-12c
+        ports: 
+            - "1521:1521"
+        volumes: 
+            - orcl-data:/u01/app/oracle 
+            
+            
+volumes: 
+    orcl-data:
